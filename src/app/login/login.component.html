@@ -1,0 +1,83 @@
+<div class="container-fluid" style="margin-top: 60px">
+  <form (ngSubmit)="f.form.valid && login()" #f="ngForm">
+    <mat-card class="mdCard">
+      <mat-card-title class="mdTitle">
+        <div>
+          <img src="assets/images/Swasthya.png" alt="Logo" />
+        </div>
+      </mat-card-title>
+      <mat-card-content class="mdContent">
+        <div class="row no-gutters">
+          <div class="col-xs-12 col-md-1 col-sm-1 m-t-25">
+            <mat-form-field class="full-width">
+              <mat-icon matPrefix>account_box</mat-icon>
+              <input
+                autocomplete="off"
+                allowText="usernameValidator"
+                matInput
+                type="text"
+                id="userID"
+                placeholder="Enter User Name"
+                [(ngModel)]="userName"
+                name="userName"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div class="col-xs-11 col-md-11 col-sm-11">
+            <mat-form-field class="full-width">
+              <mat-icon matPrefix>lock</mat-icon>
+              <input
+                autocomplete="off"
+                matInput
+                [type]="dynamictype"
+                id="password"
+                placeholder="Enter Password"
+                [(ngModel)]="password"
+                name="password"
+              />
+              <mat-icon
+                matSuffix
+                class="mat-icon material-icons cursorPointer"
+                role="img"
+                aria-hidden="true"
+                matTooltip="Show Password"
+                (mousedown)="showPWD()"
+                (touchstart)="showPWD()"
+                (mouseup)="hidePWD()"
+                (touchend)="showPWD()"
+                style="color: gray"
+                >visibility</mat-icon
+              >
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              class="btn-full-width"
+            >
+              Login
+            </button>
+          </div>
+        </div>
+        <div class="row m-t-25 m-b-10">
+          <div class="col-xs-12 col-sm-3"></div>
+          <div class="col-xs-12 col-sm-9">
+            <a
+              class="cursorPointer f-c-54 font-regular pull-right"
+              routerLink="/reset-password"
+              >Forgot Password?</a
+            >
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>
+
+<!-- <app-footer></app-footer>  -->

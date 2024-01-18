@@ -1,0 +1,166 @@
+<div *ngIf="confirmAlert">
+  <h3 class="title info">{{ title }}</h3>
+  <div class="message">{{ message }}</div>
+  <div class="action">
+    <button mat-button (click)="dialogRef.close(false)">
+      {{ btnCancelText }}
+    </button>
+    <button mat-button (click)="dialogRef.close(true)" cdkFocusInitial>
+      {{ btnOkText }}
+    </button>
+  </div>
+</div>
+
+<div *ngIf="alert">
+  <h3 [ngClass]="['title', status]">
+    {{ (status === "warn" ? "warning" : status) | titlecase }}
+  </h3>
+  <div class="message">{{ message }}</div>
+  <div class="action">
+    <button mat-button mat-dialog-close cdkFocusInitial>{{ btnOkText }}</button>
+  </div>
+</div>
+
+<div *ngIf="remarks">
+  <h3 class="title info">{{ message }}</h3>
+  <div class="message">
+    <mat-form-field [style.width]="'100%'">
+      <input
+        autocomplete="off"
+        matInput
+        placeholder="{{ currentLanguageSet?.inventory?.enterRemarks }}"
+        name="Remarks"
+        #remarksRef
+      />
+    </mat-form-field>
+  </div>
+  <div class="action">
+    <button mat-button (click)="dialogRef.close(false)">
+      {{ btnCancelText }}
+    </button>
+    <button mat-button (click)="dialogRef.close(remarksRef.value)">
+      {{ btnOkText }}
+    </button>
+  </div>
+</div>
+
+<div *ngIf="editRemarks">
+  <h3 class="title info">{{ message }}</h3>
+  <div class="message">
+    <mat-form-field [style.width]="'100%'">
+      <textarea
+        matInput
+        matTextareaAutosize
+        placeholder="{{ currentLanguageSet?.inventory?.enterRemarks }}"
+        name="Remarks"
+        maxLength="500"
+        #remarksRef
+        [(ngModel)]="comments"
+      ></textarea>
+    </mat-form-field>
+  </div>
+  <div class="action">
+    <button mat-button (click)="dialogRef.close(false)">
+      {{ btnCancelText }}
+    </button>
+    <button mat-button (click)="dialogRef.close(remarksRef.value + '.')">
+      {{ btnOkText }}
+    </button>
+  </div>
+</div>
+
+<div *ngIf="provideDraftDesc">
+  <h3 class="title info">{{ message }}</h3>
+  <div class="message">
+    <mat-form-field [style.width]="'100%'">
+      <textarea
+        matInput
+        matTextareaAutosize
+        placeholder="{{ currentLanguageSet?.inventory?.provideDraftDesc }}"
+        name="draftDescription"
+        maxLength="500"
+        [value]="comments"
+        #draftDescription
+      ></textarea>
+    </mat-form-field>
+  </div>
+  <div class="action">
+    <button mat-button (click)="dialogRef.close(comments)">
+      {{ btnCancelText }}
+    </button>
+    <button mat-button (click)="dialogRef.close(draftDescription.value)">
+      {{ btnOkText }}
+    </button>
+  </div>
+</div>
+
+<div *ngIf="notify">
+  <h3 class="title warn">{{ message }}</h3>
+  <div class="message">
+    <ul class="list-group">
+      <li
+        class="list-group-item alert alert-danger"
+        *ngFor="let items of mandatories"
+      >
+        <span
+          class="glyphicon glyphicon-hand-right"
+          style="color: #cd807e; margin-right: 5px"
+        ></span>
+        <strong> {{ items | titlecase }}</strong>
+      </li>
+    </ul>
+  </div>
+  <div class="action">
+    <button mat-button (click)="dialogRef.close(true)" cdkFocusInitial>
+      {{ btnOkText }}
+    </button>
+  </div>
+</div>
+
+<div *ngIf="choice">
+  <h3 class="title info">{{ message }}</h3>
+  <div class="message">
+    <mat-radio-group
+      [(ngModel)]="selectedValue"
+      disableRipple="true"
+      class="radio-group"
+    >
+      <mat-radio-button
+        color="primary"
+        disableRipple="true"
+        class="radio-button"
+        *ngFor="let value of values"
+        [value]="value.id"
+      >
+        {{ value.name }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="action">
+    <button mat-button (click)="dialogRef.close(false)">
+      {{ btnCancelText }}
+    </button>
+    <button mat-button (click)="dialogRef.close(selectedValue)" cdkFocusInitial>
+      {{ btnOkText }}
+    </button>
+  </div>
+</div>
+
+<div *ngIf="sessionTimeout">
+  <h3 class="title warn">{{ title }}</h3>
+  <div class="message">
+    <span>{{ message }} &nbsp;</span>
+    <small>
+      <span *ngIf="minutes >= 1"
+        >{{ minutes.toFixed(0) }} &nbsp; minutes &nbsp;</span
+      >
+      <span *ngIf="seconds > 0">{{ seconds }} &nbsp; seconds</span>
+    </small>
+  </div>
+  <div class="action">
+    <button mat-button (click)="stopTimer()">{{ btnCancelText }}</button>
+    <button mat-button (click)="continueSession()" cdkFocusInitial>
+      {{ btnOkText }}
+    </button>
+  </div>
+</div>

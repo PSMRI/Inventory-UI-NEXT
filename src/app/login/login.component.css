@@ -1,0 +1,58 @@
+.container-fluid {
+    height: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mdCard {
+    width: 400px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px gray;
+}
+
+.formIcons {
+    padding-top: 30px;
+    color: gray;
+}
+
+.mdContent {
+    font-size: 17px;
+}
+
+button {
+    font-size: 15px;
+}
+
+.forgotBtn {
+    margin: 10px;
+}
+
+.mdTitle {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.btn-full-width {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.full-width {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.m-b-10 {
+    margin-bottom: 10px;
+}
+
+.f-c-54 {
+  color: #545454 !important;
+}

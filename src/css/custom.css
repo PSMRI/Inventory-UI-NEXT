@@ -1,0 +1,438 @@
+@font-face {
+  font-family: SF-UI-Display-Regular;
+  src: url(../fonts/SF-UI-Display/SF-UI-Display-Regular.otf);
+}
+
+@font-face {
+  font-family: SF-UI-Display-Medium;
+  src: url(../fonts/SF-UI-Display/SF-UI-Display-Medium.otf);
+}
+
+@font-face {
+  font-family: SF-UI-Display-Black;
+  src: url(../fonts/SF-UI-Display/SF-UI-Display-Black.otf);
+}
+
+@font-face {
+  font-family: SF-UI-Display-Light;
+  src: url(../fonts/SF-UI-Display/SF-UI-Display-Light.otf);
+}
+
+@font-face {
+  font-family: SF-UI-Display-Semibold;
+  src: url(../fonts/SF-UI-Display/SF-UI-Display-Semibold.otf);
+}
+
+@font-face {
+  font-family: SF-UI-Display-Bold;
+  src: url(../fonts/SF-UI-Display/SF-UI-Display-Bold.otf);
+}
+
+.font-Light {
+  font-family: SF-UI-Display-Light !important;
+}
+
+.font-regular {
+  font-family: SF-UI-Display-Regular !important;
+}
+
+.font-Semibold {
+  font-family: SF-UI-Display-Semibold !important;
+}
+
+.font-bold {
+  font-family: SF-UI-Display-Regular !important;
+}
+
+.font-Medium {
+  font-family: SF-UI-Display-Medium !important;
+}
+
+body {
+  background: #f2f2f0 !important;
+  font-family: SF-UI-Display-Regular !important;
+  height: 100%;
+}
+
+.header {
+  background-color: #253746;
+  padding: 5px 10px;
+  padding-top: 0px;
+  text-align: center;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  text-transform: capitalize;
+}
+
+.cu-panel-footer {
+  padding: 1px 15px !important;
+}
+
+.overflow-x-initial {
+  overflow-x: initial;
+}
+
+.btn {
+  background: #14508c !important;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  transition: background-color .3s;
+  float: left;
+  color: #fff !important;
+  font-family: SF-UI-Display-Regular;
+  /* margin:3px;    color: #ecf0f1;*/
+}
+
+.radioBtn {
+  padding: 6px 12px;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  transition: background-color .3s;
+  float: left;
+  color: #fff;
+  font-family: SF-UI-Display-Regular;
+  border: 1px solid #069;
+  /* margin:3px;    color: #ecf0f1;*/
+}
+
+.btn>* {
+  position: relative;
+}
+
+.activeBtn {
+  background: #14508c !important;
+}
+
+.btn:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 0;
+  padding-top: 0;
+  border-radius: 100%;
+  background-color: rgba(236, 240, 241, .3);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.btn:active:before {
+  width: 120%;
+  padding-top: 120%;
+  transition: width .2s ease-out, padding-top .2s ease-out;
+}
+
+.btn:hover, .btn:focus {
+  color: #fff !important;
+  outline: 0 !important;
+  background: #545454 !important;
+}
+
+.cu-green-btn {
+  background: #008c44 !important;
+  color: #fff;
+}
+
+.login-div {
+  margin: 0 auto;
+  width: 458px;
+}
+
+.mat-drawer-content {
+  background: #f2f2f0 !important;
+
+}
+
+.no-row {
+  margin: 0 !important;
+}
+
+.login-div-bg {
+  background: #e4e4e4;
+}
+
+.cu-form-horizontal-label-left .control-label {
+  text-align: left !important;
+  color: #545454 !important;
+  font-size: 16px;
+}
+
+ul.parentIcon li {
+  padding: 5px;
+  margin-right: 5px;
+}
+.inline-block {
+  display: inline-block;
+}
+ul.parentIcon li button {
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+  cursor: pointer;
+  color: white;
+  border-width: 1px;
+  border-color: red;
+  border-radius: 5px;
+  padding: 1px 4px 4px 4px;
+  background: transparent;
+  /* background: url(../assets/images/logoutIcon.png) no-repeat; */
+}
+
+ul.topIcon li {
+  padding: 5px;
+}
+
+ul.topIcon li a {
+  display: inline-block;
+  width: 24px;
+  height: 21px;
+  cursor: pointer;
+  background: url(../assets/images/logoutIcon.png) no-repeat;
+}
+
+ul.topIcon li.logout a:hover {
+  background-position: 0 -21px;
+}
+
+ul.topIcon li.help a {
+  background-position: 0px -42px;
+}
+
+ul.topIcon li.help a:hover {
+  background-position: 0px -63px;
+}
+
+.cu-nav a:hover {
+  background: none !important;
+}
+
+.cu-nav div, .cu-nav li a {
+  height: 50px;
+}
+
+.cu-nav div i {
+  line-height: 50px !important;
+}
+
+.cu-nav>li>a {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.line-height-30 {
+  line-height: 30px !important;
+}
+
+.line-height-50 {
+  line-height: 50px !important;
+}
+
+.iconDiv {
+  border-right: 2px solid #fff;
+  width: 50px;
+  float: left;
+}
+
+.badge-corner {
+  position: relative;
+  /* top:-20px;
+    right: 15px;*/
+  left: 58px;
+  width: 0;
+  height: 0;
+  border-top: 30px solid #008c44;
+  /* border-top-color: rgba(0, 0, 0, 0.3);*/
+  border-left: 40px solid transparent;
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+  z-index: 2;
+}
+
+.badge-corner span {
+  position: absolute;
+  top: -30px;
+  left: -17px;
+  font-size: 12px;
+  color: #fff;
+}
+
+.serviceLineDiv {
+  height: 50px !important;
+  width: 100px;
+  display: block;
+  border: 1px solid #cdcdcd !important;
+  float: left;
+  margin-right: 10px;
+}
+
+.serviceLine {
+  color: #7b7b7b;
+  overflow: hidden !important;
+  display: block;
+  float: left;
+}
+
+.serviceLineDiv:hover {
+  text-decoration: none !important;
+  border: 1px solid #008c44 !important;
+}
+
+.serviceActive {
+  border: 1px solid #008c44 !important;
+}
+
+.serviceLabelName {
+  position: absolute;
+  padding-top: 10px;
+}
+
+.adminIconsDiv {
+  width: 200px;
+  height: 90px;
+  border: 1px solid #e8e8e8;
+  float: left;
+  margin: 5px;
+}
+
+.adminIconsDiv:hover {
+  box-shadow: 0 0 5px #ababab;
+}
+
+#leftNavSidebar {
+  background: #f2f2f0;
+  width: 0px;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  z-index: 2;
+}
+
+#dashboardContent {
+  width: 96.4%;
+  height: auto;
+  display: inline-block;
+  position: relative;
+  margin-left: 49px;
+}
+
+.sidebar-toggle {
+  font-family: fontAwesome;
+  font-size: 20px;
+}
+
+.sidebar-toggle:before {
+  content: "\f105";
+}
+
+/*.sidebar-toggle:after {
+
+  content: "\f104";
+}*/
+
+.circleOuterDiv {
+  width: 180px;
+  height: 160px;
+  float: left;
+  /*  border:1px solid #dcdcdb;*/
+  margin: 10px;
+}
+
+.circle {
+  position: relative;
+  padding: 0;
+  width: 150px;
+  height: 150px;
+  line-height: 55px;
+  border-radius: 50%;
+  z-index: 1;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 2px rgba(0, 0, 0, .2);
+  border: none;
+  background: #fff;
+}
+
+.circle-admin {
+  line-height: 30px !important;
+}
+
+.subRolecircle {
+  display: none;
+}
+
+.footer {
+  position: fixed !important;
+  bottom: 0px;
+  color: #000;
+  font-size: 12px !important;
+  z-index: 20;
+  width: 100%;
+  background: #40454d;
+  background: #404a5b;
+}
+
+input {
+  font-family: SF-UI-Display-Regular !important;
+}
+
+.control-label {
+  font-family: SF-UI-Display-Regular !important;
+  color: #999 !important;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.table-hover:hover {
+  cursor: pointer !important;
+  color: #337ab7 !important;
+}
+
+/* input:-webkit-autofill, input:-webkit-autofill:focus, input:-webkit-autofill:hover {
+  -webkit-box-shadow: 0 0 0 20px white inset;
+  border-bottom: 2px solid #e6e6e6;
+  bottom: 1px;
+} */
+
+.md2-datepicker-arrow {
+  display: none;
+}
+
+.md2-datepicker-trigger .md2-datepicker-button {
+  padding: 12px 8px 8px !important;
+}
+
+.mat-input-infix, .mat-tab-label, .mat-select-value-text, .md2-datepicker-input {
+  font-family: SF-UI-Display-Regular, "Helvetica Neue", sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+
+.mat-input-placeholder, .mat-select-placeholder, .md2-datepicker-placeholder {
+  font-family: SF-UI-Display-Regular, "Helvetica Neue", sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #999 !important;
+}
+
+[disabled] .mat-input-placeholder, [disabled] .mat-select-placeholder, [aria-disabled="true"] .md2-datepicker-placeholder {
+  color: #999 !important;
+}
+
+.mat-dialog-content {
+  padding: 0 15px !important;
+}
+
+.mat-card {
+  padding: 15px !important;
+}
+
+.errorText {
+  color: #F74038 !important;
+}

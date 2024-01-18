@@ -1,1 +1,189 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+@import 'css/custom.css';
+@import 'css/layout.css';
+
+.mat-select-placeholder {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+/* 
+.mat-form-field-placeholder {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+} */
+
+
+
+.md-input-prefix md-icon, .md-input-suffix md-icon {
+    vertical-align: text-bottom;
+}
+
+.odd {
+    background-color: #f0f5f5;
+    border-bottom: 1px solid #ddd;
+}
+
+.box {
+    height: 70px;
+}
+
+.title {
+    margin: 0px;
+    padding: 0 15px;
+    color: white;
+    font-size: 18px;
+    line-height: 32px;
+    font-weight: 400;
+}
+
+.cdk-overlay-container .cdk-global-overlay-wrapper .cdk-overlay-pane .mat-dialog-container {
+    padding: 0px;
+    overflow: auto;
+}
+
+@media only screen and (max-width: 768px) {
+    .cdk-overlay-container .cdk-global-overlay-wrapper .cdk-overlay-pane.fit-screen {
+        width: 100% !important;
+        height: 100% !important;
+    }
+    .cdk-overlay-container .cdk-global-overlay-wrapper .cdk-overlay-pane .mat-dialog-container {
+        padding: 0px;
+        max-width: unset;
+    }
+}
+
+.btn-green {
+    background: green !important;
+}
+
+.btn-green:disabled {
+    background: grey !important;
+    cursor: not-allowed;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.row.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.row.no-gutters>[class^="col-"], .row.no-gutters>[class*=" col-"] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.userInfo.mat-menu-panel {
+    margin-top: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    .role-menu.mat-menu-panel {
+        max-width: none;
+        width: 100vw;
+        margin-top: 10px;
+    }
+}
+
+.mat-form-field.readonly .mat-form-field-underline {
+    background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.42)), color-stop(33%, rgba(0, 0, 0, 0.42)), color-stop(0%, transparent));
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.42) 33%, transparent 0%);
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
+    background-color: unset;
+}
+
+table thead tr th {
+    white-space: nowrap;
+}
+
+.total-count {
+    padding-top: 25px !important;
+}
+
+@media only screen and (max-width: 768px) {
+    /***********************table-form*****************************/
+    /* Force table to not be like tables anymore */
+    table.responsive-table-form, table.responsive-table-form thead, table.responsive-table-form thead tr, table.responsive-table-form thead th, table.responsive-table-form thead td, table.responsive-table-form tbody, table.responsive-table-form tbody tr, table.responsive-table-form tbody th, table.responsive-table-form tbody td, table.responsive-table-form tfoot, table.responsive-table-form tfoot tr, table.responsive-table-form tfoot th, table.responsive-table-form tfoot td {
+        display: block;
+    }
+    /* Hide table headers (but not display: none;, for accessibility) */
+    table.responsive-table-form thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    table.responsive-table-form tbody td {
+        /* Behave  like a "row" */
+        /* border: none !important; */
+        /* border-bottom: 1px solid #eee; */
+        position: relative;
+        padding: 4px 8px !important;
+        border: none !important;
+        min-height: 64px;
+    }
+    table.responsive-table-form tbody tr td.vertical-align-middle {
+        text-align: center;
+        background: #0277bd;
+        color: white;
+        font-size: 20px;
+        min-height: 40px;
+    }
+    /***********************table-view*****************************/
+    table.responsive-table-view, table.responsive-table-view thead, table.responsive-table-view thead tr, table.responsive-table-view thead th, table.responsive-table-view thead td, table.responsive-table-view tbody, table.responsive-table-view tbody tr, table.responsive-table-view tbody th, table.responsive-table-view tbody td, table.responsive-table-view tfoot, table.responsive-table-view tfoot tr, table.responsive-table-view tfoot th, table.responsive-table-view tfoot td {
+        display: block;
+    }
+    table.responsive-table-view thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    table.responsive-table-view tbody tr {
+        border: 1px solid darkgray;
+    }
+    table.responsive-table-view tbody td {
+        /* Behave  like a "row" */
+        /* border: none !important; */
+        /* border-bottom: 1px solid #eee; */
+        position: relative;
+        padding-left: 50% !important;
+        padding-bottom: 8px !important;
+        padding-top: 8px !important;
+        min-height: 40px;
+    }
+    table.responsive-table-view tbody td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 8px;
+        left: 8px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        content: attr(data-title);
+        
+    }
+    /* Label the data */
+    
+    table.responsive-table-view tfoot tr {
+        display: flex;
+        align-content: space-between
+    }
+    table.responsive-table-view tfoot tr th, table.responsive-table-view tfoot tr td {
+        min-height: 70px;
+        flex: 1;
+    }
+    table.responsive-table-view tfoot .total-count {
+        padding-top: 25px;
+    }
+}
