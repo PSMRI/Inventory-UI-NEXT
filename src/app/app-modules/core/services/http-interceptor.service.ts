@@ -20,28 +20,27 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 import { Injectable } from '@angular/core';
-
-import { SpinnerService } from './spinner.service';
-import { ConfirmationService } from './confirmation.service';
-import { Router } from '@angular/router';
-
-import { environment } from '../../../../environments/environment';
-
-// import 'rxjs/Rx';
-import { SetLanguageComponent } from '../components/set-language.component';
-import { LanguageService } from './language.service';
 import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpResponse,
   HttpClient,
   HttpErrorResponse,
-  HttpEvent,
-  HttpHandler,
-  HttpRequest,
-  HttpResponse,
 } from '@angular/common/http';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
+import { throwError } from 'rxjs/internal/observable/throwError';
+import { SpinnerService } from './spinner.service';
+import { ConfirmationService } from './confirmation.service';
+import { environment } from 'src/environments/environment';
 
-@Injectable()
-export class HttpInterceptor implements HttpInterceptor {
+@Injectable({
+  providedIn: 'root',
+})
+export class HttpInterceptorService implements HttpInterceptor {
   timerRef: any;
   currentLanguageSet: any;
   constructor(
@@ -49,6 +48,7 @@ export class HttpInterceptor implements HttpInterceptor {
     private router: Router,
     private confirmationService: ConfirmationService,
     private http: HttpClient,
+    // private setLanguageService: SetLanguageService
   ) {}
 
   intercept(
@@ -69,17 +69,18 @@ export class HttpInterceptor implements HttpInterceptor {
     return next.handle(modifiedReq).pipe(
       tap((event: HttpEvent<any>) => {
         if (req.url !== undefined && !req.url.includes('cti/getAgentState'))
-          this.spinnerService.show();
-        if (event instanceof HttpResponse) {
-          console.log(event.body);
-          this.onSuccess(req.url, event.body);
-          this.spinnerService.show();
-          return event.body;
-        }
+          if (event instanceof HttpResponse) {
+            // this.spinnerService.show();
+            console.log(event.body);
+            this.onSuccess(req.url, event.body);
+            // this.spinnerService.show();
+            return event.body;
+          }
       }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        this.spinnerService.show();
+
+        // this.spinnerService.show();
         return throwError(error.error);
       }),
     );
@@ -96,7 +97,57 @@ export class HttpInterceptor implements HttpInterceptor {
       localStorage.clear();
       setTimeout(() => this.router.navigate(['/login']), 0);
       this.confirmationService.alert(response.errorMessage, 'error');
+    } else {
+      this.startTimer();
     }
   }
-  // -----End------
+
+  startTimer() {
+    this.timerRef = setTimeout(
+      () => {
+        console.log('there', Date());
+
+        if (
+          sessionStorage.getItem('authenticationToken') &&
+          sessionStorage.getItem('isAuthenticated')
+        ) {
+          this.confirmationService
+            .alert(
+              'Your session is about to Expire. Do you need more time ? ',
+              'sessionTimeOut',
+            )
+            .afterClosed()
+            .subscribe((result: any) => {
+              if (result.action == 'continue') {
+                this.http.post(environment.extendSessionUrl, {}).subscribe(
+                  (res: any) => {},
+                  (err: any) => {},
+                );
+              } else if (result.action == 'timeout') {
+                clearTimeout(this.timerRef);
+                sessionStorage.clear();
+                localStorage.clear();
+                this.confirmationService.alert(
+                  this.currentLanguageSet.sessionExpired,
+                  'error',
+                );
+                this.router.navigate(['/login']);
+              } else if (result.action == 'cancel') {
+                setTimeout(() => {
+                  clearTimeout(this.timerRef);
+                  sessionStorage.clear();
+                  localStorage.clear();
+                  this.confirmationService.alert(
+                    this.currentLanguageSet.sessionExpired,
+                    'error',
+                  );
+                  this.router.navigate(['/login']);
+                }, result.remainingTime * 1000);
+              }
+            });
+        }
+      },
+      27 * 60 * 1000,
+    );
+  }
 }

@@ -1,0 +1,217 @@
+<div class="container-fluid">
+  <div class="row m-t-10">
+    <div class="col-xs-12 col-sm-6">
+      <h4 class="inline-block">
+        {{ currentLanguageSet?.inventory?.patientIssueWithoutRx }}
+      </h4>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <button
+        mat-raised-button
+        class="pull-right button-full-width m-l-5"
+        type="button"
+        color="primary"
+        routerLink="View"
+      >
+        {{ currentLanguageSet?.inventory?.previousRecords }}
+      </button>
+      <button
+        mat-raised-button
+        class="pull-right button-full-width m-l-5"
+        type="button"
+        color="primary"
+        (click)="openSearchDialog()"
+      >
+        {{ currentLanguageSet?.bendetails?.advanceSearch }}
+      </button>
+    </div>
+
+    <div class="col-xs-12">
+      <mat-card class="m-t-20 m-b-40">
+        <form [formGroup]="beneficiaryDetailForm" autocomplete="off">
+          <div class="row medicineAlign">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+              <mat-form-field class="input-full-width">
+                <input
+                  matInput
+                  appDefaultNull
+                  allowText="number"
+                  maxlength="12"
+                  name="beneficiaryID"
+                  id="beneficiaryID"
+                  formControlName="beneficiaryID"
+                  placeholder="{{
+                    currentLanguageSet?.bendetails?.beneficiaryID
+                  }}"
+                  (keyup)="checkBeneficiary()"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+              <mat-form-field>
+                <mat-label>
+                  {{ currentLanguageSet?.itemDispense?.visitcode }}
+                </mat-label>
+                <mat-select
+                  class="input-full-width"
+                  name="visitNo"
+                  formControlName="visitCode"
+                  [disabled]="
+                    !beneficiaryDetailForm.get('beneficiaryID')?.value
+                  "
+                  (change)="getVisitDetail()"
+                >
+                  <mat-option
+                    *ngFor="let visit of beneficiaryDetail"
+                    [value]="visit"
+                  >
+                    {{ visit.benVisitCode }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+              <mat-form-field class="input-full-width">
+                <input
+                  matInput
+                  [matDatepicker]="visitDatePicker"
+                  name="visitDate"
+                  id="visitDate"
+                  formControlName="visitDate"
+                  placeholder="{{ currentLanguageSet?.bendetails?.visitDate }}"
+                  [disabled]="true"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="visitDatePicker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #visitDatePicker></mat-datepicker>
+              </mat-form-field>
+
+              <!-- <md2-datepicker class='input-full-width' [openOnFocus]="true" name='visitDate' id='visitDate' formControlName="visitDate"
+              placeholder="{{currentLanguageSet?.bendetails?.visitDate}}" [disabled]='true'></md2-datepicker> -->
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+              <mat-form-field class="input-full-width">
+                <input
+                  matInput
+                  appDefaultNull
+                  allowText="alphaspace"
+                  name="beneficiaryName"
+                  id="beneficiaryName"
+                  formControlName="beneficiaryName"
+                  [readonly]="true"
+                  placeholder="{{ currentLanguageSet?.inventory?.patientName }}"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+              <mat-form-field class="input-full-width">
+                <input
+                  matInput
+                  appDefaultNull
+                  allowText="number"
+                  name="beneficiaryAge"
+                  id="beneficiaryAge"
+                  formControlName="beneficiaryAge"
+                  [readonly]="true"
+                  placeholder="{{ currentLanguageSet?.bendetails?.age }}"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+              <mat-form-field class="input-full-width">
+                <input
+                  matInput
+                  appDefaultNull
+                  allowText="alphabet"
+                  name="genderName"
+                  id="genderName"
+                  formControlName="genderName"
+                  [readonly]="true"
+                  placeholder="{{ currentLanguageSet?.bendetails?.gender }}"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+              <mat-form-field class="input-full-width">
+                <input
+                  matInput
+                  appDefaultNull
+                  allowText="alphaspace"
+                  name="doctorName"
+                  id="doctorName"
+                  formControlName="doctorName"
+                  placeholder="{{ currentLanguageSet?.inventory?.doctorName }}"
+                  [readonly]="true"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+              <mat-form-field class="input-full-width">
+                <input
+                  matInput
+                  appDefaultNull
+                  allowText="alphanumericspace"
+                  name="reference"
+                  id="reference"
+                  formControlName="reference"
+                  maxlength="50"
+                  placeholder="{{ currentLanguageSet?.inventory?.remarks }}"
+                  [disabled]="!beneficiaryDetailForm.get('visitCode')?.value"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-xs-12 col-sm-6 box">
+              <label class="control-label" for="medicineDispenseType"
+                >{{ currentLanguageSet?.inventory?.typeofDispense }}:</label
+              >
+              <div class="clearfix"></div>
+              <mat-radio-group
+                name="medicineDispenseType"
+                formControlName="medicineDispenseType"
+                [disabled]="!beneficiaryDetailForm.get('visitCode')?.value"
+                (change)="getBeneficiaryDetail()"
+              >
+                <mat-radio-button
+                  color="primary"
+                  class="radio-btn"
+                  value="Manual"
+                  >{{
+                    currentLanguageSet?.inventory?.manualDispense
+                  }}</mat-radio-button
+                >
+                <mat-radio-button
+                  color="primary"
+                  class="radio-btn"
+                  value="System"
+                  >{{
+                    currentLanguageSet?.inventory?.systemDispense
+                  }}</mat-radio-button
+                >
+              </mat-radio-group>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </form>
+
+        <app-system-medicine-dispense
+          [beneficaryDetail]="beneficaryDetail"
+          (resetBeneficiaryDetail)="resetBeneficiaryDetails($event)"
+          *ngIf="
+            this.beneficiaryDetailForm.controls['medicineDispenseType']
+              .value === 'System'
+          "
+        ></app-system-medicine-dispense>
+        <app-manual-medicine-dispense
+          [beneficaryDetail]="beneficaryDetail"
+          (resetBeneficiaryDetail)="resetBeneficiaryDetails($event)"
+          *ngIf="
+            this.beneficiaryDetailForm.controls['medicineDispenseType']
+              .value === 'Manual'
+          "
+        ></app-manual-medicine-dispense>
+      </mat-card>
+    </div>
+  </div>
+</div>

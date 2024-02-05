@@ -22,6 +22,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import { ServiceComponent } from 'src/service/service.component';
+import { AuthGuard } from './app-modules/core/services/auth-guard.service';
+import { FacilitySelectionComponent } from './facility-selection/facility-selection.component';
+import { LoadStoreDetailsComponent } from './load-store-details/load-store-details.component';
 
 // import { ServiceComponent } from './service/service.component';
 
@@ -61,25 +65,28 @@ const routes: Routes = [
   //   component: SetPasswordComponent,
   //   // canActivate: [AuthGuard],
   // },
-  // {
-  //   path: 'service',
-  //   component: ServiceComponent,
-  //   canActivate: [AuthGuard],
-  // },
-  // {
-  //   path: 'facility',
-  //   component: FacilitySelectionComponent,
-  //   canActivate: [AuthGuard],
-  // },
-  // {
-  //   path:'loadStores',
-  //   component:LoadStoreDetailsComponent,
-  // },
-  // {
-  //   path: 'inventory',
-  //   canActivate: [AuthGuard],
-  //   loadChildren: './app-modules/inventory/inventory.module#InventoryModule'
-  // },
+  {
+    path: 'service',
+    component: ServiceComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'facility',
+    component: FacilitySelectionComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'loadStores',
+    component: LoadStoreDetailsComponent,
+  },
+  {
+    path: 'inventory',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./app-modules/inventory/inventory.module').then(
+        (x) => x.InventoryModule,
+      ),
+  },
   // {
   //   path: 'rx',
   //   canActivate: [AuthGuard],

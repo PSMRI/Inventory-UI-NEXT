@@ -1,0 +1,111 @@
+<div class="container-fluid">
+  <form [formGroup]="patientReturnForm" autocomplete="off">
+    <div class="row m-t-10">
+      <div class="col-xs-12 col-sm-6">
+        <h4>
+          {{ currentLanguageSet?.inventory?.patientReturns }}
+        </h4>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 pull-right">
+        <button
+          mat-raised-button
+          class="pull-right button-full-width m-l-5"
+          type="button"
+          color="primary"
+          routerLink="previousRecord"
+        >
+          {{ currentLanguageSet?.inventory?.previousRecords }}
+        </button>
+      </div>
+    </div>
+
+    <div class="row m-t-10">
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" *ngIf="!benSelected">
+        <mat-form-field class="input-full-width">
+          <input
+            matInput
+            required
+            allowText="number"
+            maxlength="12"
+            name="beneficiaryIDOrPhoneNumber"
+            formControlName="beneficiaryIDOrPhoneNumber"
+            placeholder="{{
+              currentLanguageSet?.inventory?.beneficiaryIDPhoneNumber
+            }}"
+            (keyup.enter)="identityQuickSearch(beneficiaryIDOrPhoneNumber)"
+          />
+          <mat-icon
+            class="search-btn"
+            matSuffix
+            (click)="identityQuickSearch(beneficiaryIDOrPhoneNumber)"
+            >search</mat-icon
+          >
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row m-t-10">
+      <div class="no-gutters" *ngIf="benSelected">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 box">
+          <mat-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              maxlength="100"
+              matInput
+              placeholder="{{ currentLanguageSet?.bendetails?.beneficiaryID }}"
+              name="beneficiaryID"
+              id="beneficiaryID"
+              formControlName="beneficiaryID"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 box">
+          <mat-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              maxlength="100"
+              matInput
+              placeholder="{{
+                currentLanguageSet?.bendetails?.beneficiaryName
+              }}"
+              name="name"
+              id="name"
+              formControlName="name"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 box">
+          <mat-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              maxlength="100"
+              matInput
+              placeholder="{{ currentLanguageSet?.bendetails?.age }}"
+              name="age"
+              id="age"
+              formControlName="age"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 box">
+          <mat-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              maxlength="100"
+              matInput
+              placeholder="{{ currentLanguageSet?.bendetails?.gender }}"
+              name="gender"
+              id="gender"
+              formControlName="gender"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<app-item-batch-details-for-patient-return
+  *ngIf="benSelected"
+  [itemMasterList]="itemMasterList"
+  [benRegId]="benRegId"
+  (resetBenDetails)="resetBenDetails($event)"
+></app-item-batch-details-for-patient-return>

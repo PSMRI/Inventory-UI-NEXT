@@ -1,0 +1,89 @@
+<div class="title">
+  <h4>{{ currentLanguageSet?.inventory?.itemSelection }}</h4>
+  <button
+    mat-icon-button
+    matDialogClose
+    matTooltip="{{ currentLanguageSet?.inventory?.close }}"
+    class="pull-right exit width-20px"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div class="container-fluid">
+  <div class="row no-gutters">
+    <div class="col-xs-12 col-sm-4">
+      <mat-form-field class="input-full-width">
+        <input
+          autocomplete="off"
+          allowText="itemNameSearchValidator"
+          matInput
+          placeholder="{{ currentLanguageSet?.inventory?.itemNameCode }}"
+          [(ngModel)]="input.searchTerm"
+          (keyup.enter)="search(input.searchTerm)"
+          maxlength="100"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col-xs-12 col-sm-8">
+      <button
+        class="search-btn"
+        mat-raised-button
+        color="accent"
+        type="button"
+        (click)="search(input.searchTerm)"
+      >
+        {{ currentLanguageSet?.inventory?.search }}
+      </button>
+    </div>
+  </div>
+
+  <div class="m-t-30"></div>
+
+  <mat-dialog-content>
+    <div class="table-responsive">
+      <!-- <table class="table table-bordered table-striped" [md2Data]="items$ | async" #md2="md2DataTable" [rowsPerPage]="5"
+        [activePage]="1" aria-describedby="itemDispenseDetails">
+        <caption></caption><thead>
+          <tr>
+            <th id="itemCode">{{currentLanguageSet?.inventory?.itemCode}}</th>
+            <th id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
+            <th id="batchNo">{{currentLanguageSet?.inventory?.batchNo}}</th>
+            <th id="itemCategory">{{currentLanguageSet?.inventory?.itemCategory}}</th>
+            <th id="itemForm">{{currentLanguageSet?.inventory?.itemForm}}</th>
+            <th id="pharmacologicalCategory">{{currentLanguageSet?.inventory?.pharmacologicalCategory}}</th>
+            <th id="strength">{{currentLanguageSet?.inventory?.strength}}</th>
+            <th id="action">{{currentLanguageSet?.inventory?.action}}</th>
+          </tr> 
+        </thead>
+
+        <tbody>
+          <tr *ngIf="md2.data?.length === 0">
+            <td colspan="8" style="text-align: center; font-size: 16px">
+              <strong>{{currentLanguageSet?.inventory?.norecordsfound}}</strong>
+            </td>
+          </tr>
+          <tr *ngFor="let selectedItem of md2.data">
+            <td data-title="Item Name">{{ selectedItem?.item?.itemName }} </td>
+            <td data-title="Quantity On Hand">{{ selectedItem?.quantityInHand }} </td>
+            <td data-title="Item Code">{{ selectedItem?.item?.itemCode }} </td>
+            <td data-title="Item Category">{{ selectedItem?.item?.itemCategory?.itemCategoryName }} </td>
+            <td data-title="Item Form">{{ selectedItem?.item?.itemForm?.itemForm }} </td>
+            <td data-title="Pharmacological Category">{{ selectedItem?.item?.pharmacologyCategory?.pharmCategoryName }} </td>
+            <td data-title="Strength">{{ selectedItem?.item?.strength ? selectedItem?.item?.strength : " " }} {{selectedItem?.item?.uom?.uOMName ? selectedItem?.item?.uom?.uOMName : " "}} </td>
+            <td class="text-center">
+              <button md-raised-button (click)="selectSelectedItem(selectedItem)" color="primary">{{currentLanguageSet?.inventory?.select}}</button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr *ngIf="md2.data?.length > 0">
+            <td colspan="8" class="text-right">
+              <md2-pagination></md2-pagination>
+            </td>
+          </tr>
+        </tfoot>
+      </table> -->
+    </div>
+  </mat-dialog-content>
+</div>

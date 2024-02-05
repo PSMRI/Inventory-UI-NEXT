@@ -1,0 +1,31 @@
+.input-full-width {
+    width: 100%;
+}
+
+.search-btn {
+    cursor: pointer;
+}
+
+.vertical-align-middle {
+    vertical-align: middle;
+}
+
+.icon-remove {
+    margin: 16px;
+}
+
+.mat-form-field {
+    line-height: unset !important;
+}
+
+.width5 {
+    width: 5%;
+}
+
+.width10 {
+    width: 10%;
+}
+
+.width15 {
+    width: 15%;
+}

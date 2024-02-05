@@ -1,0 +1,91 @@
+<form [formGroup]="itemReturnForm" autocomplete="off">
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+    <mat-select
+      class="input-full-width"
+      name="itemName"
+      id="itemName"
+      formControlName="itemName"
+      placeholder="{{ currentLanguageSet?.inventory?.item }}"
+      (change)="getBatchDetail(itemName, null)"
+    >
+      <mat-option *ngFor="let item of filterItemList" [value]="item">
+        {{ item.itemName }}
+      </mat-option>
+    </mat-select>
+  </div>
+</form>
+<div class="container-fluid">
+  <div class="row" *ngIf="selectedBatchList?.length > 0">
+    <div class="col-xs-12">
+      <h4>{{ currentLanguageSet?.inventory?.dispensingItem }}</h4>
+    </div>
+
+    <div class="col-xs-12">
+      <div class="table-responsive">
+        <!-- <table class="table table-bordered table-striped" [md2Data]="selectedBatchList" #md2="md2DataTable" aria-describedby="itemBatchDetails">
+          <caption></caption> 
+          <thead>
+            <tr>
+              <th id ="sNo" class="width-percent-5">{{currentLanguageSet?.inventory?.sNo}}</th>
+              <th id ="itemName" class="width-percent-10">{{currentLanguageSet?.inventory?.itemName}}</th>
+              <th id ="batchNo" class="width-percent-10">{{currentLanguageSet?.itemDispense?.batchNo}}</th>
+              <th id ="issuedQuantity" class="width-percent-10">{{currentLanguageSet?.inventory?.issueQuantity}}</th>
+              <th id ="dateofIssue" class="width-percent-10">{{currentLanguageSet?.inventory?.dateOfIssue}}</th>
+              <th id ="returnQuantity" class="width-percent-10">{{currentLanguageSet?.inventory?.returnQuantity}}</th>
+              <th id ="edit" class="width-percent-10">{{currentLanguageSet?.bendetails?.edit}}</th>
+              <th id ="delete" class="width-percent-10">{{currentLanguageSet?.inventory?.delete}}</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="selectedBatchList?.length > 0">
+            <ng-container *ngFor="let item of md2.data; let i = index">
+              <tr>
+                <td class="width-percent-5">{{ selectedBatchList.indexOf(item)+1 }}</td>
+                <td class="width-percent-10"> {{item.itemName.itemName}}</td>
+                <td colspan="4" class="noPadding">
+                  <table class="table inner_table table-striped" aria-describedby="itemBatchDetails">
+                    <caption *ngIf="hide"></caption> 
+                    <th id="noValue"></th>
+                    <tr *ngFor='let batch of item?.batchList'>
+                      <td class="width-percent-25">{{batch?.batchNo?.batchNo}}</td>
+                      <td class="width-percent-10">{{batch?.batchNo?.issuedQuantity}}</td>
+                      <td class="width-percent-10" style="padding-left: 70px;">{{batch?.batchNo?.dateofIssue}}</td>
+                      <td class="width-percent-25" style="padding-left: 100px;">{{batch?.returnQuantity}}</td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="width-percent-10">
+                  <md-icon mdTooltip="{{currentLanguageSet?.bendetails.edit}}" class="mat-icon material-icons" role="img" aria-hidden="true" style="cursor:Pointer" (click)='editItem(item,i)'>edit</md-icon>
+                </td>
+                <td class="width-percent-10">
+                  <md-icon class="icon-remove cursorPointer" tooltip="{{currentLanguageSet?.inventory?.delete}}" (click)='removeAddedItem(i)'>delete</md-icon>
+                </td>
+            </ng-container>
+          </tbody>
+        </table>  -->
+      </div>
+    </div>
+  </div>
+  <div class="row m-t-10 m-b-40">
+    <div class="col-xs-12">
+      <button
+        type="button"
+        mat-raised-button
+        color="accent"
+        class="pull-right m-r-5"
+        *ngIf="selectedBatchList?.length > 0"
+        (click)="manipulateFinalData()"
+      >
+        {{ currentLanguageSet?.common?.save }}
+      </button>
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        class="pull-right m-r-5"
+        (click)="resetOnClear()"
+      >
+        {{ currentLanguageSet?.inventory?.clear }}
+      </button>
+    </div>
+  </div>
+</div>

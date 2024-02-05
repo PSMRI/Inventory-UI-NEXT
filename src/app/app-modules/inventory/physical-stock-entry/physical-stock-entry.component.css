@@ -1,0 +1,47 @@
+.input-full-width {
+    width: 100%;
+}
+
+.m-b-40 {
+    margin-bottom: 200px;
+}
+
+.m-r-5 {
+    margin-right: 5px;
+}
+
+.icon-remove {
+    margin: 16px;
+}
+
+.width5 {
+    width: 5%;
+}
+
+.width25 {
+    width: 25%;
+}
+
+.width20 {
+    width: 20%;
+}
+
+.vertical-align-middle {
+    vertical-align: middle;
+}
+
+.input-datepicker {
+    padding: 5px 8px;
+}
+
+.search-btn {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .button-full-width {
+        width: 100%;
+        /* height: 50px; */
+        margin-top: 3px;
+    }
+}

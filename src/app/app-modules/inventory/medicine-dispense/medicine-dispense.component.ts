@@ -1,0 +1,343 @@
+/*
+ * AMRIT – Accessible Medical Records via Integrated Technology
+ * Integrated EHR (Electronic Health Records) Solution
+ *
+ * Copyright (C) "Piramal Swasthya Management and Research Institute"
+ *
+ * This file is part of AMRIT.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see https://www.gnu.org/licenses/.
+ */
+import { Component, OnInit, OnDestroy, DoCheck } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { InventoryService } from './../shared/service/inventory.service';
+import { ConfirmationService } from './../../core/services/confirmation.service';
+import { SetLanguageComponent } from '../../core/components/set-language.component';
+import { LanguageService } from '../../core/services/language.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { SearchComponent } from '../../core/components/search/search.component';
+
+@Component({
+  selector: 'app-medicine-dispense',
+  templateUrl: './medicine-dispense.component.html',
+  styleUrls: ['./medicine-dispense.component.css'],
+})
+export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
+  beneficiaryDetailForm!: FormGroup;
+  beneficaryDetail: any;
+
+  parentBenID: any;
+  parentVisitID: any;
+  languageComponent!: SetLanguageComponent;
+  currentLanguageSet: any;
+  constructor(
+    private fb: FormBuilder,
+    private confirmationService: ConfirmationService,
+    private inventoryService: InventoryService,
+    public http_service: LanguageService,
+    private dialog: MatDialog,
+  ) {}
+
+  ngOnInit() {
+    this.beneficiaryDetailForm = this.createBeneficiaryForm();
+    //Parent App Calling
+    this.checkParentVisits();
+    this.fetchLanguageResponse();
+  }
+
+  ngOnDestroy() {
+    sessionStorage.removeItem('parentBen');
+    sessionStorage.removeItem('parentBenVisit');
+  }
+
+  createBeneficiaryForm() {
+    return this.fb.group({
+      medicineDispenseType: { value: '', disabled: true },
+      beneficiaryID: { value: '', disabled: false },
+      visitCode: { value: '', disabled: true },
+      visitID: { value: '', disabled: true },
+      beneficiaryName: { value: '', disabled: false },
+      beneficiaryAge: { value: '', disabled: false },
+      genderName: { value: '', disabled: false },
+      doctorName: { value: '', disabled: false },
+      reference: { value: '', disabled: true },
+      visitDate: { value: '', disabled: false },
+    });
+  }
+
+  checkParentVisits() {
+    this.parentBenID =
+      sessionStorage.getItem('parentBen') === 'undefined'
+        ? undefined
+        : sessionStorage.getItem('parentBen');
+    this.parentVisitID =
+      sessionStorage.getItem('parentBenVisit') === 'undefined'
+        ? undefined
+        : sessionStorage.getItem('parentBenVisit');
+    console.log(this.parentBenID, this.parentVisitID);
+
+    if (this.parentBenID) {
+      this.getParentBenVisits();
+    }
+  }
+
+  getParentBenVisits() {
+    this.beneficiaryDetailForm.patchValue({
+      beneficiaryID: this.parentBenID,
+      medicineDispenseType: 'System',
+    });
+
+    this.inventoryService
+      .getBeneficaryVisitDetail({
+        providerServiceMapID: localStorage.getItem('providerServiceID'),
+        beneficiaryID:
+          this.beneficiaryDetailForm.controls['beneficiaryID'].value,
+      })
+      .subscribe(
+        (response) => {
+          console.log('response', response);
+          if (response.statusCode == 200) {
+            if (response.data.beneficiaryFlowStatus.length > 0) {
+              this.beneficiaryVisitDetailList = response.data;
+              console.log(this.beneficiaryVisitDetailList, 'lissss');
+              this.beneficiaryDetail = response.data.beneficiaryFlowStatus;
+              this.loadCurrentVisit(response.data.beneficiaryFlowStatus);
+            } else {
+              this.confirmationService.alert(
+                this.currentLanguageSet.inventory.norecentvisitavailable,
+              );
+            }
+          } else {
+            this.confirmationService.alert(response.errorMessage, 'error');
+          }
+        },
+        (err) => {
+          this.confirmationService.alert(err, 'error');
+        },
+      );
+  }
+
+  loadCurrentVisit(resp: any) {
+    if (this.parentVisitID) {
+      resp.forEach((element: any) => {
+        if (element.benVisitID == this.parentVisitID) {
+          this.beneficiaryDetailForm.patchValue({
+            visitCode: element,
+          });
+          this.getVisitDetail();
+        }
+      });
+    }
+  }
+
+  beneficiaryDetail: any;
+  beneficiaryVisitDetailList: any;
+  recentBeneficaryVisit: any;
+  checkBeneficiary() {
+    if (this.beneficiaryDetailForm.controls['beneficiaryID'].value == null) {
+      this.nullifyBeneficiaryDetails();
+    }
+
+    if (this.beneficiaryDetailForm.controls['beneficiaryID'].value != null) {
+      if (
+        this.beneficiaryDetailForm.controls['beneficiaryID'].value.length != 12
+      ) {
+        this.nullifyBeneficiaryDetails();
+      }
+      if (
+        this.beneficiaryDetailForm.controls['beneficiaryID'].value.length == 12
+      ) {
+        this.inventoryService
+          .getBeneficaryVisitDetail({
+            providerServiceMapID: localStorage.getItem('providerServiceID'),
+            beneficiaryID:
+              this.beneficiaryDetailForm.controls['beneficiaryID'].value,
+          })
+          .subscribe(
+            (response) => {
+              console.log('response', response);
+              if (response.statusCode == 200) {
+                if (response.data.benVisitDetail.length > 0) {
+                  this.beneficiaryVisitDetailList = response.data;
+                  this.beneficiaryDetail = response.data.beneficiaryFlowStatus;
+                } else {
+                  this.confirmationService.alert(
+                    this.currentLanguageSet.inventory.norecentvisitavailable,
+                  );
+                }
+              } else {
+                this.confirmationService.alert(response.errorMessage, 'error');
+              }
+            },
+            (err) => {
+              this.confirmationService.alert(err, 'error');
+            },
+          );
+      }
+    }
+    // 720088175112
+  }
+  openSearchDialog() {
+    const matDialogRef: MatDialogRef<SearchComponent> = this.dialog.open(
+      SearchComponent,
+      {
+        // height: '80%',
+        // width: '80%',
+        panelClass: 'fit-screen',
+        disableClose: false,
+      },
+    );
+
+    matDialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('something fishy happening here', result);
+        this.beneficiaryDetailForm.patchValue({
+          beneficiaryID: result,
+        });
+        this.checkBeneficiary();
+      }
+    });
+  }
+
+  getVisitDetail() {
+    // console.log('this.beneficiaryDetailForm.controls['medicineDispenseType'].value', this.beneficiaryDetailForm.controls['medicineDispenseType'].value);
+    if (
+      this.beneficiaryDetailForm.controls['medicineDispenseType'].value !=
+        undefined ||
+      this.beneficiaryDetailForm.controls['medicineDispenseType'].value != null
+    ) {
+      this.beneficiaryDetailForm.patchValue({
+        beneficiaryName:
+          this.beneficiaryDetailForm.controls['medicineDispenseType'].value
+            .benName,
+        beneficiaryAge:
+          this.beneficiaryDetailForm.controls['medicineDispenseType'].value
+            .ben_age_val,
+        genderName:
+          this.beneficiaryDetailForm.controls['medicineDispenseType'].value
+            .genderName,
+        doctorName:
+          this.beneficiaryDetailForm.controls['medicineDispenseType'].value
+            .agentId,
+        visitDate:
+          this.beneficiaryDetailForm.controls['medicineDispenseType'].value
+            .visitDate,
+        visitID:
+          this.beneficiaryDetailForm.controls['medicineDispenseType'].value
+            .benVisitID,
+        reference: null,
+        medicineDispenseType: 'System',
+      });
+      this.getBeneficiaryDetail();
+    } else {
+      this.nullifyBeneficiaryDetails();
+    }
+  }
+  nullifyBeneficiaryDetails() {
+    this.beneficiaryDetailForm.patchValue({
+      medicineDispenseType: null,
+      visitCode: null,
+      visitDate: null,
+      beneficiaryName: null,
+      beneficiaryAge: null,
+      genderName: null,
+      doctorName: null,
+      reference: null,
+    });
+  }
+
+  getBeneficiaryDetail() {
+    const facilityDetailfromStorage: any =
+      localStorage.getItem('facilityDetail');
+    const facilityDetail = JSON.parse(facilityDetailfromStorage);
+    const facilityName = facilityDetail.facilityName;
+    // console.log(' this.beneficiaryDetailForm.controls['medicineDispenseType'].value', this.beneficiaryDetailForm.controls['medicineDispenseType'].value);
+    this.beneficaryDetail = {
+      age: this.beneficiaryDetailForm.controls['medicineDispenseType'].value
+        .ben_age_val,
+      beneficiaryID: this.beneficiaryDetailForm.controls['beneficiaryID'].value,
+      benRegID: this.beneficiaryVisitDetailList.beneficiaryRegID,
+      createdBy: localStorage.getItem('username'),
+      providerServiceMapID: localStorage.getItem('providerServiceID'),
+      doctorName:
+        this.beneficiaryDetailForm.controls['medicineDispenseType'].value
+          .agentId,
+      facilityID: localStorage.getItem('facilityID'),
+      gender:
+        this.beneficiaryDetailForm.controls['medicineDispenseType'].value
+          .genderName,
+      issueType:
+        this.beneficiaryDetailForm.controls['medicineDispenseType'].value,
+      patientName:
+        this.beneficiaryDetailForm.controls['medicineDispenseType'].value
+          .benName,
+      prescriptionID: null,
+      reference: this.beneficiaryDetailForm.controls['reference'].value,
+      visitID:
+        this.beneficiaryDetailForm.controls['medicineDispenseType'].value
+          .benVisitID,
+      visitCode:
+        this.beneficiaryDetailForm.controls['medicineDispenseType'].value
+          .benVisitCode,
+      facilityName: facilityName,
+      visitDate:
+        this.beneficiaryDetailForm.controls['medicineDispenseType'].value
+          .visitDate,
+    };
+  }
+
+  // get reference() {
+  //   return this.beneficiaryDetailForm.controls['reference'].value;
+  // }
+  // get medicineDispenseType() {
+  //   return this.beneficiaryDetailForm.controls['medicineDispenseType'].value;
+  // }
+
+  // get beneficiaryID() {
+  //   return this.beneficiaryDetailForm.controls['beneficiaryID'].value;
+  // }
+
+  // get beneficiaryName() {
+  //   return this.beneficiaryDetailForm.controls['beneficiaryName'].value;
+  // }
+
+  // get beneficiaryAge() {
+  //   return this.beneficiaryDetailForm.controls['beneficiaryAge'].value;
+  // }
+
+  // get visitDate() {
+  //   return this.beneficiaryDetailForm.controls['visitDate'].value;
+  // }
+
+  // get visitCode() {
+  //   return this.beneficiaryDetailForm.controls['visitCode'].value;
+  // }
+
+  resetBeneficiaryDetails(event: any) {
+    console.log('event', event);
+    this.beneficiaryDetailForm.reset();
+  }
+
+  // AV40085804 29/09/2021 Integrating Multilingual Functionality -----Start-----
+  ngDoCheck() {
+    this.fetchLanguageResponse();
+  }
+
+  fetchLanguageResponse() {
+    this.languageComponent = new SetLanguageComponent(this.http_service);
+    this.languageComponent.setLanguage();
+    this.currentLanguageSet = this.languageComponent.currentLanguageObject;
+  }
+  // -----End------
+}

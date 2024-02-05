@@ -1,0 +1,399 @@
+<section class="container-fluid">
+  <section class="row m-t-10 no-gutters">
+    <div class="col-xs-12 col-sm-4 box">
+      <h4>{{ currentLanguageSet?.inventory?.previousPhysicalStoreEntry }}</h4>
+    </div>
+
+    <div class="col-xs-12 col-sm-3 box">
+      <mat-form-field class="input-full-width">
+        <input
+          matInput
+          [matDatepicker]="_startDatePicker"
+          placeholder="{{ currentLanguageSet?.inventory?.fromDate }}"
+          [min]="_minDate"
+          [max]="_today"
+          required="true"
+          [(ngModel)]="_dateRange[0]"
+          #startDate="ngModel"
+          (keydown)="preventTyping($event)"
+          readonly
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="_startDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #_startDatePicker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- <md2-datepicker
+        (keydown)="preventTyping($event)"
+        class="input-full-width"
+        autocomplete="off"
+        readonly="true"
+        [min]="_minDate"
+        [max]="_today"
+        placeholder="{{ currentLanguageSet?.inventory?.fromDate }}"
+        required="true"
+        id="from-input"
+        [(ngModel)]="_dateRange[0]"
+        #startDate="ngModel"
+        ngModel
+      ></md2-datepicker> -->
+    </div>
+
+    <div class="col-xs-12 col-sm-3 box">
+      <mat-form-field class="input-full-width">
+        <input
+          matInput
+          [matDatepicker]="_endDatePicker"
+          [disabled]="!_dateRange[0]"
+          autocomplete="off"
+          readonly="true"
+          [min]="_dateRange[0]"
+          [max]="_today"
+          placeholder="{{ currentLanguageSet?.inventory?.toDate }}"
+          required="true"
+          id="to-input"
+          [(ngModel)]="_dateRange[1]"
+          #endDate="ngModel"
+          ngModel
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="_endDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #_endDatePicker></mat-datepicker>
+      </mat-form-field>
+      <span
+        class="errorText f-s-10 p-l-10"
+        *ngIf="endDate.value < startDate.value"
+      >
+        {{ currentLanguageSet?.inventory?.toDateCannotBeBeforeFromDate }}
+      </span>
+    </div>
+
+    <!-- <div class="col-xs-12 col-sm-3 box">
+      <md2-datepicker
+        (keydown)="preventTyping($event)"
+        class="input-full-width"
+        [disabled]="!_dateRange[0]"
+        autocomplete="off"
+        readonly="true"
+        [min]="_dateRange[0]"
+        [max]="_today"
+        placeholder="{{ currentLanguageSet?.inventory?.toDate }}"
+        required="true"
+        id="to-input"
+        [(ngModel)]="_dateRange[1]"
+        #endDate="ngModel"
+        ngModel
+      ></md2-datepicker>
+      <span
+        class="errorText f-s-10 p-l-10"
+        *ngIf="endDate.value < startDate.value"
+        >{{ currentLanguageSet?.inventory?.toDateCannotBeBeforeFromDate }}</span
+      >
+    </div> -->
+    <div class="col-xs-12 col-sm-2 box">
+      <button
+        class="previous-btn"
+        mat-raised-button
+        [disabled]="
+          !_dateRange[0] || !_dateRange[1] || endDate.value < startDate.value
+        "
+        type="button"
+        color="accent"
+        (click)="updateDate()"
+      >
+        {{ currentLanguageSet?.inventory?.viewRecords }}
+      </button>
+    </div>
+  </section>
+
+  <section class="row m-t-10">
+    <div class="col-xs-12">
+      <mat-card class="m-b-40">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 text-right">
+              <mat-form-field id="filterbox">
+                <input
+                  autocomplete="off"
+                  autocomplete="off"
+                  matInput
+                  placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
+                  [(ngModel)]="filterTerm"
+                  name="filterTerm"
+                  (keyup)="filterConsumptionList(filterTerm)"
+                />
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="col-xs-12">
+              <section class="table-responsive">
+                <table
+                  mat-table
+                  [dataSource]="_filteredStockEntryList"
+                  class="table table-striped responsive-table-view"
+                  aria-describedby="viewStockDetails"
+                >
+                  <ng-container matColumnDef="noValue">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let row"></td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="entryID">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.entryID }}
+                    </th>
+                    <td
+                      mat-cell
+                      *matCellDef="let row; let i = index"
+                      (click)="loadEntryDetails(row)"
+                    >
+                      {{ i + 1 }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="refNo">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.refNo }}
+                    </th>
+                    <td
+                      mat-cell
+                      *matCellDef="let row"
+                      (click)="loadEntryDetails(row)"
+                    >
+                      {{ row?.refNo }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.bendetails?.status }}
+                    </th>
+                    <td
+                      mat-cell
+                      *matCellDef="let row"
+                      (click)="loadEntryDetails(row)"
+                    >
+                      {{ row?.status }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="createdBy">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.createdBy }}
+                    </th>
+                    <td
+                      mat-cell
+                      *matCellDef="let row"
+                      (click)="loadEntryDetails(row)"
+                    >
+                      {{ row?.createdBy }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="createdDate">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.createdDate }}
+                    </th>
+                    <td
+                      mat-cell
+                      *matCellDef="let row"
+                      (click)="loadEntryDetails(row)"
+                    >
+                      {{ row?.createdDate | istDate: "dd/MM/yyyy" }}
+                    </td>
+                  </ng-container>
+
+                  <!-- <ng-container *ngIf="_filteredStockEntryList.data.length === 0 && searched">
+                    <tr>
+                      <td colspan="6" style="text-align: center; font-size: 16px">
+                        <strong>{{currentLanguageSet?.inventory?.norecordsfound}}</strong>
+                      </td>
+                    </tr>
+                  </ng-container> -->
+
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="[
+                      'noValue',
+                      'entryID',
+                      'refNo',
+                      'status',
+                      'createdBy',
+                      'createdDate'
+                    ]"
+                  ></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="
+                      let row;
+                      columns: [
+                        'noValue',
+                        'entryID',
+                        'refNo',
+                        'status',
+                        'createdBy',
+                        'createdDate'
+                      ]
+                    "
+                  ></tr>
+                  <!-- <ng-container *ngIf="_filteredStockEntryList && _filteredStockEntryList.data.length === 0 && searched">
+                  <tr>
+                    <td colspan="6" style="text-align: center; font-size: 16px">
+                      <strong>{{currentLanguageSet?.inventory?.norecordsfound}}</strong>
+                    </td>
+                  </tr>
+                </ng-container> -->
+                </table>
+                <div
+                  *ngIf="
+                    _filteredStockEntryList &&
+                    _filteredStockEntryList.data.length === 0 &&
+                    searched
+                  "
+                  style="text-align: center; font-size: 16px"
+                >
+                  <tr>
+                    <td colspan="6" style="text-align: center; font-size: 16px">
+                      <strong>{{
+                        currentLanguageSet?.inventory?.norecordsfound
+                      }}</strong>
+                    </td>
+                  </tr>
+                </div>
+                <!-- <table
+                  [md2Data]="_filteredStockEntryList"
+                  #md2="md2DataTable"
+                  [rowsPerPage]="5"
+                  [activePage]="1"
+                  class="table table-striped responsive-table-view"
+                  aria-describedby="viewStockDetails"
+                >
+                  <caption></caption>
+                  <thead>
+                    <tr>
+                      <th id="noValue"></th>
+                      <th id="entryID">
+                        {{ currentLanguageSet?.inventory?.entryID }}
+                      </th>
+                      <th id="refNo">
+                        {{ currentLanguageSet?.inventory?.refNo }}
+                      </th>
+                      <th id="status">
+                        {{ currentLanguageSet?.bendetails?.status }}
+                      </th>
+                      <th id="createdBy">
+                        {{ currentLanguageSet?.inventory?.createdBy }}
+                      </th>
+                      <th id="createdDate">
+                        {{ currentLanguageSet?.inventory?.createdDate }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-template
+                      [ngIf]="
+                        _filteredStockEntryList &&
+                        _filteredStockEntryList.length === 0 &&
+                        !searched
+                      "
+                    >
+                      <tr *ngFor="let row of blankTable">
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                    </ng-template>
+                    <ng-template
+                      [ngIf]="
+                        _filteredStockEntryList &&
+                        _filteredStockEntryList.length === 0 &&
+                        searched
+                      "
+                    >
+                      <tr>
+                        <td
+                          colspan="6"
+                          style="text-align: center; font-size: 16px"
+                        >
+                          <strong>{{
+                            currentLanguageSet?.inventory?.norecordsfound
+                          }}</strong>
+                        </td>
+                      </tr>
+                    </ng-template>
+                    <tr *ngFor="let entry of md2.data" class="table-hover">
+                      <td data-title="S.No." (click)="loadEntryDetails(entry)">
+                        {{ _filteredStockEntryList.indexOf(entry) + 1 }}
+                      </td>
+                      <td
+                        data-title="Entry ID"
+                        (click)="loadEntryDetails(entry)"
+                      >
+                        {{ entry?.phyEntryID }}
+                      </td>
+                      <td
+                        data-title="Ref. No."
+                        (click)="loadEntryDetails(entry)"
+                      >
+                        {{ entry?.refNo }}
+                      </td>
+                      <td data-title="Status" (click)="loadEntryDetails(entry)">
+                        {{ entry?.status }}
+                      </td>
+                      <td
+                        data-title="Created By"
+                        (click)="loadEntryDetails(entry)"
+                      >
+                        {{ entry?.createdBy }}
+                      </td>
+                      <td
+                        data-title="Created Date"
+                        (click)="loadEntryDetails(entry)"
+                      >
+                        {{ entry?.createdDate | istDate: "dd/MM/yyyy" }}
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr *ngIf="_filteredStockEntryList.length > 0">
+                      <td colspan="3" class="total-count">
+                        <div>
+                          {{ currentLanguageSet?.inventory?.totalCount }} :
+                          {{ _filteredStockEntryList.length }}
+                        </div>
+                      </td>
+
+                      <td colspan="3" class="text-right">
+                        <md2-pagination></md2-pagination>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table> -->
+              </section>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="back-btn-container">
+            <button
+              mat-raised-button
+              matTooltip="{{ currentLanguageSet?.inventory?.back }}"
+              matTooltipPosition="right"
+              color="primary"
+              (click)="goBack()"
+            >
+              {{ currentLanguageSet?.inventory?.back }}
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </section>
+</section>

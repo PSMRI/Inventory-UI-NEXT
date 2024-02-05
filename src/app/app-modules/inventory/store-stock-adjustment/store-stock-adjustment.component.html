@@ -1,0 +1,419 @@
+<div class="container-fluid">
+  <div class="row m-t-10">
+    <div class="col-xs-12 col-sm-6">
+      <h4>{{ currentLanguageSet?.inventory?.storeAdjustment }}</h4>
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+      <button
+        *ngIf="!editMode"
+        mat-raised-button
+        class="pull-right button-full-width"
+        type="button"
+        color="primary"
+        routerLink="/inventory/storeStockAdjustmentDraft/view"
+      >
+        {{ currentLanguageSet?.inventory?.previousDraftRecords }}
+      </button>
+      <button
+        *ngIf="!editMode"
+        mat-raised-button
+        class="pull-right button-full-width"
+        type="button"
+        color="primary"
+        routerLink="/inventory/storeStockAdjustment/view"
+      >
+        {{ currentLanguageSet?.inventory?.previousRecords }}
+      </button>
+      <button
+        *ngIf="!isMainStore"
+        (click)="addEAushadhiStock()"
+        mat-raised-button
+        class="pull-right button-full-width"
+        type="button"
+        color="primary"
+      >
+        Add E-Aushadhi Stock
+      </button>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-t-5">
+      <h5 style="float: right">
+        E-aushadhi stock last updated on -
+        <strong>{{
+          lastUpdatedStockDate
+            ? (lastUpdatedStockDate | date: "dd/MM/yyyy HH:mm")
+            : "NA"
+        }}</strong>
+      </h5>
+    </div>
+  </div>
+  <form [formGroup]="storeStockAdjustmentForm" autocomplete="off" novalidate>
+    <div class="row m-t-20">
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 box">
+        <mat-form-field class="input-full-width">
+          <input
+            matInput
+            [matDatepicker]="adjustmentDatePicker"
+            autocomplete="off"
+            placeholder="{{ currentLanguageSet?.inventory?.adjustmentDate }}"
+            name="adjustmentDate"
+            formControlName="adjustmentDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="adjustmentDatePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #adjustmentDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 box">
+        <mat-form-field class="input-full-width">
+          <input
+            matInput
+            allowText="alphanumeric"
+            placeholder="{{ currentLanguageSet?.inventory?.referenceNumber }}"
+            name="refNo"
+            formControlName="refNo"
+            required
+          />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row m-t-10">
+      <div class="col-xs-12">
+        <mat-card>
+          <div class="table-responsive">
+            <!-- <table class="table table-striped responsive-table-form" aria-describedby="storeStockDetails">
+              <caption></caption>  
+              <thead>
+                <tr>
+                  <th class="width5" id="noValue"></th>
+                  <th class="width15" id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
+                  <th class="width10" id="batchID">{{currentLanguageSet?.inventory?.batchID}}</th>
+                  <th class="width10" id="quantityOnHand">{{currentLanguageSet?.inventory?.quantityOnHand}}</th>
+                  <th class="width15" id="adjustmentType">{{currentLanguageSet?.inventory?.adjustmentType}}</th>
+                  <th class="width10" id="adjustmentQuantity">{{currentLanguageSet?.inventory?.adjustmentQuantity}}</th>
+                  <th class="width10" id="qOHAfterAdjustment">{{currentLanguageSet?.inventory?.qOHAfterAdjustment}}</th>
+                  <th class="width20" id="reason">{{currentLanguageSet?.inventory?.reason}}</th>
+                  <th class="width5" id="emptyID"></th>
+                </tr>
+              </thead>
+              <tbody formArrayName="stockAdjustmentList">
+                <ng-container *ngFor="let stock of storeStockAdjustmentForm.controls['stockAdjustmentList']['controls']; let i = index; let isLast=last;">
+                  <tr [formGroupName]="i">
+                    <td class="vertical-align-middle"> {{ i+1 }} </td>
+                    <td>
+                      <mat-form-field class="input-full-width">
+                        <input matInput allowText = "itemNameSearchValidator" appBatchAdjustment [previousSelected]="storeStockAdjustmentForm?.value?.stockAdjustmentList" [stockForm]="stock"
+                          placeholder="{{currentLanguageSet?.inventory?.itemName}}" name="itemName" formControlName="itemName" maxlength="100" required>
+                        <mat-icon *ngIf="!(stock.controls['itemName'].disabled)" class="search-btn" matSuffix appBatchAdjustment [stockForm]="stock"
+                          [previousSelected]="storeStockAdjustmentForm?.value?.stockAdjustmentList">search</mat-icon>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field class="input-full-width readonly">
+                        <input matInput placeholder="{{currentLanguageSet?.inventory?.batchID}}" name="batchID" formControlName="batchID" required readonly>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field class="input-full-width readonly">
+                        <input matInput allowText="number" placeholder="{{currentLanguageSet?.inventory?.qOH}}" name="quantityInHand" formControlName="quantityInHand" required readonly>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-select class="input-full-width" placeholder="{{currentLanguageSet?.inventory?.adjustmentType}}" name="adjustmentType" formControlName="adjustmentType"
+                        (change)="calculateQOHAfterAdjustment(stock)" required>
+                        <mat-option *ngFor="let adjustmentType of adjustmentTypeList" [value]="adjustmentType">
+                          {{adjustmentType}}
+                        </mat-option>
+                      </mat-select>
+                    </td>
+                    <td>
+                      <mat-form-field class="input-full-width" *ngIf="stock.value.adjustmentType == 'Issue'">
+                        <input matInput allowText="number" placeholder="{{currentLanguageSet?.inventory?.adjustmentQuantity}}" name="adjustedQuantity" formControlName="adjustedQuantity"
+                          (input)="calculateQOHAfterAdjustment(stock)" [allowMax]="stock.value.quantityInHand" required>
+                      </mat-form-field>
+                      <mat-form-field class="input-full-width" *ngIf="stock?.value?.adjustmentType != 'Issue'">
+                        <input matInput allowText="number" placeholder="{{currentLanguageSet?.inventory?.adjustmentQuantity}}" name="adjustedQuantity" formControlName="adjustedQuantity"
+                          (input)="calculateQOHAfterAdjustment(stock)" [allowMax]="9999" required>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field class="input-full-width readonly">
+                        <input matInput allowText="number" placeholder="{{currentLanguageSet?.inventory?.qOHAfterAdjustment}}" name="qohAfterAdjustment" formControlName="qohAfterAdjustment"
+                          required readonly>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field class="input-full-width">
+                        <input matInput allowText="alphaspace" placeholder="{{currentLanguageSet?.inventory?.reason}}" name="reason" formControlName="reason" required>
+                      </mat-form-field>
+                    </td>
+                    <td class="text-right">
+                      <mat-icon class="icon-remove cursorPointer" matTooltip="{{currentLanguageSet?.inventory?.delete}}" (click)="removeFromStockAdjustmentList(i, stock)">delete</mat-icon>
+                    </td>
+                  </tr>
+                </ng-container>
+                <tr *ngIf="storeStockAdjustmentForm.valid">
+                  <td colspan="9">
+                    <button mat-mini-fab type="button" class="pull-right" color="primary" (click)="addToStockAdjustmentList()">
+                      <mat-icon>add</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table> -->
+
+            <table
+              mat-table
+              [dataSource]="stroreStockTableData()"
+              aria-describedby="storeStockDetails"
+            >
+              <ng-container matColumnDef="noValue">
+                <mat-header-cell *matHeaderCellDef>{{
+                  currentLanguageSet?.inventory?.index
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let stock; let i = index">{{
+                  i + 1
+                }}</mat-cell>
+              </ng-container>
+
+              <!-- Item Name Column -->
+              <ng-container matColumnDef="itemName">
+                <mat-header-cell *matHeaderCellDef>{{
+                  currentLanguageSet?.inventory?.itemName
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let stock">
+                  <mat-form-field class="input-full-width">
+                    <input
+                      matInput
+                      allowText="itemNameSearchValidator"
+                      appBatchAdjustment
+                      [previousSelected]="
+                        storeStockAdjustmentForm.value.stockAdjustmentList
+                      "
+                      [stockForm]="stock"
+                      placeholder="{{
+                        currentLanguageSet?.inventory?.itemName
+                      }}"
+                      name="itemName"
+                      formControlName="itemName"
+                      maxlength="100"
+                      required
+                    />
+                    <mat-icon
+                      *ngIf="!stock.controls['itemName'].disabled"
+                      class="search-btn"
+                      matSuffix
+                      appBatchAdjustment
+                      [stockForm]="stock"
+                      [previousSelected]="
+                        storeStockAdjustmentForm.value.stockAdjustmentList
+                      "
+                      >search</mat-icon
+                    >
+                  </mat-form-field>
+                </mat-cell>
+              </ng-container>
+
+              <!-- Batch ID Column -->
+              <ng-container matColumnDef="batchID">
+                <mat-header-cell *matHeaderCellDef>{{
+                  currentLanguageSet?.itemDispense?.batchID
+                }}</mat-header-cell>
+                <mat-cell *matCellDef="let stock; let i = index">
+                  <mat-form-field class="input-full-width">
+                    <input
+                      matInput
+                      placeholder="{{ currentLanguageSet?.inventory?.batchID }}"
+                      name="batchID"
+                      formControlName="batchID"
+                      required
+                      readonly
+                    />
+                  </mat-form-field>
+                </mat-cell>
+              </ng-container>
+
+              <!-- Quantity On Hand Column -->
+              <ng-container matColumnDef="quantityOnHand">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.quantityOnHand }}
+                </th>
+                <td mat-cell *matCellDef="let item">
+                  {{ item?.quantityInHand }}
+                </td>
+              </ng-container>
+
+              <!-- Adjustment Type Column -->
+              <ng-container matColumnDef="adjustmentType">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.adjustmentType }}
+                </th>
+                <td mat-cell *matCellDef="let item">
+                  {{ item?.adjustmentType }}
+                </td>
+              </ng-container>
+
+              <!-- Adjustment Quantity Column -->
+              <ng-container matColumnDef="adjustmentQuantity">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.adjustmentQuantity }}
+                </th>
+                <td mat-cell *matCellDef="let item">
+                  <mat-form-field
+                    class="input-full-width"
+                    *ngIf="item.adjustmentType === 'Issue'"
+                  >
+                    <input
+                      matInput
+                      allowText="number"
+                      placeholder="{{
+                        currentLanguageSet?.inventory?.adjustmentQuantity
+                      }}"
+                      name="adjustedQuantity"
+                      [(ngModel)]="item.adjustedQuantity"
+                      (input)="calculateQOHAfterAdjustment(item)"
+                      [appAllowMax]="item.quantityInHand"
+                      required
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field
+                    class="input-full-width"
+                    *ngIf="item?.adjustmentType !== 'Issue'"
+                  >
+                    <input
+                      matInput
+                      allowText="number"
+                      placeholder="{{
+                        currentLanguageSet?.inventory?.adjustmentQuantity
+                      }}"
+                      name="adjustedQuantity"
+                      [(ngModel)]="item.adjustedQuantity"
+                      (input)="calculateQOHAfterAdjustment(item)"
+                      [appAllowMax]="9999"
+                      required
+                    />
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <!-- QOH After Adjustment Column -->
+              <ng-container matColumnDef="qOHAfterAdjustment">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.qOHAfterAdjustment }}
+                </th>
+                <td mat-cell *matCellDef="let item">
+                  {{ item?.qohAfterAdjustment }}
+                </td>
+              </ng-container>
+
+              <!-- Reason Column -->
+              <ng-container matColumnDef="reason">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.reason }}
+                </th>
+                <td mat-cell *matCellDef="let item">
+                  <mat-form-field class="input-full-width">
+                    <input
+                      matInput
+                      allowText="alphaspace"
+                      placeholder="{{ currentLanguageSet?.inventory?.reason }}"
+                      name="reason"
+                      [(ngModel)]="item.reason"
+                      required
+                    />
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <!-- Action Column -->
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.action }}
+                </th>
+                <td mat-cell *matCellDef="let item" class="text-right">
+                  <mat-icon
+                    class="icon-remove cursorPointer"
+                    matTooltip="{{ currentLanguageSet?.inventory?.delete }}"
+                    (click)="removeFromStockAdjustmentList(item)"
+                    >delete</mat-icon
+                  >
+                </td>
+              </ng-container>
+
+              <!-- Header Row -->
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+              <!-- Data Rows -->
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              <!-- Add Row -->
+              <tr>
+                <td colspan=" displayedColumns.length " class="text-right">
+                  <button
+                    mat-mini-fab
+                    type="button"
+                    color="primary"
+                    (click)="addToStockAdjustmentList()"
+                  >
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="row m-t-10 m-b-40">
+      <div class="col-xs-12">
+        <button
+          *ngIf="editMode"
+          type="button"
+          class="pull-left"
+          color="primary"
+          mat-raised-button
+          matTooltip="{{ currentLanguageSet?.inventory?.back }}"
+          matTooltipPosition="right"
+          (click)="goBack()"
+        >
+          {{ currentLanguageSet?.inventory?.back }}
+        </button>
+        <button
+          type="button"
+          mat-raised-button
+          color="accent"
+          class="pull-right m-r-5"
+          [disabled]="storeStockAdjustmentForm.invalid"
+          (click)="submitStockAdjustmentFinal(storeStockAdjustmentForm)"
+        >
+          {{ currentLanguageSet?.common?.save }}
+        </button>
+        <button
+          type="button"
+          mat-raised-button
+          color="accent"
+          class="pull-right m-r-5"
+          [disabled]="storeStockAdjustmentForm.invalid"
+          (click)="submitStockAdjustmentDraft(storeStockAdjustmentForm)"
+        >
+          {{ currentLanguageSet?.inventory?.saveDraft }}
+        </button>
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          class="pull-right m-r-5"
+          [disabled]="storeStockAdjustmentForm.pristine"
+          (click)="resetStoreStockAdjustmentForm()"
+        >
+          {{ currentLanguageSet?.inventory?.clear }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

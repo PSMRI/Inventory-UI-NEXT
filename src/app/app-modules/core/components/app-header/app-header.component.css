@@ -1,0 +1,129 @@
+.navbar-iemr {
+  background-color: #253746;
+  color: white;
+  border-radius: 0px;
+  margin-bottom: 5px;
+  min-height: unset;
+  padding: 3px 0px;
+}
+
+.icon-bar {
+  background-color: white;
+}
+
+.navbar-brand {
+  padding: 0px 15px;
+  height: unset;
+}
+
+li a {
+  outline: none;
+}
+
+.navbar-iemr li {
+  float: right !important;
+}
+
+.navbar-iemr li a:hover {
+  background: unset;
+}
+
+.navbar-iemr .nav li a {
+  padding: 6px 8px;
+}
+
+span.logoutIcon {
+  height: 21px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url(../../../../../assets/images/logoutIcon.png) no-repeat;
+}
+
+li.telemed a img {
+  height: 24px;
+  width: 24px;
+}
+
+li.logout a span.logoutIcon:hover {
+  background-position-y: -21px;
+}
+
+#main-navbar {
+  padding: 5px 15px;
+  font-weight: bold;
+  background-color: rgba(37, 55, 70, 0.2);
+  box-shadow: inset 0px 0px 5px 2px rgba(0, 0, 0, 0.1);
+}
+
+.active {
+  background: rgba(37, 55, 70, 0.1);
+}
+
+button.mat-button {
+  font-weight: bold;
+  width: 100%;
+}
+
+.role-menu {
+  width: 100%;
+}
+
+.helpAlign {
+  font-size: 26px;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0px;
+  color: rgba(245, 245, 245, 0.877);
+  margin-top: 4px;
+}
+
+@media (max-width: 500px) {
+  .container-fluid .navbar-collapse,
+  .container-fluid .navbar-header {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
+@media (max-width: 760px) {
+  .navbar-brand {
+    padding: 5px 15px;
+  }
+}
+
+.userInfo-btn {
+  width: 200px;
+  display: flex;
+  align-items: center;
+}
+
+.userInfo-btn span {
+  margin-left: 10px;
+}
+
+.alignDropDown {
+  margin-top: 3px;
+}
+.alignWord {
+  margin: 8px 10px;
+
+}
+.container-fluid {
+  display: flex;
+  justify-content: space-between  ;
+}
+.fluid-activities{
+  display: flex;
+}
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid\9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}

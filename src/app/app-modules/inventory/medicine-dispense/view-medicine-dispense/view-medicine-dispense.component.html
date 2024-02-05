@@ -1,0 +1,308 @@
+<section class="container-fluid">
+  <section class="row no-gutters m-t-10">
+    <div class="col-xs-12 col-sm-4 box">
+      <h4>
+        {{ currentLanguageSet?.inventory?.previousPatientIssueWithoutRx }}
+      </h4>
+    </div>
+    <div class="col-xs-12 col-sm-3 box">
+      <mat-form-field class="input-full-width">
+        <input
+          matInput
+          [matDatepicker]="startDatePicker"
+          (keydown)="preventTyping($event)"
+          class="input-full-width"
+          autocomplete="off"
+          readonly="true"
+          [min]="_minDate"
+          [max]="_today"
+          placeholder="{{ currentLanguageSet?.inventory?.fromDate }}"
+          required="true"
+          id="from-input"
+          [(ngModel)]="_dateRange[0]"
+          #startDate="ngModel"
+          ngModell
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="startDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </mat-form-field>
+      <!-- <md2-datepicker class="input-full-width" (keydown)="preventTyping($event)" class="input-full-width" autocomplete="off" readonly="true"
+        [min]="_minDate" [max]="_today" placeholder="{{currentLanguageSet?.inventory?.fromDate}}" required="true" id="from-input" [(ngModel)]="_dateRange[0]" #startDate="ngModel" ngModel></md2-datepicker> -->
+    </div>
+    <div class="col-xs-12 col-sm-3 box">
+      <mat-form-field class="input-full-width">
+        <input
+          matInput
+          [matDatepicker]="toDatePicker"
+          (keydown)="preventTyping($event)"
+          class="input-full-width"
+          [disabled]="!_dateRange[0]"
+          autocomplete="off"
+          readonly="true"
+          [min]="_dateRange[0]"
+          [max]="_today"
+          placeholder="{{ currentLanguageSet?.inventory?.toDate }}"
+          required="true"
+          id="to-input"
+          [(ngModel)]="_dateRange[1]"
+          #endDate="ngModel"
+          ngModel
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="toDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #toDatePicker></mat-datepicker>
+      </mat-form-field>
+      <!-- <md2-datepicker class="input-full-width" (keydown)="preventTyping($event)" class="input-full-width" [disabled]="!_dateRange[0]"
+        autocomplete="off" readonly="true" [min]="_dateRange[0]" [max]="_today" placeholder="{{currentLanguageSet?.inventory?.toDate}}" required="true" id="to-input"
+        [(ngModel)]="_dateRange[1]" #endDate="ngModel" ngModel></md2-datepicker> -->
+      <span
+        class="errorText f-s-10 p-l-10"
+        *ngIf="endDate.value < startDate.value"
+        >{{ currentLanguageSet?.inventory?.toDateCannotBeBeforeFromDate }}</span
+      >
+    </div>
+    <div class="col-xs-12 col-sm-2 box">
+      <button
+        class="previous-btn"
+        mat-raised-button
+        [disabled]="
+          !_dateRange[0] || !_dateRange[1] || endDate.value < startDate.value
+        "
+        type="button"
+        color="accent"
+        (click)="updateDate()"
+      >
+        {{ currentLanguageSet?.inventory?.viewRecords }}
+      </button>
+    </div>
+  </section>
+
+  <section class="row m-t-10">
+    <div class="col-xs-12">
+      <mat-card class="m-b-40">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-xs-12 text-right">
+              <mat-form-field id="filterbox">
+                <input
+                  autocomplete="off"
+                  matInput
+                  placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
+                  [(ngModel)]="filterTerm"
+                  name="filterTerm"
+                  (keyup)="filterConsumptionList(filterTerm)"
+                />
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
+            </div>
+            <section class="col-xs-12 table-responsive">
+              <!-- <table [md2Data]="_filteredDispenseList" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1" class="table table-striped responsive-table-view" aria-describedby="medicineDispenseDetails">
+                <caption></caption> 
+                <thead>
+                  <tr>
+                    <th id="noValue"></th>
+                    <th id="issueID">{{currentLanguageSet?.inventory?.issueID}}</th>
+                    <th id="patientName">{{currentLanguageSet?.inventory?.patientName}}</th>
+                    <th id="reference">{{currentLanguageSet?.inventory?.reference}}</th>
+                    <th id="issueType">{{currentLanguageSet?.inventory?.issueType}}</th>
+                    <th id="createdBy">{{currentLanguageSet?.inventory?.createdBy}}</th>
+                    <th id="createdDate">{{currentLanguageSet?.inventory?.createdDate}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-template [ngIf]="_filteredDispenseList && _filteredDispenseList.length == 0 && !searched">
+                    <tr *ngFor="let row of blankTable">
+                      <td> &nbsp; </td>
+                      <td> &nbsp; </td>
+                      <td> &nbsp; </td>
+                      <td> &nbsp; </td>
+                      <td> &nbsp; </td>
+                      <td> &nbsp; </td>
+                      <td> &nbsp; </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template [ngIf]="_filteredDispenseList && _filteredDispenseList.length == 0 && searched">
+                    <tr>
+                      <td colspan="7" style="text-align: center; font-size: 16px">
+                        <strong>{{currentLanguageSet?.inventory?.norecordsfound}}</strong>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <tr *ngFor="let dispense of md2.data" class="table-hover">
+                    <td data-title="S.No." (click)="loadDispenseDetails(dispense)">{{ _filteredDispenseList.indexOf(dispense)+1 }}</td>
+                    
+                    <td data-title="Issue ID" (click)="loadDispenseDetails(dispense)">{{dispense?.patientIssueID}}</td>
+                    <td data-title="Patient Name" (click)="loadDispenseDetails(dispense)">{{dispense?.patientName}}</td>
+                    <td data-title="Reference" (click)='loadDispenseDetails(dispense)'>{{dispense?.reference}}</td>
+                    <td data-title="Issue Type" (click)='loadDispenseDetails(dispense)'>{{dispense?.issueType}}</td>
+                    <td data-title="Created By" (click)='loadDispenseDetails(dispense)'>{{dispense?.createdBy}}</td>
+                    <td data-title="Created Date" (click)='loadDispenseDetails(dispense)'>{{dispense?.createdDate | istDate: 'dd/MM/yyyy'}}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr *ngIf="_filteredDispenseList.length > 0">
+                    <td colspan="3" class="total-count">
+                      <div> {{currentLanguageSet?.inventory?.totalCount}} : {{ _filteredDispenseList.length }}</div>
+                    </td>
+
+                    <td colspan="4" style="text-align: right">
+                      <md2-pagination></md2-pagination>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table> -->
+              <mat-table
+                [dataSource]="_filteredDispenseList"
+                class="mat-elevation-z8"
+              >
+                <!-- S.No. Column -->
+                <ng-container matColumnDef="noValue">
+                  <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                  <mat-cell *matCellDef="let element">{{
+                    _filteredDispenseList.data.indexOf(element) + 1
+                  }}</mat-cell>
+                </ng-container>
+
+                <!-- Issue ID Column -->
+                <ng-container matColumnDef="issueID">
+                  <mat-header-cell *matHeaderCellDef>{{
+                    currentLanguageSet?.inventory?.issueID
+                  }}</mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let element"
+                    (click)="loadDispenseDetails(element)"
+                    >{{ element?.patientIssueID }}</mat-cell
+                  >
+                </ng-container>
+
+                <!-- Patient Name Column -->
+                <ng-container matColumnDef="patientName">
+                  <mat-header-cell *matHeaderCellDef>{{
+                    currentLanguageSet?.inventory?.patientName
+                  }}</mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let element"
+                    (click)="loadDispenseDetails(element)"
+                    >{{ element?.patientName }}</mat-cell
+                  >
+                </ng-container>
+
+                <!-- Reference Column -->
+                <ng-container matColumnDef="reference">
+                  <mat-header-cell *matHeaderCellDef>{{
+                    currentLanguageSet?.inventory?.reference
+                  }}</mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let element"
+                    (click)="loadDispenseDetails(element)"
+                    >{{ element?.reference }}</mat-cell
+                  >
+                </ng-container>
+
+                <!-- Issue Type Column -->
+                <ng-container matColumnDef="issueType">
+                  <mat-header-cell *matHeaderCellDef>{{
+                    currentLanguageSet?.inventory?.issueType
+                  }}</mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let element"
+                    (click)="loadDispenseDetails(element)"
+                    >{{ element?.issueType }}</mat-cell
+                  >
+                </ng-container>
+
+                <!-- Created By Column -->
+                <ng-container matColumnDef="createdBy">
+                  <mat-header-cell *matHeaderCellDef>{{
+                    currentLanguageSet?.inventory?.createdBy
+                  }}</mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let element"
+                    (click)="loadDispenseDetails(element)"
+                    >{{ element?.createdBy }}</mat-cell
+                  >
+                </ng-container>
+
+                <!-- Created Date Column -->
+                <ng-container matColumnDef="createdDate">
+                  <mat-header-cell *matHeaderCellDef>{{
+                    currentLanguageSet?.inventory?.createdDate
+                  }}</mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let element"
+                    (click)="loadDispenseDetails(element)"
+                    >{{
+                      element?.createdDate | istDate: "dd/MM/yyyy"
+                    }}</mat-cell
+                  >
+                </ng-container>
+
+                <mat-header-row
+                  *matHeaderRowDef="[
+                    'noValue',
+                    'issueID',
+                    'patientName',
+                    'reference',
+                    'issueType',
+                    'createdBy',
+                    'createdDate'
+                  ]"
+                >
+                </mat-header-row>
+                <mat-row
+                  *matRowDef="
+                    let row;
+                    columns: [
+                      'noValue',
+                      'issueID',
+                      'patientName',
+                      'reference',
+                      'issueType',
+                      'createdBy',
+                      'createdDate'
+                    ]
+                  "
+                  class="table-hover"
+                ></mat-row>
+              </mat-table>
+              <div
+                *ngIf="
+                  _filteredDispenseList &&
+                  _filteredDispenseList.data.length === 0 &&
+                  searched
+                "
+                style="text-align: center; font-size: 16px"
+              >
+                <tr>
+                  <td colspan="6" style="text-align: center; font-size: 16px">
+                    <strong>{{
+                      currentLanguageSet?.inventory?.norecordsfound
+                    }}</strong>
+                  </td>
+                </tr>
+              </div>
+            </section>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="back-btn-container">
+            <button
+              mat-raised-button
+              matTooltip="{{ currentLanguageSet?.inventory?.back }}"
+              matTooltipPosition="right"
+              color="primary"
+              (click)="goBack()"
+            >
+              {{ currentLanguageSet?.inventory?.back }}
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </section>
+</section>

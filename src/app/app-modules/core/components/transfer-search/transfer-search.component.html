@@ -1,0 +1,105 @@
+<div class="dialog-title">
+  <h4>{{ currentLanguageSet?.inventory?.batchSelection }}</h4>
+  <button
+    mat-icon-button
+    matDialogClose
+    matTooltip="{{ currentLanguageSet?.inventory?.close }}"
+    class="pull-right exit width-20px"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="container-fluid">
+  <div class="scrolling-content">
+    <div class="row no-gutters m-t-10">
+      <div class="col-xs-12 col-sm-4">
+        <mat-form-field class="input-full-width">
+          <input
+            autocomplete="off"
+            matInput
+            placeholder="{{ currentLanguageSet?.inventory?.itemBatch }}"
+            [(ngModel)]="input.searchTerm"
+            (keyup.enter)="search(input.searchTerm)"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-8">
+        <button
+          class="search-btn"
+          mat-raised-button
+          color="accent"
+          type="button"
+          (click)="search(input.searchTerm)"
+        >
+          {{ currentLanguageSet?.inventory?.search }}
+        </button>
+      </div>
+    </div>
+
+    <div class="row m-t-20">
+      <div class="col-xs-12">
+        <div class="table-responsive">
+          <!-- <table class="table table-bordered table-striped responsive-table-view" [md2Data]="items$ | async" #md2="md2DataTable" [rowsPerPage]="5"
+            [activePage]="1" aria-describedby="searchDetails">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th id="itemCode">{{currentLanguageSet?.inventory?.itemCode}}</th>
+                <th id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
+                <th id="batchNo">{{currentLanguageSet?.inventory?.batchNo}}</th>
+                <th id="itemCategory">{{currentLanguageSet?.inventory?.itemCategory}}</th>
+                <th id="itemForm">{{currentLanguageSet?.inventory?.itemForm}}</th>
+                <th id="pharmacologicalCategory">{{currentLanguageSet?.inventory?.pharmacologicalCategory}}</th>
+                <th id="strength">{{currentLanguageSet?.inventory?.strength}}</th>
+                <th id="quantityOnHand">{{currentLanguageSet?.inventory?.quantityOnHand}}</th>
+                <th id="expiryDate">{{currentLanguageSet?.inventory?.expiryDate}}</th>
+                <th id="action">{{currentLanguageSet?.inventory?.action}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="md2.data?.length === 0">
+                <td colspan="10" style="text-align: center; font-size: 16px">
+                  <strong>{{currentLanguageSet?.inventory?.norecordsfound}}</strong>
+                </td>
+              </tr>
+              <tr *ngFor="let batch of md2.data">
+                <td data-title="Item Code">{{ batch?.item?.itemCode }} </td>
+                <td data-title="Item Name">{{ batch?.item?.itemName }} </td>
+                <td data-title="Batch No">{{ batch?.batchNo }} </td>
+                <td data-title="Item Category">{{ batch?.item?.itemCategory?.itemCategoryName }} </td>
+                <td data-title="Item Form">{{ batch?.item?.itemForm?.itemForm }} </td>
+                <td data-title="Pharmacological Category">{{ batch?.item?.pharmacologyCategory?.pharmCategoryName }} </td>
+                <td data-title="Strength">{{ batch?.item?.strength  ? batch?.item?.strength : " "  }} {{batch?.item?.uom?.uOMName ? batch?.item?.uom?.uOMName : " "}} </td>
+                <td data-title="Quantity On Hand">{{ batch?.quantityInHand }} </td>
+                <td data-title="Expiry Date">{{ batch.expiryDate | date:'dd-MM-yyyy' }} </td>
+                <td class="text-center">
+                  <md-checkbox (change)="selectBatch($event, batch)" [checked]="disableSelection(batch) || batch.selected" [disabled]="disableSelection(batch)"></md-checkbox>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr *ngIf="md2.data?.length > 0">
+                <td colspan="10" class="text-right">
+                  <md2-pagination></md2-pagination>
+                </td>
+              </tr>
+            </tfoot>
+          </table> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row m-t-10 m-b-10">
+    <div class="col-xs-12">
+      <button
+        mat-raised-button
+        class="pull-right"
+        (click)="submitBatch()"
+        [disabled]="selectedBatchList.length === 0"
+        color="primary"
+      >
+        {{ currentLanguageSet?.inventory?.submit }}
+      </button>
+    </div>
+  </div>
+</div>

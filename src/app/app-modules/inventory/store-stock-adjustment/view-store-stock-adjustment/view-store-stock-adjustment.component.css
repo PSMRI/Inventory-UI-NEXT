@@ -1,0 +1,33 @@
+.filterTest {
+    vertical-align: text-bottom;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.box {
+    height: 60px;
+}
+
+.back-btn-container {
+    margin: -26px 15px 15px;
+}
+
+.previous-btn {
+    margin: 5px 0px;
+}
+
+.m-b-40 {
+    margin-bottom: 40px !important;
+}
+
+.vertical-align-middle {
+    vertical-align: middle;
+}
+
+@media screen and (max-width: 768px) {
+    .previous-btn {
+        width: 100%;
+    }
+}

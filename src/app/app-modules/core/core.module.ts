@@ -31,7 +31,6 @@ import { CommonService } from './services/common-services.service';
 import { ConfirmationService } from './services/confirmation.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
-import { HttpInterceptor } from './services/http-interceptor.service';
 import { ItemSearchService } from './services/item-search.service';
 import { BatchViewService } from './services/rx-batchview.service';
 import { SpinnerService } from './services/spinner.service';
@@ -47,6 +46,43 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { MaterialModule } from './material.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SearchComponent } from './components/search/search.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { ItemSearchDirective } from './directives/item-search.directive';
+import { ItemSearchComponent } from './components/item-search/item-search.component';
+import { DisableFormControlDirective } from './directives/disableFormControl.directive';
+import { HttpInterceptorService } from './services/http-interceptor.service';
+import { AppFooterComponent } from './components/app-footer/app-footer.component';
+import { AppHeaderComponent } from './components/app-header/app-header.component';
+import { myEmailDirective } from './directives/email/myEmail.directive';
+import { myMobileNumberDirective } from './directives/MobileNumber/myMobileNumber.directive';
+import { myNameDirective } from './directives/name/myName.directive';
+import { myPasswordDirective } from './directives/password/myPassword.directive';
+import { ISTDatePipe } from './pipes/ist-date.pipe';
+import { BatchAdjustmentComponent } from './components/batch-adjustment/batch-adjustment.component';
+import { BatchSearchDirective } from './directives/batch-search.directive';
+import { BatchSearchComponent } from './components/batch-search/batch-search.component';
+import { BeneficiaryDetailsComponent } from './components/beneficiary-details/beneficiary-details.component';
+import { IndentItemListComponent } from './components/indent-item-list/indent-item-list.component';
+import { ItemDispenseComponent } from './components/item-dispense/item-dispense.component';
+import { RxBatchViewComponent } from './components/rx-batch-view/rx-batch-view.component';
+import { ShowCommitAndVersionDetailsComponent } from './components/show-commit-and-version-details/show-commit-and-version-details.component';
+import { TextareaDialogComponent } from './components/textarea-dialog/textarea-dialog.component';
+import { TransferSearchComponent } from './components/transfer-search/transfer-search.component';
+import { BatchAdjustmentDirective } from './directives/batch-adjustment.directive';
+import { StringValidatorDirective } from './directives/stringValidator.directive';
+import { NullDefaultValueDirective } from './directives/null-default-value.directive';
+import { ItemDispenseDirective } from './directives/item-dispense.directive';
+import { ItemTransferDirective } from './directives/item-transfer.directive';
+import { IndentDispenseDirective } from './directives/indent-dispense.directive';
+import { IndentRequestDirective } from './directives/indent-request.directive';
+import { MinNumberValidatorDirective } from './directives/minNumberValidator.directive';
+import { NumberValidatorDirective } from './directives/numberValidator.directive';
 @NgModule({
   imports: [
     HttpClientModule,
@@ -62,87 +98,92 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatInputModule,
     MatTableModule,
     MatTooltipModule,
+    MatPaginatorModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
     MatCardModule,
     MatRadioModule,
     MatDatepickerModule,
+    MatListModule,
+    MatSelectModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
 
     // Ng2GoogleChartsModule,
   ],
   declarations: [
     CommonDialogComponent,
-    // TextareaDialogComponent,
-    // SpinnerComponent,
-    // AppFooterComponent,
-    // AppHeaderComponent,
-    // myEmail,
-    // myMobileNumber,
+    TextareaDialogComponent,
+    SpinnerComponent,
+    AppFooterComponent,
+    AppHeaderComponent,
+    myEmailDirective,
+    myMobileNumberDirective,
     SetLanguageComponent,
-    // myName,
-    // myPassword,
-    // StringValidator,
-    // NullDefaultValueDirective,
-    // NumberValidator,
-    // DisableFormControlDirective,
-    // ItemSearchComponent,
-    // ItemSearchDirective,
-    // MinNumberValidator,
-    // TransferSearchComponent,
-    // ItemTransferDirective,
-    // BatchSearchComponent,
-    // BatchSearchDirective,
-    // ItemDispenseDirective,
-    // ItemDispenseComponent,
-    // SearchComponent,
+    myNameDirective,
+    myPasswordDirective,
+    StringValidatorDirective,
+    NullDefaultValueDirective,
+    NumberValidatorDirective,
+    DisableFormControlDirective,
+    ItemSearchComponent,
+    ItemSearchDirective,
+    MinNumberValidatorDirective,
+    TransferSearchComponent,
+    ItemTransferDirective,
+    BatchSearchComponent,
+    BatchSearchDirective,
+    ItemDispenseDirective,
+    ItemDispenseComponent,
+    SearchComponent,
     // SetLanguageComponent,
-    // ISTDatePipe,
-    // BatchAdjustmentDirective,
-    // BatchAdjustmentComponent,
-    // BeneficiaryDetailsComponent,
-    //  RxBatchViewComponent,
-    // IndentRequestDirective,
-    // IndentItemListComponent,
-    // IndentDispenseDirective,
-    // ShowCommitAndVersionDetailsComponent
+    ISTDatePipe,
+    BatchAdjustmentDirective,
+    BatchAdjustmentComponent,
+    BeneficiaryDetailsComponent,
+    RxBatchViewComponent,
+    IndentRequestDirective,
+    IndentItemListComponent,
+    IndentDispenseDirective,
+    ShowCommitAndVersionDetailsComponent,
   ],
   exports: [
     MaterialModule,
     // Md2Module,
     CommonDialogComponent,
-    // TextareaDialogComponent,
-    // SpinnerComponent,
+    TextareaDialogComponent,
+    SpinnerComponent,
     // SetLanguageComponent,
     // ReactiveFormsModule,
-    // AppFooterComponent,
-    // AppHeaderComponent,
+    AppFooterComponent,
+    AppHeaderComponent,
     // Ng2GoogleChartsModule,
-    // myEmail,
+    myEmailDirective,
     SetLanguageComponent,
-    // myMobileNumber,
-    // myName,
-    // myPassword,
+    myMobileNumberDirective,
+    myNameDirective,
+    myPasswordDirective,
     // DisableFormControlDirective,
-    // StringValidator,
-    // NumberValidator,
-    // MinNumberValidator,
-    // NullDefaultValueDirective,
-    // ItemSearchComponent,
-    // ItemSearchDirective,
-    // TransferSearchComponent,
-    // ItemTransferDirective,
-    // ItemDispenseDirective,
-    // BatchSearchComponent,
-    // BatchSearchDirective,
-    // ISTDatePipe,
-    // BatchAdjustmentComponent,
-    // BatchAdjustmentDirective,
-    // BeneficiaryDetailsComponent,
-    // IndentRequestDirective,
-    // IndentItemListComponent,
-    // IndentDispenseDirective,
-    // ShowCommitAndVersionDetailsComponent
+    StringValidatorDirective,
+    NumberValidatorDirective,
+    MinNumberValidatorDirective,
+    NullDefaultValueDirective,
+    ItemSearchComponent,
+    ItemSearchDirective,
+    TransferSearchComponent,
+    ItemTransferDirective,
+    ItemDispenseDirective,
+    BatchSearchComponent,
+    BatchSearchDirective,
+    ISTDatePipe,
+    BatchAdjustmentComponent,
+    BatchAdjustmentDirective,
+    BeneficiaryDetailsComponent,
+    IndentRequestDirective,
+    IndentItemListComponent,
+    IndentDispenseDirective,
+    ShowCommitAndVersionDetailsComponent,
   ],
   // entryComponents: [
   //   CommonDialogComponent,
@@ -165,7 +206,7 @@ export class CoreModule {
       ngModule: CoreModule,
       providers: [
         ConfirmationService,
-        HttpInterceptor,
+        HttpInterceptorService,
         BatchViewService,
         // TextareaDialog,
         AuthGuard,

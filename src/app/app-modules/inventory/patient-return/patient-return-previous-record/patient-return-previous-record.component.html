@@ -1,0 +1,163 @@
+<section class="container-fluid">
+  <section class="row m-t-10 no-gutters">
+    <div class="col-xs-12 col-sm-4 box">
+      <h4>{{ currentLanguageSet?.inventory?.previousPatientReturn }}</h4>
+    </div>
+    <div class="col-xs-12 col-sm-3 box">
+      <mat-form-field class="input-full-width">
+        <input
+          matInput
+          [matDatepicker]="fromDatePicker"
+          placeholder="{{ currentLanguageSet?.inventory?.fromDate }}"
+          [(ngModel)]="fromDate"
+          [max]="today"
+          #startDate="ngModel"
+          ngModel
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="fromDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #fromDatePicker></mat-datepicker>
+      </mat-form-field>
+      <!-- <md2-datepicker class="input-full-width" autocomplete="off" placeholder="{{currentLanguageSet?.inventory?.fromDate}}" [(ngModel)]="fromDate" [max]="today" #startDate="ngModel" ngModel></md2-datepicker> -->
+    </div>
+    <div class="col-xs-12 col-sm-3 box">
+      <mat-form-field class="input-full-width">
+        <input
+          matInput
+          [matDatepicker]="toDatePicker"
+          placeholder="{{ currentLanguageSet?.inventory?.toDate }}"
+          [(ngModel)]="toDate"
+          [max]="today"
+          #endDate="ngModel"
+          ngModel
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="toDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #toDatePicker></mat-datepicker>
+      </mat-form-field>
+      <!-- <md2-datepicker class="input-full-width" autocomplete="off" placeholder="{{currentLanguageSet?.inventory?.toDate}}" [(ngModel)]="toDate" [max]="today"  #endDate="ngModel" ngModel></md2-datepicker> -->
+      <span
+        class="errorText f-s-10 p-l-10"
+        *ngIf="endDate.value < startDate.value"
+        >{{ currentLanguageSet?.inventory?.toDateCannotBeBeforeFromDate }}</span
+      >
+    </div>
+    <div class="col-xs-12 col-sm-2 box">
+      <button
+        class="previous-btn"
+        mat-raised-button
+        [disabled]="!fromDate || !toDate || endDate.value < startDate.value"
+        type="button"
+        color="accent"
+        (click)="viewRecords()"
+      >
+        {{ currentLanguageSet?.inventory?.viewRecords }}
+      </button>
+    </div>
+  </section>
+
+  <section class="row m-t-20 m-b-40">
+    <div class="col-xs-12">
+      <mat-card>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-xs-12 text-right">
+              <mat-form-field id="filterbox">
+                <input
+                  autocomplete="off"
+                  matInput
+                  placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
+                  [(ngModel)]="filterTerm"
+                  name="filterTerm"
+                  (keyup)="filterPatientReturnList(filterTerm)"
+                />
+                <mat-icon class="mdIcon" mdSuffix>search</mat-icon>
+              </mat-form-field>
+            </div>
+            <section class="col-xs-12">
+              <div class="table-responsive">
+                <!-- <table [md2Data]="filteredPatientReturnList" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1" class="table table-striped responsive-table-view" aria-describedby="patientReturnBatchDetails">
+                  <caption></caption> 
+                  <thead>
+                    <tr>
+                      <th id=""></th>
+                      <th id="patientName">{{currentLanguageSet?.inventory?.patientName}}</th>
+                      <th id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
+                      <th id="batchNo">{{currentLanguageSet?.itemDispense?.batchNo}}</th>
+                      <th id="dateOfIssue">{{currentLanguageSet?.inventory?.dateOfIssue}}</th>
+                      <th id="dateOfReturn">{{currentLanguageSet?.inventory?.dateOfReturn}}</th>
+                      <th id="quantityinHand">{{currentLanguageSet?.itemDispense?.quantityinHand}}</th>
+                      
+
+                    </tr>
+                  </thead>
+                  <ng-template [ngIf]="filteredPatientReturnList && filteredPatientReturnList.length == 0">
+                    <tbody>
+                      <tr *ngFor="let row of blankTable">
+                        <td> &nbsp; </td>
+                        <td> &nbsp; </td>
+                        <td> &nbsp; </td>
+                        <td> &nbsp; </td>
+                        <td> &nbsp; </td>
+                        <td> &nbsp; </td>
+                        <td> &nbsp; </td>
+                      </tr>
+                    </tbody>
+                  </ng-template>
+                  <ng-template [ngIf]="filteredPatientReturnList && filteredPatientReturnList.length == 0">
+                    <tbody>
+                      <tr>
+                        <td colspan="7" style="text-align: center; font-size: 16px;">
+                          <strong>{{currentLanguageSet?.inventory?.norecordsfound}}</strong>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </ng-template>
+                  <tbody>
+                    <tr *ngFor="let return of md2.data">
+                      <td data-title="S.No">{{ filteredPatientReturnList.indexOf(return)+1 }}</td>
+                      <td data-title="Patient Name">{{return?.patientName}}</td>
+                      <td data-title="Item Name">{{return?.itemName}}</td>
+                      <td data-title="Batch No.">{{return?.batchNo}}</td>
+                      <td data-title="Date Of Issue">{{return?.dateofIssue | istDate: 'dd/MM/yyyy'}}</td>
+                      <td data-title="Date Of Return">{{return?.returnDate | istDate: 'dd/MM/yyyy'}}</td>
+                      <td data-title="Return Quantity">{{return?.issuedQuantity}}</td>
+
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr *ngIf="filteredPatientReturnList.length > 0">
+                      <td colspan="4" class="vertical-align-middle total-count">
+                        <div> {{currentLanguageSet?.inventory?.totalCount}} : {{ filteredPatientReturnList.length }}</div>
+                      </td>
+                      <td colspan="3" style="text-align: right">
+                        <md2-pagination></md2-pagination>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table> -->
+              </div>
+            </section>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="back-btn-container">
+            <button
+              mat-raised-button
+              matTooltip="{{ currentLanguageSet?.inventory?.back }}"
+              matTooltipPosition="right"
+              color="primary"
+              (click)="goBack()"
+            >
+              {{ currentLanguageSet?.inventory?.back }}
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </section>
+</section>

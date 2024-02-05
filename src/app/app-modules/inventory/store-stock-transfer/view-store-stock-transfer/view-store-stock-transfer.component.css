@@ -1,0 +1,81 @@
+.transfer {
+  position: relative;
+  padding-left: 20px;
+}
+
+.transfer.transfer-in::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #0b69b2;
+}
+
+.transfer.transfer-out::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  width: 4px;
+  background: #ff9900;
+}
+
+ul {
+  list-style: none;
+  padding: 0px;
+}
+
+ul li {
+  display: inline-block;
+  padding: 0 8px;
+}
+
+ul li div, ul li p {
+  display: inline-block;
+}
+
+ul li div {
+  height: 15px;
+  width: 15px;
+}
+
+.transfer-in-marker {
+  background: #0b69b2;
+}
+
+.transfer-out-marker {
+  background: #ff9900;
+}
+
+.totalCount, .description {
+  padding-top: 15px;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.box {
+  height: 60px;
+}
+
+.back-btn-container {
+  margin: -26px 15px 15px; 
+}
+
+.previous-btn {
+  margin: 5px 0px;
+}
+
+.m-b-40 {
+  margin-bottom: 40px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .previous-btn {
+    width: 100%;
+  }
+}

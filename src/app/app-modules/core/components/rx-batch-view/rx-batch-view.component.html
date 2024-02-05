@@ -1,0 +1,71 @@
+<!-- <div *ngIf="items">
+  <h3 class="title info">{{currentLanguageSet?.itemDispense?.batchSelection}}</h3>
+  <div class="container-fluid">
+
+    <div class="row m-t-20">
+      <div class="col-md-3 ">
+        <mat-form-field class="input-full-width">
+          <input autocomplete="off" type="text" name="prescribed" [readonly]="true" matInput [(ngModel)]="prescribed"
+            placeholder="{{currentLanguageSet?.itemDispense?.prescribedQuantity}}">
+        </mat-form-field>
+      </div>
+      <div class="col-md-3 " *ngIf="dispensed > 0">
+          <mat-form-field class="input-full-width">
+            <input autocomplete="off" type="text" [readonly]="true" name="dispensed"  matInput [(ngModel)]="dispensed"
+              placeholder="{{currentLanguageSet?.itemDispense?.dispenseQuantity}}">
+          </mat-form-field>
+        </div>
+    </div>
+  </div>
+  <form [formGroup]="itemsForm">
+    <div formArrayName="formArray" style="overflow-y: auto; max-height: 350px;">
+      <div class="container-fluid m-t-20">
+        <div *ngFor="let batch of itemsForm?.controls.formArray?.controls; let i=index; let lastIndex=last">
+          <ng-container [formGroupName]="i">
+            <div class="row m-t-5 row-shade p-5" [ngClass]="{'alert-border': batch.value.expiresIn && batch.value.expiresIn < alertDays}">
+              <div class="col-md-1 checkbox-fix">
+                <mat-checkbox color="primary" disabled (change)="checkboxChange($event, i)" formControlName="selection">
+                </mat-checkbox>
+              </div>
+              <div class="col-md-2 right-padding-remove-desktop left-padding-remove-desktop">
+                <mat-form-field class="input-full-width">
+                  <input autocomplete="off" matInput defaultNull readonly="true" name='batchNo' formControlName='batchNo'
+                    placeholder="{{currentLanguageSet?.itemDispense?.batchNo}}">
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-2 ">
+                <mat-form-field class="input-full-width">
+                  <input autocomplete="off" matInput defaultNull readonly="true" name='quantityInHand' formControlName='quantityInHand'
+                    placeholder="{{currentLanguageSet?.itemDispense?.quantityinHand}}">
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="input-full-width" (click)="enableBatch(batch.value, i)">
+                  <input autocomplete="off" matInput defaultNull  [required]="batch.value.selection" allowText="number"
+                    [readonly]="!batch.value.selection || editSelection == 1" [allowMax]="batch.value.quantityInHand"
+                    name='quantity' formControlName='quantity' placeholder="{{currentLanguageSet?.itemDispense?.dispenseQuantity}}" (blur)="setDispensed(itemsForm?.controls.formArray?.value, i)">
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+
+                <md2-datepicker placeholder="{{currentLanguageSet?.itemDispense?.expiryDate}}" class="input-full-width" name="expiryDate" formControlName="expiryDate"
+                  [disabled]="true"></md2-datepicker>
+
+              </div>
+
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="action">
+    <button (click)="save()" md-raised-button class="selectButton" color="primary" style="color:white" type="button"
+      *ngIf="editSelection == 0">{{currentLanguageSet?.common?.save}}</button>
+    <button md-dialog-close md-raised-button class="selectButton" color="primary" style="color:white" type="button"
+      *ngIf="editSelection == 1">{{currentLanguageSet?.common?.ok}}</button>
+  </div>
+</div> -->
+
+<!-- {{itemsForm.value | json}} -->

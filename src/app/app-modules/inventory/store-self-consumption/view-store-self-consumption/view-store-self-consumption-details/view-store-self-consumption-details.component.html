@@ -1,0 +1,120 @@
+<div id="head">
+  <h4 id="dialog_head" class="pull-left">
+    {{ currentLanguageSet?.inventory?.consumptionDetails }}
+  </h4>
+  <mat-icon
+    id="cross"
+    class="pull-right"
+    matTooltip="{{ currentLanguageSet?.inventory?.close }}"
+    mat-dialog-close
+    matTooltip="{{ currentLanguageSet?.inventory?.close }}"
+    (click)="dialogRef.close(false)"
+    >clear</mat-icon
+  >
+</div>
+
+<div class="scrolling-content">
+  <div class="container-fluid">
+    <!-- <table class="table" aria-describedby="viewStoreSelfDetails">
+      <caption></caption> 
+      <tbody>
+        <tr>
+          <th id="consumptionID">{{currentLanguageSet?.inventory?.consumptionID}}</th>
+          <td> {{data?.consumptionDetails?.consumptionID}}</td>
+          <th id="refNo">{{currentLanguageSet?.inventory?.refNo}}</th>
+          <td> {{data?.consumptionDetails?.refNo}}</td>
+        </tr>
+        <tr>
+          <th id="reason">{{currentLanguageSet?.inventory?.reason}}</th>
+          <td colspan="3"> {{data?.consumptionDetails?.reason}}</td>
+        </tr>
+        <tr>
+          <th id="createdBy">{{currentLanguageSet?.inventory?.createdBy}}</th>
+          <td> {{data?.consumptionDetails?.createdBy}}</td>
+          <th id="createdDate">{{currentLanguageSet?.inventory?.createdDate}}</th>
+          <td> {{data?.consumptionDetails?.createdDate | istDate: 'dd/MM/yyyy'}}</td>
+        </tr>
+      </tbody>
+    </table> -->
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 text-right">
+        <mat-form-field id="filterbox">
+          <input
+            autocomplete="off"
+            tabindex="-1"
+            matInput
+            placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
+            [(ngModel)]="_filterTerm"
+            name="filterTerm"
+            (keyup)="filterDetails(_filterTerm)"
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <section class="table-responsive">
+          <!-- <table [md2Data]="_filteredDetailedList" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1" class="table table-striped responsive-table-view" aria-describedby="viewStoreSelfDetails">
+            <caption></caption>  
+            <thead>
+              <tr>
+                <th id="noValue"></th>
+                <th id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
+                <th id="batchNo">{{currentLanguageSet?.inventory?.batchNo}}</th>
+                <th id="quantity">{{currentLanguageSet?.inventory?.quantity}}</th>
+                <th id="expiryDate">{{currentLanguageSet?.itemDispense?.expiryDate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-template [ngIf]="_filteredDetailedList && _filteredDetailedList.length == 0">
+                <tr *ngFor="let row of blankTable">
+                  <td> &nbsp; </td>
+                  <td> &nbsp; </td>
+                  <td> &nbsp; </td>
+                  <td> &nbsp; </td>
+                  <td> &nbsp; </td>
+                </tr>
+              </ng-template>
+              <tr *ngFor="let consumption of md2.data">
+                <td data-title="S.No.">{{ _filteredDetailedList.indexOf(consumption)+1 }}</td>
+                <td data-title="Item Name">{{consumption?.itemName}}</td>
+                <td data-title="Batch No.">{{consumption?.batchNo}}</td>
+                <td data-title="Quantity">{{consumption?.quantity}}</td>
+                <td data-title="Expiry Date">{{consumption?.expiryDate | date: 'dd/MM/yyyy'}}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr *ngIf="_filteredDetailedList.length > 0">
+                <td colspan="3" class="total-count">
+                  <div>{{currentLanguageSet?.inventory?.totalCount}} : {{ _filteredDetailedList.length }}</div>
+                </td>
+
+                <td colspan="3" style="text-align: right">
+                  <md2-pagination></md2-pagination>
+                </td>
+              </tr>
+            </tfoot>
+          </table> -->
+        </section>
+      </div>
+    </div>
+
+    <div class="row m-b-15">
+      <div class="col-xs-12">
+        <button
+          class="pull-right"
+          mat-raised-button
+          color="primary"
+          type="button"
+          tabindex="-1"
+          (click)="print()"
+        >
+          {{ currentLanguageSet?.inventory?.print }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
