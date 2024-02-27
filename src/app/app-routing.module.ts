@@ -26,45 +26,37 @@ import { ServiceComponent } from 'src/service/service.component';
 import { AuthGuard } from './app-modules/core/services/auth-guard.service';
 import { FacilitySelectionComponent } from './facility-selection/facility-selection.component';
 import { LoadStoreDetailsComponent } from './load-store-details/load-store-details.component';
-
-// import { ServiceComponent } from './service/service.component';
-
-// import { SetPasswordComponent } from './set-password/set-password.component';
-// import { SetSecurityQuestionsComponent } from './set-security-questions/set-security-questions.component';
-// import { ResetPasswordComponent } from './reset-password/reset-password.component';
-// import { AuthGuard } from './app-modules/core/services/auth-guard.service';
-// import { FacilitySelectionComponent } from './facility-selection/facility-selection.component';
-// import { RedirInComponent } from './redir-in/redir-in.component';
-
-// import { DashboardComponent } from './app-modules/inventory/dashboard/dashboard.component';
-// import { LoadStoreDetailsComponent } from './load-store-details/load-store-details.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SetPasswordComponent } from './set-password/set-password.component';
+import { SetSecurityQuestionsComponent } from './set-security-questions/set-security-questions.component';
+import { RedirInComponent } from './redir-in/redir-in.component';
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
   },
-  // {
-  //   path: 'redirin',
-  //   component: RedirInComponent
-  // },
+  {
+    path: 'redirin',
+    component: RedirInComponent,
+  },
   {
     path: 'login',
     component: LoginComponent,
   },
-  // {
-  //   path: 'set-security-questions',
-  //   component: SetSecurityQuestionsComponent,
-  // },
-  // {
-  //   path: 'reset-password',
-  //   component: ResetPasswordComponent,
-  // },
-  // {
-  //   path: 'set-password',
-  //   component: SetPasswordComponent,
-  //   // canActivate: [AuthGuard],
-  // },
+  {
+    path: 'set-security-questions',
+    component: SetSecurityQuestionsComponent,
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
+  },
+  {
+    path: 'set-password',
+    component: SetPasswordComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'service',
     component: ServiceComponent,
@@ -87,11 +79,6 @@ const routes: Routes = [
         (x) => x.InventoryModule,
       ),
   },
-  // {
-  //   path: 'rx',
-  //   canActivate: [AuthGuard],
-  //   loadChildren: './app-modules/rx/rx.module#RxModule'
-  // }
 ];
 
 @NgModule({

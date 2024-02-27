@@ -1,11 +1,13 @@
 <div class="container-fluid">
   <form [formGroup]="storeSelfConsumptionForm" autocomplete="off" novalidate>
     <div class="row m-t-10">
-      <div class="col-xs-12 col-sm-6">
-        <h4>{{ currentLanguageSet?.inventory?.storeConsumption }}</h4>
+      <div class="col-xs-12 col-sm-6" style="padding-top: 12px">
+        <h4 style="font-size: larger">
+          {{ currentLanguageSet?.inventory?.storeConsumption }}
+        </h4>
       </div>
 
-      <div class="col-xs-12 col-sm-6">
+      <div class="col-xs-12 col-sm-6" id="topBtn">
         <button
           mat-raised-button
           class="pull-right button-full-width"
@@ -28,7 +30,7 @@
             maxlength="20"
             name="referenceNumber"
             formControlName="referenceNumber"
-            placeholder="{{ currentLanguageSet?.inventory?.referenceNumber }}"
+            placeholder="{{ currentLanguageSet?.inventory?.referenceNumber }}*"
             #referenceNumber
           />
         </mat-form-field>
@@ -54,7 +56,9 @@
             maxlength="100"
             name="dispenseReason"
             formControlName="dispenseReason"
-            placeholder="{{ currentLanguageSet?.inventory?.consumptionReason }}"
+            placeholder="{{
+              currentLanguageSet?.inventory?.consumptionReason
+            }}*"
           />
         </mat-form-field>
       </div>
@@ -64,69 +68,19 @@
       <div class="col-xs-12">
         <mat-card>
           <div class="table-responsive">
-            <!-- <table class="table table-striped table responsive-table-form" aria-describedby="storeSelfDetails">
-              <caption></caption> 
-              <thead>
-                <tr>
-                  <th class="width5" id="noValue"></th>
-                  <th class="width20" id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
-                  <th class="width20" id="batchNo">{{currentLanguageSet?.itemDispense?.batchNo}}</th>
-                  <th class="width15" id="qOH">{{currentLanguageSet?.inventory?.qOH}}</th>
-                  <th class="width10" id="quantity">{{currentLanguageSet?.inventory?.quantity}}</th>
-                  <th class="width10" id="empyID"></th>
-                </tr>
-              </thead>
-              <tbody formArrayName="dispensedStock">
-                <ng-container *ngFor="let stock of storeSelfConsumptionForm.controls['dispensedStock']['controls']; let i = index; let isLast=last;">
-                  <tr [formGroupName]="i">
-                    <td class="vertical-align-middle"> {{ i+1 }} </td>
-                    <td>
-                      <mat-form-field class="input-full-width">
-                        <input matInput allowText = "itemNameSearchValidator" placeholder="{{currentLanguageSet?.inventory?.itemName}}" maxlength="100" appBatchSearch [previousSelected]="storeSelfConsumptionForm?.value?.dispensedStock"
-                          [stockForm]="stock" required name="itemName" formControlName="itemName">
-                        <mat-icon *ngIf="!(stock.controls['itemName'].disabled)" class="search-btn" matSuffix appBatchSearch [previousSelected]="storeSelfConsumptionForm?.value?.dispensedStock"
-                          [stockForm]="stock">search</mat-icon>
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <mat-form-field class="input-full-width">
-                        <input matInput placeholder="{{currentLanguageSet?.itemDispense?.batchNo}}" required name="batchNo" formControlName="batchNo" readonly>
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <mat-form-field class="input-full-width">
-                        <input matInput placeholder="{{currentLanguageSet?.inventory?.qOH}}" required name="quantityInHand" formControlName="quantityInHand" readonly>
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <mat-form-field class="input-full-width">
-                        <input matInput placeholder="{{currentLanguageSet?.inventory?.quantity}}" allowMin='1' allowText="number" required name="quantity" formControlName="quantity"
-                          [attr.maxlength]="(''+stock.value.quantityInHand).length" [appDisableFormControl]="!(stock.value.itemID)"
-                          (blur)="validateRequestedQuantity(stock)">
-                      </mat-form-field>
-                    </td>
-                    <td class="text-right">
-                      <mat-icon class="icon-remove cursorPointer" matTooltip="{{currentLanguageSet?.inventory?.delete}}" (click)="removeDispensedStock(i, stock)">delete</mat-icon>
-                    </td>
-                  </tr>
-                </ng-container>
-                <tr *ngIf="storeSelfConsumptionForm.controls['dispensedStock'].valid">
-                  <td colspan="6">
-                    <button mat-mini-fab type="button" class="pull-right" color="primary" (click)="addDispensedStock()">
-                      <mat-icon>add</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table> -->
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-              <!--- Note that these columns can be defined in any order.
-                    The actual rendered columns are set as a property on the row definition" -->
+            {{ storeSelfConsumptionForm.value | json }}
 
-              <!-- Position Column -->
+            <ng-container formArrayName="dispensedStock"></ng-container>
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
               <ng-container matColumnDef="index">
-                <th mat-header-cell *matHeaderCellDef>#</th>
-                <td mat-cell *matCellDef="let element; let i = index">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.index }}
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element; let i = index"
+                  [formGroup]="element"
+                >
                   {{ i + 1 }}
                 </td>
               </ng-container>
@@ -135,14 +89,18 @@
                 <th mat-header-cell *matHeaderCellDef>
                   {{ currentLanguageSet?.inventory?.itemName }}
                 </th>
-                <td mat-cell *matCellDef="let element">
+                <td
+                  mat-cell
+                  *matCellDef="let element; let i = index"
+                  [formGroup]="element"
+                >
                   <mat-form-field class="input-full-width">
                     <input
                       matInput
                       allowText="itemNameSearchValidator"
                       placeholder="{{
                         currentLanguageSet?.inventory?.itemName
-                      }}"
+                      }}*"
                       maxlength="100"
                       appBatchSearch
                       [previousSelected]="
@@ -171,13 +129,17 @@
                 <th mat-header-cell *matHeaderCellDef>
                   {{ currentLanguageSet?.itemDispense?.batchNo }}
                 </th>
-                <td mat-cell *matCellDef="let element">
+                <td
+                  mat-cell
+                  *matCellDef="let element; let i = index"
+                  [formGroup]="element"
+                >
                   <mat-form-field class="input-full-width">
                     <input
                       matInput
                       placeholder="{{
                         currentLanguageSet?.itemDispense?.batchNo
-                      }}"
+                      }}*"
                       required
                       name="batchNo"
                       formControlName="batchNo"
@@ -192,11 +154,15 @@
                 <th mat-header-cell *matHeaderCellDef>
                   {{ currentLanguageSet?.inventory?.qOH }}
                 </th>
-                <td mat-cell *matCellDef="let element">
+                <td
+                  mat-cell
+                  *matCellDef="let element; let i = index"
+                  [formGroup]="element"
+                >
                   <mat-form-field class="input-full-width">
                     <input
                       matInput
-                      placeholder="{{ currentLanguageSet?.inventory?.qOH }}"
+                      placeholder="{{ currentLanguageSet?.inventory?.qOH }}*"
                       required
                       name="quantityInHand"
                       formControlName="quantityInHand"
@@ -211,18 +177,23 @@
                 <th mat-header-cell *matHeaderCellDef>
                   {{ currentLanguageSet?.inventory?.quantity }}
                 </th>
-                <td mat-cell *matCellDef="let element">
+                <td
+                  mat-cell
+                  *matCellDef="let element; let i = index"
+                  [formGroup]="element"
+                >
                   <mat-form-field class="input-full-width">
                     <input
                       matInput
                       placeholder="{{
                         currentLanguageSet?.inventory?.quantity
-                      }}"
+                      }}*"
                       appAllowMin="1"
                       allowText="number"
                       required
                       name="quantity"
                       formControlName="quantity"
+                      [readonly]="!element.value.itemID"
                       [attr.maxlength]="
                         ('' + element.value?.quantityInHand).length
                       "
@@ -235,29 +206,17 @@
               <!-- Delete Column -->
               <ng-container matColumnDef="delete">
                 <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element">
+                <td
+                  mat-cell
+                  *matCellDef="let element; let i = index"
+                  [formGroup]="element"
+                >
                   <mat-icon
                     class="icon-remove cursorPointer"
                     matTooltip="{{ currentLanguageSet?.inventory?.delete }}"
-                    (click)="removeDispensedStock(element)"
+                    (click)="removeDispensedStock(i, element)"
                     >delete</mat-icon
                   >
-                </td>
-              </ng-container>
-
-              <!-- Add Button Column -->
-              <ng-container matColumnDef="addButton">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element">
-                  <button
-                    mat-mini-fab
-                    type="button"
-                    class="pull-right"
-                    color="primary"
-                    (click)="addDispensedStock()"
-                  >
-                    <mat-icon>add</mat-icon>
-                  </button>
                 </td>
               </ng-container>
 
@@ -266,17 +225,30 @@
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
+            <div
+              class="text-right"
+              *ngIf="storeSelfConsumptionForm.controls['dispensedStock'].valid"
+            >
+              <button
+                mat-mini-fab
+                type="button"
+                class="pull-right"
+                color="primary"
+                (click)="addDispensedStock()"
+              >
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
           </div>
         </mat-card>
       </div>
     </div>
 
     <div class="row m-t-10 m-b-40">
-      <div class="col-xs-12">
+      <div class="col-xs-12" id="topBtn">
         <button
           type="button"
           mat-raised-button
-          color="accent"
           class="pull-right m-r-5"
           [disabled]="storeSelfConsumptionForm.invalid"
           (click)="saveSelfConsumptionStock()"
@@ -286,7 +258,6 @@
         <button
           type="button"
           mat-raised-button
-          color="primary"
           class="pull-right m-r-5"
           [disabled]="storeSelfConsumptionForm.pristine"
           (click)="reset()"

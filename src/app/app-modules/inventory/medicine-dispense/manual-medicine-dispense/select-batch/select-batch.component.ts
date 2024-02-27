@@ -25,6 +25,7 @@ import { ConfirmationService } from '../../../../core/services/confirmation.serv
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-select-batch',
@@ -51,6 +52,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
     public http_service: LanguageService,
     public mdDialogRef: MatDialogRef<SelectBatchComponent>,
   ) {}
+  dataSource = new MatTableDataSource<any>();
   title!: string;
 
   ngOnInit() {
@@ -88,6 +90,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
       this.editBatchList = [];
       this.addBatch();
     }
+    this.loadManualDispense();
   }
 
   editableBatch(editBatchList: any) {
@@ -141,15 +144,15 @@ export class SelectBatchComponent implements OnInit, DoCheck {
     });
     this.selectedBatchList[i] = selectedBatch;
 
-    const expiryDate = (this.today = new Date(selectedBatch.expiryDate));
+    const expiryDate = (this.today = new Date(selectedBatch.value.expiryDate));
     if (batchForm != undefined) {
       batchForm.patchValue({
-        quantityOnBatch: selectedBatch.quantityInHand,
+        quantityOnBatch: selectedBatch.value.quantityInHand,
         expiryDate: expiryDate,
         quantityOfDispense: null,
       });
     }
-    const quantityOnBatch = selectedBatch.quantityInHand;
+    const quantityOnBatch = selectedBatch.value.quantityInHand;
   }
 
   calculateDispenseQuantity() {
@@ -162,6 +165,15 @@ export class SelectBatchComponent implements OnInit, DoCheck {
       }
     });
     this.batchForm.patchValue({ quantityDispensed: totalQuantity });
+  }
+
+  loadManualDispense() {
+    const dataFromFun: any = this.getBatchListTableData();
+    this.dataSource.data = dataFromFun;
+  }
+
+  getBatchListTableData(): any {
+    return (this.batchForm.get('batchList') as FormArray).controls;
   }
 
   addBatch() {
@@ -185,6 +197,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
         this.filteredBatchList.push(resultBatch.slice());
       }
       batchList.push(this.initBatchForm());
+      this.loadManualDispense();
     } else {
       this.confirmationService.alert(
         this.currentLanguageSet.inventory.nofurtherbatchesavailable,
@@ -192,7 +205,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
     }
   }
 
-  initBatchForm(): FormGroup {
+  initBatchForm() {
     return this.fb.group({
       batchNo: null,
       quantityOnBatch: null,
@@ -212,6 +225,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
         quantityOfDispense: null,
       });
       this.calculateDispenseQuantity();
+      this.loadManualDispense();
     } else {
       const removedValue = this.selectedBatchList[i];
       this.filteredBatchList.map((item: any, t: any) => {
@@ -223,6 +237,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
       this.filteredBatchList.splice(i, 1);
       batchList.removeAt(i);
       this.calculateDispenseQuantity();
+      this.loadManualDispense();
     }
   }
 

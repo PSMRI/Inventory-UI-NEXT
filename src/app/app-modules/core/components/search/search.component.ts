@@ -34,6 +34,7 @@ import { SetLanguageComponent } from '../set-language.component';
 import { LanguageService } from '../../services/language.service';
 import { environment } from 'src/environments/environment';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 interface Beneficary {
   firstName: string;
@@ -58,10 +59,10 @@ export class SearchComponent implements OnInit, DoCheck {
   countryId = environment.countryId;
   searched = false;
   beneficiaryList: any = [];
-  filteredBeneficiaryList: any = [];
+  // filteredBeneficiaryList: any = [];
+  filteredBeneficiaryList = new MatTableDataSource<any>();
   blankTable = [{}, {}, {}, {}, {}];
   displayedColumns: string[] = [
-    'sno',
     'beneficiaryID',
     'benName',
     'genderName',
@@ -135,7 +136,7 @@ export class SearchComponent implements OnInit, DoCheck {
   resetBeneficiaryForm() {
     this.form.reset();
     this.beneficiaryList = [];
-    this.filteredBeneficiaryList = [];
+    this.filteredBeneficiaryList.data = [];
     this.searched = false;
     // this.getStatesData()
   }
@@ -160,15 +161,14 @@ export class SearchComponent implements OnInit, DoCheck {
           beneficiaryList.data.length <= 0
         ) {
           this.beneficiaryList = [];
-          this.filteredBeneficiaryList = [];
+          this.filteredBeneficiaryList.data = [];
           this.searched = true;
         } else {
           this.beneficiaryList = this.searchRestruct(beneficiaryList.data, {});
-          this.filteredBeneficiaryList = this.beneficiaryList;
+          this.filteredBeneficiaryList.data = this.beneficiaryList;
           this.searched = true;
-          console.log(this.beneficiaryList, this.filteredBeneficiaryList);
+          console.log(this.beneficiaryList, this.filteredBeneficiaryList.data);
         }
-        // console.log(JSON.stringify(beneficiaryList.data, null, 4));
       },
       (error) => {
         this.confirmationService.alert(error, 'error');
@@ -199,36 +199,7 @@ export class SearchComponent implements OnInit, DoCheck {
 
     return requiredBenData;
   }
-  // getCorrectPhoneNo(phoneMaps: any, benObject: any) {
-  //   let phone;
-  //   if (benObject && !benObject && !benObject.phoneNo) {
-  //     return phoneMaps[0].phoneNo;
-  //   } else if (
-  // benObject &&
-  // !benObject &&
-  // !benObject.phoneNo &&
-  // !phoneMaps.length
-  //   ) {
-  //     return phoneMaps[0].phoneNo || 'Not Available';
-  //   } else if (benObject && benObject.phoneNo && phoneMaps.length > 0) {
-  //     phoneMaps.forEach((element: any) => {
-  //       if (element.phoneNo == benObject.phoneNo) {
-  //         phone = element.phoneNo;
-  //       }
-  //     });
-  //     if (phone) {
-  //       return phone;
-  //     } else if (phoneMaps.length > 0) {
-  //       return phoneMaps[0].phoneNo;
-  //     } else {
-  //       return 'Not Available';
-  //     }
-  //   } else if (phoneMaps.length > 0) {
-  //     return phoneMaps[0].phoneNo;
-  //   } else {
-  //     return 'Not Available';
-  //   }
-  // }
+
   getCorrectPhoneNo(phoneMaps: any, benObject: any) {
     let phone;
     if (benObject && !benObject.phoneNo) {

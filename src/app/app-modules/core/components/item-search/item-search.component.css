@@ -28,6 +28,14 @@
 .title .exit {
     cursor: pointer;
 }
+.noRecord {
+    text-align: center; font-size: 16px; display: flex;
+    justify-content: center;padding-top: 14px;
+}
+.blueBttn {
+   background: #0277bd !important;
+   color: white;
+}
 
 @media screen and (max-width: 768px) {
     .search-btn {

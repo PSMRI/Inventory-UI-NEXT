@@ -19,9 +19,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, OnChanges, DoCheck } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  DoCheck,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { InventoryService } from '../shared/service/inventory.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   NgForm,
   FormBuilder,
@@ -56,9 +62,14 @@ import { MatTableDataSource } from '@angular/material/table';
   ],
 })
 export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
+  stockItemName: any;
   physicalStockEntryForm!: FormGroup;
+  matTableStockForm!: FormGroup;
+  // dataSource!: MatTableDataSource<any>;
+  // dataSource = new BehaviorSubject<FormArray | null>(null);
   otherDetails: any;
   physicalStockList: any = [];
+  physicalStockTableDataList: any = [];
   today!: Date;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
@@ -72,13 +83,16 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
     'actions',
   ];
   stockEntryDate = new FormControl(new Date());
-  dataSource!: MatTableDataSource<AbstractControl>;
+
+  // physicalStock!: FormArray
   constructor(
+    private changeDetectorRefs: ChangeDetectorRef,
     private inventoryService: InventoryService,
     private http_service: LanguageService,
     private dialogService: ConfirmationService,
     private fb: FormBuilder,
   ) {}
+  dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {
     this.otherDetails = {
@@ -92,18 +106,32 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
 
     this.today = new Date();
     this.fetchLanguageResponse();
-    this.physicalStockEntryForm = this.createPhysicalStockEntryForm();
+    this.physicalStockEntryForm = this.fb.group({
+      referenceNumber: [''],
+      stockEntryDate: [''],
+      physicalStock: this.fb.array([]),
+    });
+    this.initPhysicalStock();
+
+    console.log('this.physicalStockEntryForm', this.physicalStockEntryForm);
+
+    console.log('form1', this.physicalStockEntryForm);
+    this.loadStockData();
+  }
+
+  loadStockData() {
+    const dataFromFun: any = this.physicalStockTableData();
+    this.dataSource.data = dataFromFun;
   }
 
   ngOnChanges() {
-    console.log('form', this.physicalStockEntryForm);
+    console.log('form2', this.physicalStockEntryForm);
   }
 
   createPhysicalStockEntryForm() {
     return this.fb.group({
       referenceNumber: null,
       stockEntryDate: null,
-      physicalStock: new FormArray([this.initPhysicalStock()]),
     });
   }
 
@@ -112,44 +140,73 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
   }
 
   initPhysicalStock() {
+    const frmArr = this.physicalStockEntryForm.get(
+      'physicalStock',
+    ) as FormArray;
+    frmArr.push(
+      this.fb.group({
+        batchNo: ['', Validators.compose([Validators.required])],
+        expiryDate: [''],
+        itemID: ['', Validators.required],
+        itemName: ['', Validators.required],
+        quantity: ['', Validators.required],
+        totalCostPrice: ['', Validators.required],
+        isMedical: [''],
+      }),
+    );
+  }
+
+  initPhysicalStockForm() {
     return this.fb.group({
-      batchNo: [null, Validators.required],
-      expiryDate: null,
-      itemID: [null, Validators.required],
-      itemName: [null, Validators.required],
-      quantity: [null, Validators.required],
-      totalCostPrice: [null, Validators.required],
-      isMedical: null,
+      batchNo: ['', Validators.compose([Validators.required])],
+      expiryDate: [''],
+      itemID: ['', Validators.required],
+      itemName: ['', Validators.required],
+      quantity: ['', Validators.required],
+      totalCostPrice: ['', Validators.required],
+      isMedical: [''],
     });
   }
 
-  physicalStockTableData(): AbstractControl[] {
+  physicalStockTableData(): any {
     return (this.physicalStockEntryForm.get('physicalStock') as FormArray)
       .controls;
   }
-
-  // this.dataSource = new MatTableDataSource<AbstractControl>(this.physicalStockTableData());
+  refresh(event: any, stock: any) {
+    console.log('event##', event);
+    stock.controls['itemName'].setValue(event.target.value);
+  }
+  get physicalStock() {
+    return this.physicalStockEntryForm.get('physicalStock') as FormArray;
+  }
 
   addStock() {
-    const stockForm = this.physicalStockEntryForm.controls[
-      'physicalStock'
-    ] as FormArray;
-    stockForm.push(this.initPhysicalStock());
+    this.physicalStock.push(this.initPhysicalStockForm());
+    this.loadStockData();
   }
 
   removeStock(index: any, stock?: FormGroup) {
-    const stockForm = this.physicalStockEntryForm.controls[
-      'physicalStock'
-    ] as FormArray;
+    // this.physicalStock.removeAt(index);
+    const stockForm = this.physicalStockEntryForm.get(
+      'physicalStock',
+    ) as FormArray;
+    console.log('stockForm', stockForm);
+    console.log('stock', stock);
+
     if (stockForm.length > 1) {
       stockForm.removeAt(index);
+      // stockForm.clear();
+      this.loadStockData();
     } else {
-      stockForm.reset();
-      stockForm.enable();
+      if (stock) {
+        stock.reset();
+        stock.controls['itemName'].enable();
+      }
     }
   }
 
   savePhysicalStock() {
+    console.log('FORMSTOCK', this.physicalStockEntryForm);
     const physicalStockEntry = JSON.parse(
       JSON.stringify(this.physicalStockEntryForm.value),
     );
@@ -166,8 +223,6 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
       physicalStock: undefined,
       referenceNumber: undefined,
     });
-
-    // console.log("Physical Entry Stock ", JSON.stringify(temp, null, 4));
 
     this.inventoryService.savePhysicalStock(temp).subscribe(
       (response) => {
@@ -190,11 +245,16 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
   }
 
   reset() {
-    // this.removeAllPhysicalStock(this.physicalStockEntryForm.controls['physicalStock'] as FormArray);
-    // this.physicalStockEntryForm.reset();
-    this.physicalStockEntryForm = this.createPhysicalStockEntryForm();
+    this.physicalStockEntryForm.reset();
+    this.resetPhysicalStockFormArray();
+    this.addStock();
+  }
 
-    this.today = new Date();
+  resetPhysicalStockFormArray() {
+    const physicalStockArray = this.physicalStockEntryForm.get(
+      'physicalStock',
+    ) as FormArray;
+    physicalStockArray.controls.length = 0;
   }
 
   preventTyping(e: any) {

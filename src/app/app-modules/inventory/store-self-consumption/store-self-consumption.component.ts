@@ -23,7 +23,13 @@ import { Component, DoCheck, OnInit } from '@angular/core';
 import { ConfirmationService } from '../../core/services/confirmation.service';
 import { InventoryService } from '../shared/service/inventory.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormArray,
+  FormGroup,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { LanguageService } from '../../core/services/language.service';
 import { SetLanguageComponent } from '../../core/components/set-language.component';
 import { MatTableDataSource } from '@angular/material/table';
@@ -50,6 +56,7 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
   createdBy: any;
   currentLanguageSet: any;
   languageComponent: any;
+
   displayedColumns: string[] = [
     'index',
     'itemName',
@@ -57,9 +64,7 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
     'quantityInHand',
     'quantity',
     'delete',
-    'addButton',
   ];
-
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -67,7 +72,8 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
     private inventoryService: InventoryService,
     private alertService: ConfirmationService,
   ) {}
-  dataSource = new MatTableDataSource([{}]);
+  dataSource = new MatTableDataSource<any>();
+
   ngOnInit() {
     this.createdBy = localStorage.getItem('username');
     this.facilityID = localStorage.getItem('facilityID');
@@ -78,38 +84,68 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
       this.router.navigate(['/inventory']);
     }
 
-    this.storeSelfConsumptionForm = this.createStoreSelfConsumptionForm();
+    // this.storeSelfConsumptionForm = this.createStoreSelfConsumptionForm();
+    this.storeSelfConsumptionForm = this.fb.group({
+      referenceNumber: [''],
+      dispenseReason: [''],
+      dispensedStock: this.fb.array([]),
+    });
+    this.initDispensedStock();
+    this.loadStockConsumptionData();
+    // this.dataSource = new MatTableDataSource<any>(this.storeSelfTableData());
+  }
+  loadStockConsumptionData() {
+    const dataFromFun: any = this.storeSelfTableData();
+    console.log('dataFromFun####', dataFromFun);
+    this.dataSource.data = dataFromFun;
+  }
+
+  storeSelfTableData(): any {
+    return (this.storeSelfConsumptionForm.get('dispensedStock') as FormArray)
+      .controls;
   }
 
   createStoreSelfConsumptionForm() {
     return this.fb.group({
       referenceNumber: null,
       dispenseReason: null,
-      dispensedStock: new FormArray([this.initDispensedStock()]),
+      // dispensedStock: new FormArray([this.initDispensedStock()]),
     });
   }
 
   initDispensedStock() {
+    const frmSelfArr = this.storeSelfConsumptionForm.get(
+      'dispensedStock',
+    ) as FormArray;
+    frmSelfArr.push(
+      this.fb.group({
+        itemStockEntryID: [''],
+        batchNo: ['', Validators.required],
+        itemID: ['', Validators.required],
+        itemName: ['', Validators.required],
+        quantityInHand: [''],
+        quantity: ['', Validators.required],
+      }),
+    );
+  }
+
+  initDispensedStockForm() {
     return this.fb.group({
-      itemStockEntryID: null,
-      batchNo: [null, Validators.required],
-      itemID: [null, Validators.required],
-      itemName: [null, Validators.required],
-      quantityInHand: null,
-      quantity: [null, Validators.required],
+      itemStockEntryID: [''],
+      batchNo: ['', Validators.required],
+      itemID: ['', Validators.required],
+      itemName: ['', Validators.required],
+      quantityInHand: [''],
+      quantity: ['', Validators.required],
     });
+  }
+  get physicalStock() {
+    return this.storeSelfConsumptionForm.get('dispensedStock') as FormArray;
   }
 
   addDispensedStock() {
-    const stockForm = this.storeSelfConsumptionForm.controls[
-      'dispensedStock'
-    ] as FormArray;
-    // if (stock) {
-    stockForm.push(this.initDispensedStock());
-    this.dataSource.data = stockForm.controls;
-    // } else {
-    // this.alertService.alert('Please enter the values first', 'info');
-    // }
+    this.physicalStock.push(this.initDispensedStockForm());
+    this.loadStockConsumptionData();
   }
 
   checkValidity(stock?: FormGroup) {
@@ -125,12 +161,16 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
   }
 
   removeDispensedStock(index: any, stock?: FormGroup) {
-    const stockForm = this.storeSelfConsumptionForm.controls[
-      'dispensedStock'
-    ] as FormArray;
+    const stockForm = this.storeSelfConsumptionForm.get(
+      'dispensedStock',
+    ) as FormArray;
+    console.log('stockForm', stockForm);
+    console.log('stock', stock);
+
     if (stockForm.length > 1) {
       stockForm.removeAt(index);
-      this.dataSource.data = stockForm.controls;
+      // stockForm.clear();
+      this.loadStockConsumptionData();
     } else {
       if (stock) {
         stock.reset();
@@ -183,14 +223,16 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
   }
 
   reset() {
-    this.removeAllDispensedStock(
-      this.storeSelfConsumptionForm.controls['dispensedStock'] as FormArray,
-    );
-    // let i = this.storeSelfConsumptionForm.controls['dispensedStock'] as FormArray;
-    // i = null;
-    // i = new FormArray([this.initDispensedStock()]);
     this.storeSelfConsumptionForm.reset();
-    // this.storeSelfConsumptionForm = this.createStoreSelfConsumptionForm();
+    this.resetStoreSelfConsumptionFormArray();
+    this.addDispensedStock();
+  }
+
+  resetStoreSelfConsumptionFormArray() {
+    const dispensedStockArray = this.storeSelfConsumptionForm.get(
+      'dispensedStock',
+    ) as FormArray;
+    dispensedStockArray.controls.length = 0;
   }
 
   validateRequestedQuantity(stock: FormGroup) {

@@ -82,13 +82,8 @@
 </div>
 
 <div class="container bg-unset non-printable m-t-10 m-b-100">
-  <div class="row">
-    <button
-      mat-raised-button
-      color="primary"
-      class="pull-right"
-      (click)="downloadList()"
-    >
+  <div class="row" style="display: flex; justify-content: end">
+    <button mat-raised-button class="pull-right" (click)="downloadList()">
       {{ currentLanguageSet?.inventory?.print }}
     </button>
     <button

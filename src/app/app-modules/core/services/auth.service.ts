@@ -21,6 +21,7 @@
  */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
@@ -30,14 +31,20 @@ export class AuthService {
 
   logoutUser() {
     return this.http.post(environment.logoutUrl, '');
-    // .map((res: any) => res.json());
   }
   getUIVersionAndCommitDetails(url: any) {
     return this.http.get(url);
-    // .map((res: any) => res.json());
   }
   getAPIVersionAndCommitDetails() {
     return this.http.get(environment.apiVersionUrl);
-    // .map((res: any) => res.json());
   }
+  login(userName: string, password: string, doLogout: any) {
+    return this.http.post(environment.loginUrl, {
+      userName: userName,
+      password: password,
+      doLogout: doLogout,
+    });
+  }
+
+  // /* AN4085822 - Concurrent login issue*/
 }

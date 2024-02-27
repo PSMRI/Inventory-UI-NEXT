@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
@@ -29,6 +29,8 @@ import { LanguageService } from 'src/app/app-modules/core/services/language.serv
 import { DataStorageService } from '../../shared/service/data-storage.service';
 import { InventoryService } from '../../shared/service/inventory.service';
 import { ViewStockAdjustmentDraftDetailsComponent } from '../view-stock-adjustment-draft-details/view-stock-adjustment-draft-details.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-view-store-stock-adjustment-draft',
@@ -42,9 +44,21 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
   stockAdjustmentList: any = [];
 
   filterTerm: any;
-  filteredStockAdjustmentList: any = [];
+  filteredStockAdjustmentList = new MatTableDataSource<any>();
+  // filteredStockAdjustmentList: any = [];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  displayedColumns: string[] = [
+    'draftID',
+    'refNo',
+    'draftDescription',
+    'createdBy',
+    'createdDate',
+    'Edit',
+    'view',
+  ];
 
   constructor(
     private location: Location,
@@ -92,17 +106,21 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
 
     this.inventoryService
       .getStockAdjustmentDraftList(temp)
-      .subscribe((response) => {
-        this.stockAdjustmentList = response.slice();
-        this.filteredStockAdjustmentList = response.slice();
+      .subscribe((response: any) => {
+        this.stockAdjustmentList = response;
+        this.filteredStockAdjustmentList.data.push(response);
+        this.dataSource = new MatTableDataSource<any>(
+          this.filteredStockAdjustmentList.data[0].data,
+        );
+        this.filteredStockAdjustmentList.paginator = this.paginator;
       });
   }
 
   filterStockAdjustmentList(filterTerm: any) {
     if (!filterTerm)
-      this.filteredStockAdjustmentList = this.stockAdjustmentList.slice();
+      this.filteredStockAdjustmentList.data = this.stockAdjustmentList.slice();
     else {
-      this.filteredStockAdjustmentList = [];
+      this.filteredStockAdjustmentList.data = [];
       this.stockAdjustmentList.forEach((item: any) => {
         for (const key in item) {
           if (
@@ -113,7 +131,7 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
-              this.filteredStockAdjustmentList.push(item);
+              this.filteredStockAdjustmentList.data.push(item);
               break;
             }
           }

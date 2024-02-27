@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, Inject, DoCheck } from '@angular/core';
+import { Component, OnInit, Inject, DoCheck, ViewChild } from '@angular/core';
 import { ItemSearchService } from '../../services/item-search.service';
 
 import { Observable, Subject } from 'rxjs';
@@ -28,6 +28,7 @@ import { SetLanguageComponent } from '../set-language.component';
 import { LanguageService } from '../../services/language.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-item-search',
@@ -39,6 +40,10 @@ export class ItemSearchComponent implements OnInit, DoCheck {
   items$!: Observable<any>;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  noRecordsFlag = false;
+  dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+
   displayedColumns: string[] = [
     'itemCode',
     'itemName',
@@ -49,7 +54,6 @@ export class ItemSearchComponent implements OnInit, DoCheck {
     'action',
   ];
   // dataSource!: MatTableDataSource<any>;
-  dataSource = new MatTableDataSource([{}]);
   constructor(
     @Inject(MAT_DIALOG_DATA) public input: any,
     public http_service: LanguageService,
@@ -59,16 +63,17 @@ export class ItemSearchComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.search(this.input.searchTerm);
     this.fetchLanguageResponse();
-    // this.items$.subscribe(data => {
-    //   this.dataSource = new MatTableDataSource(data);
-    // })
   }
 
   search(term: string): void {
     this.items$ = this.itemSearchService.searchDrugItem(term);
-    this.items$.subscribe((data: any) => {
+    this.items$.subscribe((data) => {
       if (data) {
-        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.data = data.data;
+        this.dataSource.paginator = this.paginator;
+        this.noRecordsFlag = true;
+      } else {
+        this.noRecordsFlag = false;
       }
     });
   }

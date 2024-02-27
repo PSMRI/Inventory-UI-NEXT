@@ -26,29 +26,10 @@ import { AppComponent } from './app.component';
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomRouteReuseStrategy } from './custom-route-reuse-strategy';
 import { MatDialogModule } from '@angular/material/dialog';
-
-// import { HttpModule } from '@angular/http';
-// import { Md2Module } from 'md2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { Ng2GoogleChartsModule } from 'ng2-google-charts';
-
-// Import custom route module....
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './app-modules/core/core.module';
-
-// Custom components import....
 import { LoginComponent } from './login/login.component';
-
-// Custom services import....
-// import { ServiceComponent } from './service/service.component';
-// import { ResetPasswordComponent } from './reset-password/reset-password.component';
-// import { SetPasswordComponent } from './set-password/set-password.component';
-// import { SetSecurityQuestionsComponent } from './set-security-questions/set-security-questions.component';
-// import { FacilitySelectionComponent } from './facility-selection/facility-selection.component';
-// import { FaciltyService } from './facility-selection/facilty.service';
-// import { RedirInComponent } from './redir-in/redir-in.component';
-// import { LoadStoreDetailsComponent } from './load-store-details/load-store-details.component';
-//   import { from } from 'rxjs/observable/from';
 import { AuthService } from './app-modules/core/services/auth.service';
 import { LanguageService } from './app-modules/core/services/language.service';
 import { AuthenticationService } from './login/authentication.service';
@@ -75,24 +56,29 @@ import { MaterialModule } from './app-modules/core/material.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { HttpInterceptorService } from './app-modules/core/services/http-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SetPasswordComponent } from './set-password/set-password.component';
+import { SetSecurityQuestionsComponent } from './set-security-questions/set-security-questions.component';
+import { RedirInComponent } from './redir-in/redir-in.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ServiceComponent,
-    // ResetPasswordComponent,
-    // SetPasswordComponent,
-    // SetSecurityQuestionsComponent,
+    ResetPasswordComponent,
+    SetPasswordComponent,
+    SetSecurityQuestionsComponent,
     FacilitySelectionComponent,
-    // RedirInComponent,
+    RedirInComponent,
     LoadStoreDetailsComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    // HttpModule,
-    // Md2Module,
     BrowserAnimationsModule,
+    MatGridListModule,
     AppRoutingModule,
     MatDialogModule,
     MatFormFieldModule,
@@ -113,7 +99,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     MatProgressSpinnerModule,
     MaterialModule,
     CoreModule.forRoot(),
-    // Ng2GoogleChartsModule
   ],
   providers: [
     AuthenticationService,

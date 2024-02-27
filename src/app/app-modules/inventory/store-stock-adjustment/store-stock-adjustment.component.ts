@@ -25,6 +25,7 @@ import {
   FormGroup,
   FormArray,
   AbstractControl,
+  Validators,
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -50,7 +51,7 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
   isMainStore = false;
   lastUpdatedStockDate: any;
   // dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
-  dataSource!: MatTableDataSource<AbstractControl>;
+  // dataSource!: MatTableDataSource<AbstractControl>;
 
   displayedColumns: string[] = [
     'itemName',
@@ -60,7 +61,9 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
     'adjustmentQuantity',
     'qOHAfterAdjustment',
     'reason',
+    'action',
   ];
+  stockItemName: any;
 
   constructor(
     private fb: FormBuilder,
@@ -71,9 +74,19 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
     private confirmationService: ConfirmationService,
     private inventoryService: InventoryService,
   ) {}
+  dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {
-    this.storeStockAdjustmentForm = this.createStoreStockAdjustmentForm();
+    // this.storeStockAdjustmentForm = this.createStoreStockAdjustmentForm();
+    this.storeStockAdjustmentForm = this.fb.group({
+      refNo: [''],
+      adjustmentDate: { value: new Date(), disabled: true },
+      stockAdjustmentDraftID: [''],
+      draftDesc: [''],
+      stockAdjustmentList: this.fb.array([]),
+      // stockAdjustmentList: this.fb.array([this.initStockAdjustmentList()]),
+    });
+    this.initStockAdjustmentList();
     this.draftID = this.route.snapshot.paramMap.get('draftID');
     this.fetchLanguageResponse();
 
@@ -87,6 +100,13 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
     const isMainStore: any = localStorage.getItem('facilityDetail');
     this.isMainStore = JSON.parse(isMainStore).isMainFacility;
     this.showLastUpdatedStockLog();
+    this.loadStockAdjData();
+  }
+
+  loadStockAdjData() {
+    const dataFromFun: any = this.stroreStockTableData();
+    console.log('dataFromFun####', dataFromFun);
+    this.dataSource.data = dataFromFun;
   }
 
   createStoreStockAdjustmentForm() {
@@ -95,52 +115,80 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
       adjustmentDate: { value: new Date(), disabled: true },
       stockAdjustmentDraftID: null,
       draftDesc: null,
-      stockAdjustmentList: this.fb.array([this.initStockAdjustmentList()]),
     });
   }
 
   initStockAdjustmentList() {
+    const frmArrStoreAdj = this.storeStockAdjustmentForm.get(
+      'stockAdjustmentList',
+    ) as FormArray;
+    frmArrStoreAdj.push(
+      this.fb.group({
+        itemStockEntryID: [''],
+        itemID: [''],
+        itemName: [''],
+        batchID: [''],
+        quantityInHand: [''],
+        adjustmentType: [''],
+        adjustedQuantity: [''],
+        qohAfterAdjustment: [''],
+        reason: [''],
+        deleted: [''],
+        stockAdjustmentDraftID: [''],
+        sADraftItemMapID: [''],
+      }),
+    );
+  }
+  initPhysicalStockForm() {
     return this.fb.group({
-      itemStockEntryID: null,
-      itemID: null,
-      itemName: null,
-      batchID: null,
-      quantityInHand: null,
-      adjustmentType: null,
-      adjustedQuantity: null,
-      qohAfterAdjustment: null,
-      reason: null,
-      deleted: false,
-      stockAdjustmentDraftID: null,
-      sADraftItemMapID: null,
+      itemStockEntryID: [''],
+      itemID: [''],
+      itemName: [''],
+      batchID: [''],
+      quantityInHand: [''],
+      adjustmentType: [''],
+      adjustedQuantity: [''],
+      qohAfterAdjustment: [''],
+      reason: [''],
+      deleted: [''],
+      stockAdjustmentDraftID: [''],
+      sADraftItemMapID: [''],
     });
   }
 
-  stroreStockTableData(): AbstractControl[] {
+  stroreStockTableData(): any {
     return (
       this.storeStockAdjustmentForm.get('stockAdjustmentList') as FormArray
     ).controls;
   }
-  // addToStockAdjustmentList() {
-  //   const stockAdjustmentFormArray = this.storeStockAdjustmentForm.get('stockAdjustmentList') as FormArray;
-  //   stockAdjustmentFormArray.push(this.initStockAdjustmentList());
-  //   this.dataSource.data = stockAdjustmentFormArray.value;
-  // }
 
+  get stockAdjustmentList() {
+    return this.storeStockAdjustmentForm.get(
+      'stockAdjustmentList',
+    ) as FormArray;
+  }
+
+  refresh(event: any, stock: any) {
+    console.log('event##', event);
+    stock.controls['itemName'].setValue(event.target.value);
+    console.log('stock', stock);
+    console.log('STOCK##', stock);
+    this.dataSource.data = this.stroreStockTableData();
+  }
   addToStockAdjustmentList() {
-    const stockAdjustmentFormArray = this.storeStockAdjustmentForm.controls[
-      'stockAdjustmentList'
-    ] as FormArray;
-    stockAdjustmentFormArray.push(this.initStockAdjustmentList());
+    this.stockAdjustmentList.push(this.initPhysicalStockForm());
+    this.loadStockAdjData();
   }
 
   removeFromStockAdjustmentList(index: any, stockForm?: FormGroup) {
-    const stockAdjustmentFormArray = this.storeStockAdjustmentForm.controls[
-      'stockAdjustmentList'
-    ] as FormArray;
+    const stockArrForm = this.storeStockAdjustmentForm.get(
+      'stockAdjustmentList',
+    ) as FormArray;
 
-    if (stockAdjustmentFormArray.length > 1) {
-      stockAdjustmentFormArray.removeAt(index);
+    if (stockArrForm.length > 1) {
+      stockArrForm.removeAt(index);
+      // stockForm.clear();
+      this.loadStockAdjData();
     } else {
       if (stockForm) {
         stockForm.reset();
@@ -148,11 +196,6 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
       }
     }
   }
-  // removeFromStockAdjustmentList(index: any) {
-  //   const stockAdjustmentFormArray = this.storeStockAdjustmentForm.get('stockAdjustmentList') as FormArray;
-  //   stockAdjustmentFormArray.removeAt(index);
-  //   this.dataSource.data = stockAdjustmentFormArray.value;
-  // }
 
   submitStockAdjustmentDraft(storeStockAdjustmentForm: FormGroup) {
     const storeStockAdjustment = JSON.parse(
@@ -270,42 +313,6 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
     });
   }
 
-  // getStockAdjustmentDraftDetails(draftID: any) {
-  //   const temp = parseInt(draftID);
-  //   this.inventoryService
-  //     .getStockAdjustmentDraftDetails(temp)
-  //     .subscribe((response) => {
-  //       const stockAdjusmentList = response.stockAdjustmentItemDraftEdit;
-  //       const stockAdjustmentFormArray = this.storeStockAdjustmentForm.controls[
-  //         'stockAdjustmentList'
-  //       ] as FormArray;
-
-  //       for (let i = 0; i < stockAdjusmentList.length; i++) {
-  //         stockAdjusmentList[i].adjustmentType = stockAdjusmentList[i].isAdded
-  //           ? 'Receipt'
-  //           : 'Issue';
-  //         stockAdjusmentList[i].stockAdjustmentDraftID =
-  //           response.stockAdjustmentDraftID;
-  //         stockAdjustmentFormArray.at(i).patchValue(stockAdjusmentList[i]);
-  //         (<FormGroup>stockAdjustmentFormArray.at(i)).controls[
-  //           'itemName'
-  //         ].disable();
-  //         this.calculateQOHAfterAdjustment(
-  //           stockAdjustmentFormArray.at(i) as FormGroup,
-  //         );
-  //         if (stockAdjustmentFormArray.length < stockAdjusmentList.length)
-  //           this.addToStockAdjustmentList();
-  //       }
-
-  //       this.storeStockAdjustmentForm.patchValue({
-  //         adjustmentDate: new Date(response.createdDate),
-  //         refNo: response.refNo,
-  //         stockAdjustmentDraftID: response.stockAdjustmentDraftID,
-  //         draftDesc: response.draftDesc,
-  //       });
-  //     });
-  // }
-
   getStockAdjustmentDraftDetails(draftID: any) {
     const temp = parseInt(draftID);
     this.inventoryService
@@ -351,13 +358,6 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
     }
   }
 
-  // resetStockAdjustmentFormArray() {
-  //   const stockAdjustmentFormArray = this.storeStockAdjustmentForm.controls[
-  //     'stockAdjustmentList'
-  //   ] as FormArray;
-  //   stockAdjustmentFormArray.controls.length = 0;
-  //   this.addToStockAdjustmentList();
-  // }
   resetStockAdjustmentFormArray() {
     const stockAdjustmentFormArray = this.storeStockAdjustmentForm.get(
       'stockAdjustmentList',
@@ -366,14 +366,9 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
     this.addToStockAdjustmentList();
   }
 
-  // resetStoreStockAdjustmentForm() {
-  //   this.resetStockAdjustmentFormArray();
-  //   this.storeStockAdjustmentForm.reset({ adjustmentDate: new Date() });
-  // }
-
   resetStoreStockAdjustmentForm() {
-    this.resetStockAdjustmentFormArray();
     this.storeStockAdjustmentForm.reset({ adjustmentDate: new Date() });
+    this.resetStockAdjustmentFormArray();
   }
 
   goBack() {

@@ -20,7 +20,13 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormArray,
+  FormControl,
+  FormGroup,
+  AbstractControl,
+} from '@angular/forms';
 import { ConfirmationService } from './../../services/confirmation.service';
 import { LanguageService } from '../../services/language.service';
 import { SetLanguageComponent } from '../set-language.component';
@@ -54,10 +60,8 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
 
   loadtoForm(items: any) {
     const formArray = this.initBatchListArray(items, this.editSelection);
-    console.log(formArray.value, 'noted');
-    this.itemsForm.addControl('formArray', formArray);
+    this.itemsForm?.addControl('formArray', formArray);
     this.setDispensed(formArray.value);
-    console.log(this.itemsForm.value);
   }
   setDispensed(formArray: any, index = -1) {
     this.checkQuant(formArray, index);
@@ -72,8 +76,8 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
         this.currentLanguageSet.inventory.dispenseQuantityPrescribed,
         'warn',
       );
-      const formItems = <FormArray>this.itemsForm.controls['formArray'];
-      const currentGroup: FormGroup = <FormGroup>formItems.at(index);
+      const formItems = <FormArray>this.itemsForm?.controls['formArray'];
+      const currentGroup: FormGroup = <FormGroup>formItems?.at(index);
       currentGroup.patchValue({
         quantity: null,
       });
@@ -119,9 +123,6 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
     console.log(val);
     const selection = val.selection;
     this.setEnable(index);
-    // if (this.editSelection == 0 && !selection) {
-    //   this.confirmationService.alert('Please select the batch first', 'info');
-    // }
   }
 
   setEnable(index: any) {
@@ -171,6 +172,11 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
     this.languageComponent = new SetLanguageComponent(this.http_service);
     this.languageComponent.setLanguage();
     this.currentLanguageSet = this.languageComponent.currentLanguageObject;
+  }
+
+  getRxBatch(): AbstractControl[] | null {
+    const getRxBatch = this.itemsForm.get('formArray');
+    return getRxBatch instanceof FormArray ? getRxBatch.controls : null;
   }
   // -----End------
 }

@@ -13,3 +13,17 @@
 .submit{
     top: 10px;
 }
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+ 
+.matCardService {
+    width: 500px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    align-items: center;
+    min-height: 240px;
+  }

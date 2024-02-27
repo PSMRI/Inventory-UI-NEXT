@@ -1,10 +1,13 @@
 <section class="container-fluid">
   <section class="row m-t-10 no-gutters">
-    <div class="col-xs-12 col-sm-4 box">
-      <h4>{{ currentLanguageSet?.inventory?.previousPatientReturn }}</h4>
+    <div class="col-xs-12 col-sm-4 box" style="padding-top: 12px">
+      <h4 style="font-size: larger">
+        {{ currentLanguageSet?.inventory?.previousPatientReturn }}
+      </h4>
     </div>
     <div class="col-xs-12 col-sm-3 box">
-      <mat-form-field class="input-full-width">
+      <mat-form-field class="input-full-width" style="padding: 2px">
+        <mat-label>{{ currentLanguageSet?.inventory?.fromDate }}</mat-label>
         <input
           matInput
           [matDatepicker]="fromDatePicker"
@@ -15,15 +18,15 @@
           ngModel
         />
         <mat-datepicker-toggle
-          matSuffix
+          matPrefix
           [for]="fromDatePicker"
         ></mat-datepicker-toggle>
         <mat-datepicker #fromDatePicker></mat-datepicker>
       </mat-form-field>
-      <!-- <md2-datepicker class="input-full-width" autocomplete="off" placeholder="{{currentLanguageSet?.inventory?.fromDate}}" [(ngModel)]="fromDate" [max]="today" #startDate="ngModel" ngModel></md2-datepicker> -->
     </div>
     <div class="col-xs-12 col-sm-3 box">
-      <mat-form-field class="input-full-width">
+      <mat-form-field class="input-full-width" style="padding: 2px">
+        <mat-label>{{ currentLanguageSet?.inventory?.toDate }}</mat-label>
         <input
           matInput
           [matDatepicker]="toDatePicker"
@@ -34,12 +37,11 @@
           ngModel
         />
         <mat-datepicker-toggle
-          matSuffix
+          matPrefix
           [for]="toDatePicker"
         ></mat-datepicker-toggle>
         <mat-datepicker #toDatePicker></mat-datepicker>
       </mat-form-field>
-      <!-- <md2-datepicker class="input-full-width" autocomplete="off" placeholder="{{currentLanguageSet?.inventory?.toDate}}" [(ngModel)]="toDate" [max]="today"  #endDate="ngModel" ngModel></md2-datepicker> -->
       <span
         class="errorText f-s-10 p-l-10"
         *ngIf="endDate.value < startDate.value"
@@ -48,11 +50,9 @@
     </div>
     <div class="col-xs-12 col-sm-2 box">
       <button
-        class="previous-btn"
         mat-raised-button
         [disabled]="!fromDate || !toDate || endDate.value < startDate.value"
         type="button"
-        color="accent"
         (click)="viewRecords()"
       >
         {{ currentLanguageSet?.inventory?.viewRecords }}
@@ -75,71 +75,139 @@
                   name="filterTerm"
                   (keyup)="filterPatientReturnList(filterTerm)"
                 />
-                <mat-icon class="mdIcon" mdSuffix>search</mat-icon>
+                <mat-icon class="mdIcon" matSuffix>search</mat-icon>
               </mat-form-field>
             </div>
             <section class="col-xs-12">
               <div class="table-responsive">
-                <!-- <table [md2Data]="filteredPatientReturnList" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1" class="table table-striped responsive-table-view" aria-describedby="patientReturnBatchDetails">
-                  <caption></caption> 
-                  <thead>
-                    <tr>
-                      <th id=""></th>
-                      <th id="patientName">{{currentLanguageSet?.inventory?.patientName}}</th>
-                      <th id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
-                      <th id="batchNo">{{currentLanguageSet?.itemDispense?.batchNo}}</th>
-                      <th id="dateOfIssue">{{currentLanguageSet?.inventory?.dateOfIssue}}</th>
-                      <th id="dateOfReturn">{{currentLanguageSet?.inventory?.dateOfReturn}}</th>
-                      <th id="quantityinHand">{{currentLanguageSet?.itemDispense?.quantityinHand}}</th>
-                      
+                <table
+                  mat-table
+                  class="mat-elevation-z8"
+                  aria-describedby="patientReturnBatchDetails"
+                  [dataSource]="filteredPatientReturnList"
+                >
+                  <ng-container matColumnDef="sNo">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.sNo }}
+                    </th>
+                    <td mat-cell *matCellDef="let return; let i = index">
+                      {{ i + 1 }}
+                    </td>
+                  </ng-container>
 
-                    </tr>
-                  </thead>
-                  <ng-template [ngIf]="filteredPatientReturnList && filteredPatientReturnList.length == 0">
-                    <tbody>
-                      <tr *ngFor="let row of blankTable">
-                        <td> &nbsp; </td>
-                        <td> &nbsp; </td>
-                        <td> &nbsp; </td>
-                        <td> &nbsp; </td>
-                        <td> &nbsp; </td>
-                        <td> &nbsp; </td>
-                        <td> &nbsp; </td>
-                      </tr>
-                    </tbody>
-                  </ng-template>
-                  <ng-template [ngIf]="filteredPatientReturnList && filteredPatientReturnList.length == 0">
-                    <tbody>
-                      <tr>
-                        <td colspan="7" style="text-align: center; font-size: 16px;">
-                          <strong>{{currentLanguageSet?.inventory?.norecordsfound}}</strong>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </ng-template>
-                  <tbody>
-                    <tr *ngFor="let return of md2.data">
-                      <td data-title="S.No">{{ filteredPatientReturnList.indexOf(return)+1 }}</td>
-                      <td data-title="Patient Name">{{return?.patientName}}</td>
-                      <td data-title="Item Name">{{return?.itemName}}</td>
-                      <td data-title="Batch No.">{{return?.batchNo}}</td>
-                      <td data-title="Date Of Issue">{{return?.dateofIssue | istDate: 'dd/MM/yyyy'}}</td>
-                      <td data-title="Date Of Return">{{return?.returnDate | istDate: 'dd/MM/yyyy'}}</td>
-                      <td data-title="Return Quantity">{{return?.issuedQuantity}}</td>
+                  <ng-container matColumnDef="patientName">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.patientName }}
+                    </th>
+                    <td mat-cell *matCellDef="let return">
+                      {{ return?.patientName }}
+                    </td>
+                  </ng-container>
 
-                    </tr>
-                  </tbody>
-                  <tfoot>
-                    <tr *ngIf="filteredPatientReturnList.length > 0">
-                      <td colspan="4" class="vertical-align-middle total-count">
-                        <div> {{currentLanguageSet?.inventory?.totalCount}} : {{ filteredPatientReturnList.length }}</div>
-                      </td>
-                      <td colspan="3" style="text-align: right">
-                        <md2-pagination></md2-pagination>
-                      </td>
-                    </tr>
-                  </tfoot>
-                </table> -->
+                  <ng-container matColumnDef="itemName">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.itemName }}
+                    </th>
+                    <td mat-cell *matCellDef="let return">
+                      {{ return?.itemName }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="batchNo">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.itemDispense?.batchNo }}
+                    </th>
+                    <td mat-cell *matCellDef="let return">
+                      {{ return?.batchNo }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="dateOfIssue">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.dateOfIssue }}
+                    </th>
+                    <td mat-cell *matCellDef="let return">
+                      {{ return?.dateofIssue | istDate: "dd/MM/yyyy" }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="dateOfReturn">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.dateOfReturn }}
+                    </th>
+                    <td mat-cell *matCellDef="let return">
+                      {{ return?.returnDate | istDate: "dd/MM/yyyy" }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="issuedQuantity">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.itemDispense?.quantityinHand }}
+                    </th>
+                    <td mat-cell *matCellDef="let return">
+                      {{ return?.issuedQuantity }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container
+                    *ngIf="filteredPatientReturnList.data.length > 0"
+                  >
+                    <div class="total-count">
+                      {{ currentLanguageSet?.inventory?.totalCount }} :
+                      {{ filteredPatientReturnList.data.length }}
+                    </div>
+                    <div style="text-align: right">
+                      <mat-paginator
+                        [pageSizeOptions]="[5, 10, 25]"
+                        [pageSize]="5"
+                        showFirstLastButtons
+                      ></mat-paginator>
+                    </div>
+                  </ng-container>
+
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="[
+                      'sNo',
+                      'patientName',
+                      'itemName',
+                      'batchNo',
+                      'dateOfIssue',
+                      'dateOfReturn',
+                      'issuedQuantity'
+                    ]"
+                  ></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="
+                      let row;
+                      columns: [
+                        'sNo',
+                        'patientName',
+                        'itemName',
+                        'batchNo',
+                        'dateOfIssue',
+                        'dateOfReturn',
+                        'issuedQuantity'
+                      ]
+                    "
+                  ></tr>
+                </table>
+                <div
+                  *ngIf="
+                    filteredPatientReturnList &&
+                    filteredPatientReturnList.data.length === 0
+                  "
+                  class="noRecord"
+                >
+                  <tr>
+                    <td colspan="6">
+                      <strong>{{
+                        currentLanguageSet?.inventory?.norecordsfound
+                      }}</strong>
+                    </td>
+                  </tr>
+                </div>
               </div>
             </section>
           </div>

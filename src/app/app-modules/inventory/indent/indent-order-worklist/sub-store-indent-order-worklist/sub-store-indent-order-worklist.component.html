@@ -1,0 +1,196 @@
+<section class="container-fluid">
+  <section class="row m-t-10 no-gutters">
+    <div class="col-xs-12 col-sm-6">
+      <h4>{{ currentLanguageSet?.inventory?.subStoreIndentOrderWorklist }}</h4>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <button
+        mat-raised-button
+        class="pull-right button-full-width"
+        type="button"
+        color="primary"
+        (click)="routeToRaiseRequest()"
+      >
+        {{ currentLanguageSet?.inventory?.raiseRequest }}
+      </button>
+    </div>
+  </section>
+
+  <section class="row m-t-20">
+    <div class="col-xs-12">
+      <mat-card>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-xs-12 m-t-10">
+              <div class="table-responsive">
+                <table mat-table [dataSource]="substoreOrderlist">
+                  <ng-container matColumnDef="SNo">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ substoreOrderlist.indexOf(element) + 1 }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="indentID">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.indentID }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.indentID }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="referenceNo">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.referenceNo }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.refNo }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="requestDate">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.requestDate }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.createdDate | utcDate | date: "dd/MM/yyyy" }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="view">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.view }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      <mat-icon (click)="viewItemListDetails(element)"
+                        >remove_red_eye</mat-icon
+                      >
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.bendetails?.edit }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      <mat-icon
+                        *ngIf="
+                          element.status === 'Pending' &&
+                          (element.processed === 'N' ||
+                            element.processed === 'U')
+                        "
+                        (click)="goToUpdateIndentRequest(element)"
+                        >edit</mat-icon
+                      >
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.bendetails?.action }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      <button
+                        mat-raised-button
+                        class="button-full-width"
+                        type="button"
+                        color="accent"
+                        *ngIf="element.status === 'Issued'"
+                        (click)="receiveIndent(element)"
+                      >
+                        {{ currentLanguageSet?.inventory?.receive }}
+                      </button>
+                      <button
+                        mat-raised-button
+                        class="button-full-width"
+                        type="button"
+                        color="primary"
+                        *ngIf="element.status === 'Pending'"
+                        (click)="cancelIndent(element)"
+                      >
+                        {{ currentLanguageSet?.inventory?.cancel }}
+                      </button>
+                      <button
+                        mat-raised-button
+                        class="button-full-width"
+                        type="button"
+                        color="primary"
+                        *ngIf="element.status === 'Cancelled'"
+                        [disabled]="true"
+                      >
+                        {{ currentLanguageSet?.inventory?.cancelled }}
+                      </button>
+                      <button
+                        mat-raised-button
+                        class="button-full-width"
+                        type="button"
+                        color="primary"
+                        *ngIf="element.status === 'Closed'"
+                        [disabled]="true"
+                      >
+                        {{ currentLanguageSet?.inventory?.closed }}
+                      </button>
+                      <button
+                        mat-raised-button
+                        class="button-full-width"
+                        type="button"
+                        color="primary"
+                        *ngIf="element.status === 'Rejected'"
+                        [disabled]="true"
+                      >
+                        {{ currentLanguageSet?.inventory?.rejected }}
+                      </button>
+                    </td>
+                  </ng-container>
+
+                  <ng-container *ngIf="substoreOrderlist.length === 0">
+                    <td
+                      mat-cell
+                      *matCellDef="let element"
+                      colspan="6"
+                      style="text-align: center; font-size: 16px"
+                    >
+                      <strong>{{
+                        currentLanguageSet?.inventory?.norecordsfound
+                      }}</strong>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matFooterRow>
+                    <tr *ngIf="substoreOrderlist.length > 0">
+                      <td
+                        mat-cell
+                        *matCellDef="let element"
+                        colspan="3"
+                        class="total-count"
+                      >
+                        <div>
+                          {{ currentLanguageSet?.inventory?.totalCount }} :
+                          {{ substoreOrderlist.length }}
+                        </div>
+                      </td>
+                      <td>
+                        <mat-paginator
+                          [pageSizeOptions]="[5, 10, 15, 20]"
+                          showFirstLastButtons
+                          aria-label="Select page of sub store Orderlist"
+                        >
+                        </mat-paginator>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumns"
+                  ></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+</section>

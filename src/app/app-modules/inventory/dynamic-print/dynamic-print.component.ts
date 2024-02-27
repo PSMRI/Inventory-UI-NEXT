@@ -56,8 +56,6 @@ export class DynamicPrintComponent implements OnInit, DoCheck {
     this.today = new Date();
     this.fetchLanguageResponse();
     const dataStore = this.route.snapshot.params['printablePage'];
-    console.log('dataStore', dataStore);
-
     // this.printableData = this.dataStorageService[dataStore];
     console.log('printableData', JSON.stringify(this.printableData, null, 4));
     this.title = this.printableData.title;

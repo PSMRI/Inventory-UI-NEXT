@@ -19,11 +19,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, Inject, DoCheck } from '@angular/core';
+import { Component, OnInit, Inject, DoCheck, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { InventoryService } from '../../shared/service/inventory.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-view-stock-adjustment-details',
@@ -35,9 +37,28 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
 
   stock: any;
   adjustmentList: any = [];
-  filteredAdjustmentList: any = [];
+  // filteredAdjustmentList: any = [];
+  filteredAdjustmentList = new MatTableDataSource<any>();
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  stockAdjustmentList = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<any>();
+  dataSource2 = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  displayedColumns: string[] = [
+    'stockAdjustmentID',
+    'refNo',
+    'createdBy',
+    'createdDate',
+  ];
+
+  storeListColumns: string[] = [
+    'itemName',
+    'batchNo',
+    'quantityOnHand',
+    'adjustmentType',
+    'reason',
+  ];
 
   constructor(
     private http_service: LanguageService,
@@ -59,16 +80,29 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
       .getStockAdjustmentDetails(temp)
       .subscribe((response) => {
         this.stock = response;
-        this.adjustmentList = response.stockAdjustmentItemDraftEdit.slice();
-        this.filteredAdjustmentList =
-          response.stockAdjustmentItemDraftEdit.slice();
+        console.log('response##', response);
+        this.stockAdjustmentList.data.push(this.stock);
+        console.log(
+          'this.stockAdjustmentList.data',
+          this.stockAdjustmentList.data,
+        );
+        this.dataSource = new MatTableDataSource<any>(
+          this.stockAdjustmentList.data,
+        );
+        this.adjustmentList.push(response.stockAdjustmentItemDraftEdit);
+        this.filteredAdjustmentList.data.push(this.stock);
+        this.dataSource2 = new MatTableDataSource<any>(
+          this.filteredAdjustmentList.data[0].data.stockAdjustmentItemDraftEdit,
+        );
+        this.dataSource2.paginator = this.paginator;
       });
   }
 
   filterDetails(filterTerm: any) {
-    if (!filterTerm) this.filteredAdjustmentList = this.adjustmentList.slice();
+    if (!filterTerm)
+      this.filteredAdjustmentList.data = this.adjustmentList.slice();
     else {
-      this.filteredAdjustmentList = [];
+      this.filteredAdjustmentList.data = [];
       this.adjustmentList.forEach((item: any) => {
         for (const key in item) {
           if (
@@ -85,18 +119,18 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
                 'receipt'.indexOf(filterTerm.toLowerCase()) >= 0 &&
                 item[key]
               ) {
-                this.filteredAdjustmentList.push(item);
+                this.filteredAdjustmentList.data.push(item);
                 break;
               } else if (
                 'issue'.indexOf(filterTerm.toLowerCase()) >= 0 &&
                 !item[key]
               ) {
-                this.filteredAdjustmentList.push(item);
+                this.filteredAdjustmentList.data.push(item);
                 break;
               }
             }
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
-              this.filteredAdjustmentList.push(item);
+              this.filteredAdjustmentList.data.push(item);
               break;
             }
           }

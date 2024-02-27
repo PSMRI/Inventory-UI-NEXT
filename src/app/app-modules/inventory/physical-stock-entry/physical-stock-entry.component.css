@@ -38,6 +38,11 @@
     cursor: pointer;
 }
 
+#topBtn {
+    display: flex; 
+    justify-content: flex-end;
+    padding-top: 12px;
+}
 @media screen and (max-width: 768px) {
     .button-full-width {
         width: 100%;

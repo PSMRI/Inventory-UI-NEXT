@@ -1,0 +1,57 @@
+<div class="container-fluid">
+  <div class="row m-t-10">
+    <div class="col-xs-12 col-sm-6">
+      <h4>{{ currentLanguageSet?.inventory?.yearlyReport }}</h4>
+    </div>
+  </div>
+
+  <div class="m-b-10">
+    <form [formGroup]="yearlyForm">
+      <mat-form-field>
+        <mat-label>
+          {{ currentLanguageSet?.inventory?.selectyear }}
+        </mat-label>
+        <mat-select
+          [style.width]="'100%'"
+          placeholder="{{ currentLanguageSet?.inventory?.selectyear }}"
+          name="year"
+          id="year"
+          formControlName="year"
+          required
+        >
+          <mat-option *ngFor="let year of years" [value]="year">{{
+            year
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>
+          {{ currentLanguageSet?.inventory?.facility }}
+        </mat-label>
+        <mat-select
+          [style.width]="'100%'"
+          placeholder="{{ currentLanguageSet?.inventory?.facility }}"
+          class="input-full-width"
+          formControlName="facilityName"
+        >
+          <mat-option *ngFor="let item of facilities" [value]="item">{{
+            item
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- </div> -->
+    </form>
+    <div class="m-t-10 col-xs-12 col-sm-12 col-md-12 col-lg-3">
+      <button
+        mat-raised-button
+        color="accent"
+        type="submit"
+        [disabled]="!yearlyForm.valid"
+        (click)="downloadReport(true)"
+      >
+        {{ currentLanguageSet?.inventory?.download }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -65,8 +65,12 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
   systemDispenseForm!: FormGroup;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
-  displayedColumns: string[] = ['itemName'];
-  dataSource!: MatTableDataSource<AbstractControl>;
+  displayedColumns: string[] = [
+    'itemName',
+    'quantity',
+    'totalCostPrice',
+    'actions',
+  ];
   constructor(
     private inventoryService: InventoryService,
     private confirmationService: ConfirmationService,
@@ -76,40 +80,27 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
     private dialog: MatDialog,
     private fb: FormBuilder,
   ) {}
+  dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {
-    this.systemDispenseForm = this.createSystemDispenseForm();
+    // this.systemDispenseForm = this.createSystemDispenseForm();
+    this.systemDispenseForm = this.fb.group({
+      systemItemDispenseList: this.fb.array([]),
+    });
+    this.initSystemDispense();
     this.fetchLanguageResponse();
+    this.loadSystemMedicineData();
+    console.log('ERRR1', this.beneficaryDetail);
   }
 
-  systemMedicineDataSource(): AbstractControl[] {
+  loadSystemMedicineData() {
+    const dataFromFun: any = this.systemMedicineDataSource();
+    this.dataSource.data = dataFromFun;
+  }
+
+  systemMedicineDataSource(): any {
     return (this.systemDispenseForm.get('systemItemDispenseList') as FormArray)
       .controls;
-  }
-
-  initSystemDispenseMode() {
-    const systemItemDispenseList = <FormArray>(
-      this.systemDispenseForm.controls['systemItemDispenseList']
-    );
-    systemItemDispenseList.push(this.initSystemDispense());
-  }
-  removeItem(i: any, itemForm: FormGroup) {
-    const systemItemDispenseList = <FormArray>(
-      this.systemDispenseForm.controls['systemItemDispenseList']
-    );
-    console.log('systemItemDispenseList.length', systemItemDispenseList.length);
-    if (systemItemDispenseList.length == 1 && !!itemForm) {
-      this.systemDispenseForm.reset();
-      console.log('here');
-      // itemForm.patchValue({
-      //   itemName: null,
-      //   itemID: null,
-      //   quantityInHand: null,
-      //   quantityRequired: null
-      // })
-    } else {
-      systemItemDispenseList.removeAt(i);
-    }
   }
 
   checkValidity(systemDispenseForm: FormGroup) {
@@ -120,13 +111,25 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
       return true;
     }
   }
-  createSystemDispenseForm() {
-    return this.fb.group({
-      systemItemDispenseList: new FormArray([this.initSystemDispense()]),
-    });
+
+  get systemItemDispenseList() {
+    return this.systemDispenseForm.get('systemItemDispenseList') as FormArray;
   }
 
-  initSystemDispense(): FormGroup {
+  initSystemDispense() {
+    const frmArrSystemDispense = this.systemDispenseForm.get(
+      'systemItemDispenseList',
+    ) as FormArray;
+    frmArrSystemDispense.push(
+      this.fb.group({
+        itemName: null,
+        itemID: null,
+        quantityInHand: null,
+        quantityRequired: null,
+      }),
+    );
+  }
+  initSystemDispenseForm(): FormGroup {
     return this.fb.group({
       itemName: null,
       itemID: null,
@@ -156,6 +159,39 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
     });
     return itemList;
   }
+  initSystemDispenseMode() {
+    this.systemItemDispenseList.push(this.initSystemDispenseForm());
+    this.loadSystemMedicineData();
+  }
+  removeItem(i: any, itemForm: FormGroup) {
+    const stockForm = this.systemDispenseForm.get(
+      'systemItemDispenseList',
+    ) as FormArray;
+    console.log('stockForm', stockForm);
+    console.log('stock', itemForm);
+
+    if (stockForm.length > 1) {
+      stockForm.removeAt(i);
+      // stockForm.clear();
+      this.loadSystemMedicineData();
+    } else {
+      if (itemForm) {
+        itemForm.reset();
+        itemForm.controls['itemName'].enable();
+      }
+    }
+
+    const systemItemDispenseList = <FormArray>(
+      this.systemDispenseForm.controls['systemItemDispenseList']
+    );
+    console.log('systemItemDispenseList.length', systemItemDispenseList.length);
+    if (systemItemDispenseList.length == 1 && !!itemForm) {
+      this.systemDispenseForm.reset();
+      console.log('here');
+    } else {
+      systemItemDispenseList.removeAt(i);
+    }
+  }
 
   allocateBatch() {
     const itemList = this.createItemList();
@@ -166,6 +202,7 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
           if (response.data.length > 0) {
             const itemBatchList = response.data;
             this.openModalToShowBatchList(itemBatchList);
+            console.log('ERRR2', this.beneficaryDetail);
           } else {
             this.confirmationService.alert(
               this.currentLanguageSet.inventory.itembatchlistisempty,
@@ -183,7 +220,7 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
   }
 
   openModalToShowBatchList(itemBatchList: any) {
-    const mdDialogRef: MatDialogRef<ShowBatchItemComponent> = this.dialog.open(
+    const matDialogRef: MatDialogRef<ShowBatchItemComponent> = this.dialog.open(
       ShowBatchItemComponent,
       {
         data: {
@@ -195,7 +232,7 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
         disableClose: false,
       },
     );
-    mdDialogRef.afterClosed().subscribe(
+    matDialogRef.afterClosed().subscribe(
       (result) => {
         console.log('result', result);
         if (result) {

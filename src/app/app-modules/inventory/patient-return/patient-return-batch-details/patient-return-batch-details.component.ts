@@ -20,12 +20,18 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 import { Component, OnInit, Inject, DoCheck } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  FormArray,
+  AbstractControl,
+} from '@angular/forms';
 import { InventoryService } from './../../../inventory/shared/service/inventory.service';
 import { ConfirmationService } from './../../../core/services/confirmation.service';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-patient-return-batch-details',
@@ -46,6 +52,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
   title!: string;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  dataSource!: MatTableDataSource<AbstractControl>;
 
   constructor(
     public dialogRef: MatDialogRef<PatientReturnBatchDetailsComponent>,
@@ -190,17 +197,10 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
     // const quantityOnBatch = selectedBatch.quantityInHand;
   }
 
-  // calculateDispenseQuantity() {
-  //   const batchList = <FormArray>this.batchForm.controls['batchList'];
-  //   const batchListValue = batchList.value;
-  //   let totalQuantity = 0;
-  //   batchListValue.filter((quantity) => {
-  //     if (quantity.returnQuantity && quantity.returnQuantity != null) {
-  //       totalQuantity = +(totalQuantity) + (+quantity.returnQuantity);
-  //     }
-  //   })
-  //   this.batchForm.patchValue({ quantityDispensed: totalQuantity });
-  // }
+  stroreStockTableData(): AbstractControl[] {
+    return (this.batchForm.get('batchList') as FormArray).controls;
+  }
+
   addBatch() {
     const batchList = <FormArray>this.batchForm.controls['batchList'];
     const tempBatch = batchList.value;

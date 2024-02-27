@@ -13,6 +13,11 @@
     background: #0277bd;
 }
 
+
+/* mat-checkbox--selected {
+    --mat-option-selected-state-label-text-color: #0277bd !important;
+} */
+
 .dialog-title h4 {
     display: inline-block;
 }
@@ -33,6 +38,10 @@
 
 .m-b-20 {
     margin-bottom: 20px;
+}
+.noRecord {
+    text-align: center; font-size: 16px; display: flex;
+    justify-content: center;padding-top: 14px;
 }
 
 @media screen and (max-width: 768px) {

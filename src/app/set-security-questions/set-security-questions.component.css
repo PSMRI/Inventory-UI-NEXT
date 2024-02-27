@@ -1,0 +1,23 @@
+.mdList {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 650px;
+}
+
+.mdCard {
+    width: 600px;
+}
+
+i {
+    margin-top: 18px;
+}
+
+.full-width {
+    width: 90%;
+}
+
+button { 
+    margin: auto;
+    display: block;
+}

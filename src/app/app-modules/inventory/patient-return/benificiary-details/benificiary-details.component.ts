@@ -24,6 +24,7 @@ import { InventoryService } from './../../../inventory/shared/service/inventory.
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-benificiary-details',
@@ -31,9 +32,16 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./benificiary-details.component.css'],
 })
 export class BenificiaryDetailsComponent implements OnInit, DoCheck {
-  beneficiaryDetailsList: any = [];
+  beneficiaryDetailsList = new MatTableDataSource<any>();
+  // beneficiaryDetailsList: any = [];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  displayedColumns: string[] = [
+    'beneficiaryID',
+    'beneficiaryName',
+    'age',
+    'gender',
+  ];
 
   constructor(
     private inventoryService: InventoryService,
@@ -44,9 +52,9 @@ export class BenificiaryDetailsComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     console.log('Data', this.data);
-    this.beneficiaryDetailsList = this.data.beneficiaryDetailsList;
+    this.beneficiaryDetailsList.data = this.data.beneficiaryDetailsList;
     this.fetchLanguageResponse();
-    console.log('this.ben', this.beneficiaryDetailsList);
+    console.log('this.ben', this.beneficiaryDetailsList.data);
   }
 
   loadbeneficiaryDetails(beneficiary: any) {

@@ -35,6 +35,8 @@ import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-la
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ViewStoreSelfConsumptionDetailsComponent } from './view-store-self-consumption-details/view-store-self-consumption-details.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-view-store-self-consumption',
@@ -49,12 +51,21 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
   _dateRangePrevious: Date[] = [];
 
   _consumptionList: any = [];
-  _filteredConsumptionList: any = [];
+  // _filteredConsumptionList: any = [];
+  _filteredConsumptionList = new MatTableDataSource<any>();
   blankTable = [1, 2, 3, 4, 5];
   filterTerm: any;
   searched = false;
   currentLanguageSet: any;
   languageComponent!: SetLanguageComponent;
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  displayedColumns: string[] = [
+    'consumptionID',
+    'refNo',
+    'reason',
+    'createdBy',
+    'createdDate',
+  ];
 
   constructor(
     private location: Location,
@@ -128,9 +139,6 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
   }
 
   updateDate() {
-    // if (this._dateRange !== this._dateRangePrevious) {
-    // this._dateRangePrevious = this._dateRange;
-    // console.log(JSON.stringify(this._dateRange, null, 4), 'callservice');
     this.getPastConsumptions();
 
     // }
@@ -138,21 +146,24 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
 
   loadConsumption(consumptionObject: any) {
     console.log(consumptionObject);
-    // if (consumptionObject) {
-    //   consumptionObject.forEach(element => {
-    //     element.createdDate = moment(element.createdDate).format('DD-MM-YYYY HH:mm A ') || 'Not Available'
-
-    //   });
-    // }
-    this._consumptionList = consumptionObject;
-    this._filteredConsumptionList = consumptionObject;
+    this._consumptionList = consumptionObject.data;
+    this._filteredConsumptionList.data = consumptionObject.data;
+    this._filteredConsumptionList.paginator = this.paginator;
+    console.log(
+      'this._filteredConsumptionList.data',
+      this._filteredConsumptionList.data,
+    );
     this.filterTerm = '';
   }
 
   filterConsumptionList(searchTerm: string) {
-    if (!searchTerm) this._filteredConsumptionList = this._consumptionList;
-    else {
-      this._filteredConsumptionList = [];
+    if (!searchTerm) {
+      this._filteredConsumptionList.data = this._consumptionList;
+      this._filteredConsumptionList.paginator = this.paginator;
+    } else {
+      this._filteredConsumptionList.data = [];
+      this._filteredConsumptionList.paginator = this.paginator;
+
       this._consumptionList.forEach((item: any) => {
         for (const key in item) {
           if (
@@ -163,7 +174,9 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0) {
-              this._filteredConsumptionList.push(item);
+              this._filteredConsumptionList.data.push(item);
+              this._filteredConsumptionList.paginator = this.paginator;
+
               break;
             }
           }

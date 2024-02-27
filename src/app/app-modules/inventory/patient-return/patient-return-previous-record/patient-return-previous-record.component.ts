@@ -27,6 +27,7 @@ import { Location } from '@angular/common';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-patient-return-previous-record',
@@ -40,7 +41,8 @@ export class PatientReturnPreviousRecordComponent implements OnInit, DoCheck {
   patientReturnList: any = [];
 
   filterTerm: any;
-  filteredPatientReturnList: any = [];
+  filteredPatientReturnList = new MatTableDataSource<any>();
+  // filteredPatientReturnList: any = [];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
 
@@ -106,8 +108,11 @@ export class PatientReturnPreviousRecordComponent implements OnInit, DoCheck {
       console.log('res..', response);
       this.patientReturnList = response.data.slice();
       console.log('patientReturnList', this.patientReturnList);
-      this.filteredPatientReturnList = response.data.slice();
-      console.log('filteredPatientReturnList', this.filteredPatientReturnList);
+      this.filteredPatientReturnList.data = response.data.slice();
+      console.log(
+        'filteredPatientReturnList',
+        this.filteredPatientReturnList.data,
+      );
     });
   }
 
@@ -117,9 +122,9 @@ export class PatientReturnPreviousRecordComponent implements OnInit, DoCheck {
 
   filterPatientReturnList(filterTerm: any) {
     if (!filterTerm)
-      this.filteredPatientReturnList = this.patientReturnList.slice();
+      this.filteredPatientReturnList.data = this.patientReturnList.slice();
     else {
-      this.filteredPatientReturnList = [];
+      this.filteredPatientReturnList.data = [];
       this.patientReturnList.forEach((item: any) => {
         for (const key in item) {
           if (
@@ -131,7 +136,7 @@ export class PatientReturnPreviousRecordComponent implements OnInit, DoCheck {
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
-              this.filteredPatientReturnList.push(item);
+              this.filteredPatientReturnList.data.push(item);
               break;
             }
           }

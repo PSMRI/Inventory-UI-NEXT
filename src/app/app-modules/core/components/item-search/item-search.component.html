@@ -1,4 +1,4 @@
-<div class="title">
+<div class="title" style="display: flex; justify-content: space-between">
   <h4>{{ currentLanguageSet?.inventory?.itemSelection }}</h4>
   <button
     mat-icon-button
@@ -12,7 +12,7 @@
 
 <div class="container-fluid">
   <div class="row no-gutters">
-    <div class="col-xs-12 col-sm-4">
+    <div class="col-xs-12 col-sm-4" style="display: flex; align-items: center">
       <mat-form-field class="input-full-width">
         <input
           autocomplete="off"
@@ -25,7 +25,10 @@
         />
       </mat-form-field>
     </div>
-    <div class="col-xs-12 col-sm-8">
+    <div
+      class="col-xs-12 col-sm-8"
+      style="display: flex; align-items: center; padding-left: 10px"
+    >
       <button
         class="search-btn"
         mat-raised-button
@@ -42,47 +45,9 @@
 
   <mat-dialog-content>
     <div class="table-responsive">
-      <!-- <table class="table table-bordered table-striped" [md2Data]="items$ | async" #md2="md2DataTable" [rowsPerPage]="5"
-        [activePage]="1" aria-describedby="itemDetails">
-        <caption></caption><thead>
-          <tr>
-            <th id="itemCode">{{currentLanguageSet?.inventory?.itemCode}}</th>
-            <th id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
-            <th id="itemCategory">{{currentLanguageSet?.inventory?.itemCategory}}</th>
-            <th id="itemForm">{{currentLanguageSet?.inventory?.itemForm}}</th>
-            <th id="pharmacologicalCategory">{{currentLanguageSet?.inventory?.pharmacologicalCategory}}</th>
-            <th id="search">{{currentLanguageSet?.inventory?.strength}}</th>
-            <th id="action">{{currentLanguageSet?.inventory?.action}}</th>
-          </tr> 
-        </thead >
-        <tbody>
-          <tr *ngIf="md2.data?.length === 0">
-            <td colspan="7" style="text-align: center; font-size: 16px">
-              <strong>{{currentLanguageSet?.inventory?.norecordsfound}}</strong>
-            </td>
-          </tr>
-          <tr *ngFor="let item of md2.data">
-            <td data-title="Item Code">{{ item?.itemCode }} </td>
-            <td data-title="Item Name">{{ item?.itemName }} </td>
-            <td data-title="Item Category">{{ item?.itemCategory?.itemCategoryName }} </td>
-            <td data-title="Item Form">{{ item?.itemForm?.itemForm }} </td>
-            <td data-title="Pharmacological Category">{{ item?.pharmacologyCategory?.pharmCategoryName }} </td>
-            <td data-title="Strength">{{ item?.strength ? item?.strength : " "}} {{item?.uom?.uOMName ? item?.uom?.uOMName : " " }} </td>
-            <td class="text-center">
-              <button md-raised-button [mdDialogClose]="item" color="primary">{{currentLanguageSet?.inventory?.select}}</button>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr *ngIf="md2.data?.length > 0">
-            <td colspan="7" class="text-right">
-              <md2-pagination></md2-pagination>
-            </td>
-          </tr>
-        </tfoot>
-      </table> -->
       <table mat-table [dataSource]="dataSource" aria-describedby="itemDetails">
         <!-- Item Code Column -->
+
         <ng-container matColumnDef="itemCode">
           <th mat-header-cell *matHeaderCellDef>
             {{ currentLanguageSet?.inventory?.itemCode }}
@@ -145,7 +110,7 @@
             {{ currentLanguageSet?.inventory?.action }}
           </th>
           <td mat-cell *matCellDef="let item" class="text-center">
-            <button mat-raised-button [matDialogClose]="item">
+            <button mat-raised-button [matDialogClose]="item" class="blueBttn">
               {{ currentLanguageSet?.inventory?.select }}
             </button>
           </td>
@@ -156,28 +121,18 @@
 
         <!-- Data Rows -->
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-        <!-- No Records Found Message -->
-        <ng-container *ngIf="!(items$ | async).length">
-          <tr>
-            <td
-              [attr.colspan]="displayedColumns.length + 1"
-              style="text-align: center; font-size: 16px"
-            >
-              <strong>{{
-                currentLanguageSet?.inventory?.norecordsfound
-              }}</strong>
-            </td>
-          </tr>
-        </ng-container>
-
-        <!-- Footer Row Definition -->
-        <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr> -->
       </table>
-      <!-- Paginator -->
+      <div class="noRecord" *ngIf="!noRecordsFlag">
+        <strong>{{ currentLanguageSet?.inventory?.norecordsfound }}</strong>
+      </div>
+      <div class="total-count" *ngIf="dataSource.data.length > 0">
+        {{ currentLanguageSet?.inventory?.totalCount }} :
+        {{ dataSource.data.length }}
+      </div>
       <mat-paginator
-        [length]="(items$ | async)?.length"
-        [pageSizeOptions]="[5, 10, 25, 100]"
+        [hidden]="dataSource.data.length === 0"
+        [pageSizeOptions]="[5, 10, 25]"
+        [pageSize]="5"
         showFirstLastButtons
       ></mat-paginator>
     </div>

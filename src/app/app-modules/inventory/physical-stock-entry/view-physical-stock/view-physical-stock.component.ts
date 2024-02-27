@@ -36,6 +36,7 @@ import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-la
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-view-physical-stock',
@@ -58,6 +59,7 @@ export class ViewPhysicalStockComponent implements OnInit, DoCheck {
   searched = false;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   displayedColumns: string[] = [
     'entryID',
     'refNo',
@@ -132,14 +134,19 @@ export class ViewPhysicalStockComponent implements OnInit, DoCheck {
     console.log('ENTRIES' + entriesObject.data);
     this._stockEntryList = entriesObject.data;
     this._filteredStockEntryList.data = entriesObject.data;
+    this._filteredStockEntryList.paginator = this.paginator;
     console.log('P1' + this._filteredStockEntryList);
+    console.log('length', this._filteredStockEntryList.data.length);
     this.filterTerm = '';
   }
 
   filterConsumptionList(searchTerm: string) {
-    if (!searchTerm) this._filteredStockEntryList.data = this._stockEntryList;
-    else {
+    if (!searchTerm) {
+      this._filteredStockEntryList.data = this._stockEntryList;
+      this._filteredStockEntryList.paginator = this.paginator;
+    } else {
       this._filteredStockEntryList.data = [];
+      this._filteredStockEntryList.paginator = this.paginator;
       this._stockEntryList.forEach((item: any) => {
         for (const key in item) {
           if (
@@ -152,6 +159,7 @@ export class ViewPhysicalStockComponent implements OnInit, DoCheck {
             if (value.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0) {
               console.log('ITEM', +item);
               this._filteredStockEntryList.data.push(item);
+              this._filteredStockEntryList.paginator = this.paginator;
               console.log('P2' + this._filteredStockEntryList.data);
               break;
             }
@@ -160,24 +168,6 @@ export class ViewPhysicalStockComponent implements OnInit, DoCheck {
       });
     }
   }
-
-  // filterConsumptionList(searchTerm: string) {
-  //   if (!searchTerm) {
-  //     this._filteredStockEntryList.data = this._stockEntryList;
-  //   } else {
-  //     this._filteredStockEntryList.data = this._stockEntryList.filter((item: any) => {
-  //       for (const key in item) {
-  //         if (key == 'phyEntryID' || key == 'refNo' || key == 'status' || key == 'createdBy') {
-  //           const value: string = '' + item[key];
-  //           if (value.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0) {
-  //             return true;
-  //           }
-  //         }
-  //       }
-  //       return false;
-  //     });
-  //   }
-  // }
 
   loadEntryDetails(entry: any) {
     if (entry && entry.phyEntryID) {

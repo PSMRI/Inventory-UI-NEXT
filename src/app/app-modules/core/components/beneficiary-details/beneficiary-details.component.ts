@@ -25,6 +25,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BeneficiaryDetailsService } from '../../services/beneficiary-details.service';
 import { LanguageService } from '../../services/language.service';
 import { SetLanguageComponent } from '../set-language.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-beneficiary-details',
@@ -38,6 +39,7 @@ export class BeneficiaryDetailsComponent implements OnInit, DoCheck, OnDestroy {
   currentLanguageSet: any;
   languageComponent!: SetLanguageComponent;
   healthIDValue!: string;
+  dataList = new MatTableDataSource<any>();
 
   constructor(
     private router: Router,
@@ -60,6 +62,7 @@ export class BeneficiaryDetailsComponent implements OnInit, DoCheck, OnDestroy {
         this.beneficiaryDetailsService.beneficiaryDetails$.subscribe((res) => {
           if (res != null) {
             this.beneficiary = res;
+            this.dataList.data = this.beneficiary;
             if (res.serviceDate) {
               this.today = res.serviceDate;
             }

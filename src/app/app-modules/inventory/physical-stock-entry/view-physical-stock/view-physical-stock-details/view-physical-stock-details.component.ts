@@ -19,8 +19,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, Inject, OnDestroy, DoCheck } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  OnDestroy,
+  DoCheck,
+  ViewChild,
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 
@@ -34,10 +43,13 @@ export class ViewPhysicalStockDetailsComponent
 {
   _filterTerm = '';
   _detailedList: any = [];
-  _filteredDetailedList: any = [];
+  // _filteredDetailedList: any = [];
+  _filteredDetailedList = new MatTableDataSource<any>();
   blankTable = [1, 2, 3, 4, 5];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  dataSourceList = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
   constructor(
     private http_service: LanguageService,
@@ -47,6 +59,7 @@ export class ViewPhysicalStockDetailsComponent
 
   ngOnInit() {
     this.populateStockEntryItems(this.data);
+    // this.dataSourceList.data = this.data;
     this.fetchLanguageResponse();
   }
 
@@ -58,27 +71,32 @@ export class ViewPhysicalStockDetailsComponent
   populateStockEntryItems(data: any) {
     console.log(data);
     if (data && data.entryDetails && data.stockEntry) {
+      // this.dataSourceList.data = this.data.stockEntry;
       const entries = data.entryDetails;
-      // entries.forEach(element => {
-      //   element.createdDate  = moment(element.createdDate).format('DD-MM-YYYY HH:mm A') || 'Not Available'
-      // });
-      this._detailedList = entries;
-      this._filteredDetailedList = entries;
+      const stockEntries = JSON.parse(JSON.stringify(data.stockEntry));
+      this.dataSourceList.data.push(stockEntries);
+      this._detailedList = entries.data;
+      this._filteredDetailedList.data = entries.data;
+      this._filteredDetailedList.paginator = this.paginator;
     }
   }
 
   filterDetails(filterTerm: string) {
     console.log(filterTerm);
-    if (!filterTerm) this._filteredDetailedList = this._detailedList;
-    else {
-      this._filteredDetailedList = [];
+    if (!filterTerm) {
+      this._filteredDetailedList.data = this._detailedList;
+      this._filteredDetailedList.paginator = this.paginator;
+    } else {
+      this._filteredDetailedList.data = [];
+      this._filteredDetailedList.paginator = this.paginator;
       this._detailedList.forEach((item: any) => {
         for (const key in item) {
           if (key != 'item') {
             if (key == 'batchNo' || key == 'quantity') {
               const value: string = '' + item[key];
               if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
-                this._filteredDetailedList.push(item);
+                this._filteredDetailedList.data.push(item);
+                this._filteredDetailedList.paginator = this.paginator;
                 break;
               }
             }
@@ -87,7 +105,8 @@ export class ViewPhysicalStockDetailsComponent
           if (key == 'item') {
             const value: string = '' + item.item.itemName;
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
-              this._filteredDetailedList.push(item);
+              this._filteredDetailedList.data.push(item);
+              this._filteredDetailedList.paginator = this.paginator;
               break;
             }
           }

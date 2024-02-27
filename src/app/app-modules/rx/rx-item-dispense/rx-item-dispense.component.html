@@ -1,0 +1,328 @@
+<section [formGroup]="prescriptionForm">
+  <mat-expansion-panel class="mdPanel" expanded="true">
+    <mat-expansion-panel-header>
+      <span>
+        <strong>{{ currentLanguageSet?.itemDispense?.prescriptionID }}:</strong>
+        {{ prescriptionForm.value.prescriptionID }}
+      </span>
+      <span class="m-l-10 m-r-10">|</span>
+      <span>
+        <strong>{{ currentLanguageSet?.itemDispense?.visitcode }}: </strong>
+        {{ prescriptionForm.value.visitCode }}
+      </span>
+      <span class="m-l-10 m-r-10">|</span>
+      <span>
+        <strong>
+          {{ currentLanguageSet?.itemDispense?.consultantName }}:
+        </strong>
+        {{ prescriptionForm.value.consultantName }}
+      </span>
+    </mat-expansion-panel-header>
+    <div
+      class="container-fluid p-a-0 row"
+      *ngIf="prescriptionForm.controls['itemList']['controls'].length === 0"
+    >
+      <legend class="text-center m-t-20">
+        {{ currentLanguageSet?.inventory?.noMedicalitemstoDisptach }}
+      </legend>
+    </div>
+    <div class="container-fluid p-a-0">
+      <div formArrayName="itemList">
+        <section
+          *ngFor="
+            let drug of prescriptionForm.controls['itemList']['controls'];
+            let drugIndex = index
+          "
+        >
+          <ng-container [formGroupName]="drugIndex">
+            <fieldset class="m-t-20 m-b-20 fieldset">
+              <legend>
+                {{ drug.value.genericDrugName }} {{ drug.value.drugStrength }}
+              </legend>
+              <div class="row">
+                <div class="col-md-1 right-padding-remove-desktop">
+                  <mat-form-field class="input-full-width">
+                    <input
+                      autocomplete="off"
+                      readonly="true"
+                      type="text"
+                      matInput
+                      formControlName="drugForm"
+                      placeholder="{{ currentLanguageSet?.itemDispense?.form }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                  <mat-form-field class="input-full-width">
+                    <input
+                      autocomplete="off"
+                      readonly="true"
+                      type="text"
+                      matInput
+                      formControlName="durationView"
+                      placeholder="{{
+                        currentLanguageSet?.itemDispense?.duration
+                      }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div
+                  class="col-md-2 left-padding-remove-desktop right-padding-remove-desktop"
+                >
+                  <mat-form-field class="input-full-width">
+                    <input
+                      autocomplete="off"
+                      readonly="true"
+                      type="text"
+                      matInput
+                      formControlName="frequency"
+                      placeholder="{{
+                        currentLanguageSet?.itemDispense?.frequency
+                      }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                  <mat-form-field class="input-full-width">
+                    <input
+                      autocomplete="off"
+                      readonly="true"
+                      type="text"
+                      matInput
+                      formControlName="dose"
+                      placeholder="{{ currentLanguageSet?.itemDispense?.dose }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                  <mat-form-field class="input-full-width">
+                    <input
+                      autocomplete="off"
+                      readonly="true"
+                      type="text"
+                      matInput
+                      formControlName="qtyPrescribed"
+                      placeholder="{{
+                        currentLanguageSet?.itemDispense?.quantityPrescribed
+                      }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field class="input-full-width">
+                    <input
+                      autocomplete="off"
+                      readonly="true"
+                      type="text"
+                      matInput
+                      allowText="number"
+                      formControlName="qtyDispensed"
+                      placeholder="{{
+                        currentLanguageSet?.itemDispense?.quantityDispensed
+                      }}"
+                      [allowMax]="drug.value.qtyPrescribed"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4 right-padding-remove-desktop">
+                  <mat-form-field class="input-full-width">
+                    <input
+                      autocomplete="off"
+                      readonly="true"
+                      type="text"
+                      matInput
+                      formControlName="route"
+                      placeholder="{{
+                        currentLanguageSet?.itemDispense?.route
+                      }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div
+                  [ngClass]="{
+                    'col-md-6': issueType === 0 || allocated === true,
+                    'col-md-8': issueType === 1 && allocated === false
+                  }"
+                >
+                  <mat-form-field class="input-full-width">
+                    <input
+                      autocomplete="off"
+                      type="text"
+                      matInput
+                      [readonly]="true"
+                      formControlName="specialInstruction"
+                      placeholder="{{
+                        currentLanguageSet?.itemDispense?.specialInstructions
+                      }}"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                  <button
+                    mat-raised-button
+                    *ngIf="issueType === 0"
+                    class="selectButton"
+                    color="primary"
+                    style="color: white"
+                    type="button"
+                    (click)="batchViewModal(drugIndex)"
+                  >
+                    {{ currentLanguageSet?.itemDispense?.selectBatch }}
+                  </button>
+                  <button
+                    mat-raised-button
+                    *ngIf="allocated"
+                    class="selectButton"
+                    color="primary"
+                    style="color: white"
+                    type="button"
+                    (click)="batchViewModal(drugIndex)"
+                  >
+                    {{ currentLanguageSet?.itemDispense?.viewBatch }}
+                  </button>
+                </div>
+              </div>
+            </fieldset>
+          </ng-container>
+        </section>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</section>
+
+<section *ngIf="copyprescription.itemList.length > 0">
+  <mat-expansion-panel class="mdPanel">
+    <mat-expansion-panel-header>
+      <span>
+        <strong>{{
+          currentLanguageSet?.inventory?.nonEDLMedicalRecords
+        }}</strong></span
+      >
+      <span class="m-l-10 m-r-10"></span>
+    </mat-expansion-panel-header>
+    <div class="container-fluid p-a-0">
+      <div>
+        <ng-container>
+          <section
+            class="m-t-20 overflow table-responsive"
+            *ngIf="copyprescription.itemList.length > 0"
+          >
+            <!-- <table class="table table-responsive table-bordered" aria-describedby="itemDispenseDetails">
+                <caption></caption>
+                <thead>
+                  <tr>
+                    <th id="sNo" class="width5">{{currentLanguageSet?.inventory?.sNo}}</th>
+                    <th id="medicineName" class="width10">{{currentLanguageSet?.inventory?.medicineName}}</th>
+                    <th id="form" class="width10">{{currentLanguageSet?.itemDispense?.form}}</th>
+                    <th id="duration" class="width10">{{currentLanguageSet?.itemDispense?.duration}}</th>
+                    <th id="frequency" class="width10">{{currentLanguageSet?.itemDispense?.frequency}}</th>
+                    <th id="dose" class="width10">{{currentLanguageSet?.itemDispense?.dose}}</th>
+                    <th id="quantityPrescribed" class="width10">{{currentLanguageSet?.itemDispense?.quantityPrescribed}}</th>
+                    <th id="route" class="width10">{{currentLanguageSet?.itemDispense?.route}}</th>
+                    <th id="specialInstructions" class="width20">{{currentLanguageSet?.itemDispense?.specialInstructions}}</th>
+                  </tr>
+                </thead>    
+                  <tbody *ngIf="copyprescription.itemList?.length > 0">
+                    <ng-container *ngFor="let test of copyprescription.itemList; let i = index">         
+                      <tr >
+                        <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">{{i+1}}</td>
+                        <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">{{test?.genericDrugName}} {{test?.drugStrength}}</td>
+                        <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">{{test?.drugForm}}</td>
+                        <td style="width:110px; word-break: normal; vertical-align:middle ">{{test?.duration}} {{test?.durationUnit}}</td>
+                        <td style="width:150px; word-break: normal; vertical-align:middle">{{test?.frequency}}</td>
+                        <td style="max-width:150px; word-break: normal; vertical-align:middle">{{test?.dose }}</td>
+                        <td style="max-width:150px; word-break: normal; vertical-align:middle">{{test?.qtyPrescribed }}</td>
+                        <td style="max-width:150px; word-break: normal; vertical-align:middle">{{test?.route }}</td>
+                        <td style="max-width:150px; word-break: normal; vertical-align:middle">{{test?.specialInstruction }}</td>
+                      </tr>
+                    </ng-container>
+                  </tbody>     
+              </table> -->
+            <table
+              mat-table
+              class="mat-elevation-z8"
+              aria-describedby="itemDispenseDetails"
+              [dataSource]="dataSourceList"
+            >
+              <ng-container matColumnDef="sNo">
+                <th mat-header-cell *matHeaderCellDef class="width5">
+                  {{ currentLanguageSet?.inventory?.sNo }}
+                </th>
+                <td mat-cell *matCellDef="let test; let i = index">
+                  {{ i + 1 }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="medicineName">
+                <th mat-header-cell *matHeaderCellDef class="width10">
+                  {{ currentLanguageSet?.inventory?.medicineName }}
+                </th>
+                <td mat-cell *matCellDef="let test">
+                  {{ test?.genericDrugName }} {{ test?.drugStrength }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="form">
+                <th mat-header-cell *matHeaderCellDef class="width10">
+                  {{ currentLanguageSet?.itemDispense?.form }}
+                </th>
+                <td mat-cell *matCellDef="let test">{{ test?.drugForm }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="duration">
+                <th mat-header-cell *matHeaderCellDef class="width10">
+                  {{ currentLanguageSet?.itemDispense?.duration }}
+                </th>
+                <td mat-cell *matCellDef="let test">
+                  {{ test?.duration }} {{ test?.durationUnit }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="frequency">
+                <th mat-header-cell *matHeaderCellDef class="width10">
+                  {{ currentLanguageSet?.itemDispense?.frequency }}
+                </th>
+                <td mat-cell *matCellDef="let test">{{ test?.frequency }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="dose">
+                <th mat-header-cell *matHeaderCellDef class="width10">
+                  {{ currentLanguageSet?.itemDispense?.dose }}
+                </th>
+                <td mat-cell *matCellDef="let test">{{ test?.dose }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="quantityPrescribed">
+                <th mat-header-cell *matHeaderCellDef class="width10">
+                  {{ currentLanguageSet?.itemDispense?.quantityPrescribed }}
+                </th>
+                <td mat-cell *matCellDef="let test">
+                  {{ test?.qtyPrescribed }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="route">
+                <th mat-header-cell *matHeaderCellDef class="width10">
+                  {{ currentLanguageSet?.itemDispense?.route }}
+                </th>
+                <td mat-cell *matCellDef="let test">{{ test?.route }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="specialInstructions">
+                <th mat-header-cell *matHeaderCellDef class="width20">
+                  {{ currentLanguageSet?.itemDispense?.specialInstructions }}
+                </th>
+                <td mat-cell *matCellDef="let test">
+                  {{ test?.specialInstruction }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </section>
+        </ng-container>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</section>

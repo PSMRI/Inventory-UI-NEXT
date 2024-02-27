@@ -13,6 +13,11 @@
 .vertical-align-middle {
     vertical-align: middle;
 }
+#topBtn {
+    display: flex; 
+    justify-content: flex-end;
+    padding-top: 12px;
+}
 
 .title {
     margin: 0px 0px 10px;

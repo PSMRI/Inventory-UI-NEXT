@@ -1,4 +1,4 @@
-<div class="title">
+<div class="title" style="display: flex; justify-content: space-between">
   <h4>{{ currentLanguageSet?.inventory?.advanceBeneficiarySearch }}</h4>
   <button
     mat-icon-button
@@ -59,8 +59,9 @@
           <mat-select
             class="p-t-12"
             required
+            style="border-bottom: solid 1px; border-color: grey"
             [style.width]="'100%'"
-            placeholder="{{ currentLanguageSet?.bendetails?.gender }}"
+            placeholder="{{ currentLanguageSet?.bendetails?.gender }}*"
             name="gender"
             [(ngModel)]="beneficiary.gender"
           >
@@ -75,7 +76,8 @@
             (change)="onStateChange()"
             required
             [style.width]="'100%'"
-            placeholder="{{ currentLanguageSet?.inventory?.state }}"
+            style="border-bottom: solid 1px; border-color: grey"
+            placeholder="{{ currentLanguageSet?.inventory?.state }}*"
             name="state"
             [(ngModel)]="beneficiary.stateID"
           >
@@ -89,8 +91,9 @@
             class="p-t-12"
             required
             [disabled]="!beneficiary.stateID"
+            style="border-bottom: solid 1px; border-color: grey"
             [style.width]="'100%'"
-            placeholder="{{ currentLanguageSet?.inventory?.district }}"
+            placeholder="{{ currentLanguageSet?.inventory?.district }}*"
             name="district"
             [(ngModel)]="beneficiary.districtID"
           >
@@ -102,25 +105,27 @@
           </mat-select>
         </div>
         <div class="col-xs-12 box">
-          <button
-            [disabled]="newSearchForm.invalid"
-            mat-raised-button
-            class="pull-right m-r-5"
-            color="accent"
-            type="button"
-            (click)="getSearchResult()"
-          >
-            {{ currentLanguageSet?.inventory?.search }}
-          </button>
-          <button
-            mat-raised-button
-            color="primary"
-            class="pull-right m-r-5"
-            type="button"
-            (click)="resetBeneficiaryForm()"
-          >
-            {{ currentLanguageSet?.inventory?.clear }}
-          </button>
+          <div id="topBtn">
+            <button
+              [disabled]="newSearchForm.invalid"
+              mat-raised-button
+              class="pull-right m-r-5"
+              color="accent"
+              type="button"
+              (click)="getSearchResult()"
+            >
+              {{ currentLanguageSet?.inventory?.search }}
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              class="pull-right m-r-5"
+              type="button"
+              (click)="resetBeneficiaryForm()"
+            >
+              {{ currentLanguageSet?.inventory?.clear }}
+            </button>
+          </div>
         </div>
       </section>
     </form>
@@ -128,57 +133,13 @@
     <section class="row m-b-30">
       <div class="col-xs-12">
         <div class="table-responsive">
-          <!-- <table [md2Data]="filteredBeneficiaryList" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1" class="table table-striped responsive-table-view" aria-describedby="registeredSearchDetails">
-            <caption></caption><thead>
-              <tr>
-                <th id="noValue"></th>
-                <th id="beneficiaryID">{{currentLanguageSet?.bendetails?.beneficiaryID}}</th>
-                <th id="beneficiaryName">{{currentLanguageSet?.bendetails?.beneficiaryName}}</th>
-                <th id="gender">{{currentLanguageSet?.bendetails?.gender}}</th>
-                <th id="dOB">{{currentLanguageSet?.inventory?.dOB}}</th>
-                <th id="fatherName">{{currentLanguageSet?.inventory?.fatherName}}</th>
-                <th id="districtVillage">{{currentLanguageSet?.bendetails?.district}}</th>
-                <th id="phoneNo">{{currentLanguageSet?.bendetails?.phoneNo}}</th>
-                <th id="regDate">{{currentLanguageSet?.bendetails?.regDate}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngIf="md2.data?.length === 0">
-                <td colspan="9" style="text-align: center; font-size: 16px">
-                  <strong>{{currentLanguageSet?.inventory?.norecordsfound}}</strong>
-                </td>
-              </tr>
-              
-              <tr *ngFor="let beneficiary of md2.data" class="table-hover">
-                <td data-title="S.No">{{ filteredBeneficiaryList.indexOf(beneficiary)+1 }}</td>
-                <td data-title="Beneficiary ID" (click)="checkVisit(beneficiary?.beneficiaryID)">{{beneficiary?.beneficiaryID}}</td>
-                <td data-title="Beneficiary Name" (click)="checkVisit(beneficiary?.beneficiaryID)">{{beneficiary?.benName | titlecase}}</td>
-                <td data-title="Gender" (click)="checkVisit(beneficiary?.beneficiaryID)">{{beneficiary.genderName}}</td>
-                <td data-title="DOB" (click)="checkVisit(beneficiary?.beneficiaryID)">{{beneficiary.age | date: 'dd/MM/yyyy' }}</td>
-                <td data-title="Father Name" (click)="checkVisit(beneficiary?.beneficiaryID)">{{beneficiary.fatherName | titlecase }}</td>
-                <td data-title="District / Village" (click)="checkVisit(beneficiary?.beneficiaryID)">{{beneficiary.districtName | titlecase }} / {{beneficiary.villageName | titlecase}}</td>
-                <td data-title="Phone No" (click)="checkVisit(beneficiary?.beneficiaryID)">{{beneficiary.phoneNo}}</td>
-                <td data-title="Registration Date" (click)="checkVisit(beneficiary?.beneficiaryID)">{{beneficiary.registeredOn | date: 'dd/MM/yyyy' }}</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr *ngIf="filteredBeneficiaryList?.length > 0">
-                <td colspan="2" class="total-count">
-                  <div> {{currentLanguageSet?.inventory?.totalCount}} : {{ filteredBeneficiaryList.length }}</div>
-                </td>
-                <td colspan="7">
-                  <md2-pagination></md2-pagination>
-                </td>
-              </tr>
-            </tfoot>
-          </table> -->.
           <mat-table
             [dataSource]="filteredBeneficiaryList"
             class="mat-elevation-z8"
             aria-describedby="registeredSearchDetails"
           >
-            <ng-container matColumnDef="sno">
-              <mat-header-cell *matHeaderCellDef>No</mat-header-cell>
+            <ng-container matColumnDef="noValue">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
               <mat-cell *matCellDef="let element; let i = index">{{
                 i + 1
               }}</mat-cell>
@@ -271,9 +232,6 @@
                 >{{ element?.benName | titlecase }}</mat-cell
               >
             </ng-container>
-            <!-- Repeat ng-container for other columns -->
-
-            <!-- MatPaginator for pagination -->
             <mat-paginator
               [pageSizeOptions]="[5, 10, 20]"
               showFirstLastButtons
@@ -281,95 +239,28 @@
             <mat-header-row *matHeaderRowDef="displayedColumns">
             </mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-
-            <ng-container *ngIf="filteredBeneficiaryList.data.length === 0">
-              <tr>
-                <td colspan="9" style="text-align: center; font-size: 16px">
-                  <strong>{{
-                    currentLanguageSet?.inventory?.norecordsfound
-                  }}</strong>
-                </td>
-              </tr>
-            </ng-container>
-            <ng-container
-              *ngFor="let beneficiary of filteredBeneficiaryList.data"
-              class="table-hover"
-            >
-              <tr>
-                <td data-title="S.No">
-                  {{ filteredBeneficiaryList.indexOf(beneficiary) + 1 }}
-                </td>
-                <td
-                  data-title="Beneficiary ID"
-                  (click)="checkVisit(beneficiary?.beneficiaryID)"
-                >
-                  {{ beneficiary?.beneficiaryID }}
-                </td>
-                <td
-                  data-title="Beneficiary Name"
-                  (click)="checkVisit(beneficiary?.beneficiaryID)"
-                >
-                  {{ beneficiary?.benName | titlecase }}
-                </td>
-                <td
-                  data-title="Gender"
-                  (click)="checkVisit(beneficiary?.beneficiaryID)"
-                >
-                  {{ beneficiary.genderName }}
-                </td>
-                <td
-                  data-title="DOB"
-                  (click)="checkVisit(beneficiary?.beneficiaryID)"
-                >
-                  {{ beneficiary.age | date: "dd/MM/yyyy" }}
-                </td>
-                <td
-                  data-title="Father Name"
-                  (click)="checkVisit(beneficiary?.beneficiaryID)"
-                >
-                  {{ beneficiary.fatherName | titlecase }}
-                </td>
-                <td
-                  data-title="District / Village"
-                  (click)="checkVisit(beneficiary?.beneficiaryID)"
-                >
-                  {{ beneficiary.districtName | titlecase }} /
-                  {{ beneficiary.villageName | titlecase }}
-                </td>
-                <td
-                  data-title="Phone No"
-                  (click)="checkVisit(beneficiary?.beneficiaryID)"
-                >
-                  {{ beneficiary.phoneNo }}
-                </td>
-                <td
-                  data-title="Registration Date"
-                  (click)="checkVisit(beneficiary?.beneficiaryID)"
-                >
-                  {{ beneficiary.registeredOn | date: "dd/MM/yyyy" }}
-                </td>
-              </tr>
-            </ng-container>
-            <!-- tfoot -->
-            <ng-container *ngIf="filteredBeneficiaryList?.data.length > 0">
-              <tr>
-                <td colspan="2" class="total-count">
-                  <div>
-                    {{ currentLanguageSet?.inventory?.totalCount }} :
-                    {{ filteredBeneficiaryList.length }}
-                  </div>
-                </td>
-                <td colspan="7">
-                  <mat-paginator
-                    [pageSizeOptions]="[5, 10, 20]"
-                    showFirstLastButtons
-                  >
-                  </mat-paginator>
-                </td>
-              </tr>
-            </ng-container>
           </mat-table>
-          <!-- tbody -->
+          <div
+            *ngIf="
+              filteredBeneficiaryList &&
+              filteredBeneficiaryList.data.length === 0
+            "
+            style="
+              font-size: 16px;
+              display: flex;
+              justify-content: center;
+              padding-top: 14px;
+            "
+          >
+            <strong>{{ currentLanguageSet?.inventory?.norecordsfound }}</strong>
+          </div>
+          <div
+            class="total-count"
+            *ngIf="filteredBeneficiaryList.data.length > 0"
+          >
+            {{ currentLanguageSet?.inventory?.totalCount }} :
+            {{ filteredBeneficiaryList.data.length }}
+          </div>
         </div>
       </div>
     </section>

@@ -30,7 +30,7 @@ export class SpinnerService {
   spinnerSubject = new Subject<SpinnerState>();
   spinnerState = this.spinnerSubject.asObservable();
   temp: any = [];
-
+  private loading = false;
   show() {
     this.temp.push(true);
     if (this.temp.length == 1)
@@ -47,5 +47,13 @@ export class SpinnerService {
   clear() {
     this.temp = [false];
     this.hide();
+  }
+
+  setLoading(loading: boolean) {
+    this.loading = loading;
+  }
+
+  getLoading(): boolean {
+    return this.loading;
   }
 }

@@ -24,6 +24,7 @@ import { InventoryService } from './../../../shared/service/inventory.service';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-show-batch-item',
@@ -41,14 +42,17 @@ export class ShowBatchItemComponent implements OnInit, DoCheck {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public mdDialogRef: MatDialogRef<ShowBatchItemComponent>,
   ) {}
-  issuedBatchList: any = [];
+  // issuedBatchList: any = [];
+  issuedBatchList = new MatTableDataSource<any>();
   beneficaryDetail: any;
   ngOnInit() {
     this.app = this.getApp();
 
-    this.issuedBatchList = this.data.batchList;
+    this.issuedBatchList.data = this.data.batchList;
     this.beneficaryDetail = this.data.beneficaryDetail;
-    console.log('issuedBatchList', this.issuedBatchList);
+    console.log('tD', this.data);
+    console.log('this.beneficaryDetail', this.beneficaryDetail);
+    console.log('issuedBatchList', this.issuedBatchList.data);
     this.fetchLanguageResponse();
   }
 
@@ -62,7 +66,7 @@ export class ShowBatchItemComponent implements OnInit, DoCheck {
   }
   createStockExitList() {
     const stockExitList: any = [];
-    this.issuedBatchList.forEach((dispenseItem: any) => {
+    this.issuedBatchList.data.forEach((dispenseItem: any) => {
       dispenseItem.itemBatchList.forEach((batch: any) => {
         const dispensedItem = {
           createdBy: localStorage.getItem('userID'),
@@ -73,16 +77,13 @@ export class ShowBatchItemComponent implements OnInit, DoCheck {
         stockExitList.push(dispensedItem);
       });
     });
-    const dispensingItem = Object.assign(
-      {},
-      { issuedBy: this.app },
-      this.beneficaryDetail,
-      { itemStockExit: stockExitList },
-      {
-        vanID: localStorage.getItem('vanID'),
-        parkingPlaceID: localStorage.getItem('parkingPlaceID'),
-      },
-    );
+    const dispensingItem = {
+      issuedBy: this.app,
+      ...this.beneficaryDetail,
+      itemStockExit: stockExitList,
+      vanID: localStorage.getItem('vanID'),
+      parkingPlaceID: localStorage.getItem('parkingPlaceID'),
+    };
     return dispensingItem;
   }
 
@@ -92,7 +93,7 @@ export class ShowBatchItemComponent implements OnInit, DoCheck {
     this.inventoryService
       .saveStockExit(dispensingItem)
       .subscribe((response) => {
-        this.closeBatchModal(response, this.issuedBatchList, null);
+        this.closeBatchModal(response, this.issuedBatchList.data, null);
       });
   }
 
@@ -102,7 +103,7 @@ export class ShowBatchItemComponent implements OnInit, DoCheck {
     this.inventoryService
       .saveStockExit(dispensingItem)
       .subscribe((response) => {
-        this.closeBatchModal(response, this.issuedBatchList, true);
+        this.closeBatchModal(response, this.issuedBatchList.data, true);
       });
   }
 

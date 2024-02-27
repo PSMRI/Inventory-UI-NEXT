@@ -35,7 +35,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './common-dialog.component.html',
   styleUrls: ['./common-dialog.component.css'],
 })
-export class CommonDialogComponent implements OnInit, DoCheck {
+export class CommonDialogComponent implements OnInit {
   @Output() cancelEvent = new EventEmitter();
 
   public title!: string;
@@ -67,9 +67,6 @@ export class CommonDialogComponent implements OnInit, DoCheck {
     public dialogRef: MatDialogRef<CommonDialogComponent>,
     public http_service: LanguageService,
   ) {}
-  ngDoCheck(): void {
-    throw new Error('Method not implemented.');
-  }
 
   ngOnInit() {
     this.fetchLanguageResponse();

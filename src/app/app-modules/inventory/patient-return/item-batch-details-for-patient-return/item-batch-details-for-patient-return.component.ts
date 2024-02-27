@@ -42,6 +42,7 @@ import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-la
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { PatientReturnBatchDetailsComponent } from '../patient-return-batch-details/patient-return-batch-details.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-item-batch-details-for-patient-return',
@@ -61,18 +62,29 @@ export class ItemBatchDetailsForPatientReturnComponent
   resetBenDetails: EventEmitter<any> = new EventEmitter();
 
   itemReturnForm!: FormGroup;
-
-  batchList: any;
+  // batchList: any;
+  batchList = new MatTableDataSource<any>();
   selectedItemList: any = [];
   filterItemList: any = [];
 
-  selectedBatchList: any = [];
+  // selectedBatchList: any = [];
+  selectedBatchList = new MatTableDataSource<any>();
   patientReturnList: any = [];
 
   searched = false;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
   hide = false;
+  displayedColumns: string[] = [
+    'sNo',
+    'itemName',
+    'batchNo',
+    'issuedQuantity',
+    'dateofIssue',
+    'returnQuantity',
+    'edit',
+    'delete',
+  ];
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -129,10 +141,10 @@ export class ItemBatchDetailsForPatientReturnComponent
     this.inventoryService.getBatchDetails(batchReq).subscribe((response) => {
       console.log('Response of item batch list', response);
       if (response.statusCode == 200) {
-        this.batchList = response.data;
-        this.popOutBenAndItemDetails(this.batchList, data, editIndex);
+        this.batchList.data = response.data;
+        this.popOutBenAndItemDetails(this.batchList.data, data, editIndex);
       }
-      console.log('Batchlist::', JSON.stringify(this.batchList, null, 4));
+      console.log('Batchlist::', JSON.stringify(this.batchList.data, null, 4));
     });
   }
 
@@ -155,13 +167,13 @@ export class ItemBatchDetailsForPatientReturnComponent
     matDialogRef.afterClosed().subscribe((selectedBatchList: any) => {
       if (selectedBatchList) {
         if (editIndex != null) {
-          this.selectedBatchList.splice(editIndex, 1);
-          this.selectedBatchList.push(selectedBatchList.value);
+          this.selectedBatchList.data.splice(editIndex, 1);
+          this.selectedBatchList.data.push(selectedBatchList.value);
           this.itemReturnForm.patchValue({
             itemName: null,
           });
         } else {
-          this.selectedBatchList.push(selectedBatchList.value);
+          this.selectedBatchList.data.push(selectedBatchList.value);
           this.itemReturnForm.patchValue({
             itemName: null,
           });
@@ -177,9 +189,9 @@ export class ItemBatchDetailsForPatientReturnComponent
   }
 
   removeAddedItem(i: any) {
-    const removedItem = this.selectedBatchList[i];
+    const removedItem = this.selectedBatchList.data[i];
     this.filterItemList.push(removedItem.itemName);
-    this.selectedBatchList.splice(i, 1);
+    this.selectedBatchList.data.splice(i, 1);
   }
 
   filterItem(itemName: any, filterItemMasterList: any) {
@@ -209,7 +221,7 @@ export class ItemBatchDetailsForPatientReturnComponent
 
   manipulateFinalData() {
     const finalData: any = [];
-    this.selectedBatchList.forEach((item: any) => {
+    this.selectedBatchList.data.forEach((item: any) => {
       item.batchList.forEach((batch: any) => {
         const returnQuantity = batch.returnQuantity;
         const createdBy = localStorage.getItem('userName');
@@ -238,7 +250,7 @@ export class ItemBatchDetailsForPatientReturnComponent
 
   resetFieldsAfterSubmit() {
     this.itemReturnForm.reset();
-    this.selectedBatchList = [];
+    this.selectedBatchList.data = [];
   }
   resetOnClear() {
     this.resetFieldsAfterSubmit();

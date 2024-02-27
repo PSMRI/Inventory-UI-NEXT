@@ -98,14 +98,6 @@ export class AppHeaderComponent implements OnInit, OnChanges {
     });
   }
 
-  // fetchLanguageSet() {
-  //   this.http_service.fetchLanguageSet().subscribe((languageRes: any) => {
-  //     if (languageRes !== undefined && languageRes !== null) {
-  //       this.languageArray = languageRes;
-  //       this.getLanguage();
-  //     }
-  //   });
-  // }
   getLanguage() {
     if (localStorage.getItem('currentLanguage') != null) {
       this.changeLanguage(localStorage.getItem('currentLanguage'));
@@ -142,14 +134,6 @@ export class AppHeaderComponent implements OnInit, OnChanges {
       this.currentLanguageSet = response[language];
       localStorage.setItem('currentLanguage', language);
       if (this.currentLanguageSet) {
-        // if(Array.isArray(this.languageArray)){
-        //   this.languageArray.forEach((item: any) => {
-        //     if (item.languageName == language) {
-        //       this.language = language;
-        //     }
-        //   });
-
-        // }
         this.languageArray.forEach((item: any) => {
           if (item.languageName == language) {
             this.language = language;

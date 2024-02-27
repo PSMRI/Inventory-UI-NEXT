@@ -35,6 +35,8 @@ import { Router } from '@angular/router';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-view-store-stock-transfer',
   templateUrl: './view-store-stock-transfer.component.html',
@@ -48,7 +50,8 @@ export class ViewStoreStockTransferComponent implements OnInit, DoCheck {
   _dateRangePrevious: Date[] = [];
 
   _stockEntryList = [];
-  _filteredStockEntryList = [];
+  _filteredStockEntryList = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   blankTable = [1, 2, 3, 4, 5];
   filterTerm: any;
   ourStore: any;
@@ -126,19 +129,16 @@ export class ViewStoreStockTransferComponent implements OnInit, DoCheck {
   }
 
   updateDate() {
-    // if (this._dateRange !== this._dateRangePrevious) {
-    // this._dateRangePrevious = this._dateRange;
-    // console.log(JSON.stringify(this._dateRange, null, 4), 'callservice');
     this.getPastEntries();
 
     // }
   }
 
   loadEntries(entriesObject: any) {
-    console.log(entriesObject);
+    console.log('entriesObj', entriesObject);
     const newObject: any = [];
     if (entriesObject) {
-      entriesObject.forEach((element: any) => {
+      entriesObject.data.forEach((element: any) => {
         newObject.push({
           refNo: element.refNo,
           stockTransferID: element.stockTransferID,
@@ -152,14 +152,22 @@ export class ViewStoreStockTransferComponent implements OnInit, DoCheck {
       });
     }
     this._stockEntryList = newObject;
-    this._filteredStockEntryList = newObject;
+    this._filteredStockEntryList.data = newObject;
+    this._filteredStockEntryList.paginator = this.paginator;
+    console.log(
+      'this._filteredStockEntryList.dataJK',
+      this._filteredStockEntryList.data,
+    );
     this.filterTerm = '';
   }
 
   filterConsumptionList(searchTerm: string) {
-    if (!searchTerm) this._filteredStockEntryList = this._stockEntryList;
-    else {
-      this._filteredStockEntryList = [];
+    if (!searchTerm) {
+      this._filteredStockEntryList.data = this._stockEntryList;
+      this._filteredStockEntryList.paginator = this.paginator;
+    } else {
+      this._filteredStockEntryList.data = [];
+      this._filteredStockEntryList.paginator = this.paginator;
       this._stockEntryList.forEach((item) => {
         for (const key in item) {
           if (
@@ -171,7 +179,8 @@ export class ViewStoreStockTransferComponent implements OnInit, DoCheck {
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0) {
-              this._filteredStockEntryList.push(item);
+              this._filteredStockEntryList.data.push(item);
+              this._filteredStockEntryList.paginator = this.paginator;
               break;
             }
           }

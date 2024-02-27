@@ -1,30 +1,18 @@
 <nav class="navbar navbar-iemr">
-  <div class="row container-fluid">
+  <div class="container-fluid">
     <div class="navbar-header">
-      <!-- <button
-        type="button"
-        class="navbar-toggle collapsed"
-        data-toggle="collapse"
-        data-target="#top-navbar, #main-navbar"
-        aria-expanded="false"
-      >
-        <span class="sr-only">{{currentLanguageSet?.inventory?.togglenavigation}}</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button> -->
       <a class="navbar-brand">
         <img src="assets/images/logo.png" alt="Logo" />
       </a>
     </div>
 
-    <div id="top-navbar" style="text-align: right">
+    <div class="alignHead">
       <span class="alignWord" *ngIf="isAuthenticated"
         >{{ currentLanguageSet?.inventory?.selectLanguage }} :</span
       >
       <select
         *ngIf="isAuthenticated"
-        class="form-control drop-arrow border-radius-20 height-30 width120px pull-right"
+        class="form-control drop-arrow border-radius-20"
         name="language"
         [(ngModel)]="language"
         (change)="changeLanguage(language)"
@@ -97,32 +85,7 @@
             currentLanguageSet?.inventory?.licenseInfo
           }}</a>
         </button>
-        <!-- <mat-list class="p-t-0">
-          <mat-list-item (click)="showVersionAndCommitDetails()"
-            >{{ currentLanguageSet?.inventory?.version }}:{{
-              versionUI
-            }}</mat-list-item
-          >
-          <mat-list-item
-            ><a
-              target="_blank"
-              href="{{ license }}"
-              rel="noopener noreferrer"
-              >{{ currentLanguageSet?.inventory?.licenseInfo }}</a
-            >
-          </mat-list-item>
-        </mat-list> -->
       </mat-menu>
-
-      <!-- <span
-        class="cursorPointer"
-        *ngIf="isAuthenticated"
-        class="fa fa-question-circle helpAlign"
-        matTooltip="{{ currentLanguageSet?.inventory?.help }}"
-        alt="Help"
-        [matMenuTriggerFor]="knowAboutUs"
-      ></span> -->
-
       <a
         *ngIf="providerServiceID && !isExternal && storeName"
         class="servicePoint cursorPointer"
@@ -146,9 +109,6 @@
         href="#"
       >
         <span class="logoutIcon"></span>
-        <span style="color: #ffffff" class="hidden-sm hidden-md hidden-lg">{{
-          currentLanguageSet?.inventory?.logout
-        }}</span>
       </a>
     </div>
   </div>
@@ -176,42 +136,3 @@
     </mat-menu>
   </div>
 </div>
-<!-- <div *ngIf="showRoles && !isExternal" class="container-fluid">
-  <div class="collapse navbar-collapse" id="main-navbar">
-    <ul class="nav navbar-nav" *ngFor="let item of navigation">
-      <li>
-        <button mat-button [matMenuTriggerFor]="items">
-          {{ item.role }}
-          <span class="caret"></span>
-        </button>
-        <mat-menu
-          class="role-menu"
-          #items="matMenu"
-          yPosition="below"
-          [overlapTrigger]="false"
-        >
-          <button
-          mat-menu-item
-            *ngFor="let value of item.work"
-            [routerLink]="[value.link]"
-            routerLinkActive="active"
-          >
-            {{ value.label }}
-          </button>
-        </mat-menu>
-      </li>
-      
-    </ul>
-  </div>
-</div> -->
-<!-- <div *ngIf="showRoles && isExternal" class="container-fluid">
-  <div class="collapse navbar-collapse" id="main-navbar">
-    <ul class="nav navbar-nav">
-      <li>
-        <button mat-button (click)="backToParent()">
-          {{currentLanguageSet?.itemDispense?.pharmacist}}
-        </button>
-      </li>
-    </ul>
-  </div>
-</div> -->

@@ -70,17 +70,17 @@ export class HttpInterceptorService implements HttpInterceptor {
       tap((event: HttpEvent<any>) => {
         if (req.url !== undefined && !req.url.includes('cti/getAgentState'))
           if (event instanceof HttpResponse) {
-            // this.spinnerService.show();
+            this.spinnerService.show();
             console.log(event.body);
             this.onSuccess(req.url, event.body);
-            // this.spinnerService.show();
+            this.spinnerService.show();
             return event.body;
           }
       }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
 
-        // this.spinnerService.show();
+        this.spinnerService.show();
         return throwError(error.error);
       }),
     );

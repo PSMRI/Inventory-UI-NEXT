@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, Inject, DoCheck } from '@angular/core';
+import { Component, OnInit, Inject, DoCheck, ViewChild } from '@angular/core';
 import { BatchSearchService } from '../../services/batch-search.service';
 import { ConfirmationService } from '../../services/confirmation.service';
 
@@ -28,6 +28,8 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { SetLanguageComponent } from '../set-language.component';
 import { LanguageService } from '../../services/language.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-batch-adjustment',
@@ -36,10 +38,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class BatchAdjustmentComponent implements OnInit, DoCheck {
   searchTerms!: string;
+  noRecordsFlag = false;
   items$!: Observable<any>;
   selectedBatchList: any = [];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public input: any,
@@ -56,6 +61,15 @@ export class BatchAdjustmentComponent implements OnInit, DoCheck {
 
   search(term: string): void {
     this.items$ = this.batchSearchService.searchAdjustmentBatch(term);
+    this.items$.subscribe((data) => {
+      if (data) {
+        this.dataSource.data = data.data;
+        this.dataSource.paginator = this.paginator;
+        this.noRecordsFlag = true;
+      } else {
+        this.noRecordsFlag = false;
+      }
+    });
   }
 
   selectBatch(event: any, batch: any) {

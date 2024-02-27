@@ -1,9 +1,11 @@
 <div class="container-fluid">
   <div class="row m-t-10">
-    <div class="col-xs-12 col-sm-6">
-      <h4>{{ currentLanguageSet?.inventory?.stockTransfer }}</h4>
+    <div class="col-xs-12 col-sm-6" style="padding-top: 12px">
+      <h4 style="font-size: larger">
+        {{ currentLanguageSet?.inventory?.stockTransfer }}
+      </h4>
     </div>
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-12 col-sm-6" id="topBtn">
       <button
         mat-raised-button
         class="pull-right button-full-width"
@@ -20,6 +22,7 @@
     <div class="row m-t-10">
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <mat-form-field [style.width]="'100%'">
+          <mat-label>{{ currentLanguageSet?.inventory?.date }}</mat-label>
           <input
             matInput
             placeholder="{{ currentLanguageSet?.inventory?.date }}"
@@ -33,18 +36,22 @@
           <input
             required="true"
             matInput
-            placeholder="{{ currentLanguageSet?.inventory?.referenceNumber }}"
+            placeholder="{{ currentLanguageSet?.inventory?.referenceNumber }}*"
             allowText="alphanumeric"
             maxlength="20"
             formControlName="referenceNumber"
           />
         </mat-form-field>
       </div>
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <div
+        class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style="margin-top: 30px"
+      >
         <mat-select
+          style="border-bottom: solid 1px; border-color: grey"
           [style.width]="'100%'"
           required="true"
-          placeholder="{{ currentLanguageSet?.inventory?.transferTo }}"
+          placeholder="{{ currentLanguageSet?.inventory?.transferTo }}*"
           formControlName="transferTo"
           (change)="resetItemArray()"
         >
@@ -59,79 +66,151 @@
       <div class="col-xs-12">
         <mat-card>
           <div class="table-responsive">
-            <!-- <table class="table table-striped responsive-table-form" aria-describedby="storeStockDetails">
+            <table
+              class="table table-striped responsive-table-form"
+              aria-describedby="storeStockDetails"
+            >
               <caption></caption>
               <thead>
                 <tr>
                   <th class="width5" id="noValue"></th>
-                  <th class="width20" id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
-                  <th class="width20" id="batchNo">{{currentLanguageSet?.itemDispense?.batchNo}}</th>
-                  <th class="width15" id="qOH">{{currentLanguageSet?.inventory?.qOH}}</th>
-                  <th class="width10" id="quantity">{{currentLanguageSet?.inventory?.quantity}}</th>
-                  <th class="width10" id="action">{{currentLanguageSet?.bendetails?.action}}</th>
+                  <th class="width20" id="itemName">
+                    {{ currentLanguageSet?.inventory?.itemName }}
+                  </th>
+                  <th class="width20" id="batchNo">
+                    {{ currentLanguageSet?.itemDispense?.batchNo }}
+                  </th>
+                  <th class="width15" id="qOH">
+                    {{ currentLanguageSet?.inventory?.qOH }}
+                  </th>
+                  <th class="width10" id="quantity">
+                    {{ currentLanguageSet?.inventory?.quantity }}
+                  </th>
+                  <th class="width10" id="action">
+                    {{ currentLanguageSet?.bendetails?.action }}
+                  </th>
                 </tr>
               </thead>
 
               <tbody formArrayName="itemArray">
-                <ng-container *ngFor="let transfers of stockTransferForm.controls['itemArray']['controls']; let i = index;">
+                <ng-container
+                  *ngFor="
+                    let transfers of stroreStockTransferTableData();
+                    let i = index
+                  "
+                >
                   <tr [formGroupName]="i">
-                    <td class="vertical-align-middle">{{i+1}}</td>
+                    <td class="vertical-align-middle">{{ i + 1 }}</td>
                     <td>
                       <mat-form-field class="input-full-width">
-                        <input maxlength="100" allowText = "itemNameSearchValidator" mdInput appItemTransfer [stockForm]="transfers" [previousSelected]="stockTransferForm?.value?.itemArray"
-                          name="itemName" placeholder="{{currentLanguageSet?.inventory?.itemName}}" formControlName="itemName" [errorStateMatcher]="matcher">
-                        <mat-icon *ngIf="!(transfers.controls['itemName'].disabled)" class="search-btn" mdSuffix appItemTransfer [stockForm]="transfers"
-                          [previousSelected]="stockTransferForm?.value?.itemArray">search</md-icon>
+                        <input
+                          maxlength="100"
+                          allowText="itemNameSearchValidator"
+                          matInput
+                          appItemTransfer
+                          [stockForm]="transfers"
+                          [previousSelected]="stockTransferForm.value.itemArray"
+                          name="itemName"
+                          placeholder="{{
+                            currentLanguageSet?.inventory?.itemName
+                          }}"
+                          formControlName="itemName"
+                        />
+                        <mat-icon
+                          *ngIf="!transfers.controls['itemName'].disabled"
+                          class="search-btn"
+                          matSuffix
+                          appItemTransfer
+                          [stockForm]="transfers"
+                          [previousSelected]="stockTransferForm.value.itemArray"
+                          >search</mat-icon
+                        >
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field class="input-full-width">
-                        <input matInput name="batchNo" placeholder="{{currentLanguageSet?.itemDispense?.batchNo}}" formControlName="batchNo" readonly [errorStateMatcher]="matcher">
+                        <input
+                          matInput
+                          name="batchNo"
+                          placeholder="{{
+                            currentLanguageSet?.itemDispense?.batchNo
+                          }}"
+                          formControlName="batchNo"
+                          readonly
+                        />
                       </mat-form-field>
                     </td>
                     <td>
                       <mat-form-field class="input-full-width">
-                        <input matInput name="qoh" placeholder="{{currentLanguageSet?.inventory?.qOH}}" formControlName="qoh" readonly [errorStateMatcher]="matcher">
+                        <input
+                          matInput
+                          name="qoh"
+                          placeholder="{{ currentLanguageSet?.inventory?.qOH }}"
+                          formControlName="qoh"
+                          readonly
+                        />
                       </mat-form-field>
                     </td>
                     <td>
-                      <md-form-field class="input-full-width">
-                        <input mdInput name="quantity" allowText="number" placeholder="{{currentLanguageSet?.inventory?.quantity}}" formControlName="quantity" [attr.maxlength]="(''+transfers.value.qoh).length"
-                          (change)="checkQuantityAvailable(i);" [appDisableFormControl]="!(transfers.value.itemStockEntryID)"
-                          [errorStateMatcher]="matcher">
-                      </md-form-field>
+                      <mat-form-field class="input-full-width">
+                        <input
+                          matInput
+                          name="quantity"
+                          allowText="number"
+                          placeholder="{{
+                            currentLanguageSet?.inventory?.quantity
+                          }}"
+                          formControlName="quantity"
+                          [attr.maxlength]="('' + transfers.value.qoh).length"
+                          (change)="checkQuantityAvailable(i)"
+                          [disabled]="!transfers.value.itemStockEntryID"
+                        />
+                      </mat-form-field>
                     </td>
                     <td class="text-right">
-                      <md-icon class="icon-remove cursorPointer" mdTooltip="{{currentLanguageSet?.inventory?.delete}}" (click)="removeTransfer(i, stockTransferForm.controls['itemArray'].controls.length)">delete</md-icon>
+                      <mat-icon
+                        class="icon-remove cursorPointer"
+                        matTooltip="{{ currentLanguageSet?.inventory?.delete }}"
+                        (click)="
+                          removeTransfer(
+                            i,
+                            stroreStockTransferTableData().length
+                          )
+                        "
+                        >delete</mat-icon
+                      >
                     </td>
                   </tr>
                 </ng-container>
                 <tr *ngIf="stockTransferForm.controls['itemArray'].valid">
                   <td colspan="6">
-                    <button md-mini-fab class="m-l-20 pull-right" color="primary" type="button" (click)="addTransfer()">
-                      <md-icon mdSuffix class="mat-icon material-icons" role="img" aria-hidden="true" style="cursor: pointer">add</md-icon>
+                    <button
+                      mat-mini-fab
+                      class="m-l-20 pull-right"
+                      color="primary"
+                      type="button"
+                      (click)="addTransfer()"
+                    >
+                      <mat-icon
+                        matSuffix
+                        class="mat-icon material-icons"
+                        role="img"
+                        aria-hidden="true"
+                        style="cursor: pointer"
+                        >add</mat-icon
+                      >
                     </button>
                   </td>
                 </tr>
               </tbody>
-            </table> -->
+            </table>
           </div>
         </mat-card>
       </div>
     </div>
 
     <div class="row m-t-10 m-b-40">
-      <div class="col-xs-12">
-        <button
-          mat-raised-button
-          color="accent"
-          class="pull-right m-r-5"
-          type="button"
-          [disabled]="!stockTransferForm.valid"
-          (click)="submitTransfers()"
-        >
-          {{ currentLanguageSet?.common?.save }}
-        </button>
+      <div class="col-xs-12" id="topBtn">
         <button
           mat-raised-button
           color="primary"
@@ -141,6 +220,16 @@
           (click)="resetForm()"
         >
           {{ currentLanguageSet?.inventory?.clear }}
+        </button>
+
+        <button
+          mat-raised-button
+          class="pull-right m-r-5"
+          type="button"
+          [disabled]="!stockTransferForm.valid"
+          (click)="submitTransfers()"
+        >
+          {{ currentLanguageSet?.common?.save }}
         </button>
       </div>
     </div>

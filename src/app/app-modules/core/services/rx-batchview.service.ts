@@ -23,6 +23,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Injectable, ViewContainerRef, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Observable } from 'rxjs';
+import { RxBatchViewComponent } from '../components/rx-batch-view/rx-batch-view.component';
 
 @Injectable()
 export class BatchViewService {
@@ -31,16 +32,18 @@ export class BatchViewService {
     @Inject(DOCUMENT) doc: any,
   ) {}
 
-  // public batches(prescribed: any, items: any, selection: any): Observable<any> {
-  //     let dialogRef: MatDialogRef<RxBatchViewComponent>;
-  //     dialogRef = this.dialog.open(RxBatchViewComponent, {
-  //         width: '80%',
-  //         disableClose: false
-  //     });
-  //     dialogRef.componentInstance.prescribed = prescribed;
-  //     dialogRef.componentInstance.items = items;
-  //     dialogRef.componentInstance.editSelection = selection;
+  public batches(prescribed: any, items: any, selection: any): Observable<any> {
+    const dialogRef: MatDialogRef<RxBatchViewComponent> = this.dialog.open(
+      RxBatchViewComponent,
+      {
+        width: '80%',
+        disableClose: false,
+      },
+    );
+    dialogRef.componentInstance.prescribed = prescribed;
+    dialogRef.componentInstance.items = items;
+    dialogRef.componentInstance.editSelection = selection;
 
-  //     return dialogRef.afterClosed();
-  // }
+    return dialogRef.afterClosed();
+  }
 }

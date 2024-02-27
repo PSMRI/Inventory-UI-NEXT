@@ -14,8 +14,11 @@
     margin: -26px 15px 15px;
 }
 
+
+
 .previous-btn {
     margin: 5px 0px;
+    background: #43a047 !important;
 }
 
 .m-b-40 {
@@ -24,6 +27,17 @@
 
 .vertical-align-middle {
     vertical-align: middle;
+}
+
+.noRecord {
+    text-align: center; font-size: 16px; display: flex;
+    justify-content: center;padding-top: 14px;
+  }
+
+  #topBtn {
+    display: flex; 
+    justify-content: flex-end;
+    padding-top: 12px;
 }
 
 @media screen and (max-width: 768px) {

@@ -1,4 +1,4 @@
-<div id="head">
+<div id="head" style="display: flex; justify-content: space-between">
   <h4 id="dialog_head" class="pull-left">
     {{ currentLanguageSet?.inventory?.stockEntryDetails }}
   </h4>
@@ -6,7 +6,8 @@
     id="cross"
     class="pull-right"
     matTooltip="{{ currentLanguageSet?.inventory?.close }}"
-    mat-dialog-close
+    md-dialog-close
+    matTooltip="{{ currentLanguageSet?.inventory?.close }}"
     (click)="dialogRef.close(false)"
     >clear</mat-icon
   >
@@ -14,34 +15,76 @@
 
 <div class="scrolling-content">
   <div class="container-fluid">
-    <!-- <table class="table" aria-describedby="viewStockDetails">
-      <caption></caption>
-      <tbody>
-        <tr>
-          <th id="stockEntryID">
-            {{ currentLanguageSet?.inventory?.stockEntryID }}
-          </th>
-          <td colspan="3">{{ data?.stockEntry?.phyEntryID }}</td>
-        </tr>
-        <tr>
-          <th id="refNo">{{ currentLanguageSet?.inventory?.refNo }}</th>
-          <td>{{ data?.stockEntry?.refNo }}</td>
-          <th id="storeID">{{ currentLanguageSet?.inventory?.storeID }}</th>
-          <td>{{ data?.stockEntry?.facilityID }}</td>
-        </tr>
-        <tr>
-          <th id="createdBy">{{ currentLanguageSet?.inventory?.createdBy }}</th>
-          <td>{{ data?.stockEntry?.createdBy }}</td>
-          <th id="createdDate">
-            {{ currentLanguageSet?.inventory?.createdDate }}
-          </th>
-          <td>{{ data?.stockEntry?.createdDate | istDate: "dd/MM/yyyy" }}</td>
-        </tr>
-      </tbody>
-    </table> -->
+    <table
+      mat-table
+      class="mat-elevation-z8"
+      aria-describedby="viewStockDetails"
+      [dataSource]="dataSourceList"
+    >
+      <ng-container matColumnDef="stockEntryID">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ currentLanguageSet?.inventory?.stockEntryID }}
+        </th>
+        <td mat-cell *matCellDef="let row">{{ row.phyEntryID }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="refNo">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ currentLanguageSet?.inventory?.refNo }}
+        </th>
+        <td mat-cell *matCellDef="let row">{{ row.refNo }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="storeID">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ currentLanguageSet?.inventory?.storeID }}
+        </th>
+        <td mat-cell *matCellDef="let row">{{ row.facilityID }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdBy">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ currentLanguageSet?.inventory?.createdBy }}
+        </th>
+        <td mat-cell *matCellDef="let row">{{ row.createdBy }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdDate">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ currentLanguageSet?.inventory?.createdDate }}
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.createdDate | istDate: "dd/MM/yyyy" }}
+        </td>
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="[
+          'stockEntryID',
+          'refNo',
+          'storeID',
+          'createdBy',
+          'createdDate'
+        ]"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="
+          let row;
+          columns: [
+            'stockEntryID',
+            'refNo',
+            'storeID',
+            'createdBy',
+            'createdDate'
+          ]
+        "
+      ></tr>
+    </table>
 
     <div class="row">
-      <div class="col-xs-12 col-sm-12 text-right">
+      <div class="col-xs-12 col-sm-12 text-right" style="padding-top: 22px">
         <mat-form-field id="filterbox">
           <input
             autocomplete="off"
@@ -60,86 +103,91 @@
     <div class="row">
       <div class="col-xs-12">
         <section class="table-responsive">
-          <!-- <table
-            [md2Data]="_filteredDetailedList"
-            #md2="md2DataTable"
-            [rowsPerPage]="5"
-            [activePage]="1"
-            class="table table-striped responsive-table-view"
+          <table
+            mat-table
+            class="mat-elevation-z8"
             aria-describedby="viewStockDetails"
+            [dataSource]="_filteredDetailedList"
           >
-            <caption></caption>
-            <thead>
-              <tr>
-                <th id="noValue"></th>
-                <th id="itemName">
-                  {{ currentLanguageSet?.inventory?.itemName }}
-                </th>
-                <th id="batchNo">
-                  {{ currentLanguageSet?.itemDispense?.batchNo }}
-                </th>
-                <th id="expiryDate">
-                  {{ currentLanguageSet?.itemDispense?.expiryDate }}
-                </th>
-                <th id="quantity">
-                  {{ currentLanguageSet?.inventory?.quantity }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <ng-template
-                [ngIf]="
-                  _filteredDetailedList && _filteredDetailedList.length == 0
-                "
-              >
-                <tr *ngFor="let row of blankTable">
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                </tr>
-              </ng-template>
-              <tr *ngFor="let item of md2.data">
-                <td data-title="S.No.">
-                  {{ _filteredDetailedList.indexOf(item) + 1 }}
-                </td>
-                <td data-title="Item Name">{{ item?.item.itemName }}</td>
-                <td data-title="Batch No.">{{ item?.batchNo }}</td>
-                <td data-title="Expiry Date">
-                  {{ item?.expiryDate | date: "dd/MM/yyyy" }}
-                </td>
-                <td data-title="Quantity">{{ item?.quantity }}</td>
-              </tr>
-            </tbody>
-            <tfoot *ngIf="_filteredDetailedList.length > 0">
-              <tr>
-                <td colspan="3" class="total-count">
-                  <div>
-                    {{ currentLanguageSet?.inventory?.totalCount }} :
-                    {{ _filteredDetailedList.length }}
-                  </div>
-                </td>
-                <td colspan="3" class="text-right">
-                  <md2-pagination></md2-pagination>
-                </td>
-              </tr>
-            </tfoot>
-          </table> -->
+            <ng-container matColumnDef="noValue">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let row">&nbsp;</td>
+            </ng-container>
+
+            <ng-container matColumnDef="itemName">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.inventory?.itemName }}
+              </th>
+              <td mat-cell *matCellDef="let row">{{ row.item.itemName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="batchNo">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.itemDispense?.batchNo }}
+              </th>
+              <td mat-cell *matCellDef="let row">{{ row.batchNo }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="expiryDate">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.itemDispense?.expiryDate }}
+              </th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.expiryDate | date: "dd/MM/yyyy" }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="quantity">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.inventory?.quantity }}
+              </th>
+              <td mat-cell *matCellDef="let row">{{ row.quantity }}</td>
+            </ng-container>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="[
+                'noValue',
+                'itemName',
+                'batchNo',
+                'expiryDate',
+                'quantity'
+              ]"
+            ></tr>
+            <tr
+              mat-row
+              *matRowDef="
+                let row;
+                columns: [
+                  'noValue',
+                  'itemName',
+                  'batchNo',
+                  'expiryDate',
+                  'quantity'
+                ]
+              "
+            ></tr>
+          </table>
+          <div
+            class="total-count"
+            *ngIf="_filteredDetailedList.data.length > 0"
+          >
+            {{ currentLanguageSet?.inventory?.totalCount }} :
+            {{ _filteredDetailedList.data.length }}
+          </div>
+          <mat-paginator
+            [hidden]="_filteredDetailedList.data.length === 0"
+            [pageSizeOptions]="[5, 10, 25]"
+            [pageSize]="5"
+            showFirstLastButtons
+          ></mat-paginator>
         </section>
       </div>
     </div>
 
     <div class="row m-b-15">
-      <div class="col-xs-12">
-        <button
-          class="pull-right"
-          mat-raised-button
-          color="primary"
-          type="button"
-          tabindex="-1"
-          (click)="print()"
-        >
+      <div class="col-xs-12" style="display: flex; justify-content: end">
+        <button mat-raised-button type="button" tabindex="-1" (click)="print()">
           {{ currentLanguageSet?.inventory?.print }}
         </button>
       </div>

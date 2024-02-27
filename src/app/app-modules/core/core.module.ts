@@ -83,12 +83,14 @@ import { IndentDispenseDirective } from './directives/indent-dispense.directive'
 import { IndentRequestDirective } from './directives/indent-request.directive';
 import { MinNumberValidatorDirective } from './directives/minNumberValidator.directive';
 import { NumberValidatorDirective } from './directives/numberValidator.directive';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { TextareaDialog } from './components/textarea-dialog/textarea-dialog.service';
 @NgModule({
   imports: [
     HttpClientModule,
     CommonModule,
     MaterialModule,
-    // Md2Module,
     RouterModule,
     FormsModule,
     MatDialogModule,
@@ -104,13 +106,13 @@ import { NumberValidatorDirective } from './directives/numberValidator.directive
     MatButtonModule,
     MatCardModule,
     MatRadioModule,
+    MatCheckboxModule,
     MatDatepickerModule,
     MatListModule,
     MatSelectModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-
-    // Ng2GoogleChartsModule,
+    MatGridListModule,
   ],
   declarations: [
     CommonDialogComponent,
@@ -137,7 +139,6 @@ import { NumberValidatorDirective } from './directives/numberValidator.directive
     ItemDispenseDirective,
     ItemDispenseComponent,
     SearchComponent,
-    // SetLanguageComponent,
     ISTDatePipe,
     BatchAdjustmentDirective,
     BatchAdjustmentComponent,
@@ -150,21 +151,16 @@ import { NumberValidatorDirective } from './directives/numberValidator.directive
   ],
   exports: [
     MaterialModule,
-    // Md2Module,
     CommonDialogComponent,
     TextareaDialogComponent,
     SpinnerComponent,
-    // SetLanguageComponent,
-    // ReactiveFormsModule,
     AppFooterComponent,
     AppHeaderComponent,
-    // Ng2GoogleChartsModule,
     myEmailDirective,
     SetLanguageComponent,
     myMobileNumberDirective,
     myNameDirective,
     myPasswordDirective,
-    // DisableFormControlDirective,
     StringValidatorDirective,
     NumberValidatorDirective,
     MinNumberValidatorDirective,
@@ -185,20 +181,6 @@ import { NumberValidatorDirective } from './directives/numberValidator.directive
     IndentDispenseDirective,
     ShowCommitAndVersionDetailsComponent,
   ],
-  // entryComponents: [
-  //   CommonDialogComponent,
-  //   ItemSearchComponent,
-  //   TransferSearchComponent,
-  //   BatchSearchComponent,
-  //   BatchAdjustmentComponent,
-  //   TextareaDialogComponent,
-  //   ItemDispenseComponent,
-  //   SpinnerComponent,
-  //   SearchComponent,
-  //  RxBatchViewComponent,
-  //   IndentItemListComponent,
-  //   ShowCommitAndVersionDetailsComponent
-  // ]
 })
 export class CoreModule {
   static forRoot(): ModuleWithProviders<CoreModule> {
@@ -208,23 +190,14 @@ export class CoreModule {
         ConfirmationService,
         HttpInterceptorService,
         BatchViewService,
-        // TextareaDialog,
+        TextareaDialog,
         AuthGuard,
         SpinnerService,
         CommonService,
         ItemSearchService,
         BatchSearchService,
         BeneficiaryDetailsService,
-        // {
-        //   // provide: Http,
-        //   // useFactory: HttpInterceptorFactory,
-        //   deps: [XHRBackend, RequestOptions, Router, SpinnerService, ConfirmationService]
-        // }
       ],
     };
   }
 }
-
-// export function HttpInterceptorFactory(backend: XHRBackend, options: RequestOptions, router: Router, spinner: SpinnerService, confirmation: ConfirmationService, http_service: LanguageService) {
-//   return new HttpInterceptor(backend, options, router, spinner, confirmation, http_service);
-// }

@@ -192,8 +192,8 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
     const matDialogRef: MatDialogRef<SearchComponent> = this.dialog.open(
       SearchComponent,
       {
-        // height: '80%',
-        // width: '80%',
+        height: '80%',
+        width: '65%',
         panelClass: 'fit-screen',
         disableClose: false,
       },
@@ -211,31 +211,14 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   getVisitDetail() {
-    // console.log('this.beneficiaryDetailForm.controls['medicineDispenseType'].value', this.beneficiaryDetailForm.controls['medicineDispenseType'].value);
-    if (
-      this.beneficiaryDetailForm.controls['medicineDispenseType'].value !=
-        undefined ||
-      this.beneficiaryDetailForm.controls['medicineDispenseType'].value != null
-    ) {
+    if (this.visitCode != undefined || this.visitCode != null) {
       this.beneficiaryDetailForm.patchValue({
-        beneficiaryName:
-          this.beneficiaryDetailForm.controls['medicineDispenseType'].value
-            .benName,
-        beneficiaryAge:
-          this.beneficiaryDetailForm.controls['medicineDispenseType'].value
-            .ben_age_val,
-        genderName:
-          this.beneficiaryDetailForm.controls['medicineDispenseType'].value
-            .genderName,
-        doctorName:
-          this.beneficiaryDetailForm.controls['medicineDispenseType'].value
-            .agentId,
-        visitDate:
-          this.beneficiaryDetailForm.controls['medicineDispenseType'].value
-            .visitDate,
-        visitID:
-          this.beneficiaryDetailForm.controls['medicineDispenseType'].value
-            .benVisitID,
+        beneficiaryName: this.visitCode.benName,
+        beneficiaryAge: this.visitCode.ben_age_val,
+        genderName: this.visitCode.genderName,
+        doctorName: this.visitCode.agentId,
+        visitDate: this.visitCode.visitDate,
+        visitID: this.visitCode.benVisitID,
         reference: null,
         medicineDispenseType: 'System',
       });
@@ -262,67 +245,53 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
       localStorage.getItem('facilityDetail');
     const facilityDetail = JSON.parse(facilityDetailfromStorage);
     const facilityName = facilityDetail.facilityName;
-    // console.log(' this.beneficiaryDetailForm.controls['medicineDispenseType'].value', this.beneficiaryDetailForm.controls['medicineDispenseType'].value);
     this.beneficaryDetail = {
-      age: this.beneficiaryDetailForm.controls['medicineDispenseType'].value
-        .ben_age_val,
-      beneficiaryID: this.beneficiaryDetailForm.controls['beneficiaryID'].value,
+      age: this.visitCode.ben_age_val,
+      beneficiaryID: this.beneficiaryID,
       benRegID: this.beneficiaryVisitDetailList.beneficiaryRegID,
       createdBy: localStorage.getItem('username'),
       providerServiceMapID: localStorage.getItem('providerServiceID'),
-      doctorName:
-        this.beneficiaryDetailForm.controls['medicineDispenseType'].value
-          .agentId,
+      doctorName: this.visitCode.agentId,
       facilityID: localStorage.getItem('facilityID'),
-      gender:
-        this.beneficiaryDetailForm.controls['medicineDispenseType'].value
-          .genderName,
-      issueType:
-        this.beneficiaryDetailForm.controls['medicineDispenseType'].value,
-      patientName:
-        this.beneficiaryDetailForm.controls['medicineDispenseType'].value
-          .benName,
+      gender: this.visitCode.genderName,
+      issueType: this.medicineDispenseType,
+      patientName: this.visitCode.benName,
       prescriptionID: null,
-      reference: this.beneficiaryDetailForm.controls['reference'].value,
-      visitID:
-        this.beneficiaryDetailForm.controls['medicineDispenseType'].value
-          .benVisitID,
-      visitCode:
-        this.beneficiaryDetailForm.controls['medicineDispenseType'].value
-          .benVisitCode,
+      reference: this.reference,
+      visitID: this.visitCode.benVisitID,
+      visitCode: this.visitCode.benVisitCode,
       facilityName: facilityName,
-      visitDate:
-        this.beneficiaryDetailForm.controls['medicineDispenseType'].value
-          .visitDate,
+      visitDate: this.visitCode.visitDate,
     };
+    console.log('ERRR100', this.beneficaryDetail);
   }
 
-  // get reference() {
-  //   return this.beneficiaryDetailForm.controls['reference'].value;
-  // }
-  // get medicineDispenseType() {
-  //   return this.beneficiaryDetailForm.controls['medicineDispenseType'].value;
-  // }
+  get reference() {
+    return this.beneficiaryDetailForm.controls['reference'].value;
+  }
+  get medicineDispenseType() {
+    return this.beneficiaryDetailForm.controls['medicineDispenseType'].value;
+  }
 
-  // get beneficiaryID() {
-  //   return this.beneficiaryDetailForm.controls['beneficiaryID'].value;
-  // }
+  get beneficiaryID() {
+    return this.beneficiaryDetailForm.controls['beneficiaryID'].value;
+  }
 
-  // get beneficiaryName() {
-  //   return this.beneficiaryDetailForm.controls['beneficiaryName'].value;
-  // }
+  get beneficiaryName() {
+    return this.beneficiaryDetailForm.controls['beneficiaryName'].value;
+  }
 
-  // get beneficiaryAge() {
-  //   return this.beneficiaryDetailForm.controls['beneficiaryAge'].value;
-  // }
+  get beneficiaryAge() {
+    return this.beneficiaryDetailForm.controls['beneficiaryAge'].value;
+  }
 
-  // get visitDate() {
-  //   return this.beneficiaryDetailForm.controls['visitDate'].value;
-  // }
+  get visitDate() {
+    return this.beneficiaryDetailForm.controls['visitDate'].value;
+  }
 
-  // get visitCode() {
-  //   return this.beneficiaryDetailForm.controls['visitCode'].value;
-  // }
+  get visitCode() {
+    return this.beneficiaryDetailForm.controls['visitCode'].value;
+  }
 
   resetBeneficiaryDetails(event: any) {
     console.log('event', event);

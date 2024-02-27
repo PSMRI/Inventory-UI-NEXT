@@ -21,13 +21,20 @@
  */
 import { Router } from '@angular/router';
 import { InventoryService } from '../shared/service/inventory.service';
-import { FormBuilder, FormArray, Validators, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormArray,
+  Validators,
+  FormGroup,
+  AbstractControl,
+} from '@angular/forms';
 import { ConfirmationService } from '../../core/services/confirmation.service';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { SetLanguageComponent } from '../../core/components/set-language.component';
 import { LanguageService } from '../../core/services/language.service';
 import * as moment from 'moment';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-store-stock-transfer',
   templateUrl: './store-stock-transfer.component.html',
@@ -53,6 +60,14 @@ export class StoreStockTransferComponent implements OnInit, DoCheck {
   filterStore: any = [];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  dataSource!: MatTableDataSource<AbstractControl>;
+  displayedColumns: string[] = [
+    'itemName',
+    'batchID',
+    'qOH',
+    'adjustmentType',
+    'action',
+  ];
 
   constructor(
     private inventoryService: InventoryService,
@@ -73,6 +88,10 @@ export class StoreStockTransferComponent implements OnInit, DoCheck {
     this.fetchLanguageResponse();
   }
 
+  stroreStockTransferTableData(): any {
+    return (this.stockTransferForm.get('itemArray') as FormArray).controls;
+  }
+
   checkFacility() {
     this.facilityID = localStorage.getItem('facilityID');
     if (this.facilityID == null || this.facilityID <= 0) {
@@ -83,8 +102,13 @@ export class StoreStockTransferComponent implements OnInit, DoCheck {
   getAllStore() {
     const serviceProviderId = localStorage.getItem('providerServiceID');
     this.inventoryService.getAllStore(serviceProviderId).subscribe((data) => {
-      this.stores = data.filter((item: any) => item.deleted == false);
+      console.log('data****', data);
+      const newArr: any = Object.entries(data).map(([key, value]) => value);
+      console.log('newArr****', newArr);
+      this.stores = newArr[0].filter((item: any) => item.deleted == false);
+      console.log('stores$$$', this.stores);
       this.filterStore = this.filterSubStore(this.stores, this.facilityID);
+      console.log('filterStore&&&&&', this.filterStore);
     });
   }
 
@@ -178,7 +202,13 @@ export class StoreStockTransferComponent implements OnInit, DoCheck {
       stockArray.removeAt(index);
     }
 
-    if (index === 0 && length === 1) this.addTransfer();
+    if (index === 0 && length === 1) {
+      // this.addTransfer();
+      // stockArray.removeAt(index);
+      stockArray.reset();
+      stockArray?.reset();
+      stockArray.enable();
+    }
   }
 
   matcher(control: any, form: any) {

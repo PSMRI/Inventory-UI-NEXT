@@ -28,22 +28,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './spinner.component.html',
   styleUrls: ['./spinner.component.css'],
 })
-export class SpinnerComponent implements OnDestroy, OnInit {
-  visible = false;
-
-  private spinnerStateChanged!: Subscription;
-
-  constructor(private spinnerService: SpinnerService) {}
-
-  ngOnInit() {
-    this.spinnerStateChanged = this.spinnerService.spinnerState.subscribe(
-      (state: SpinnerState) => {
-        this.visible = state.show;
-      },
-    );
-  }
-
-  ngOnDestroy() {
-    this.spinnerStateChanged.unsubscribe();
+export class SpinnerComponent implements OnInit {
+  constructor(public spinnerService: SpinnerService) {}
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
 }

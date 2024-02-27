@@ -19,11 +19,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, Inject, DoCheck } from '@angular/core';
+import { Component, OnInit, Inject, DoCheck, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { InventoryService } from '../../shared/service/inventory.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-view-stock-adjustment-draft-details',
@@ -37,9 +39,29 @@ export class ViewStockAdjustmentDraftDetailsComponent
 
   stock: any;
   adjustmentList: any = [];
-  filteredAdjustmentList: any = [];
+  // filteredAdjustmentList: any = [];
+  filteredAdjustmentList = new MatTableDataSource<any>();
   currentLanguageSet: any;
   languageComponent!: SetLanguageComponent;
+  stockAdjustmentDraftList = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<any>();
+  newDataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  displayedColumns: string[] = [
+    'stockAdjustmentDraftID',
+    'refNo',
+    'draftDescription',
+    'createdBy',
+    'createdDate',
+  ];
+
+  adjustmentListColumns: string[] = [
+    'itemName',
+    'batchNo',
+    'quantityOnHand',
+    'adjustmentType',
+    'reason',
+  ];
 
   constructor(
     private http_service: LanguageService,
@@ -61,16 +83,23 @@ export class ViewStockAdjustmentDraftDetailsComponent
       .getStockAdjustmentDraftDetails(temp)
       .subscribe((response) => {
         this.stock = response;
-        this.adjustmentList = response.stockAdjustmentItemDraftEdit.slice();
-        this.filteredAdjustmentList =
-          response.stockAdjustmentItemDraftEdit.slice();
+        this.stockAdjustmentDraftList.data.push(this.stock);
+        this.dataSource = new MatTableDataSource<any>(
+          this.stockAdjustmentDraftList.data,
+        );
+        this.adjustmentList.push(response.stockAdjustmentItemDraftEdit);
+        this.filteredAdjustmentList.data.push(this.stock);
+        this.newDataSource = new MatTableDataSource<any>(
+          this.filteredAdjustmentList.data[0].data.stockAdjustmentItemDraftEdit,
+        );
       });
   }
 
   filterDetails(filterTerm: any) {
-    if (!filterTerm) this.filteredAdjustmentList = this.adjustmentList.slice();
+    if (!filterTerm)
+      this.filteredAdjustmentList.data = this.adjustmentList.slice();
     else {
-      this.filteredAdjustmentList = [];
+      this.filteredAdjustmentList.data = [];
       this.adjustmentList.forEach((item: any) => {
         for (const key in item) {
           if (
@@ -87,18 +116,18 @@ export class ViewStockAdjustmentDraftDetailsComponent
                 'receipt'.indexOf(filterTerm.toLowerCase()) >= 0 &&
                 item[key]
               ) {
-                this.filteredAdjustmentList.push(item);
+                this.filteredAdjustmentList.data.push(item);
                 break;
               } else if (
                 'issue'.indexOf(filterTerm.toLowerCase()) >= 0 &&
                 !item[key]
               ) {
-                this.filteredAdjustmentList.push(item);
+                this.filteredAdjustmentList.data.push(item);
                 break;
               }
             }
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
-              this.filteredAdjustmentList.push(item);
+              this.filteredAdjustmentList.data.push(item);
               break;
             }
           }

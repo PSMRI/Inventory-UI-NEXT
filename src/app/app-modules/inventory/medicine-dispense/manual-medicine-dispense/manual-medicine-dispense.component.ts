@@ -38,6 +38,7 @@ import * as moment from 'moment';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-manual-medicine-dispense',
   templateUrl: './manual-medicine-dispense.component.html',
@@ -54,6 +55,22 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
   manualItemDispenseForm!: FormGroup;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  manualDispenseList = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<any>();
+  batchNumberDataList: any = [];
+  otherData: any = [];
+  displayedColumns: string[] = [
+    'SNo',
+    'itemName',
+    'quantityInHand',
+    'quantityDispensed',
+    'batchNo',
+    'quantityOnBatch',
+    'expiryDate',
+    'quantityOfDispense',
+    'edit',
+    'delete',
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -122,7 +139,9 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
     return this.manualItemDispenseForm.controls['quantityInHand'].value;
   }
 
-  manualDispenseList: any = [];
+  // manualDispenseList: any = [];
+  // manualDispenseList = new MatTableDataSource<any>();
+
   selectBatch() {
     const batchList = <FormArray>(
       this.manualItemDispenseForm.controls['batchList']
@@ -178,14 +197,25 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
         disableClose: false,
       },
     );
-    mdDialogRef.afterClosed().subscribe((result) => {
+    mdDialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
+        console.log("result['batchList']", result.value['batchList']);
         if (editIndex != null) {
-          this.manualDispenseList.splice(editIndex, 1);
-          this.manualDispenseList.push(result.value);
+          this.manualDispenseList.data.splice(editIndex, 1);
+          this.manualDispenseList.data.push(result.value);
           this.manualItemDispenseForm.reset();
         } else {
-          this.manualDispenseList.push(result.value);
+          this.manualDispenseList.data.push(result.value);
+          this.manualDispenseList.data.forEach((item: any) => {
+            this.manualDispenseList.data[0].batchList.forEach((item: any) => {
+              this.batchNumberDataList.push(item.batchNo);
+              this.otherData.push(item.quantityOfDispense);
+            });
+            this.manualDispenseList.data.forEach((element: any) => {
+              element['batchNo'] = this.batchNumberDataList;
+              element['quantityOfDispense'] = this.otherData;
+            });
+          });
           this.manualItemDispenseForm.reset();
         }
       }
@@ -193,7 +223,7 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
   }
 
   removeManualDispenseItem(i: any) {
-    this.manualDispenseList.splice(i, 1);
+    this.manualDispenseList.data.splice(i, 1);
   }
 
   editItem(item: any, i: any) {
@@ -202,9 +232,8 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
 
   stockExitList: any = [];
   createStockExitList() {
-    this.manualDispenseList.forEach((dispenseItem: any) => {
+    this.manualDispenseList.data.forEach((dispenseItem: any) => {
       dispenseItem.batchList.forEach((batch: any) => {
-        console.log('batch', batch);
         const dispensedItem = {
           createdBy: localStorage.getItem('userID'),
           itemID: batch.batchNo.itemID,
@@ -242,7 +271,7 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
               this.currentLanguageSet.inventory.savedsuccessfully,
               'success',
             );
-            this.manualDispenseList = [];
+            this.manualDispenseList.data = [];
             this.manualItemDispenseForm.reset();
             this.resetBeneficiaryDetails();
           }
@@ -264,7 +293,7 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
   createPrintableData() {
     const printableData: any = [];
     let i = 0;
-    this.manualDispenseList.forEach((dispenseItem: any) => {
+    this.manualDispenseList.data.forEach((dispenseItem: any) => {
       dispenseItem.batchList.forEach((batch: any) => {
         console.log('batch', batch);
         i = i + 1;

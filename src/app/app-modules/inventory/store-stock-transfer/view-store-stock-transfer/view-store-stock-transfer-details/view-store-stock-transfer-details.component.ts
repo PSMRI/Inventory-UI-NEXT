@@ -19,8 +19,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, Inject, OnDestroy, DoCheck } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  OnDestroy,
+  DoCheck,
+  ViewChild,
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 
@@ -34,10 +43,14 @@ export class ViewStoreStockTransferDetailsComponent
 {
   _filterTerm = '';
   _detailedList = [];
-  _filteredDetailedList = [];
+  // _filteredDetailedList = [];
   blankTable = [1, 2, 3, 4, 5];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  _filteredDetailedList = new MatTableDataSource<any>();
+  dataSourceTransferList = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
   constructor(
     private http_service: LanguageService,
@@ -47,6 +60,8 @@ export class ViewStoreStockTransferDetailsComponent
 
   ngOnInit() {
     this.populateStockEntryItems(this.data);
+    this.dataSourceTransferList.data.push(this.data);
+    console.log('OOOOOOO', this.dataSourceTransferList.data);
     this.fetchLanguageResponse();
   }
 
@@ -58,21 +73,26 @@ export class ViewStoreStockTransferDetailsComponent
   populateStockEntryItems(data: any) {
     if (data && data.entryDetails && data.stockEntry) {
       this._detailedList = data.entryDetails;
-      this._filteredDetailedList = data.entryDetails;
+      console.log(' this._detailedList', this._detailedList);
+      this._filteredDetailedList.data.push(this._detailedList);
+      this.dataSource = new MatTableDataSource<any>(
+        this._filteredDetailedList.data[0].data,
+      );
+      console.log('dataSourceG', this.dataSource.data);
     }
   }
 
   filterDetails(filterTerm: string) {
     console.log(filterTerm);
-    if (!filterTerm) this._filteredDetailedList = this._detailedList;
+    if (!filterTerm) this._filteredDetailedList.data = this._detailedList;
     else {
-      this._filteredDetailedList = [];
+      this._filteredDetailedList.data = [];
       this._detailedList.forEach((item) => {
         for (const key in item) {
           if (key == 'batchNo' || key == 'itemName' || key == 'quantity') {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
-              this._filteredDetailedList.push(item);
+              this._filteredDetailedList.data.push(item);
               break;
             }
           }

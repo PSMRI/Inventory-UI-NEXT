@@ -1,20 +1,11 @@
 <div class="container-fluid">
   <div class="row m-t-10">
-    <div class="col-xs-12 col-sm-6">
-      <h4 class="inline-block">
+    <div class="col-xs-12 col-sm-6" style="padding-top: 22px">
+      <h4 class="inline-block" style="font-size: larger">
         {{ currentLanguageSet?.inventory?.patientIssueWithoutRx }}
       </h4>
     </div>
-    <div class="col-xs-12 col-sm-6">
-      <button
-        mat-raised-button
-        class="pull-right button-full-width m-l-5"
-        type="button"
-        color="primary"
-        routerLink="View"
-      >
-        {{ currentLanguageSet?.inventory?.previousRecords }}
-      </button>
+    <div class="col-xs-12 col-sm-6" id="topBtn">
       <button
         mat-raised-button
         class="pull-right button-full-width m-l-5"
@@ -23,6 +14,15 @@
         (click)="openSearchDialog()"
       >
         {{ currentLanguageSet?.bendetails?.advanceSearch }}
+      </button>
+      <button
+        mat-raised-button
+        class="pull-right button-full-width m-l-5"
+        type="button"
+        color="primary"
+        routerLink="View"
+      >
+        {{ currentLanguageSet?.inventory?.previousRecords }}
       </button>
     </div>
 
@@ -48,18 +48,19 @@
               </mat-form-field>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
-              <mat-form-field>
-                <mat-label>
-                  {{ currentLanguageSet?.itemDispense?.visitcode }}
-                </mat-label>
+              <mat-form-field style="width: 100%; line-height: 4px !important">
+                <label class="control-label" htmlFor="visitInvCode"
+                  >{{ currentLanguageSet?.itemDispense?.visitcode }}:</label
+                >
                 <mat-select
+                  id="visitInvCode"
                   class="input-full-width"
-                  name="visitNo"
+                  name="visitCode"
                   formControlName="visitCode"
                   [disabled]="
                     !beneficiaryDetailForm.get('beneficiaryID')?.value
                   "
-                  (change)="getVisitDetail()"
+                  (selectionChange)="getVisitDetail()"
                 >
                   <mat-option
                     *ngFor="let visit of beneficiaryDetail"
@@ -82,14 +83,11 @@
                   [disabled]="true"
                 />
                 <mat-datepicker-toggle
-                  matSuffix
+                  matPrefix
                   [for]="visitDatePicker"
                 ></mat-datepicker-toggle>
                 <mat-datepicker #visitDatePicker></mat-datepicker>
               </mat-form-field>
-
-              <!-- <md2-datepicker class='input-full-width' [openOnFocus]="true" name='visitDate' id='visitDate' formControlName="visitDate"
-              placeholder="{{currentLanguageSet?.bendetails?.visitDate}}" [disabled]='true'></md2-datepicker> -->
             </div>
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
               <mat-form-field class="input-full-width">
@@ -163,11 +161,12 @@
               </mat-form-field>
             </div>
             <div class="col-xs-12 col-sm-6 box">
-              <label class="control-label" for="medicineDispenseType"
-                >{{ currentLanguageSet?.inventory?.typeofDispense }}:</label
+              <mat-label class="control-label" for="medicineDispenseType"
+                >{{ currentLanguageSet?.inventory?.typeofDispense }}:</mat-label
               >
               <div class="clearfix"></div>
               <mat-radio-group
+                id="medicineDispenseType"
                 name="medicineDispenseType"
                 formControlName="medicineDispenseType"
                 [disabled]="!beneficiaryDetailForm.get('visitCode')?.value"

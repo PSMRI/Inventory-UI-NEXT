@@ -27,6 +27,10 @@
 .m-b-15 {
   margin-bottom: 15px;
 }
+.greenBttn {
+  background: #43a047 !important;
+  color: white;
+}
 
 .scrolling-content {
   max-height: 75vh;

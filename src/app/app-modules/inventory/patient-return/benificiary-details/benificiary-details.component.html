@@ -1,5 +1,7 @@
-<div class="title">
-  <h4>{{ currentLanguageSet?.inventory?.benificiaryDetails }}</h4>
+<div class="title" style="display: flex; justify-content: space-between">
+  <h4 style="font-size: larger">
+    {{ currentLanguageSet?.inventory?.benificiaryDetails }}
+  </h4>
   <button
     mat-icon-button
     matTooltip="{{ currentLanguageSet?.inventory?.close }}"
@@ -19,37 +21,78 @@
             <div class="row">
               <div class="col-xs-12">
                 <section class="table-responsive">
-                  <!-- <table [md2Data]="beneficiaryDetailsList" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1"
-                    class="table table-striped responsive-table-view">
-                    <caption></caption> 
-                    <thead>
-                      <tr>
-                        <th id="noValue"></th>
-                        <th id="beneficiaryID">{{currentLanguageSet?.bendetails?.beneficiaryID}}</th>
-                        <th id="beneficiaryName">{{currentLanguageSet?.bendetails?.beneficiaryName}}</th>
-                        <th id="age">{{currentLanguageSet?.bendetails?.age}}</th>
-                        <th id="gender">{{currentLanguageSet?.bendetails?.gender}}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <ng-template [ngIf]="beneficiaryDetailsList && beneficiaryDetailsList.length == 0">
-                        <tr>
-                          <td colspan="6" style="text-align: center; font-size: 16px">
-                            <strong>{{currentLanguageSet?.inventory?.norecordsfound}}</strong>
-                          </td>
-                        </tr>
-                      </ng-template>
-                      <tr *ngFor="let beneficiary of md2.data" class="table-hover">
-                        <td data-title="S.No." (click)="loadbeneficiaryDetails(beneficiary)">{{
-                          beneficiaryDetailsList.indexOf(beneficiary)+1 }}</td>
-                        <td data-title="Beneficiary ID" (click)="loadbeneficiaryDetails(beneficiary)">{{beneficiary?.beneficiaryID}}</td>
-                        <td data-title="Beneficiary Name" (click)='loadbeneficiaryDetails(beneficiary)'>{{beneficiary?.firstName?
-                          beneficiary?.firstName: "" + " "+ beneficiary?.lastName ? beneficiary?.lastName: ""}}</td>
-                        <td data-title="Age" (click)='loadbeneficiaryDetails(beneficiary)'>{{beneficiary?.age}}</td>
-                        <td data-title="Gender" (click)='loadbeneficiaryDetails(beneficiary)'>{{beneficiary?.m_gender?.genderName}}</td>
-                      </tr>
-                    </tbody>
-                  </table> -->
+                  <table
+                    mat-table
+                    [dataSource]="beneficiaryDetailsList"
+                    class="table table-striped responsive-table-view"
+                  >
+                    <ng-container matColumnDef="noValue">
+                      <th mat-header-cell *matHeaderCellDef></th>
+                      <td mat-cell *matCellDef="let i = index">{{ i + 1 }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="beneficiaryID">
+                      <th mat-header-cell *matHeaderCellDef>
+                        {{ currentLanguageSet?.bendetails?.beneficiaryID }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element?.beneficiaryID }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="beneficiaryName">
+                      <th mat-header-cell *matHeaderCellDef>
+                        {{ currentLanguageSet?.bendetails?.beneficiaryName }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element?.firstName ? element.firstName : "" }}
+                        {{ element?.lastName ? element.lastName : "" }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="age">
+                      <th mat-header-cell *matHeaderCellDef>
+                        {{ currentLanguageSet?.bendetails?.age }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element?.age }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="gender">
+                      <th mat-header-cell *matHeaderCellDef>
+                        {{ currentLanguageSet?.bendetails?.gender }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element?.m_gender?.genderName }}
+                      </td>
+                    </ng-container>
+                    <!-- Header and row definitions -->
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr
+                      mat-row
+                      *matRowDef="let row; columns: displayedColumns"
+                      (click)="loadbeneficiaryDetails(row)"
+                    ></tr>
+                  </table>
+                  <div
+                    *ngIf="
+                      beneficiaryDetailsList &&
+                      beneficiaryDetailsList.data.length === 0
+                    "
+                    class="noRecord"
+                  >
+                    <tr>
+                      <td
+                        colspan="6"
+                        style="text-align: center; font-size: 16px"
+                      >
+                        <strong>{{
+                          currentLanguageSet?.inventory?.norecordsfound
+                        }}</strong>
+                      </td>
+                    </tr>
+                  </div>
                 </section>
               </div>
             </div>

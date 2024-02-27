@@ -19,8 +19,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, Inject, OnDestroy, DoCheck } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  OnDestroy,
+  DoCheck,
+  ViewChild,
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
@@ -35,10 +44,22 @@ export class ViewMedicineDispenseDetailsComponent
 {
   _filterTerm = '';
   _detailedList: any = [];
-  _filteredDetailedList: any = [];
+  // _filteredDetailedList: any = [];
   blankTable = [1, 2, 3, 4, 5];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  medicineDetailList = new MatTableDataSource<any>();
+  _filteredDetailedList = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  displayedColumns: string[] = [
+    'patientName',
+    'issueType',
+    'createdBy',
+    'reference',
+    'createdDate',
+  ];
+  itemListColumns: string[] = ['itemName', 'batchNo', 'expiryDate', 'quantity'];
 
   constructor(
     public dialogRef: MatDialogRef<ViewMedicineDispenseDetailsComponent>,
@@ -59,21 +80,25 @@ export class ViewMedicineDispenseDetailsComponent
   populateDispenseRecords(data: any) {
     if (data && data.dispenseItem && data.dispense) {
       this._detailedList = data.dispenseItem;
-      this._filteredDetailedList = data.dispenseItem;
+      this._filteredDetailedList.data.push(this._detailedList);
+      this.dataSource = new MatTableDataSource<any>(
+        this._filteredDetailedList.data[0].data,
+      );
+      this.medicineDetailList.data.push(data.dispense);
     }
   }
 
   filterDetails(filterTerm: string) {
     console.log(filterTerm);
-    if (!filterTerm) this._filteredDetailedList = this._detailedList;
+    if (!filterTerm) this._filteredDetailedList.data = this._detailedList;
     else {
-      this._filteredDetailedList = [];
+      this._filteredDetailedList.data = [];
       this._detailedList.forEach((item: any) => {
         for (const key in item) {
           if (key == 'batchNo' || key == 'itemName' || key == 'quantity') {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
-              this._filteredDetailedList.push(item);
+              this._filteredDetailedList.data.push(item);
               break;
             }
           }

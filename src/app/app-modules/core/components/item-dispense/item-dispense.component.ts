@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, Inject, DoCheck } from '@angular/core';
+import { Component, OnInit, Inject, DoCheck, ViewChild } from '@angular/core';
 import { ItemSearchService } from '../../services/item-search.service';
 import { ConfirmationService } from '../../services/confirmation.service';
 
@@ -28,6 +28,8 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { SetLanguageComponent } from '../set-language.component';
 import { LanguageService } from '../../services/language.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-item-dispense',
@@ -41,6 +43,9 @@ export class ItemDispenseComponent implements OnInit, DoCheck {
 
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  dataSource = new MatTableDataSource<any>();
+  noRecordsFlag = false;
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public input: any,
@@ -57,10 +62,20 @@ export class ItemDispenseComponent implements OnInit, DoCheck {
 
   search(term: string): void {
     this.items$ = this.itemSearchService.getItemDetailsByName(term);
+    this.items$.subscribe((data) => {
+      if (data) {
+        this.dataSource.data = data.data;
+        this.dataSource.paginator = this.paginator;
+        this.noRecordsFlag = true;
+      } else {
+        this.noRecordsFlag = false;
+      }
+    });
   }
 
   selectSelectedItem(selectedItem: any) {
-    const dispenseItemList = this.input.dispenseItemList;
+    const dispenseItemList = this.input.dispenseItemList.data;
+    console.log('dispenseItemList', dispenseItemList);
 
     const temp = dispenseItemList.filter(
       (item: any) => item.itemID == selectedItem.item.itemID,

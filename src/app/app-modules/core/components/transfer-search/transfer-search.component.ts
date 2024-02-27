@@ -19,13 +19,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, Inject, DoCheck } from '@angular/core';
+import { Component, OnInit, Inject, DoCheck, ViewChild } from '@angular/core';
 import { ItemSearchService } from '../../services/item-search.service';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { SetLanguageComponent } from '../set-language.component';
 import { LanguageService } from '../../services/language.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-transfer-search',
@@ -38,6 +40,21 @@ export class TransferSearchComponent implements OnInit, DoCheck {
   selectedBatchList: any = [];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  noRecordsFlag = false;
+  dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  displayedColumns: string[] = [
+    'itemCode',
+    'itemName',
+    'batchNo',
+    'itemCategory',
+    'itemForm',
+    'pharmacologicalCategory',
+    'strength',
+    'quantityOnHand',
+    'expiryDate',
+    'action',
+  ];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public input: any,
@@ -56,6 +73,15 @@ export class TransferSearchComponent implements OnInit, DoCheck {
       term,
       this.input.transferTo,
     );
+    this.items$.subscribe((data) => {
+      if (data) {
+        this.dataSource.data = data.data;
+        this.dataSource.paginator = this.paginator;
+        this.noRecordsFlag = true;
+      } else {
+        this.noRecordsFlag = false;
+      }
+    });
   }
 
   selectBatch(event: any, batch: any) {

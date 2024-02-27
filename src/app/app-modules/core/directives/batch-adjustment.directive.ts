@@ -55,7 +55,9 @@ export class BatchAdjustmentDirective {
   ) {}
 
   openDialog(): void {
+    // const searchTerm = this.stockForm.controls['itemName'].value;
     const searchTerm = this.stockForm.value.itemName;
+    console.log('SEACHTEREM', searchTerm);
 
     const dialogRef = this.dialog.open(BatchAdjustmentComponent, {
       // width: '80%',

@@ -1,0 +1,267 @@
+<div class="title">
+  <h4>{{ title }}</h4>
+  <button
+    mat-icon-button
+    matTooltip="{{ currentLanguageSet?.inventory?.close }}"
+    [matDialogClose]="false"
+    class="pull-right exit width--20px"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="scrolling-content">
+  <div class="container-fluid">
+    <form [formGroup]="batchForm">
+      <div class="row m-t-10">
+        <div class="col-xs-6 col-sm-3">
+          <mat-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              matInput
+              allowText="number"
+              name="quantityRequired"
+              placeholder="{{
+                currentLanguageSet?.inventory?.requiredQuantity
+              }}"
+              formControlName="quantityRequired"
+              [readonly]="true"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-xs-6 col-sm-3">
+          <mat-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              matInput
+              allowText="number"
+              name="quantityDispensed"
+              placeholder="{{
+                currentLanguageSet?.inventory?.dispensedQuantity
+              }}"
+              formControlName="quantityDispensed"
+              [readonly]="true"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row m-t-10">
+        <div class="col-xs-12 col-sm-12">
+          <div class="table-responsive" *ngIf="batchFormArray.length > 0">
+            <ng-container formArrayName="batchList">
+              <table mat-table [dataSource]="batchFormArray">
+                <ng-container matColumnDef="SNo">
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.sNo }}
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    [formGroupName]="i"
+                  >
+                    {{ i + 1 }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="batchNo">
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.batchNo }}
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    [formGroupName]="i"
+                  >
+                    <mat-select
+                      placeholder="{{ currentLanguageSet?.inventory?.batchNo }}"
+                      class="input-full-width"
+                      formControlName="batchNo"
+                      name="batchNo"
+                      #myInput
+                      (change)="
+                        getQuantityAndFilterItem(myInput.value, i, element)
+                      "
+                      required
+                    >
+                      <mat-option
+                        *ngFor="let batchItem of filteredBatchList[i]"
+                        [value]="batchItem"
+                        >{{ batchItem.batchNo }}</mat-option
+                      >
+                    </mat-select>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="qtyinBatch">
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.qtyinBatch }}
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    [formGroupName]="i"
+                  >
+                    <mat-form-field class="input-full-width">
+                      <input
+                        autocomplete="off"
+                        required
+                        placeholder="{{
+                          currentLanguageSet?.inventory?.qtyinBatch
+                        }}"
+                        matInput
+                        defaultNull
+                        allowText="number"
+                        name="quantityOnBatch"
+                        formControlName="quantityOnBatch"
+                        [readonly]="true"
+                      />
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="qtytoDispensed">
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.qtytoDispensed }}
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    [formGroupName]="i"
+                  >
+                    <mat-form-field class="input-full-width">
+                      <input
+                        autocomplete="off"
+                        required
+                        placeholder="{{
+                          currentLanguageSet?.inventory?.qtytoDispensed
+                        }}"
+                        matInput
+                        defaultNull
+                        allowText="number"
+                        [attr.maxlength]="
+                          ('' + element.value.quantityOnBatch).length
+                        "
+                        [disabled]="!element.value.batchNo"
+                        name="quantityOfDispense"
+                        formControlName="quantityOfDispense"
+                        (keyup)="calculateDispenseQuantity()"
+                        (blur)="checkQuantity(element)"
+                        required
+                      />
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="expiryDate">
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.itemDispense?.expiryDate }}
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    [formGroupName]="i"
+                  >
+                    <input
+                      matInput
+                      class="input-full-width"
+                      [matDatepicker]="picker"
+                      name="expiryDate"
+                      id="expiryDate"
+                      placeholder="{{
+                        currentLanguageSet?.itemDispense?.expiryDate
+                      }}"
+                      formControlName="expiryDate"
+                      [disabled]="true"
+                    />
+                    <mat-datepicker-toggle
+                      matPrefix
+                      [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker
+                      [style.width]="'100%'"
+                      #picker
+                    ></mat-datepicker>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.bendetails?.action }}
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    [formGroupName]="i"
+                  >
+                    <mat-icon
+                      class="icon-remove cursorPointer"
+                      matTooltip="{{ currentLanguageSet?.inventory?.delete }}"
+                      (click)="removeBatch(i, element)"
+                      >delete</mat-icon
+                    >
+                  </td>
+                </ng-container>
+
+                <ng-container *ngIf="masterItemBatchList.length === 0">
+                  <td mat-cell>
+                    <strong>{{
+                      currentLanguageSet?.inventory?.noBatchesAvailable
+                    }}</strong>
+                  </td>
+                </ng-container>
+                <ng-container
+                  *ngIf="
+                    batchForm.controls['batchList'].valid &&
+                    masterItemBatchList.length !== 0
+                  "
+                >
+                  <td mat-cell>
+                    <button
+                      class="pull-right"
+                      mat-mini-fab
+                      color="primary"
+                      id="addBatch"
+                      (click)="addBatch(true)"
+                    >
+                      <mat-icon class="mat-18 cursorPointer">add</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <!-- Table Rows -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-t-10 m-b-10">
+        <div class="col-xs-12 actionButton">
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            *ngIf="masterItemBatchList.length !== 0"
+            [disabled]="!batchForm.valid"
+            (click)="saveAndUpdateItem()"
+          >
+            {{ buttonSaveAndUpdate }}
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            *ngIf="masterItemBatchList.length === 0"
+            matDialogClose="false"
+          >
+            {{ currentLanguageSet?.common?.ok }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

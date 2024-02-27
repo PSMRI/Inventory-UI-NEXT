@@ -20,25 +20,6 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 
-// import { MdToolbarModule } from '@angular/material';
-// import { MdIconModule } from '@angular/material';
-// import { MatStepperModule } from '@angular/material';
-// import { MdButtonModule } from '@angular/material';
-// import { MatListModule } from '@angular/material';
-// import { MatCardModule } from '@angular/material';
-// import { MatChipsModule } from '@angular/material/chips';
-// import { MatExpansionModule } from '@angular/material';
-// import { MatAutocompleteModule } from '@angular/material/autocomplete';
-// import { MatRadioModule, MatTooltipModule } from '@angular/material';
-// import { MatInputModule } from '@angular/material';
-// import { MatSlideToggleModule } from '@angular/material';
-// import { MatButtonToggleModule } from '@angular/material';
-// import { MD_ERROR_GLOBAL_OPTIONS, showOnDirtyErrorStateMatcher } from '@angular/material';
-// import { MatSelectModule, MatSidenavModule } from '@angular/material';
-// import { MatProgressSpinnerModule, MatCheckboxModule } from '@angular/material';
-// import { MatDialogModule, MatMenuModule, MdDatepickerModule } from '@angular/material';
-// import { MatDatepickerModule, MdNativeDateModule } from '@angular/material';
-// import { MatTabsModule } from '@angular/material/tabs';
 import { NgModule } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -59,14 +40,16 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatRadioModule } from '@angular/material/radio';
+import { MatRadioGroup, MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @NgModule({
   imports: [
@@ -89,7 +72,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatInputModule,
     MatToolbarModule,
     MatRadioModule,
-    // MatRadioGroup,
+    MatGridListModule,
     MatStepperModule,
     MatButtonModule,
     MatExpansionModule,
@@ -101,64 +84,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatListModule,
     MatTableModule,
     MatFormFieldModule,
-    // MdIconModule,
-    // MatAutocompleteModule,
-    // MatTooltipModule,
-    // MdNativeDateModule,
-    // MatDatepickerModule,
-    // MatChipsModule,
-    // MatSidenavModule,
-    // MatCheckboxModule,
-    // MatMenuModule,
-    // MdDatepickerModule,
-    // MatDialogModule,
-    // MatProgressSpinnerModule,
-    // MatSelectModule,
-    // MatButtonToggleModule,
-    // MatSlideToggleModule,
-    // MatInputModule,
-    // MdToolbarModule,
-    // MatRadioModule,
-    // MatStepperModule,
-    // MdButtonModule,
-    // MatExpansionModule,
-    // MatListModule,
-    // MatCardModule,
-    // MatTabsModule,
   ],
-  providers: [
-    // {
-    //   provide: MD_ERROR_GLOBAL_OPTIONS,
-    //   useValue: {
-    //     errorStateMatcher: showOnDirtyErrorStateMatcher
-    //   }
-    // },
-  ],
-  exports: [
-    // MdIconModule,
-    // MatAutocompleteModule,
-    // MatTooltipModule,
-    // MdNativeDateModule,
-    // MatDatepickerModule,
-    // MatChipsModule,
-    // MatSidenavModule,
-    // MatCheckboxModule,
-    // MatMenuModule,
-    // MdDatepickerModule,
-    // MatDialogModule,
-    // MatProgressSpinnerModule,
-    // MatSelectModule,
-    // MatButtonToggleModule,
-    // MatSlideToggleModule,
-    // MatInputModule,
-    // MdToolbarModule,
-    // MatRadioModule,
-    // MatStepperModule,
-    // MdButtonModule,
-    // MatExpansionModule,
-    // MatListModule,
-    // MatCardModule,
-    // MatTabsModule
-  ],
+  providers: [],
+  exports: [],
 })
 export class MaterialModule {}

@@ -1,4 +1,4 @@
-<div class="title">
+<div class="title" style="display: flex; justify-content: space-between">
   <h4>{{ currentLanguageSet?.inventory?.itemForIndentRequest }}</h4>
   <button
     mat-icon-button
@@ -40,41 +40,97 @@
 
   <mat-dialog-content>
     <div class="table-responsive">
-      <!-- <table class="table table-bordered table-striped responsive-table-view" [md2Data]="items | async" #md2="md2DataTable" [rowsPerPage]="5"
-        [activePage]="1" aria-describedby="itemListDetails">
-        <caption></caption> 
-        <thead>
-          <tr>
-            <th id="itemCode">{{currentLanguageSet?.inventory?.itemCode}}</th>
-            <th id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
-            <th id="itemCategory">{{currentLanguageSet?.inventory?.itemCategory}}</th>
-            <th id="itemForm">{{currentLanguageSet?.inventory?.itemForm}}</th>
-            <th id="strength">{{currentLanguageSet?.inventory?.strength}}</th>
-            <th id="quantityOnHand">{{currentLanguageSet?.inventory?.quantityOnHand}}</th>
-            <th id="action">{{currentLanguageSet?.inventory?.action}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of md2.data; let i = index">
-            <td data-title="Item Code">{{item?.itemCode}}</td>
-            <td data-title="Item Name">{{ item?.itemName }} </td>
-            <td data-title="Item Category">{{ item?.itemCategory }} </td>
-            <td data-title="Item Form">{{ item?.itemForm }} </td>
-            <td data-title="Strength">{{ item?.strength ? item?.strength : " "}} </td>
-            <td data-title="Quantity On Hand">{{ item?.qoh }} </td>
-            <td class="text-center">
-              <md-checkbox (change)="selectItem($event, item)" [checked]="disableSelection(item) || item.selected" [disabled]="disableSelection(item)"></md-checkbox>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="10" class="text-right">
-              <md2-pagination></md2-pagination>
-            </td>
-          </tr>
-        </tfoot>
-      </table> -->
+      <table
+        mat-table
+        class="mat-elevation-z8"
+        aria-describedby="itemListDetails"
+        [dataSource]="dataSource"
+      >
+        <ng-container matColumnDef="itemCode">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.itemCode }}
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.itemCode }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="itemName">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.itemName }}
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.itemName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="itemCategory">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.itemCategory }}
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.itemCategory }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="itemForm">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.itemForm }}
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.itemForm }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="strength">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.strength }}
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.strength ? row.strength : " " }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantityOnHand">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.quantityOnHand }}
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.qoh }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.action }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="text-center">
+            <mat-checkbox
+              (change)="selectItem($event, row)"
+              [checked]="disableSelection(row) || row.selected"
+              [disabled]="disableSelection(row)"
+            ></mat-checkbox>
+          </td>
+        </ng-container>
+        <tr
+          mat-row
+          *matRowDef="
+            let row;
+            columns: [
+              'itemCode',
+              'itemName',
+              'itemCategory',
+              'itemForm',
+              'strength',
+              'quantityOnHand',
+              'action'
+            ]
+          "
+        ></tr>
+      </table>
+      <div class="noRecord" *ngIf="!noRecordsFlag">
+        <strong>{{ currentLanguageSet?.inventory?.norecordsfound }}</strong>
+      </div>
+      <div class="total-count" *ngIf="dataSource.data.length > 0">
+        {{ currentLanguageSet?.inventory?.totalCount }} :
+        {{ dataSource.data.length }}
+      </div>
+      <mat-paginator
+        [hidden]="dataSource.data.length === 0"
+        [pageSizeOptions]="[5, 10, 25]"
+        [pageSize]="5"
+        showFirstLastButtons
+      ></mat-paginator>
     </div>
   </mat-dialog-content>
   <div class="row m-t-10 m-b-10">

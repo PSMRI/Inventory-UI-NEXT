@@ -52,8 +52,7 @@ export class ItemSearchDirective {
   ) {}
 
   openDialog(): void {
-    const searchTerm = this.stockForm.value.itemName ?? '';
-    console.log('SEARCH#####', this.stockForm.value);
+    const searchTerm = this.stockForm.controls['itemName'].value;
     const dialogRef = this.dialog.open(ItemSearchComponent, {
       width: '80%',
       height: '90%',

@@ -34,7 +34,7 @@ import { AbstractControl, NgControl } from '@angular/forms';
     '[appAllowMin][formControlName],[appAllowMin][formControl],[appAllowMin][ngModel],[allowMin]',
 })
 export class MinNumberValidatorDirective {
-  @Input('allowMin')
+  @Input('appAllowMin')
   public min!: any;
 
   constructor(

@@ -19,13 +19,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, Inject, DoCheck } from '@angular/core';
+import { Component, OnInit, Inject, DoCheck, ViewChild } from '@angular/core';
 import { ConfirmationService } from '../../services/confirmation.service';
 import { Observable, Subject } from 'rxjs';
 import { BatchSearchService } from '../../services/batch-search.service';
 import { SetLanguageComponent } from '../set-language.component';
 import { LanguageService } from '../../services/language.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-indent-item-list',
@@ -36,10 +38,11 @@ export class IndentItemListComponent implements OnInit, DoCheck {
   searchTerms!: string;
   items!: Observable<any>;
   selectedItemList: any = [];
-
+  dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
-
+  noRecordsFlag = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public input: any,
     private confirmationService: ConfirmationService,
@@ -55,6 +58,15 @@ export class IndentItemListComponent implements OnInit, DoCheck {
 
   search(term: string): void {
     this.items = this.batchSearchService.searchItem(term);
+    this.items.subscribe((data) => {
+      if (data) {
+        this.dataSource.data = data.data;
+        this.dataSource.paginator = this.paginator;
+        this.noRecordsFlag = true;
+      } else {
+        this.noRecordsFlag = false;
+      }
+    });
   }
   selectItem(event: any, item: any) {
     if (event.checked) {
