@@ -79,6 +79,13 @@ const routes: Routes = [
         (x) => x.InventoryModule,
       ),
   },
+
+  {
+    path: 'rx',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./app-modules/rx/rx.module').then((x) => x.RxModule),
+  },
 ];
 
 @NgModule({

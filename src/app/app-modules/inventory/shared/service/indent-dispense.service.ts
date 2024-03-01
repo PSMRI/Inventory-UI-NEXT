@@ -19,24 +19,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-// import { Injectable } from '@angular/core';
-// import { Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
-// @Injectable()
-// export class IndentDispenseService {
+@Injectable()
+export class IndentDispenseService {
+  private mainStoreRequest = new Subject<string>();
+  private indentDispenseAllocation = new Subject<string>();
 
-//     private mainStoreRequest = new Subject<string>();
-//     private indentDispenseAllocation = new Subject<string>();
+  mainStoreRequest$ = this.mainStoreRequest.asObservable();
+  indentDispenseAllocation$ = this.indentDispenseAllocation.asObservable();
 
-//     mainStoreRequest$ = this.mainStoreRequest.asObservable();
-//     indentDispenseAllocation$ = this.indentDispenseAllocation.asObservable();
+  // Service message commands
+  mainStoreIndentRequest(indentRequest: string) {
+    this.mainStoreRequest.next(indentRequest);
+  }
 
-//     // Service message commands
-//     mainStoreIndentRequest(indentRequest: string) {
-//         this.mainStoreRequest.next(indentRequest);
-//     }
-
-//     indentAllocateBasedOnBatch(indentAllocate: string) {
-//         this.indentDispenseAllocation.next(indentAllocate);
-//     }
-// }
+  indentAllocateBasedOnBatch(indentAllocate: string) {
+    this.indentDispenseAllocation.next(indentAllocate);
+  }
+}

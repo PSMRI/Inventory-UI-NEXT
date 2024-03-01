@@ -68,8 +68,6 @@
       <div class="col-xs-12">
         <mat-card>
           <div class="table-responsive">
-            {{ storeSelfConsumptionForm.value | json }}
-
             <ng-container formArrayName="dispensedStock"></ng-container>
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
               <ng-container matColumnDef="index">

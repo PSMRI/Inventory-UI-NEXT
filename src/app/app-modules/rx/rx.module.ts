@@ -33,7 +33,7 @@ import { RxItemDispenseComponent } from './rx-item-dispense/rx-item-dispense.com
 
 /*Services*/
 import { PrescribedDrugService } from './shared/service/prescribed-drug.service';
-import { MatSidenav } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MaterialModule } from '../core/material.module';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -77,6 +77,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSelectModule,
     MatProgressBarModule,
     MatPaginatorModule,
+    MatSidenavModule,
     MatProgressSpinnerModule,
   ],
   declarations: [RxDashboardComponent, RxItemDispenseComponent],

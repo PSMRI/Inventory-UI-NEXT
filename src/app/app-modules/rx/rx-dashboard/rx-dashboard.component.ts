@@ -24,7 +24,6 @@ import { ActivatedRoute } from '@angular/router';
 import { BeneficiaryDetailsService } from '../../core/services/beneficiary-details.service';
 import { PrescribedDrugService } from './../shared/service/prescribed-drug.service';
 import { ConfirmationService } from '../../core/services/confirmation.service';
-import 'rxjs/Rx';
 import { LanguageService } from '../../core/services/language.service';
 import { SetLanguageComponent } from '../../core/components/set-language.component';
 

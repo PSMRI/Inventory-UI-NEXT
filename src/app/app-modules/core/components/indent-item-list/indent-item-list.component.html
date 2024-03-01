@@ -118,7 +118,7 @@
           "
         ></tr>
       </table>
-      <div class="noRecord" *ngIf="!noRecordsFlag">
+      <div class="noRecord" *ngIf="dataSource.data.length === 0">
         <strong>{{ currentLanguageSet?.inventory?.norecordsfound }}</strong>
       </div>
       <div class="total-count" *ngIf="dataSource.data.length > 0">

@@ -18,22 +18,14 @@
         {{ prescriptionForm.value.consultantName }}
       </span>
     </mat-expansion-panel-header>
-    <div
-      class="container-fluid p-a-0 row"
-      *ngIf="prescriptionForm.controls['itemList']['controls'].length === 0"
-    >
+    <div class="container-fluid p-a-0 row" *ngIf="rxItemData().length === 0">
       <legend class="text-center m-t-20">
         {{ currentLanguageSet?.inventory?.noMedicalitemstoDisptach }}
       </legend>
     </div>
     <div class="container-fluid p-a-0">
       <div formArrayName="itemList">
-        <section
-          *ngFor="
-            let drug of prescriptionForm.controls['itemList']['controls'];
-            let drugIndex = index
-          "
-        >
+        <section *ngFor="let drug of rxItemData(); let drugIndex = index">
           <ng-container [formGroupName]="drugIndex">
             <fieldset class="m-t-20 m-b-20 fieldset">
               <legend>
@@ -120,7 +112,7 @@
                       placeholder="{{
                         currentLanguageSet?.itemDispense?.quantityDispensed
                       }}"
-                      [allowMax]="drug.value.qtyPrescribed"
+                      allowMax="drug.value.qtyPrescribed"
                     />
                   </mat-form-field>
                 </div>
@@ -207,37 +199,6 @@
             class="m-t-20 overflow table-responsive"
             *ngIf="copyprescription.itemList.length > 0"
           >
-            <!-- <table class="table table-responsive table-bordered" aria-describedby="itemDispenseDetails">
-                <caption></caption>
-                <thead>
-                  <tr>
-                    <th id="sNo" class="width5">{{currentLanguageSet?.inventory?.sNo}}</th>
-                    <th id="medicineName" class="width10">{{currentLanguageSet?.inventory?.medicineName}}</th>
-                    <th id="form" class="width10">{{currentLanguageSet?.itemDispense?.form}}</th>
-                    <th id="duration" class="width10">{{currentLanguageSet?.itemDispense?.duration}}</th>
-                    <th id="frequency" class="width10">{{currentLanguageSet?.itemDispense?.frequency}}</th>
-                    <th id="dose" class="width10">{{currentLanguageSet?.itemDispense?.dose}}</th>
-                    <th id="quantityPrescribed" class="width10">{{currentLanguageSet?.itemDispense?.quantityPrescribed}}</th>
-                    <th id="route" class="width10">{{currentLanguageSet?.itemDispense?.route}}</th>
-                    <th id="specialInstructions" class="width20">{{currentLanguageSet?.itemDispense?.specialInstructions}}</th>
-                  </tr>
-                </thead>    
-                  <tbody *ngIf="copyprescription.itemList?.length > 0">
-                    <ng-container *ngFor="let test of copyprescription.itemList; let i = index">         
-                      <tr >
-                        <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">{{i+1}}</td>
-                        <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">{{test?.genericDrugName}} {{test?.drugStrength}}</td>
-                        <td style="width:300px;max-width:120px; word-break: normal; vertical-align:middle">{{test?.drugForm}}</td>
-                        <td style="width:110px; word-break: normal; vertical-align:middle ">{{test?.duration}} {{test?.durationUnit}}</td>
-                        <td style="width:150px; word-break: normal; vertical-align:middle">{{test?.frequency}}</td>
-                        <td style="max-width:150px; word-break: normal; vertical-align:middle">{{test?.dose }}</td>
-                        <td style="max-width:150px; word-break: normal; vertical-align:middle">{{test?.qtyPrescribed }}</td>
-                        <td style="max-width:150px; word-break: normal; vertical-align:middle">{{test?.route }}</td>
-                        <td style="max-width:150px; word-break: normal; vertical-align:middle">{{test?.specialInstruction }}</td>
-                      </tr>
-                    </ng-container>
-                  </tbody>     
-              </table> -->
             <table
               mat-table
               class="mat-elevation-z8"

@@ -78,9 +78,9 @@ export const environment = {
 
   getItem_Url: `${INVENTORY_API}getSubStoreitem/`,
 
-  savePhysicalStock_Url: `${INVENTORY_API}physicalStockEntry/`,
+  savePhysicalStock_Url: `${INVENTORY_API}physicalStockEntry`,
 
-  storeSelfConsumption: `${INVENTORY_API}storeSelfConsumption/`,
+  storeSelfConsumption: `${INVENTORY_API}storeSelfConsumption`,
 
   searchItemUrl: `${INVENTORY_API}itemPartialSearch`,
   searchBatchUrl: `${INVENTORY_API}itemBatchPartialSearch`,

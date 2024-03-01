@@ -190,7 +190,7 @@
                 "
               ></tr>
             </table>
-            <div class="noRecord" *ngIf="!noRecordsFlag">
+            <div class="noRecord" *ngIf="dataSource.data.length === 0">
               <strong>{{
                 currentLanguageSet?.inventory?.norecordsfound
               }}</strong>

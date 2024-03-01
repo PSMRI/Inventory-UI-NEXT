@@ -59,6 +59,16 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
   copyprescription: any;
   languageComponent!: SetLanguageComponent;
   dataSourceList = new MatTableDataSource<any>();
+  displayedColumns: string[] = [
+    'medicineName',
+    'form',
+    'duration',
+    'frequency',
+    'dose',
+    'quantityPrescribed',
+    'route',
+    'specialInstructions',
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -109,6 +119,10 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
 
   allocate(): void {
     this.getBatchList();
+  }
+
+  rxItemData(): any {
+    return (this.prescriptionForm.get('itemList') as FormArray).controls;
   }
 
   getBatchList() {
