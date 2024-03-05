@@ -141,7 +141,7 @@ export class RedirInComponent implements OnInit {
       this.externalSession.healthID =
         params['healthID'] === 'undefined' ? undefined : params['healthID'];
     });
-    console.log(JSON.stringify(this.externalSession, null, 4));
+    console.log('PSMRI', this.externalSession);
 
     // this.savetoStorage();
     this.storeSession();
@@ -204,7 +204,7 @@ export class RedirInComponent implements OnInit {
     ) {
       console.log(this.externalSession, 'exter');
       this.deleteParentSessioning();
-      // window.location.href = this.fallback;
+      window.location.href = this.fallback;
     } else {
       // go back
       this.location.back();

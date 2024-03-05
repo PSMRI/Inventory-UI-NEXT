@@ -40,7 +40,7 @@ export class RxDashboardComponent implements OnInit, DoCheck {
   beneficiaryDetailsSubscription: any;
   prescription: any;
   dispensed: any;
-  issueType = 1;
+  issueType: any = 1;
   beneficiary: any;
   username: any;
   // issueType 0 means Manual and 1 means System
@@ -58,6 +58,7 @@ export class RxDashboardComponent implements OnInit, DoCheck {
   ) {}
 
   ngOnInit() {
+    this.issueType = 1;
     this.fetchLanguageResponse();
     this.parent_url = sessionStorage.getItem('return');
     this.username = localStorage.getItem('username');
@@ -78,8 +79,11 @@ export class RxDashboardComponent implements OnInit, DoCheck {
       this.beneficiaryDetailsSubscription =
         this.beneficiaryDetailsService.beneficiaryDetails$.subscribe((res) => {
           if (res != null) {
+            console.log('response0', res);
             if (res.serviceDate) {
+              console.log('response1', res);
               this.beneficiary = res;
+              console.log('beneficiary', this.beneficiary);
               this.today = res.serviceDate;
             }
           }
@@ -161,6 +165,7 @@ export class RxDashboardComponent implements OnInit, DoCheck {
     const facilityName = JSON.parse(facilityDetail).facilityName;
     const visitCode = this.visitCode;
     const beneficiary = this.beneficiary;
+    console.log('beneficiaryHKK', beneficiary);
     const issuedBy = sessionStorage.getItem('host')
       ? sessionStorage.getItem('host')
       : 'STORE';
@@ -178,13 +183,14 @@ export class RxDashboardComponent implements OnInit, DoCheck {
       providerServiceMapID: localStorage.getItem('providerServiceID'),
       doctorName: prescription.consultantName,
       gender: beneficiary.genderName,
-      issueType: this.issueType == 0 ? 'Manual' : 'System',
+      issueType: this.issueType === 0 ? 'Manual' : 'System',
       patientName: beneficiary.beneficiaryName,
       prescriptionID: prescription.prescriptionID,
       reference: `Prescribed by  ${prescription.consultantName} from ${sessionStorage.getItem('host')}`,
       visitID: beneficiary.benVisitID,
       visitDate: beneficiary.serviceDate,
     };
+
     return reqObj;
   }
 

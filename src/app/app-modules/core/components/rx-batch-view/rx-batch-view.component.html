@@ -6,6 +6,9 @@
     <div class="row m-t-20">
       <div class="col-md-3">
         <mat-form-field class="input-full-width">
+          <mat-label>{{
+            currentLanguageSet?.itemDispense?.prescribedQuantity
+          }}</mat-label>
           <input
             autocomplete="off"
             type="text"
@@ -21,6 +24,9 @@
       </div>
       <div class="col-md-3" *ngIf="dispensed > 0">
         <mat-form-field class="input-full-width">
+          <mat-label>{{
+            currentLanguageSet?.itemDispense?.dispenseQuantity
+          }}</mat-label>
           <input
             autocomplete="off"
             type="text"
@@ -67,6 +73,9 @@
                 class="col-md-2 right-padding-remove-desktop left-padding-remove-desktop"
               >
                 <mat-form-field class="input-full-width">
+                  <mat-label>{{
+                    currentLanguageSet?.itemDispense?.batchNo
+                  }}</mat-label>
                   <input
                     autocomplete="off"
                     matInput
@@ -83,6 +92,9 @@
 
               <div class="col-md-2">
                 <mat-form-field class="input-full-width">
+                  <mat-label>{{
+                    currentLanguageSet?.itemDispense?.quantityinHand
+                  }}</mat-label>
                   <input
                     autocomplete="off"
                     matInput
@@ -101,6 +113,9 @@
                   class="input-full-width"
                   (click)="enableBatch(batch.value, i)"
                 >
+                  <mat-label>{{
+                    currentLanguageSet?.itemDispense?.dispenseQuantity
+                  }}</mat-label>
                   <input
                     autocomplete="off"
                     matInput
@@ -126,6 +141,7 @@
                     currentLanguageSet?.itemDispense?.expiryDate
                   }}</mat-label>
                   <input
+                    style="width: 120px"
                     matInput
                     [matDatepicker]="expiryDatepicker"
                     placeholder="{{
@@ -160,8 +176,8 @@
       {{ currentLanguageSet?.common?.save }}
     </button>
     <button
-      md-dialog-close
-      md-raised-button
+      mat-dialog-close
+      mat-raised-button
       class="selectButton"
       color="primary"
       style="color: white"
