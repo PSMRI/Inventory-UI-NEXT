@@ -65,13 +65,13 @@
         <mat-card>
           <div class="table-responsive">
             <ng-container formArrayName="indentItemList">
-              <table mat-table [dataSource]="indentItemListArray">
+              <table mat-table [dataSource]="dataSource">
                 <ng-container matColumnDef="SNo">
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td
                     mat-cell
                     *matCellDef="let element; let i = index"
-                    [formGroupName]="i"
+                    [formGroup]="element"
                   >
                     {{ i + 1 }}
                   </td>
@@ -84,7 +84,7 @@
                   <td
                     mat-cell
                     *matCellDef="let element; let i = index"
-                    [formGroupName]="i"
+                    [formGroup]="element"
                   >
                     <mat-form-field class="input-full-width">
                       <mat-label>
@@ -101,16 +101,15 @@
                         maxlength="100"
                         appIndentRequest
                         [previousSelected]="
-                          indentRequestForm.value.indentItemList
+                          indentRequestForm?.value?.indentItemList
                         "
                         [itemListForm]="element"
                         required
                       />
                       <mat-icon
-                        *ngIf="!element.itemNameView.disabled"
                         appIndentRequest
                         [previousSelected]="
-                          indentRequestForm.value.indentItemList
+                          indentRequestForm?.value?.indentItemList
                         "
                         [itemListForm]="element"
                         class="search-btn"
@@ -129,7 +128,7 @@
                   <td
                     mat-cell
                     *matCellDef="let element; let i = index"
-                    [formGroupName]="i"
+                    [formGroup]="element"
                   >
                     <!-- {{element | json}} -->
                     <mat-form-field class="input-full-width readonly">
@@ -139,7 +138,9 @@
                       <input
                         matInput
                         allowText="number"
-                        placeholder="{{ currentLanguageSet?.inventory?.qOH }}"
+                        placeholder="{{
+                          currentLanguageSet?.inventory?.quantityOnHand
+                        }}"
                         name="qOH"
                         formControlName="qOH"
                         required
@@ -155,7 +156,7 @@
                   <td
                     mat-cell
                     *matCellDef="let element; let i = index"
-                    [formGroupName]="i"
+                    [formGroup]="element"
                   >
                     <mat-form-field class="input-full-width">
                       <mat-label>
@@ -186,7 +187,7 @@
                   <td
                     mat-cell
                     *matCellDef="let element; let i = index"
-                    [formGroupName]="i"
+                    [formGroup]="element"
                   >
                     <mat-form-field class="input-full-width">
                       <mat-label>
@@ -210,7 +211,7 @@
                   <td
                     mat-cell
                     *matCellDef="let element; let i = index"
-                    [formGroupName]="i"
+                    [formGroup]="element"
                   >
                     <mat-icon
                       class="icon-remove cursorPointer"
@@ -221,21 +222,6 @@
                   </td>
                 </ng-container>
 
-                <ng-container
-                  *ngIf="indentRequestForm.controls['indentItemList'].valid"
-                >
-                  <td mat-cell *matCellDef="let element" colspan="6">
-                    <button
-                      mat-mini-fab
-                      type="button"
-                      class="pull-right"
-                      color="primary"
-                      (click)="addToindentItemList()"
-                    >
-                      <mat-icon>add</mat-icon>
-                    </button>
-                  </td>
-                </ng-container>
                 <!-- Table Rows -->
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr
@@ -243,6 +229,18 @@
                   *matRowDef="let row; columns: displayedColumns"
                 ></tr>
               </table>
+              <div
+                class="text-right"
+                *ngIf="indentRequestForm.controls['indentItemList'].valid"
+              >
+                <button
+                  mat-mini-fab
+                  color="primary"
+                  (click)="addToindentItemList()"
+                >
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
             </ng-container>
           </div>
         </mat-card>

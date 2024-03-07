@@ -57,6 +57,10 @@ export class MainStoreItemModelComponent implements OnInit, DoCheck {
       indentID: input.indentID,
       fromFacilityID: input.fromFacilityID,
     };
+    // let viewItemReqObj = {
+    //   "indentID": 3,
+    //   "vanID": 97
+    // }
     this.inventoryService
       .viewItemListForMainStore(viewItemReqObj)
       .subscribe((viewItemResponse) => {

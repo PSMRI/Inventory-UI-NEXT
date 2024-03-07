@@ -200,6 +200,9 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
         }),
       );
     }
+    // else {
+    //   this.confirmationService.alert('No further batches available')
+    // }
   }
   showPopUp() {
     if (this.itemBatchList.length == this.tempBatch.length) {

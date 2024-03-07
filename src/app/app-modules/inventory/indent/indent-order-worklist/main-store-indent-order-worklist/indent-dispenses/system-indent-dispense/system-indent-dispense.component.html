@@ -87,7 +87,6 @@
     </div>
   </div>
 
-  <!-- <div class="row" *ngIf="systemDispenseList?.length > 0"> -->
   <div class="row" *ngIf="systemDispenseList">
     <div class="col-xs-12">
       <h4>{{ currentLanguageSet?.inventory?.dispensingItem }}</h4>
@@ -128,6 +127,7 @@
 
           <!-- Weight Column -->
           <ng-container matColumnDef="batchNo">
+            <!-- <th mat-header-cell *matHeaderCellDef> {{currentLanguageSet?.inventory?.batchNo}} </th> -->
             <th mat-header-cell *matHeaderCellDef>
               {{ currentLanguageSet?.itemDispense?.batchNo }}
             </th>
@@ -156,6 +156,7 @@
           </ng-container>
 
           <ng-container matColumnDef="quantity">
+            <!-- <th mat-header-cell *matHeaderCellDef> {{currentLanguageSet?.itemDispense?.quantityDispensed}} </th> -->
             <th mat-header-cell *matHeaderCellDef>
               {{ currentLanguageSet?.quantityDispensed }}
             </th>

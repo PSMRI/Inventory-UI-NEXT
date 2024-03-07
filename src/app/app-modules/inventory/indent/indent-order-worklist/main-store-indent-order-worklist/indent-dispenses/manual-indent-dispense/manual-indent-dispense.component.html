@@ -126,6 +126,7 @@
             </th>
             <td mat-cell *matCellDef="let element">
               {{ element.itemDetails.itemName }}
+              <!-- {{ element.itemDetails }} -->
             </td>
           </ng-container>
 
@@ -200,7 +201,9 @@
                 aria-hidden="true"
                 style="cursor: Pointer"
                 *ngIf="element.batchDetails.batchList.length !== 0"
-                (click)="editItem(element, manualDispenseList.indexOf(element))"
+                (click)="
+                  editItem(element, manualDispenseList?.indexOf(element))
+                "
                 >edit</mat-icon
               >
             </td>

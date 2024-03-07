@@ -36,6 +36,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DataStorageService } from '../../../../shared/service/data-storage.service';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-indent-request',
@@ -61,6 +62,7 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     'remarks',
     'action',
   ];
+  dataSource = new MatTableDataSource<any>();
 
   constructor(
     private router: Router,
@@ -74,7 +76,6 @@ export class IndentRequestComponent implements OnInit, DoCheck {
   ) {}
 
   ngOnInit() {
-    // debugger
     // this.indentRequestForm = this.createIndentRequestForm();
     this.indentRequestForm = this.fb.group({
       requestDate: new Date(),
@@ -92,11 +93,12 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     }
     this.fetchLanguageResponse();
     this.initIndentItemList();
-    this.indentItemListArray = this.indentRequestForm.value.indentItemList;
-    console.log(
-      'this.indentItemListArray**********from indent',
-      this.indentItemListArray,
-    );
+    this.loadIndentData();
+    // this.indentItemListArray = this.indentRequestForm.value.indentItemList;
+    // console.log(
+    //   'this.indentItemListArray**********from indent',
+    //   this.indentItemListArray,
+    // );
   }
 
   methodForIndentEdit() {
@@ -123,30 +125,45 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     const frmArr = this.indentRequestForm.get('indentItemList') as FormArray;
     frmArr.push(
       this.fb.group({
-        itemID: [''],
-        itemName: [''],
-        itemNameView: [''],
-        qOH: [''],
-        requiredQty: [''],
-        remarks: [''],
-        indentOrderID: [''],
-        indentID: [''],
-        providerServiceMapID: [''],
-        vanID: [''],
-        status: [''],
+        itemID: null,
+        itemName: null,
+        itemNameView: null,
+        qOH: null,
+        requiredQty: null,
+        remarks: null,
+        indentOrderID: null,
+        indentID: null,
+        providerServiceMapID: null,
+        vanID: null,
+        status: null,
         deleted: false,
-        processed: [''],
-        createdBy: [''],
-        createdDate: [''],
-        lastModDate: [''],
-        parkingPlaceID: [''],
-        fromFacilityID: [''],
+        processed: null,
+        createdBy: null,
+        createdDate: null,
+        lastModDate: null,
+        parkingPlaceID: null,
+        fromFacilityID: null,
       }),
     );
     console.log('frmArr****', frmArr);
   }
+
+  loadIndentData() {
+    const dataFromFun: any = this.indentRequestFormTableData();
+    console.log('dataFromFun************', dataFromFun);
+    this.dataSource.data = dataFromFun;
+    console.log(
+      'dataFromFun************ this.dataSource',
+      this.dataSource.data,
+    );
+  }
+
+  indentRequestFormTableData(): any {
+    return (this.indentRequestForm.get('indentItemList') as FormArray).controls;
+  }
+
   checkQuantity(itemList?: FormGroup) {
-    console.log('itemList-requiredQty', itemList);
+    console.log('itemList in checkQuantity', itemList);
     const quantity = itemList?.value.requiredQty;
     if (quantity == 0) {
       this.confirmationService.alert(
@@ -155,40 +172,61 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       itemList?.patchValue({ requiredQty: null });
       itemList?.markAsPristine();
     }
+    // else if (itemList.value.qOH < quantity) {
+    //   this.confirmationService.alert('Please enter quantity less than or equal to Qty in qoh')
+    //   itemList.patchValue({ requiredQty: null });
+    //   itemList.markAsPristine();
+    // }
+  }
+
+  get indentItemList() {
+    return this.indentRequestForm.get('indentItemList') as FormArray;
   }
   addToindentItemList() {
-    const IndentItemListArray = this.indentRequestForm.controls[
-      'indentItemList'
-    ] as FormArray;
-    IndentItemListArray.push(
-      this.fb.group({
-        itemID: [''],
-        itemName: [''],
-        itemNameView: [''],
-        qOH: [''],
-        requiredQty: [''],
-        remarks: [''],
-        indentOrderID: [''],
-        indentID: [''],
-        providerServiceMapID: [''],
-        vanID: [''],
-        status: [''],
-        deleted: false,
-        processed: [''],
-        createdBy: [''],
-        createdDate: [''],
-        lastModDate: [''],
-        parkingPlaceID: [''],
-        fromFacilityID: [''],
-      }),
-    );
+    // const IndentItemListArray = this.indentRequestForm.controls[
+    //   'indentItemList'
+    // ] as FormArray;
+    // IndentItemListArray.push(this.initIndentItemList());
+    this.indentItemList.push(this.loadIndentItemList());
+    this.loadIndentData();
+    // IndentItemListArray.push(
+    //   this.loadIndentItemList()
+    // );
+  }
+
+  loadIndentItemList() {
+    return this.fb.group({
+      itemID: null,
+      itemName: null,
+      itemNameView: null,
+      qOH: null,
+      requiredQty: null,
+      remarks: null,
+      indentOrderID: null,
+      indentID: null,
+      providerServiceMapID: null,
+      vanID: null,
+      status: null,
+      deleted: false,
+      processed: null,
+      createdBy: null,
+      createdDate: null,
+      lastModDate: null,
+      parkingPlaceID: null,
+      fromFacilityID: null,
+    });
   }
 
   removeFromindentItemList(index: any, itemListForm?: FormGroup) {
     console.log('itemListForm', itemListForm);
-    const IndentItemListArray = this.indentRequestForm.controls[
-      'indentItemList'
-    ] as FormArray;
+    const IndentItemListArray = this.indentRequestForm.get(
+      'indentItemList',
+    ) as FormArray;
+    // const stockForm = this.physicalStockEntryForm.get(
+    //   'physicalStock',
+    // ) as FormArray;
+
+    // if (IndentItemListArray.length > 1)
 
     if (IndentItemListArray.length > 1) {
       this.deleted = true;
@@ -213,6 +251,7 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       };
       this.deletedItemObject.push(temp);
       IndentItemListArray.removeAt(index);
+      this.loadIndentData();
     } else {
       itemListForm?.reset();
       itemListForm?.controls['itemNameView'].enable();
@@ -237,7 +276,11 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     const indentRequest = JSON.parse(
       JSON.stringify(indentRequestForm.value.indentItemList),
     );
-
+    console.log(
+      'indentRequestForm under submitIndentRequest',
+      indentRequestForm,
+    );
+    console.log('localStorage ', localStorage);
     const otherDetails = {
       refNo: indentRequestForm.value.referenceNumber,
       reason: indentRequestForm.value.indentReason,
@@ -254,12 +297,14 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       userID: localStorage.getItem('userID'),
     };
 
+    console.log('otherDetails under submitIndentRequest', otherDetails);
     const temp = Object.assign(
       {},
       { indentOrder: indentRequest },
       otherDetails,
     );
     this.inventoryService.saveIndentRequest(temp).subscribe((response) => {
+      console.log('response+++++++++++', response);
       if (response.statusCode == 200) {
         this.confirmationService.alert(
           this.currentLanguageSet.inventory.savedsuccessfully,

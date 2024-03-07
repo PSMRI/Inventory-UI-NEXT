@@ -10,7 +10,86 @@
       [src]="beneficiary?.benImage"
       alt="Patient Image"
     />
-    <table
+    <table class="table profileData" aria-describedby="beneficiaryDetails">
+      <caption></caption>
+      <!-- Table discription added SonarQube Fix -->
+      <tr style="font-size: 14px; color: #000000">
+        <th id="beneficiaryName">
+          {{ currentLanguageSet?.bendetails?.beneficiaryName }}:
+        </th>
+      </tr>
+      <tr style="color: #595959; font-size: 14px">
+        <td>{{ beneficiary?.beneficiaryName }}</td>
+      </tr>
+      <tr style="font-size: 14px; color: #000000">
+        <th id="genderAge">
+          {{ currentLanguageSet?.bendetails?.gender }} /
+          {{ currentLanguageSet?.bendetails?.age }}:
+        </th>
+      </tr>
+      <tr style="color: #595959; font-size: 14px">
+        <td>
+          {{ beneficiary?.genderName }} / {{ beneficiary?.age }} &nbsp;{{
+            beneficiary?.ageUnit
+          }}
+        </td>
+      </tr>
+
+      <tr style="font-size: 14px; color: #000000">
+        <th id="beneficiaryID">
+          {{ currentLanguageSet?.bendetails?.beneficiaryID }} :
+        </th>
+      </tr>
+
+      <tr style="color: #595959; font-size: 14px">
+        <td>{{ beneficiary?.beneficiaryID }}</td>
+      </tr>
+      <tr
+        *ngIf="
+          healthIDValue !== undefined &&
+          healthIDValue !== null &&
+          healthIDValue !== '' &&
+          healthIDValue.length > 0
+        "
+        style="font-size: 14px; color: #000000"
+      >
+        <th id="healthId">{{ currentLanguageSet?.healthId }}:</th>
+      </tr>
+      <tr
+        *ngIf="
+          healthIDValue !== undefined &&
+          healthIDValue !== null &&
+          healthIDValue !== '' &&
+          healthIDValue.length > 0
+        "
+        style="color: #595959; font-size: 14px"
+      >
+        <td>{{ healthIDValue }}</td>
+      </tr>
+      <tr style="font-size: 14px; color: #000000">
+        <th id="registrationDate">
+          {{ currentLanguageSet?.bendetails?.registrationDate }}:
+        </th>
+      </tr>
+      <tr style="color: #595959; font-size: 14px">
+        <td>{{ beneficiary?.createdDate | date: "dd/MM/yyyy, h:mm a" }}</td>
+      </tr>
+      <tr style="font-size: 14px; color: #000000">
+        <th id="visitDate">{{ currentLanguageSet?.bendetails?.visitDate }}:</th>
+      </tr>
+      <tr style="color: #595959; font-size: 14px">
+        <td>{{ today | date: "dd/MM/yyyy, h:mm a" }}</td>
+      </tr>
+      <tr style="font-size: 14px; color: #000000">
+        <th id="district">{{ currentLanguageSet?.bendetails?.district }}:</th>
+      </tr>
+      <tr style="color: #595959; font-size: 14px">
+        <td>
+          {{ beneficiary?.districtName }} / {{ beneficiary?.villageName }}
+        </td>
+      </tr>
+    </table>
+    <!-- <table
       mat-table
       class="mat-elevation-z8"
       aria-describedby="beneficiaryDetails"
@@ -99,6 +178,6 @@
           ]
         "
       ></tr>
-    </table>
+    </table> -->
   </div>
 </div>

@@ -85,12 +85,13 @@ export class SystemIndentDispenseComponent implements OnInit, DoCheck {
       const selectedFlag = false;
       this.mainStoreItemList.forEach((dispenseItem: any) => {
         const itemdata = Object.assign(dispenseItem, { selectedFlag });
+        console.log('itemdata +++++++++++ in system', itemdata);
         this.mainStoreItemListForDispense.push(itemdata);
+        console.log(
+          'this.mainStoreItemListForDispense ************in system',
+          this.mainStoreItemListForDispense,
+        );
       });
-      console.log(
-        'this.mainStoreItemListForDispense ************in system',
-        this.mainStoreItemListForDispense,
-      );
     } else {
       console.log('mainstoreItemList is empty');
     }
