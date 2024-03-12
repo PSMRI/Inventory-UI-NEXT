@@ -7,8 +7,37 @@
 
 <div class="container-fluid">
   <mat-dialog-content>
+    <!-- <div class="row m-t-10" *ngIf="issuedBatchList?.length > 0"> -->
     <div class="row m-t-10" *ngIf="issuedBatchList">
       <div class="col-xs-12">
+        <!-- <table class="table table-bordered table-striped" [md2Data]="issuedBatchList" #md2="md2DataTable" aria-describedby="indentBatchDetails">
+          <caption></caption>  
+          <thead>
+            <tr>
+              <th id="sNo" class="width-percent-5">{{currentLanguageSet?.inventory?.sNo}}</th>
+              <th id="item" class="width-percent-10">{{currentLanguageSet?.inventory?.item}}</th>
+              <th id="batchNo" class="width-percent-10">{{currentLanguageSet?.inventory?.batchNo}}</th>
+              <th id="quantityOnHand" class="width-percent-10">{{currentLanguageSet?.inventory?.quantityOnHand}}</th>
+              <th id="expiryDate" class="width-percent-10">{{currentLanguageSet?.itemDispense?.expiryDate}}</th>
+              <th id="quantityDispensed" class="width-percent-10">{{currentLanguageSet?.itemDispense?.quantityDispensed}}</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="issuedBatchList?.length > 0">
+            <ng-container *ngFor="let item of md2.data; let i = index">
+              <tr>
+                <td [rowSpan]='item?.itemBatchList?.length+1' class="width-percent-5">{{ issuedBatchList?.indexOf(item)+1 }}</td>
+                <td [rowSpan]='item?.itemBatchList?.length+1' class="width-percent-10">{{item?.itemName}}</td>
+              </tr>
+              <tr *ngFor='let batch of item?.itemBatchList'>
+                <td class="width-percent-25">{{batch?.batchNo}}</td>
+                <td class="width-percent-25">{{batch?.quantityInHand}}</td>
+                <td class="width-percent-25">{{batch?.expiryDate | date: 'dd/MM/yyyy'}}</td>
+                <td class="width-percent-25">{{batch?.quantity}}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table> -->
+
         <table
           mat-table
           [dataSource]="issuedBatchList"

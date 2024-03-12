@@ -54,16 +54,22 @@
         </mat-form-field>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-        <mat-select
-          [style.width]="'100%'"
-          placeholder="{{ currentLanguageSet?.inventory.facility }}"
-          class="input-full-width"
-          formControlName="facilityName"
-        >
-          <mat-option *ngFor="let item of facilities" [value]="item">{{
-            item
-          }}</mat-option>
-        </mat-select>
+        <mat-form-field>
+          <mat-label>
+            {{ currentLanguageSet?.inventory?.facility }}
+          </mat-label>
+          <mat-select
+            [style.width]="'100%'"
+            placeholder="{{ currentLanguageSet?.inventory.facility }}"
+            class="input-full-width"
+            formControlName="facilityName"
+          >
+            <mat-option *ngFor="let item of facilities" [value]="item">{{
+              item
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
       </div>
     </form>
     <div class="m-t-10 col-xs-12 col-sm-12 col-md-12 col-lg-3">

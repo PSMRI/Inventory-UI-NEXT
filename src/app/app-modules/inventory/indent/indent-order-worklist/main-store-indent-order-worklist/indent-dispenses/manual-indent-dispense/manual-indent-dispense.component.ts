@@ -123,7 +123,6 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
     editIndex: any,
     editableItem: any,
   ) {
-    console.log('selectedItem', selectedItem);
     const batchlistObj = {
       itemID: selectedItem.itemID,
       facilityID: localStorage.getItem('facilityID'),

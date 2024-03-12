@@ -1,1 +1,6 @@
-/* CSS files should not be empty SonarQube Bug Fix */
+/* CSS files should not be empty SonarQube Bug Fix */mat-form-field {
+    margin-right: 40px;
+    margin-left: 20px
+  }
+
+  
