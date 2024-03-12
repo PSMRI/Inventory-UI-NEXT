@@ -136,3 +136,10 @@
     </mat-menu>
   </div>
 </div>
+<div *ngIf="showRoles && isExternal" class="fluid-activities" id="main-navbar">
+  <div>
+    <button mat-button (click)="backToParent()" class="nav navbar-nav">
+      {{ currentLanguageSet?.itemDispense?.pharmacist }}
+    </button>
+  </div>
+</div>
