@@ -179,9 +179,9 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     // }
   }
 
-  get indentItemList(){
+  get indentItemList() {
     return this.indentRequestForm.get('indentItemList') as FormArray;
-  } 
+  }
   addToindentItemList() {
     // const IndentItemListArray = this.indentRequestForm.controls[
     //   'indentItemList'
@@ -191,10 +191,10 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     this.loadIndentData();
     // IndentItemListArray.push(
     //   this.loadIndentItemList()
-    // );    
+    // );
   }
 
-  loadIndentItemList(){
+  loadIndentItemList() {
     return this.fb.group({
       itemID: null,
       itemName: null,
@@ -213,13 +213,15 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       createdDate: null,
       lastModDate: null,
       parkingPlaceID: null,
-      fromFacilityID: null
-    })
+      fromFacilityID: null,
+    });
   }
 
   removeFromindentItemList(index: any, itemListForm?: FormGroup) {
     console.log('itemListForm', itemListForm);
-    const IndentItemListArray = this.indentRequestForm.get('indentItemList') as FormArray;    
+    const IndentItemListArray = this.indentRequestForm.get(
+      'indentItemList',
+    ) as FormArray;
     // const stockForm = this.physicalStockEntryForm.get(
     //   'physicalStock',
     // ) as FormArray;
@@ -270,19 +272,27 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     this.resetIndentRequestFormArray();
     this.indentRequestForm.reset({ requestDate: new Date() });
   }
-  submitIndentRequest(indentRequestForm: FormGroup) {   
+  submitIndentRequest(indentRequestForm: FormGroup) {
     const indentRequest = JSON.parse(
       JSON.stringify(indentRequestForm.value.indentItemList),
     );
-    console.log("indentRequestForm under submitIndentRequest", indentRequestForm);
-    console.log("JSON.parse(localStorage.getItem('facilityDetail') || '{}').mainFacilityID", JSON.parse(localStorage.getItem('facilityDetail') || '{}').mainFacilityID);       
+    console.log(
+      'indentRequestForm under submitIndentRequest',
+      indentRequestForm,
+    );
+    console.log(
+      "JSON.parse(localStorage.getItem('facilityDetail') || '{}').mainFacilityID",
+      JSON.parse(localStorage.getItem('facilityDetail') || '{}').mainFacilityID,
+    );
     const otherDetails = {
       refNo: indentRequestForm.value.referenceNumber,
       reason: indentRequestForm.value.indentReason,
       fromFacilityID: localStorage.getItem('facilityID'),
       fromFacilityName: JSON.parse(
-        localStorage.getItem('facilityDetail') || '{}').facilityName,
-      toFacilityID: JSON.parse(localStorage.getItem('facilityDetail') || '{}').mainFacilityID,
+        localStorage.getItem('facilityDetail') || '{}',
+      ).facilityName,
+      toFacilityID: JSON.parse(localStorage.getItem('facilityDetail') || '{}')
+        .mainFacilityID,
       createdBy: localStorage.getItem('username'),
       providerServiceMapID: localStorage.getItem('providerServiceID'),
       vanID: localStorage.getItem('vanID'),
@@ -290,14 +300,14 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       userID: localStorage.getItem('userID'),
     };
 
-    console.log("otherDetails under submitIndentRequest", otherDetails); 
+    console.log('otherDetails under submitIndentRequest', otherDetails);
     const temp = Object.assign(
       {},
       { indentOrder: indentRequest },
       otherDetails,
-    );  
+    );
     this.inventoryService.saveIndentRequest(temp).subscribe((response) => {
-      console.log("response+++++++++++ in saveIndentRequest", response);      
+      console.log('response+++++++++++ in saveIndentRequest', response);
       if (response.statusCode == 200) {
         this.confirmationService.alert(
           this.currentLanguageSet.inventory.savedsuccessfully,

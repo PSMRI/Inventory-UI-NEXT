@@ -27,5 +27,9 @@
     </div>
   </div>
 </div>
-<app-manual-indent-dispense *ngIf="issueType == 0"></app-manual-indent-dispense>
-<app-system-indent-dispense *ngIf="issueType == 1"></app-system-indent-dispense>
+<app-manual-indent-dispense
+  *ngIf="issueType === 0"
+></app-manual-indent-dispense>
+<app-system-indent-dispense
+  *ngIf="issueType === 1"
+></app-system-indent-dispense>

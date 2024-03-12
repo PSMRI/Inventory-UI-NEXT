@@ -298,7 +298,6 @@
                   </td>
                 </ng-container>
 
-                
                 <!-- Table Rows -->
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr
@@ -321,15 +320,19 @@
                     </button>
                   </td>
                 </ng-container> -->
-                <!-- -->
-                <div
-              class="text-right"
-              *ngIf="indentRequestForm.get('indentItemList')?.valid" 
-            >
-              <button mat-mini-fab color="primary" (click)="addToindentItemList()">
-                <mat-icon>add</mat-icon>
-              </button>
-            </div>
+              <!-- -->
+              <div
+                class="text-right"
+                *ngIf="indentRequestForm.get('indentItemList')?.valid"
+              >
+                <button
+                  mat-mini-fab
+                  color="primary"
+                  (click)="addToindentItemList()"
+                >
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
             </ng-container>
           </div>
         </mat-card>
