@@ -57,6 +57,7 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
     'batchNo',
     'quantityOnHand',
     'adjustmentType',
+    'adjustedQuantity',
     'reason',
   ];
 

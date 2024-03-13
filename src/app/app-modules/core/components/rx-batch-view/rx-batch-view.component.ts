@@ -84,10 +84,11 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
         quantity: null,
       });
     }
-    if (this.editSelection === 1) {
-      formItemsTick.at(index).get('selection')?.disable();
-      console.log('formItems-Disbale', formItemsTick);
-    }
+    formItemsTick.at(index).get('selection')?.disable();
+    // if (this.editSelection === 1) {
+    //   formItemsTick.at(index).get('selection')?.disable();
+    //   console.log('formItems-Disbale', formItemsTick);
+    // }
   }
 
   checkQuant(formArrayVals: any, index: any) {

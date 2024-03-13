@@ -122,7 +122,7 @@ export class ViewMedicineDispenseDetailsComponent
     const facilityName = facilityDetail.facilityName;
     const printableData: any = [];
     let i = 0;
-    this.data.dispenseItem.forEach((dispenseItem: any) => {
+    this.data.dispenseItem.data.forEach((dispenseItem: any) => {
       i = i + 1;
       const dispensedItem = {
         sNo: i,

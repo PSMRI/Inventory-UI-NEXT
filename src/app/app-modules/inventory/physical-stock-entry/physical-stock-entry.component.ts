@@ -65,8 +65,7 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
   stockItemName: any;
   physicalStockEntryForm!: FormGroup;
   matTableStockForm!: FormGroup;
-  // dataSource!: MatTableDataSource<any>;
-  // dataSource = new BehaviorSubject<FormArray | null>(null);
+  isDisabled = true;
   otherDetails: any;
   physicalStockList: any = [];
   physicalStockTableDataList: any = [];

@@ -63,7 +63,7 @@
         >{{ currentLanguageSet?.inventory?.toDateCannotBeBeforeFromDate }}</span
       >
     </div>
-    <div class="col-xs-12 col-sm-2 box">
+    <div class="col-xs-12 col-sm-2 box" style="padding-top: 15px">
       <button
         mat-raised-button
         [disabled]="
@@ -112,7 +112,7 @@
 
                 <ng-container matColumnDef="consumptionID">
                   <mat-header-cell *matHeaderCellDef>
-                    {{ currentLanguageSet?.inventory?.consumptionID }}
+                    <b>{{ currentLanguageSet?.inventory?.consumptionID }}</b>
                   </mat-header-cell>
                   <mat-cell
                     *matCellDef="let consumption"
@@ -124,7 +124,7 @@
 
                 <ng-container matColumnDef="refNo">
                   <mat-header-cell *matHeaderCellDef>
-                    {{ currentLanguageSet?.inventory?.refNo }}
+                    <b>{{ currentLanguageSet?.inventory?.refNo }}</b>
                   </mat-header-cell>
                   <mat-cell
                     *matCellDef="let consumption"
@@ -136,7 +136,7 @@
 
                 <ng-container matColumnDef="reason">
                   <mat-header-cell *matHeaderCellDef>
-                    {{ currentLanguageSet?.inventory?.reason }}
+                    <b>{{ currentLanguageSet?.inventory?.reason }}</b>
                   </mat-header-cell>
                   <mat-cell
                     *matCellDef="let consumption"
@@ -148,7 +148,7 @@
 
                 <ng-container matColumnDef="createdBy">
                   <mat-header-cell *matHeaderCellDef>
-                    {{ currentLanguageSet?.inventory?.createdBy }}
+                    <b>{{ currentLanguageSet?.inventory?.createdBy }}</b>
                   </mat-header-cell>
                   <mat-cell
                     *matCellDef="let consumption"
@@ -160,7 +160,7 @@
 
                 <ng-container matColumnDef="createdDate">
                   <mat-header-cell *matHeaderCellDef>
-                    {{ currentLanguageSet?.inventory?.createdDate }}
+                    <b>{{ currentLanguageSet?.inventory?.createdDate }}</b>
                   </mat-header-cell>
                   <mat-cell
                     *matCellDef="let consumption"

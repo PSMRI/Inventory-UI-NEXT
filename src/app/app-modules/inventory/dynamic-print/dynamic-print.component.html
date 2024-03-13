@@ -35,7 +35,9 @@
       <h4>{{ title?.headerTitle }}</h4>
     </div>
     <div class="col-xs-12">
-      <table mat-table class="mat-elevation-z8" aria-describedby="printDetails">
+      <table class="table table-no-border" aria-describedby="printDetails">
+        <caption></caption>
+        <!-- Table discription added SonarQube Fix -->
         <ng-container
           *ngFor="
             let column of headerColumn;
@@ -43,53 +45,65 @@
             let isodd = odd
           "
         >
-          <ng-container *ngIf="iseven">
-            <tr mat-header-row>
-              <th mat-header-cell id="columnName for even" [attr.rowspan]="2">
-                {{ column?.columnName }}
-              </th>
-              <td mat-cell [attr.rowspan]="2">
-                {{ headerDetail[column?.keyName] }}
-              </td>
-            </tr>
-          </ng-container>
-          <ng-container *ngIf="isodd">
-            <tr mat-row>
-              <td mat-cell id="columnName for odd">{{ column?.columnName }}</td>
-              <td mat-cell>{{ headerDetail[column?.keyName] }}</td>
-            </tr>
-          </ng-container>
+          <tr *ngIf="iseven">
+            <th id="columnName for even" rowspan="2">
+              {{ column?.columnName }}
+            </th>
+            <td rowspan="2">{{ headerDetail[column?.keyName] }}</td>
+          </tr>
+          <tr *ngIf="isodd">
+            <th id="columnName for odd">{{ column?.columnName }}</th>
+            <td>{{ headerDetail[column?.keyName] }}</td>
+          </tr>
         </ng-container>
       </table>
     </div>
   </div>
+  <!-- End of Beneficiary Details -->
 
   <div class="row">
     <section class="col-xs-12">
-      <table mat-table class="mat-elevation-z8" aria-describedby="printDetails">
-        <ng-container
-          matColumnDef="column"
-          *ngFor="let column of columnList; let iseven = even; let isodd = odd"
-        >
-          <th mat-header-cell>{{ column.columnName }}</th>
-          <td mat-cell *matCellDef="let data">{{ data[column.keyName] }}</td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="['column']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['column']"></tr>
+      <table
+        class="table table-bordered table-striped"
+        aria-describedby="printDetails"
+      >
+        <caption></caption>
+        <!-- Table discription added SonarQube Fix -->
+        <thead>
+          <tr class="column">
+            <th id="columnList" *ngFor="let column of columnList">
+              {{ column.columnName }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of fieldData">
+            <td *ngFor="let column of columnList">
+              {{ data[column.keyName] }}
+            </td>
+          </tr>
+        </tbody>
       </table>
     </section>
   </div>
 </div>
 
 <div class="container bg-unset non-printable m-t-10 m-b-100">
-  <div class="row" style="display: flex; justify-content: end">
-    <button mat-raised-button class="pull-right" (click)="downloadList()">
-      {{ currentLanguageSet?.inventory?.print }}
-    </button>
+  <div class="row">
     <button
       mat-raised-button
       color="primary"
+      class="pull-right"
+      (click)="downloadList()"
+      style="width: 30px; display: flex; justify-content: left"
+    >
+      {{ currentLanguageSet?.inventory?.print }}
+    </button>
+    <button
       class="pull-left"
+      style="width: 30px"
+      mat-raised-button
+      color="primary"
       (click)="goBack()"
     >
       {{ currentLanguageSet?.inventory?.back }}

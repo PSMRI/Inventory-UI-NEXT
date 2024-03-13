@@ -236,7 +236,7 @@ export class ViewStoreStockTransferComponent implements OnInit, DoCheck {
       'stockEntryResponse',
       JSON.stringify(stockEntryResponse, null, 4),
     );
-    stockEntryResponse.forEach((batch: any) => {
+    stockEntryResponse.data.forEach((batch: any) => {
       i = i + 1;
       const consumedBatch = {
         sNo: i,

@@ -120,7 +120,7 @@
                     matInput
                     defaultNull
                     [required]="batch.value.selection"
-                    [readonly]="!batch.value.selection || editSelection === 1"
+                    [readonly]="editSelection === 1"
                     allowMax="batch.value.quantityInHand"
                     name="quantity"
                     formControlName="quantity"

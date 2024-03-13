@@ -23,6 +23,9 @@
     <div class="row m-t-10">
       <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
         <mat-form-field class="input-full-width">
+          <mat-label>{{
+            currentLanguageSet?.inventory?.referenceNumber
+          }}</mat-label>
           <input
             matInput
             required
@@ -30,7 +33,6 @@
             maxlength="20"
             name="referenceNumber"
             formControlName="referenceNumber"
-            placeholder="{{ currentLanguageSet?.inventory?.referenceNumber }}*"
             #referenceNumber
           />
         </mat-form-field>
@@ -49,6 +51,9 @@
       </div>
       <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
         <mat-form-field class="input-full-width">
+          <mat-label>{{
+            currentLanguageSet?.inventory?.consumptionReason
+          }}</mat-label>
           <input
             matInput
             required
@@ -56,9 +61,6 @@
             maxlength="100"
             name="dispenseReason"
             formControlName="dispenseReason"
-            placeholder="{{
-              currentLanguageSet?.inventory?.consumptionReason
-            }}*"
           />
         </mat-form-field>
       </div>
@@ -85,7 +87,7 @@
               <!-- Name Column -->
               <ng-container matColumnDef="itemName">
                 <th mat-header-cell *matHeaderCellDef>
-                  {{ currentLanguageSet?.inventory?.itemName }}
+                  <b>{{ currentLanguageSet?.inventory?.itemName }}</b>
                 </th>
                 <td
                   mat-cell
@@ -93,12 +95,12 @@
                   [formGroup]="element"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.itemName
+                    }}</mat-label>
                     <input
                       matInput
                       allowText="itemNameSearchValidator"
-                      placeholder="{{
-                        currentLanguageSet?.inventory?.itemName
-                      }}*"
                       maxlength="100"
                       appBatchSearch
                       [previousSelected]="
@@ -125,7 +127,7 @@
               </ng-container>
               <ng-container matColumnDef="batchNo">
                 <th mat-header-cell *matHeaderCellDef>
-                  {{ currentLanguageSet?.itemDispense?.batchNo }}
+                  <b>{{ currentLanguageSet?.itemDispense?.batchNo }}</b>
                 </th>
                 <td
                   mat-cell
@@ -133,11 +135,11 @@
                   [formGroup]="element"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.itemDispense?.batchNo
+                    }}</mat-label>
                     <input
                       matInput
-                      placeholder="{{
-                        currentLanguageSet?.itemDispense?.batchNo
-                      }}*"
                       required
                       name="batchNo"
                       formControlName="batchNo"
@@ -150,7 +152,7 @@
               <!-- Quantity in Hand Column -->
               <ng-container matColumnDef="quantityInHand">
                 <th mat-header-cell *matHeaderCellDef>
-                  {{ currentLanguageSet?.inventory?.qOH }}
+                  <b>{{ currentLanguageSet?.inventory?.qOH }}</b>
                 </th>
                 <td
                   mat-cell
@@ -158,9 +160,11 @@
                   [formGroup]="element"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.qOH
+                    }}</mat-label>
                     <input
                       matInput
-                      placeholder="{{ currentLanguageSet?.inventory?.qOH }}*"
                       required
                       name="quantityInHand"
                       formControlName="quantityInHand"
@@ -173,7 +177,7 @@
               <!-- Quantity Column -->
               <ng-container matColumnDef="quantity">
                 <th mat-header-cell *matHeaderCellDef>
-                  {{ currentLanguageSet?.inventory?.quantity }}
+                  <b>{{ currentLanguageSet?.inventory?.quantity }}</b>
                 </th>
                 <td
                   mat-cell
@@ -181,11 +185,11 @@
                   [formGroup]="element"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.quantity
+                    }}</mat-label>
                     <input
                       matInput
-                      placeholder="{{
-                        currentLanguageSet?.inventory?.quantity
-                      }}*"
                       appAllowMin="1"
                       allowText="number"
                       required

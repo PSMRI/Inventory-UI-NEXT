@@ -54,6 +54,7 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
   // dataSource!: MatTableDataSource<AbstractControl>;
 
   displayedColumns: string[] = [
+    'index',
     'itemName',
     'batchID',
     'quantityOnHand',

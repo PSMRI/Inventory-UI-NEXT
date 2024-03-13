@@ -99,7 +99,7 @@
             <!-- Define columns for mat-table -->
             <ng-container matColumnDef="noValue">
               <mat-header-cell *matHeaderCellDef>{{
-                currentLanguageSet?.inventory?.index
+                currentLanguageSet?.inventory?.sNo
               }}</mat-header-cell>
               <mat-cell *matCellDef="let adjustment; let i = index">{{
                 i + 1
@@ -108,7 +108,7 @@
 
             <ng-container matColumnDef="itemName">
               <mat-header-cell *matHeaderCellDef>
-                {{ currentLanguageSet?.inventory?.itemName }}
+                <b>{{ currentLanguageSet?.inventory?.itemName }}</b>
               </mat-header-cell>
               <mat-cell *matCellDef="let adjustment; let i = index">
                 {{ adjustment?.itemName }}
@@ -117,7 +117,7 @@
 
             <ng-container matColumnDef="batchNo">
               <mat-header-cell *matHeaderCellDef>
-                {{ currentLanguageSet?.itemDispense?.batchNo }}
+                <b>{{ currentLanguageSet?.itemDispense?.batchNo }}</b>
               </mat-header-cell>
               <mat-cell *matCellDef="let adjustment; let i = index">
                 {{ adjustment?.batchID }}
@@ -126,7 +126,7 @@
 
             <ng-container matColumnDef="quantityOnHand">
               <mat-header-cell *matHeaderCellDef>
-                {{ currentLanguageSet?.inventory?.quantityOnHand }}
+                <b>{{ currentLanguageSet?.inventory?.quantityOnHand }}</b>
               </mat-header-cell>
               <mat-cell *matCellDef="let adjustment; let i = index">
                 {{ adjustment?.quantityInHand }}
@@ -135,16 +135,25 @@
 
             <ng-container matColumnDef="adjustmentType">
               <mat-header-cell *matHeaderCellDef>
-                {{ currentLanguageSet?.inventory?.adjustmentType }}
+                <b>{{ currentLanguageSet?.inventory?.adjustmentType }}</b>
               </mat-header-cell>
               <mat-cell *matCellDef="let adjustment; let i = index">
                 {{ adjustment?.isAdded ? "Receipt" : "Issue" }}
               </mat-cell>
             </ng-container>
 
+            <ng-container matColumnDef="adjustedQuantity">
+              <mat-header-cell *matHeaderCellDef>
+                <b>{{ currentLanguageSet?.inventory?.adjustedQuantity }}</b>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let adjustment; let i = index">
+                {{ adjustment?.adjustedQuantity }}
+              </mat-cell>
+            </ng-container>
+
             <ng-container matColumnDef="reason">
               <mat-header-cell *matHeaderCellDef>
-                {{ currentLanguageSet?.inventory?.reason }}
+                <b>{{ currentLanguageSet?.inventory?.reason }}</b>
               </mat-header-cell>
               <mat-cell *matCellDef="let adjustment; let i = index">
                 {{ adjustment?.reason }}
@@ -164,6 +173,7 @@
     <div class="row m-b-15">
       <div class="col-xs-12" style="display: flex; justify-content: end">
         <button
+          color="primary"
           class="pull-right"
           mat-raised-button
           type="button"

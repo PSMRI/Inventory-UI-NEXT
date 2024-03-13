@@ -66,6 +66,7 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
   displayedColumns: string[] = [
+    'sNo',
     'itemName',
     'quantity',
     'totalCostPrice',

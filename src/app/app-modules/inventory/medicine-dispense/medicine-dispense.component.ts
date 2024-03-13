@@ -41,6 +41,7 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
   parentVisitID: any;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  dateBool = false;
   constructor(
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
@@ -132,9 +133,11 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
     if (this.parentVisitID) {
       resp.forEach((element: any) => {
         if (element.benVisitID == this.parentVisitID) {
+          this.dateBool = true;
           this.beneficiaryDetailForm.patchValue({
             visitCode: element,
           });
+          this.dateBool = true;
           this.getVisitDetail();
         }
       });
@@ -222,6 +225,7 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
         reference: null,
         medicineDispenseType: 'System',
       });
+      this.dateBool = true;
       this.getBeneficiaryDetail();
     } else {
       this.nullifyBeneficiaryDetails();
@@ -263,6 +267,7 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
       facilityName: facilityName,
       visitDate: this.visitCode.visitDate,
     };
+    this.dateBool = true;
     console.log('ERRR100', this.beneficaryDetail);
   }
 

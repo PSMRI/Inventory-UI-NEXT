@@ -60,6 +60,7 @@ export class ViewStockAdjustmentDraftDetailsComponent
     'batchNo',
     'quantityOnHand',
     'adjustmentType',
+    'adjustedQuantity',
     'reason',
   ];
 

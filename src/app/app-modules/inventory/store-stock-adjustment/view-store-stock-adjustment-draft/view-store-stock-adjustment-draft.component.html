@@ -48,7 +48,7 @@
         >{{ currentLanguageSet?.inventory?.toDateCannotBeBeforeFromDate }}</span
       >
     </div>
-    <div class="col-xs-12 col-sm-2 box">
+    <div class="col-xs-12 col-sm-2 box" style="padding-top: 15px">
       <button
         mat-raised-button
         [disabled]="!fromDate || !toDate || endDate.value < startDate.value"
@@ -93,7 +93,7 @@
 
                   <ng-container matColumnDef="draftID">
                     <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.draftID }}
+                      <b>{{ currentLanguageSet?.inventory?.draftID }}</b>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let adjustment; let i = index">
                       {{ adjustment?.stockAdjustmentDraftID }}
@@ -102,7 +102,7 @@
 
                   <ng-container matColumnDef="refNo">
                     <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.refNo }}
+                      <b>{{ currentLanguageSet?.inventory?.refNo }}</b>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let adjustment; let i = index">
                       {{ adjustment?.refNo }}
@@ -111,7 +111,9 @@
 
                   <ng-container matColumnDef="draftDescription">
                     <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.draftDescription }}
+                      <b>{{
+                        currentLanguageSet?.inventory?.draftDescription
+                      }}</b>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let adjustment; let i = index">
                       {{ adjustment?.draftDescription }}
@@ -120,7 +122,7 @@
 
                   <ng-container matColumnDef="createdBy">
                     <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.createdBy }}
+                      <b>{{ currentLanguageSet?.inventory?.createdBy }}</b>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let adjustment; let i = index">
                       {{ adjustment?.createdBy }}
@@ -129,7 +131,7 @@
 
                   <ng-container matColumnDef="createdDate">
                     <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.createdDate }}
+                      <b>{{ currentLanguageSet?.inventory?.createdDate }}</b>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let adjustment; let i = index">
                       {{ adjustment?.createdDate | istDate: "dd/MM/yyyy" }}
@@ -138,7 +140,7 @@
 
                   <ng-container matColumnDef="Edit">
                     <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.bendetails?.edit }}
+                      <b>{{ currentLanguageSet?.bendetails?.edit }}</b>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let adjustment; let i = index">
                       <mat-icon
@@ -155,7 +157,7 @@
 
                   <ng-container matColumnDef="view">
                     <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.view }}
+                      <b>{{ currentLanguageSet?.inventory?.view }}</b>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let adjustment; let i = index">
                       <mat-icon

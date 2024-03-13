@@ -57,6 +57,7 @@ export class ItemDispenseComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.search(this.input.searchTerm);
+    console.log('this.input', this.input);
     this.fetchLanguageResponse();
   }
 
@@ -74,7 +75,11 @@ export class ItemDispenseComponent implements OnInit, DoCheck {
   }
 
   selectSelectedItem(selectedItem: any) {
-    const dispenseItemList = this.input.dispenseItemList.data;
+    const dispenseItemList: any = this.input.dispenseItemList.data;
+    console.log(
+      'this.input.dispenseItemList.data',
+      this.input.dispenseItemList.data,
+    );
     console.log('dispenseItemList', dispenseItemList);
 
     const temp = dispenseItemList.filter(

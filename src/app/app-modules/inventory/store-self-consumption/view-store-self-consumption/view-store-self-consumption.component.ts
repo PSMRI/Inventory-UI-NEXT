@@ -230,7 +230,7 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
     const facilityName = facilityDetail.facilityName;
     const printableData: any = [];
     let i = 0;
-    consumptionResponse.forEach((batch: any) => {
+    consumptionResponse.data.forEach((batch: any) => {
       i = i + 1;
       const consumedBatch = {
         sNo: i,

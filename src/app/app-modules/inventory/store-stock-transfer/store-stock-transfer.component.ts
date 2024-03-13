@@ -267,7 +267,7 @@ export class StoreStockTransferComponent implements OnInit, DoCheck {
     this.inventoryService
       .saveStockTransfer(this.serviceDataMapper(this.stockTransferForm.value))
       .subscribe((res) => {
-        if (res && res.response) {
+        if (res && res.data.response) {
           this.confirmationService.alert(
             this.currentLanguageSet.inventory.savedsuccessfully,
             'success',
