@@ -167,7 +167,7 @@
                   id="reference"
                   formControlName="reference"
                   maxlength="50"
-                  [disabled]="!beneficiaryDetailForm.get('visitCode')?.value"
+                  [readonly]="!dateBool"
                 />
               </mat-form-field>
             </div>

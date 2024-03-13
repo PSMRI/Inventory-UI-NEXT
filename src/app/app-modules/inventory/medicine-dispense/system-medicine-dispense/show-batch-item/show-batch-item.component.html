@@ -109,7 +109,10 @@
   </mat-dialog-content>
 
   <div class="row">
-    <div class="col-xs-12 actionButton" id="topBtn">
+    <div
+      class="col-xs-12 actionButton"
+      style="display: flex; justify-content: flex-start"
+    >
       <button
         mat-raised-button
         *ngIf="issuedBatchList.data.length > 0"
@@ -120,6 +123,7 @@
         {{ currentLanguageSet?.inventory?.saveAndPrint }}
       </button>
       <button
+        style="margin-left: 4px"
         mat-raised-button
         *ngIf="issuedBatchList.data.length > 0"
         type="button"

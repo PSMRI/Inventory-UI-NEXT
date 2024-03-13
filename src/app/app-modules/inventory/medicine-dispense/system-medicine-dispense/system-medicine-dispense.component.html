@@ -149,13 +149,11 @@
   </form>
 
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12" style="display: flex; justify-content: end">
       <button
         mat-raised-button
-        class="pull-right"
         type="button"
         [disabled]="!systemDispenseForm.valid"
-        color="accent"
         (click)="allocateBatch()"
       >
         {{ currentLanguageSet?.inventory?.allocateBatch }}

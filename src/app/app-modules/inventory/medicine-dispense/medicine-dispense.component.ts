@@ -72,7 +72,7 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
       beneficiaryAge: { value: '', disabled: false },
       genderName: { value: '', disabled: false },
       doctorName: { value: '', disabled: false },
-      reference: { value: '', disabled: true },
+      reference: { value: '', disabled: false },
       visitDate: { value: '', disabled: false },
     });
   }

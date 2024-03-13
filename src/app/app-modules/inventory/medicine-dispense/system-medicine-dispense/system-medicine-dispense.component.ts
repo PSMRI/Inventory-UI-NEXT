@@ -164,7 +164,7 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
     this.systemItemDispenseList.push(this.initSystemDispenseForm());
     this.loadSystemMedicineData();
   }
-  removeItem(i: any, itemForm: FormGroup) {
+  removeItem(index: any, itemForm: FormGroup) {
     const stockForm = this.systemDispenseForm.get(
       'systemItemDispenseList',
     ) as FormArray;
@@ -172,7 +172,7 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
     console.log('stock', itemForm);
 
     if (stockForm.length > 1) {
-      stockForm.removeAt(i);
+      stockForm.removeAt(index);
       // stockForm.clear();
       this.loadSystemMedicineData();
     } else {
@@ -180,17 +180,6 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
         itemForm.reset();
         itemForm.controls['itemName'].enable();
       }
-    }
-
-    const systemItemDispenseList = <FormArray>(
-      this.systemDispenseForm.controls['systemItemDispenseList']
-    );
-    console.log('systemItemDispenseList.length', systemItemDispenseList.length);
-    if (systemItemDispenseList.length == 1 && !!itemForm) {
-      this.systemDispenseForm.reset();
-      console.log('here');
-    } else {
-      systemItemDispenseList.removeAt(i);
     }
   }
 
