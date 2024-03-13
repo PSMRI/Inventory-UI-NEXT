@@ -93,7 +93,7 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
 
   checkQuant(formArrayVals: any, index: any) {
     console.log(formArrayVals, index);
-    if (index != -1) {
+    if (index !== -1) {
       if (
         formArrayVals[index].quantity === '' ||
         formArrayVals[index].quantity === null ||
@@ -118,7 +118,7 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
       this.dialogRef.close({
         selectionBatchList: formItems.value,
         batchList: formItems.value.filter(
-          (item: any) => item.selection == true,
+          (item: any) => item.selection === true,
         ),
         dispensed: this.dispensed > 0 ? this.dispensed : null,
       });
@@ -167,7 +167,7 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
       quantityInHand: batch.qty || batch.quantityInHand,
       expiresIn: batch.expiresIn,
       itemStockEntryID: batch.itemStockEntryID,
-      selection: batch.selection || selection == '1' ? true : false,
+      selection: batch.selection || selection === '1' ? true : false,
     });
   }
 

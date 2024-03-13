@@ -45,7 +45,7 @@ export class myEmailDirective implements Validator {
 
   validate(control: AbstractControl): { [key: string]: any } | null {
     const input = control.value;
-    if (input == '' || input == null) return null;
+    if (input === '' || input === null) return null;
 
     const flag = this.pattern.test(input);
     return flag

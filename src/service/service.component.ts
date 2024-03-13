@@ -39,7 +39,11 @@ export class ServiceComponent implements OnInit {
     }
   }
   handleKeyselectService(event: KeyboardEvent, service: any): void {
-    if (event.key == 'Enter' || event.key == 'Spacebar' || event.key == ' ') {
+    if (
+      event.key === 'Enter' ||
+      event.key === 'Spacebar' ||
+      event.key === ' '
+    ) {
       this.selectService(service);
     }
   }

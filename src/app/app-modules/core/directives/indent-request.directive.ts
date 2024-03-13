@@ -46,7 +46,7 @@ export class IndentRequestDirective {
     this.openDialog();
   }
   @HostListener('click') onClick() {
-    if (this.el.nativeElement.nodeName != 'INPUT') this.openDialog();
+    if (this.el.nativeElement.nodeName !== 'INPUT') this.openDialog();
   }
   constructor(
     private el: ElementRef,

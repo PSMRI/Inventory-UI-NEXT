@@ -128,11 +128,11 @@ export class PatientReturnPreviousRecordComponent implements OnInit, DoCheck {
       this.patientReturnList.forEach((item: any) => {
         for (const key in item) {
           if (
-            key == 'itemName' ||
-            key == 'batchNo' ||
-            key == 'dateofIssue' ||
-            key == 'patientName' ||
-            key == 'returnDate'
+            key === 'itemName' ||
+            key === 'batchNo' ||
+            key === 'dateofIssue' ||
+            key === 'patientName' ||
+            key === 'returnDate'
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {

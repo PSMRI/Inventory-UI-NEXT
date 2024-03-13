@@ -134,7 +134,7 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
     this.prescribedDrugService
       .allocateBatches(meds, this.facilityID)
       .subscribe((batches: any) => {
-        if (batches.statusCode == 200) {
+        if (batches.statusCode === 200) {
           const data = batches.data;
           data.map((batch: any) =>
             this.applyBatches(batch.itemID, batch.itemBatchList),
@@ -204,14 +204,14 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
       this.clearBatchArray(batchList);
       this.clearBatchArray(selectionBatchList);
 
-      if (this.issueType == 0) {
+      if (this.issueType === 0) {
         this.allocated = false;
         element.preDefinedBatchList.forEach((batch: any) => {
           selectionBatchList.push(
             this.utils.initBatchListElement(batch, this.issueType),
           );
         });
-      } else if (this.issueType == 1) {
+      } else if (this.issueType === 1) {
         this.allocate();
       }
       currentGroup.patchValue({
@@ -242,7 +242,7 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
           this.issueType,
         )
         .subscribe((res: any) => {
-          if (res && this.issueType == 0) {
+          if (res && this.issueType === 0) {
             this.pushSavedBatches(
               res.batchList,
               res.selectionBatchList,

@@ -67,7 +67,7 @@ export class StringValidatorDirective {
   validate(input: any) {
     const patternCode = this.allowText.trim();
 
-    if (input == null || input == '') return false;
+    if (input === null || input === '') return false;
 
     switch (patternCode) {
       case 'alphabet':

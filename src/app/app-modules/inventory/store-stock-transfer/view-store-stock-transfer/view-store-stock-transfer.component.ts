@@ -171,11 +171,11 @@ export class ViewStoreStockTransferComponent implements OnInit, DoCheck {
       this._stockEntryList.forEach((item) => {
         for (const key in item) {
           if (
-            key == 'refNo' ||
-            key == 'stockTransferID' ||
-            key == 'transferFromFacility' ||
-            key == 'transferToFacility' ||
-            key == 'createdBy'
+            key === 'refNo' ||
+            key === 'stockTransferID' ||
+            key === 'transferFromFacility' ||
+            key === 'transferToFacility' ||
+            key === 'createdBy'
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0) {
@@ -210,7 +210,7 @@ export class ViewStoreStockTransferComponent implements OnInit, DoCheck {
         });
       mdDialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          if (result.print != null && result.print == true) {
+          if (result.print !== null && result.print === true) {
             if (result.print) {
               const printableData = this.createPrintableData(
                 entry,

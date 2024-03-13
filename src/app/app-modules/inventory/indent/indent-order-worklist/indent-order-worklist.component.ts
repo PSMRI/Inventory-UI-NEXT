@@ -51,13 +51,13 @@ export class IndentOrderWorklistComponent implements OnInit {
     ).mainFacilityID;
     if (
       !this.isMainStore &&
-      (this.mainFacilityID != null || this.mainFacilityID != undefined)
+      (this.mainFacilityID !== null || this.mainFacilityID !== undefined)
     ) {
       this.router.navigate(['inventory/subStoreIndentOrderWorklist']);
     } else if (
       this.isMainStore ||
-      this.mainFacilityID != null ||
-      this.mainFacilityID != undefined
+      this.mainFacilityID !== null ||
+      this.mainFacilityID !== undefined
     ) {
       this.router.navigate(['/inventory/mainStoreIndentOrderWorklist']);
     }

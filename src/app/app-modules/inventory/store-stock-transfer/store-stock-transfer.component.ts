@@ -94,7 +94,7 @@ export class StoreStockTransferComponent implements OnInit, DoCheck {
 
   checkFacility() {
     this.facilityID = localStorage.getItem('facilityID');
-    if (this.facilityID == null || this.facilityID <= 0) {
+    if (this.facilityID === null || this.facilityID <= 0) {
       this.router.navigate(['/inventory']);
     }
   }
@@ -105,7 +105,7 @@ export class StoreStockTransferComponent implements OnInit, DoCheck {
       console.log('data****', data);
       const newArr: any = Object.entries(data).map(([key, value]) => value);
       console.log('newArr****', newArr);
-      this.stores = newArr[0].filter((item: any) => item.deleted == false);
+      this.stores = newArr[0].filter((item: any) => item.deleted === false);
       console.log('stores$$$', this.stores);
       this.filterStore = this.filterSubStore(this.stores, this.facilityID);
       console.log('filterStore&&&&&', this.filterStore);
@@ -114,7 +114,7 @@ export class StoreStockTransferComponent implements OnInit, DoCheck {
 
   filterSubStore(storeList: any, facilityID: any) {
     const source = storeList.filter(
-      (item: any) => item.facilityID == facilityID,
+      (item: any) => item.facilityID === facilityID,
     );
 
     const children = [];
@@ -125,7 +125,7 @@ export class StoreStockTransferComponent implements OnInit, DoCheck {
       const front = queue.shift();
       children.push(front);
       storeList.forEach((item: any) => {
-        if (item.mainFacilityID && item.mainFacilityID == front.facilityID)
+        if (item.mainFacilityID && item.mainFacilityID === front.facilityID)
           queue.push(item);
       });
     }
@@ -135,12 +135,13 @@ export class StoreStockTransferComponent implements OnInit, DoCheck {
 
     const parent = storeList.filter(
       (item: any) =>
-        source[0].mainFacilityID && item.facilityID == source[0].mainFacilityID,
+        source[0].mainFacilityID &&
+        item.facilityID === source[0].mainFacilityID,
     );
     const sibling = storeList.filter(
       (item: any) =>
         source[0].mainFacilityID &&
-        item.mainFacilityID == source[0].mainFacilityID,
+        item.mainFacilityID === source[0].mainFacilityID,
     );
 
     const index2 = sibling.indexOf(source[0]);

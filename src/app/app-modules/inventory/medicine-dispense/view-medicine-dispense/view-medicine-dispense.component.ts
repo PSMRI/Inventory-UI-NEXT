@@ -154,11 +154,11 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
       this._dispenseList.forEach((item: any) => {
         for (const key in item) {
           if (
-            key == 'patientIssueID' ||
-            key == 'patientName' ||
-            key == 'reference' ||
-            key == 'issueType' ||
-            key == 'createdBy'
+            key === 'patientIssueID' ||
+            key === 'patientName' ||
+            key === 'reference' ||
+            key === 'issueType' ||
+            key === 'createdBy'
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0) {

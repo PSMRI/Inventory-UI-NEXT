@@ -45,7 +45,7 @@ export class BatchAdjustmentDirective {
   }
 
   @HostListener('click') onClick() {
-    if (this.el.nativeElement.nodeName != 'INPUT') this.openDialog();
+    if (this.el.nativeElement.nodeName !== 'INPUT') this.openDialog();
   }
 
   constructor(

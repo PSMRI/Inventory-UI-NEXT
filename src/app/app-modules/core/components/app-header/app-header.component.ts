@@ -64,20 +64,20 @@ export class AppHeaderComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.getUIVersionAndCommitDetails();
     const userName = localStorage.getItem('userName');
-    if (userName != null) {
+    if (userName !== null) {
       this.userName = userName;
     }
     const designation = localStorage.getItem('designation');
-    if (designation != null) {
+    if (designation !== null) {
       this.designation = designation;
     }
-    this.isExternal = sessionStorage.getItem('isExternal') == 'true';
+    this.isExternal = sessionStorage.getItem('isExternal') === 'true';
     this.parent_app = sessionStorage.getItem('host');
     const providerServiceID = localStorage.getItem('providerServiceID');
-    if (providerServiceID != null) {
+    if (providerServiceID !== null) {
       this.providerServiceID = providerServiceID;
     }
-    this.isAuthenticated = sessionStorage.getItem('isAuthenticated') == 'true';
+    this.isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
     this.license = environment.licenseUrl;
     this.reportsList = [
       'Inward stock Report',
@@ -99,7 +99,7 @@ export class AppHeaderComponent implements OnInit, OnChanges {
   }
 
   getLanguage() {
-    if (localStorage.getItem('currentLanguage') != null) {
+    if (localStorage.getItem('currentLanguage') !== null) {
       this.changeLanguage(localStorage.getItem('currentLanguage'));
     } else {
       this.changeLanguage(this.language);
@@ -127,15 +127,15 @@ export class AppHeaderComponent implements OnInit, OnChanges {
   }
   languageSuccessHandler(response: any, language: any) {
     console.log('language is ', response);
-    if (response == undefined) {
+    if (response === undefined) {
       alert(this.currentLanguageSet.alerts.langNotDefinesd);
     }
-    if (response[language] != undefined) {
+    if (response[language] !== undefined) {
       this.currentLanguageSet = response[language];
       localStorage.setItem('currentLanguage', language);
       if (this.currentLanguageSet) {
         this.languageArray.forEach((item: any) => {
-          if (item.languageName == language) {
+          if (item.languageName === language) {
             this.language = language;
           }
         });
@@ -155,7 +155,7 @@ export class AppHeaderComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     const facility = localStorage.getItem('facilityDetail');
-    if (facility != null) {
+    if (facility !== null) {
       this.facility = JSON.parse(facility);
     }
     if (this.facility) {
@@ -246,14 +246,18 @@ export class AppHeaderComponent implements OnInit, OnChanges {
     ];
   }
   handleKeyLogout(event: KeyboardEvent): void {
-    if (event.key == 'Enter' || event.key == 'Spacebar' || event.key == ' ') {
+    if (
+      event.key === 'Enter' ||
+      event.key === 'Spacebar' ||
+      event.key === ' '
+    ) {
       this.logout();
     }
   }
 
   logout() {
     this.auth.logoutUser().subscribe((res: any) => {
-      if (res && res.statusCode == 200) {
+      if (res && res.statusCode === 200) {
         this.router.navigate(['/login']);
         this.changeLanguage('English');
         localStorage.clear();
@@ -279,7 +283,7 @@ export class AppHeaderComponent implements OnInit, OnChanges {
   showVersionAndCommitDetails() {
     this.auth.getAPIVersionAndCommitDetails().subscribe(
       (res: any) => {
-        if (res.statusCode == 200) {
+        if (res.statusCode === 200) {
           this.constructAPIAndUIDetails(res.data);
         }
       },
@@ -316,7 +320,7 @@ export class AppHeaderComponent implements OnInit, OnChanges {
     sessionStorage.removeItem('return');
     localStorage.removeItem('facilityDetail');
     let language: any;
-    if (localStorage.getItem('currentLanguage') == 'undefined') {
+    if (localStorage.getItem('currentLanguage') === 'undefined') {
       language = 'English';
     } else {
       language = localStorage.getItem('currentLanguage');

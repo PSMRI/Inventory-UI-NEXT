@@ -143,7 +143,7 @@ export class ResetPasswordComponent {
       )
       .subscribe(
         (response: any) => {
-          if (response.statusCode == 200) {
+          if (response.statusCode === 200) {
             this.counter = 0;
             this.router.navigate(['/set-password']);
             this.authService.transactionId = response.data.transactionId;

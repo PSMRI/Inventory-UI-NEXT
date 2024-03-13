@@ -124,10 +124,10 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
       this.stockAdjustmentList.forEach((item: any) => {
         for (const key in item) {
           if (
-            key == 'stockAdjustmentDraftID' ||
-            key == 'refNo' ||
-            key == 'draftDesc' ||
-            key == 'createdBy'
+            key === 'stockAdjustmentDraftID' ||
+            key === 'refNo' ||
+            key === 'draftDesc' ||
+            key === 'createdBy'
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
@@ -184,7 +184,7 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
         quantityInHand: stock.quantityInHand,
         adjustedQuantity: stock.adjustedQuantity,
         adjustmentType:
-          stock.isAdded != undefined && stock.isAdded ? 'Receipt' : 'Issue',
+          stock.isAdded !== undefined && stock.isAdded ? 'Receipt' : 'Issue',
         reason: stock.reason,
       };
       adjustedItemList.push(temp);

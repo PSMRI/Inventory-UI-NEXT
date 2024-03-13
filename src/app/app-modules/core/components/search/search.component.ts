@@ -98,7 +98,7 @@ export class SearchComponent implements OnInit, DoCheck {
 
   callForMasterData() {
     this.commonService.getRegistrationData().subscribe((res) => {
-      if (res && res.statusCode == 200 && res.data) {
+      if (res && res.statusCode === 200 && res.data) {
         console.log(res);
         this.genders = res.data.m_genders;
         this.states = res.data.states;
@@ -114,7 +114,7 @@ export class SearchComponent implements OnInit, DoCheck {
     this.commonService
       .getStateDistricts(this.beneficiary.stateID)
       .subscribe((res) => {
-        if (res && res.data && res.statusCode == 200) {
+        if (res && res.data && res.statusCode === 200) {
           console.log(res);
           this.districts = res.data;
         } else {
@@ -206,7 +206,7 @@ export class SearchComponent implements OnInit, DoCheck {
       return phoneMaps.length > 0 ? phoneMaps[0].phoneNo : 'Not Available';
     } else if (benObject && benObject.phoneNo && phoneMaps.length > 0) {
       phoneMaps.forEach((element: any) => {
-        if (element.phoneNo == benObject.phoneNo) {
+        if (element.phoneNo === benObject.phoneNo) {
           phone = element.phoneNo;
         }
       });
@@ -226,7 +226,7 @@ export class SearchComponent implements OnInit, DoCheck {
           beneficiaryID: benID,
         })
         .subscribe((res) => {
-          if (res && res.statusCode == 200 && res.data) {
+          if (res && res.statusCode === 200 && res.data) {
             if (res.data.benVisitDetail && res.data.benVisitDetail.length) {
               this.mdDialogRef.close(benID);
             } else {

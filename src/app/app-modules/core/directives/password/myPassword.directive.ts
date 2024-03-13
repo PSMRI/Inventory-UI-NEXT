@@ -41,16 +41,16 @@ export class myPasswordDirective {
 
   @HostListener('keyup', ['$event']) onKeyUp(ev: any) {
     const result = this.passwordValidator(ev.target.value);
-    if (result == 1) {
+    if (result === 1) {
       ev.target.nextSibling.nextElementSibling.innerHTML = 'Strong Password';
       ev.target.style.border = '2px solid green';
     }
-    if (result == 0) {
+    if (result === 0) {
       ev.target.nextSibling.nextElementSibling.innerHTML = 'Weak Password';
       ev.target.style.border = '2px solid yellow';
     }
 
-    if (result == -1) {
+    if (result === -1) {
       ev.target.nextSibling.nextElementSibling.innerHTML =
         'password should be 8-12 characters long and must start with an alphabet and can have numbers alphabets and $%#@!&^*()-+{}[]';
       ev.target.style.border = '2px solid red';

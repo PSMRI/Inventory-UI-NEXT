@@ -108,7 +108,7 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
       .subscribe(
         (response) => {
           console.log('response', response);
-          if (response.statusCode == 200) {
+          if (response.statusCode === 200) {
             if (response.data.beneficiaryFlowStatus.length > 0) {
               this.beneficiaryVisitDetailList = response.data;
               console.log(this.beneficiaryVisitDetailList, 'lissss');
@@ -132,7 +132,7 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
   loadCurrentVisit(resp: any) {
     if (this.parentVisitID) {
       resp.forEach((element: any) => {
-        if (element.benVisitID == this.parentVisitID) {
+        if (element.benVisitID === this.parentVisitID) {
           this.dateBool = true;
           this.beneficiaryDetailForm.patchValue({
             visitCode: element,
@@ -148,18 +148,18 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
   beneficiaryVisitDetailList: any;
   recentBeneficaryVisit: any;
   checkBeneficiary() {
-    if (this.beneficiaryDetailForm.controls['beneficiaryID'].value == null) {
+    if (this.beneficiaryDetailForm.controls['beneficiaryID'].value === null) {
       this.nullifyBeneficiaryDetails();
     }
 
-    if (this.beneficiaryDetailForm.controls['beneficiaryID'].value != null) {
+    if (this.beneficiaryDetailForm.controls['beneficiaryID'].value !== null) {
       if (
-        this.beneficiaryDetailForm.controls['beneficiaryID'].value.length != 12
+        this.beneficiaryDetailForm.controls['beneficiaryID'].value.length !== 12
       ) {
         this.nullifyBeneficiaryDetails();
       }
       if (
-        this.beneficiaryDetailForm.controls['beneficiaryID'].value.length == 12
+        this.beneficiaryDetailForm.controls['beneficiaryID'].value.length === 12
       ) {
         this.inventoryService
           .getBeneficaryVisitDetail({
@@ -170,7 +170,7 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
           .subscribe(
             (response) => {
               console.log('response', response);
-              if (response.statusCode == 200) {
+              if (response.statusCode === 200) {
                 if (response.data.benVisitDetail.length > 0) {
                   this.beneficiaryVisitDetailList = response.data;
                   this.beneficiaryDetail = response.data.beneficiaryFlowStatus;
@@ -214,7 +214,7 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   getVisitDetail() {
-    if (this.visitCode != undefined || this.visitCode != null) {
+    if (this.visitCode !== undefined || this.visitCode !== null) {
       this.beneficiaryDetailForm.patchValue({
         beneficiaryName: this.visitCode.benName,
         beneficiaryAge: this.visitCode.ben_age_val,

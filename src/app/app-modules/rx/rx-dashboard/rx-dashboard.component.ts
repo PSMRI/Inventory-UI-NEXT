@@ -78,7 +78,7 @@ export class RxDashboardComponent implements OnInit, DoCheck {
       );
       this.beneficiaryDetailsSubscription =
         this.beneficiaryDetailsService.beneficiaryDetails$.subscribe((res) => {
-          if (res != null) {
+          if (res !== null) {
             console.log('response0', res);
             if (res.serviceDate) {
               console.log('response1', res);
@@ -111,7 +111,7 @@ export class RxDashboardComponent implements OnInit, DoCheck {
       .getPrescription({ visitCode, facilityID, beneficiaryRegID })
       .subscribe(
         (res: any) => {
-          if (res.data && res.statusCode == 200) {
+          if (res.data && res.statusCode === 200) {
             console.log(res);
             this.prescription = res.data || undefined;
           } else {
@@ -146,7 +146,7 @@ export class RxDashboardComponent implements OnInit, DoCheck {
     return this.prescribedDrugService
       .saveStockExit(reqObj)
       .subscribe((res: any) => {
-        if (res.statusCode == 200) {
+        if (res.statusCode === 200) {
           // this.confirmationService.confirm('info', 'Items Dispensed').subscribe(
           // () => {
           const language = localStorage.getItem('currentLanguage');

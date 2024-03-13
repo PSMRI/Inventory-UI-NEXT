@@ -91,8 +91,8 @@ export class ViewPhysicalStockDetailsComponent
       this._filteredDetailedList.paginator = this.paginator;
       this._detailedList.forEach((item: any) => {
         for (const key in item) {
-          if (key != 'item') {
-            if (key == 'batchNo' || key == 'quantity') {
+          if (key !== 'item') {
+            if (key === 'batchNo' || key === 'quantity') {
               const value: string = '' + item[key];
               if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
                 this._filteredDetailedList.data.push(item);
@@ -102,7 +102,7 @@ export class ViewPhysicalStockDetailsComponent
             }
           }
 
-          if (key == 'item') {
+          if (key === 'item') {
             const value: string = '' + item.item.itemName;
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this._filteredDetailedList.data.push(item);

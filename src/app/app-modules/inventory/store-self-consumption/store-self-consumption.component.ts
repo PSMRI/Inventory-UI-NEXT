@@ -80,7 +80,7 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
     this.fetchLanguageResponse();
     this.providerServiceMapID = localStorage.getItem('providerServiceID');
 
-    if (this.facilityID == null || this.facilityID <= 0) {
+    if (this.facilityID === null || this.facilityID <= 0) {
       this.router.navigate(['/inventory']);
     }
 
@@ -208,7 +208,7 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
 
     this.inventoryService.storeSelfConsumption(requestBody).subscribe(
       (response) => {
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           this.alertService.alert(
             this.currentLanguageSet.inventory.savedsuccessfully,
             'success',

@@ -86,7 +86,7 @@ export class BatchAdjustmentComponent implements OnInit, DoCheck {
   disableSelection(batch: any) {
     const addedStock = this.input.addedStock;
     const temp = addedStock.filter(
-      (stock: any) => stock.itemStockEntryID == batch.itemStockEntryID,
+      (stock: any) => stock.itemStockEntryID === batch.itemStockEntryID,
     );
     if (temp.length > 0) return true;
     else return false;

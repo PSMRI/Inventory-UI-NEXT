@@ -114,7 +114,7 @@ export class SetSecurityQuestionsComponent implements OnInit {
       this.selectedQuestions,
     );
 
-    if (this.selectedQuestions.indexOf(selectedques) == -1) {
+    if (this.selectedQuestions.indexOf(selectedques) === -1) {
       this.selectedQuestions[position] = selectedques;
       if (position === 0) {
         this.answer1 = '';
@@ -127,7 +127,7 @@ export class SetSecurityQuestionsComponent implements OnInit {
       }
       console.log('if block, selected questions', this.selectedQuestions);
     } else {
-      if (this.selectedQuestions.indexOf(selectedques) != position) {
+      if (this.selectedQuestions.indexOf(selectedques) !== position) {
         this.confirmationService.alert(
           'This Question is already selected. Choose Unique Question',
         );
@@ -283,7 +283,7 @@ export class SetSecurityQuestionsComponent implements OnInit {
   handleQuestionSaveSuccess(response: any, encryptedConfirmPwd: any) {
     if (
       response &&
-      response.statusCode == 200 &&
+      response.statusCode === 200 &&
       response.data.transactionId !== undefined &&
       response.data.transactionId !== null
     ) {
@@ -319,7 +319,7 @@ export class SetSecurityQuestionsComponent implements OnInit {
 
   logout() {
     this.auth.logoutUser().subscribe((res: any) => {
-      if (res && res.statusCode == 200) {
+      if (res && res.statusCode === 200) {
         this.router.navigate(['/login']);
         localStorage.clear();
         sessionStorage.clear();

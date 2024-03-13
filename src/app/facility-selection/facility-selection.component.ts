@@ -95,7 +95,7 @@ export class FacilitySelectionComponent implements OnInit, DoCheck {
       this.enableContinue = true;
       localStorage.setItem('facilityID', facility.facilityID);
       localStorage.setItem('facilityDetail', JSON.stringify(facility));
-    } else if (isMainStore == 'false' && facility && subFacility) {
+    } else if (isMainStore === 'false' && facility && subFacility) {
       this.enableContinue = true;
       localStorage.setItem('facilityID', subFacility.facilityID);
       localStorage.setItem('facilityDetail', JSON.stringify(subFacility));
@@ -107,7 +107,7 @@ export class FacilitySelectionComponent implements OnInit, DoCheck {
 
   getFacility() {
     this.facilities = this.stores.filter((facility: any) => {
-      if (facility.isMainFacility == true && facility.deleted == false) {
+      if (facility.isMainFacility === true && facility.deleted === false) {
         return facility;
       }
     });
@@ -121,7 +121,7 @@ export class FacilitySelectionComponent implements OnInit, DoCheck {
       if (
         !subFacility.deleted &&
         subFacility.mainFacilityID &&
-        subFacility.mainFacilityID == facility.facilityID
+        subFacility.mainFacilityID === facility.facilityID
       ) {
         return subFacility;
       }
@@ -133,7 +133,7 @@ export class FacilitySelectionComponent implements OnInit, DoCheck {
 
   getFacilityMappedVanID(facilityID: any) {
     this.faciltyService.getVanByStoreID(facilityID).subscribe((res: any) => {
-      if (res.statusCode == 200 && res.data) {
+      if (res.statusCode === 200 && res.data) {
         this.vanID = res.data.vanID;
         this.parkingPlaceID = res.data.parkingPlaceID;
       }

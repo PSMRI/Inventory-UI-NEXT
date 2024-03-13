@@ -75,7 +75,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
     if (this.data !== undefined) {
       this.masterItemBatchList = this.data.batchList;
       this.itemBatchList = this.data.batchList;
-      if (this.data.editIndex != null) {
+      if (this.data.editIndex !== null) {
         this.title = this.currentLanguageSet.inventory.editBatchSelection;
       } else {
         this.title = this.currentLanguageSet.itemDispense.batchSelection;
@@ -85,7 +85,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
       }
       this.title;
       console.log('this.data', this.data);
-      if (this.data.editBatch != null) {
+      if (this.data.editBatch !== null) {
         if (
           this.data.editBatch.batchList &&
           this.data.editBatch.batchList.length > 0
@@ -134,7 +134,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
 
     for (let i = 0; i < temp.length; i++) {
       const batchArray = this.masterItemBatchList.filter((item: any) => {
-        return item.batchNo == temp[i].batchNo.batchNo;
+        return item.batchNo === temp[i].batchNo.batchNo;
       });
 
       if (batchArray.length > 0) {
@@ -176,7 +176,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
       const index = item.indexOf(selectedBatch);
       console.log('index', index);
 
-      if (index != -1 && t != i) {
+      if (index !== -1 && t !== i) {
         console.log('item', item);
 
         item = item.splice(index, 1);
@@ -187,7 +187,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
     this.selectedBatchList[i] = selectedBatch;
 
     const dateOfIssue = (this.today = new Date(selectedBatch.dateofIssue));
-    if (batchForm != undefined) {
+    if (batchForm !== undefined) {
       batchForm.patchValue({
         issuedQuantity: selectedBatch.issuedQuantity,
         dateOfIssue: dateOfIssue,
@@ -210,13 +210,13 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
           const batchArray = tempBatch.filter((item: any) => {
             if (
               item.batchNo &&
-              item.batchNo != null &&
-              item.batchNo.batchNo != null
+              item.batchNo !== null &&
+              item.batchNo.batchNo !== null
             ) {
-              return item.batchNo.batchNo == batch.batchNo;
+              return item.batchNo.batchNo === batch.batchNo;
             }
           });
-          const batchFlag = batchArray.length == 0 ? true : false;
+          const batchFlag = batchArray.length === 0 ? true : false;
           return batchFlag;
         });
         this.filteredBatchList.push(resultBatch.slice());
@@ -231,7 +231,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
 
   removeBatch(i: any, batchForm: any) {
     const batchList = <FormArray>this.batchForm.controls['batchList'];
-    if (batchList.length == 1 && !!batchForm) {
+    if (batchList.length === 1 && !!batchForm) {
       batchForm.patchValue({
         batchNo: null,
         issuedQuantity: null,
@@ -242,7 +242,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
     } else {
       const removedBatch = this.selectedBatchList[i];
       this.filteredBatchList.map((item: any, t: any) => {
-        if (t != i && removedBatch) {
+        if (t !== i && removedBatch) {
           item.push(removedBatch);
         }
       });
@@ -256,7 +256,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
   checkValidity(batchForm: FormGroup) {
     const batchList = <FormArray>this.batchForm.controls['batchList'];
     const tempBatch = batchForm.value;
-    if (batchList.length != this.masterItemBatchList.length) {
+    if (batchList.length !== this.masterItemBatchList.length) {
       if (tempBatch.returnQuantity) {
         return false;
       } else {
@@ -270,7 +270,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
   checkQuantity(batch?: FormGroup) {
     if (batch) {
       const quantity = batch.value.returnQuantity;
-      if (batch.value.returnQuantity == 0) {
+      if (batch.value.returnQuantity === 0) {
         this.confirmationService.alert(
           this.currentLanguageSet.inventory
             .pleaseenterquantitygreaterthanzeroandlessthanorequaltoQtyinBatch,

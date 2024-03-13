@@ -230,9 +230,9 @@ export class RedirInComponent implements OnInit {
 
   getSession() {
     this.authService.getSessionExists().subscribe((res) => {
-      if (res && res.statusCode == 200) {
+      if (res && res.statusCode === 200) {
         this.checkANDSetAuthenticatedDetails(res.data);
-      } else if (res.statusCode == 5002) {
+      } else if (res.statusCode === 5002) {
         // sessionStorage.clear();
         // localStorage.clear();
         this.deleteParentSessioning();
@@ -252,9 +252,9 @@ export class RedirInComponent implements OnInit {
     let serviceData;
     if (loginDataResponse.previlegeObj) {
       serviceData = loginDataResponse.previlegeObj.filter((item: any) => {
-        return item.serviceName == this.externalSession.inventoryServiceName;
+        return item.serviceName === this.externalSession.inventoryServiceName;
       })[0];
-      if (serviceData != null) {
+      if (serviceData !== null) {
         this.checkMappedRoleForService(loginDataResponse, serviceData);
       }
     } else {
@@ -324,7 +324,7 @@ export class RedirInComponent implements OnInit {
     this.authService
       .getFacilityDetails(this.externalSession.facility)
       .subscribe((res) => {
-        if (res && res.statusCode == 200 && res.data) {
+        if (res && res.statusCode === 200 && res.data) {
           localStorage.setItem('facilityDetail', JSON.stringify(res.data));
           // this.router.navigate(['/inventory/medicineDispense']);
           this.router.navigate([

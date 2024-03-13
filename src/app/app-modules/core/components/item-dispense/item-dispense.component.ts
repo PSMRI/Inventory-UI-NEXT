@@ -83,7 +83,7 @@ export class ItemDispenseComponent implements OnInit, DoCheck {
     console.log('dispenseItemList', dispenseItemList);
 
     const temp = dispenseItemList.filter(
-      (item: any) => item.itemID == selectedItem.item.itemID,
+      (item: any) => item.itemID === selectedItem.item.itemID,
     );
 
     if (temp.length <= 0) this.dialogRef.close(selectedItem);

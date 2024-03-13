@@ -188,7 +188,7 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
     console.log('itemList', JSON.stringify(itemList, null, 4));
     this.inventoryService.allocateBatch(itemList).subscribe(
       (response) => {
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           if (response.data.length > 0) {
             const itemBatchList = response.data;
             this.openModalToShowBatchList(itemBatchList);
@@ -229,9 +229,9 @@ export class SystemMedicineDispenseComponent implements OnInit, DoCheck {
           console.log('resuklt', result);
           if (result.result) {
             console.log('result.result', result.result);
-            if (result.result.statusCode == 200) {
+            if (result.result.statusCode === 200) {
               console.log('result.result.statusCode', result.result.statusCode);
-              if (result.print != null && result.print == true) {
+              if (result.print !== null && result.print === true) {
                 const printableData = this.createPrintableData(
                   result.issuedBatchList,
                 );
