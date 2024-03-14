@@ -106,7 +106,7 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       indentID: this.dataStorageService.indentDetails.indentID,
       fromFacilityID: this.dataStorageService.indentDetails.fromFacilityID,
     };
-    if (this.viewItemReqObj != undefined || this.viewItemReqObj != null) {
+    if (this.viewItemReqObj !== undefined || this.viewItemReqObj !== null) {
       this.editMode = true;
       this.getItemList(this.viewItemReqObj);
     } else {
@@ -165,7 +165,7 @@ export class IndentRequestComponent implements OnInit, DoCheck {
   checkQuantity(itemList?: FormGroup) {
     console.log('itemList in checkQuantity', itemList);
     const quantity = itemList?.value.requiredQty;
-    if (quantity == 0) {
+    if (quantity === 0) {
       this.confirmationService.alert(
         this.currentLanguageSet.inventory.enterQuantityGreaterThanZero,
       );
@@ -308,7 +308,7 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     );
     this.inventoryService.saveIndentRequest(temp).subscribe((response) => {
       console.log('response+++++++++++ in saveIndentRequest', response);
-      if (response.statusCode == 200) {
+      if (response.statusCode === 200) {
         this.confirmationService.alert(
           this.currentLanguageSet.inventory.savedsuccessfully,
           'success',
@@ -322,7 +322,7 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     this.inventoryService
       .viewItemListForSubStore(viewItemReqObj)
       .subscribe((viewItemResponse) => {
-        if (viewItemResponse.statusCode == 200) {
+        if (viewItemResponse.statusCode === 200) {
           const itemListDetails = viewItemResponse.data;
           const indentRequestFormArray = this.indentRequestForm.controls[
             'indentItemList'
@@ -357,7 +357,7 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       JSON.stringify(indentRequestForm.value.indentItemList),
     );
 
-    if (this.deleted == true) {
+    if (this.deleted === true) {
       addedDeletedObject = Object.assign(
         [],
         indentRequest,
@@ -388,7 +388,7 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       lastModDate: this.dataStorageService.indentDetails.lastModDate,
       vanSerialNo: this.dataStorageService.indentDetails.vanSerialNo,
     };
-    if (this.deleted == true) {
+    if (this.deleted === true) {
       temp = Object.assign(
         {},
         { indentOrder: addedDeletedObject },
@@ -398,7 +398,7 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       temp = Object.assign({}, { indentOrder: indentRequest }, otherDetails);
     }
     this.inventoryService.updateIndentRequest(temp).subscribe((response) => {
-      if (response.statusCode == 200) {
+      if (response.statusCode === 200) {
         this.confirmationService.alert(response.data.response, 'success');
         this.dataStorageService.indentDetails = undefined;
         this.router.navigate(['inventory/subStoreIndentOrderWorklist']);

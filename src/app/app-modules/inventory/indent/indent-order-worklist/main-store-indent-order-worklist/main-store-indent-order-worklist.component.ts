@@ -142,7 +142,7 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
 
     if (
       this.isMainStore &&
-      (this.mainFacilityID != null || this.mainFacilityID != undefined)
+      (this.mainFacilityID !== null || this.mainFacilityID !== undefined)
     ) {
       this.enableIndentReceipt = true;
     }

@@ -77,7 +77,7 @@ export class SubStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
     this.inventoryService
       .cancelIndentRequest(indentOrder)
       .subscribe((cancelResponse) => {
-        if (cancelResponse.statusCode == 200) {
+        if (cancelResponse.statusCode === 200) {
           this.confirmationService.alert(
             cancelResponse.data.response,
             'success',
@@ -106,7 +106,7 @@ export class SubStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
     this.inventoryService
       .receiveIndentOrder(acceptorder)
       .subscribe((acceptOrderResponse) => {
-        if (acceptOrderResponse.statusCode == 200) {
+        if (acceptOrderResponse.statusCode === 200) {
           this.confirmationService.alert(
             acceptOrderResponse.data.response,
             'success',

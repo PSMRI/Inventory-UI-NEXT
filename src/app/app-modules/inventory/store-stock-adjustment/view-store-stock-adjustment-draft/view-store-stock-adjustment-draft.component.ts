@@ -100,7 +100,7 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
         endDate.valueOf() - 1 * endDate.getTimezoneOffset() * 60 * 1000,
       ),
       facilityID: localStorage.getItem('facilityID')
-        ? +localStorage.getItem('facilityID')!
+        ? " +localStorage.getItem('facilityID') || '{}'"
         : undefined,
     };
 

@@ -111,7 +111,7 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
           'viewItemResponse**************************',
           viewItemResponse,
         );
-        if (viewItemResponse.statusCode == 200) {
+        if (viewItemResponse.statusCode === 200) {
           this.mainStoreItemList = viewItemResponse.data;
           this.manipulateMainStoreItem();
         }
@@ -130,7 +130,7 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
     this.inventoryService
       .viewBatchlistForIndentItem(batchlistObj)
       .subscribe((batchlistResponse) => {
-        if (batchlistResponse.statusCode == 200) {
+        if (batchlistResponse.statusCode === 200) {
           console.log('Batch list response', batchlistResponse);
           this.batchlist = batchlistResponse.data;
           console.log('this.batchList', this.batchlist);
@@ -170,7 +170,7 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
       if (result) {
         console.log('Result', result);
 
-        if (editIndex != null) {
+        if (editIndex !== null) {
           this.manualDispenseList.splice(editIndex, 1);
           this.manualDispenseList.push(result);
           console.log(
@@ -198,7 +198,7 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
   ) {
     this.mainStoreItemListForDispense = mainStoreItemList.filter(
       (dispenseItem: { itemName: any }) => {
-        if (selectedItem.itemName == dispenseItem.itemName) {
+        if (selectedItem.itemName === dispenseItem.itemName) {
           const selectedFlag = true;
           Object.assign(dispenseItem, {
             selectedFlag: selectedFlag,
@@ -235,7 +235,7 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
     console.log('deletedItem', deletedItem);
     this.mainStoreItemListForDispense = mainStoreItemList.filter(
       (dispenseItem: { itemName: any }) => {
-        if (deletedItem.itemDetails.itemName == dispenseItem.itemName) {
+        if (deletedItem.itemDetails.itemName === dispenseItem.itemName) {
           const selectedFlag = false;
           Object.assign(dispenseItem, {
             selectedFlag: selectedFlag,
@@ -311,7 +311,8 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
     });
     console.log('batchListDetails', this.batchListDetails);
     if (
-      this.mainStoreItemListForDispense.length != this.manualDispenseList.length
+      this.mainStoreItemListForDispense.length !==
+      this.manualDispenseList.length
     ) {
       this.confirmationService
         .confirm(
@@ -327,7 +328,8 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
         });
     }
     if (
-      this.mainStoreItemListForDispense.length == this.manualDispenseList.length
+      this.mainStoreItemListForDispense.length ===
+      this.manualDispenseList.length
     ) {
       this.saveAPICall();
     }
@@ -337,7 +339,7 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
       .saveDispenseList(this.batchListDetails)
       .subscribe((response) => {
         console.log('Response for save data', response);
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           this.confirmationService.alert(response.data.response, 'success');
           this.router.navigate(['/inventory/mainStoreIndentOrderWorklist']);
           this.resetLocalstorageData();

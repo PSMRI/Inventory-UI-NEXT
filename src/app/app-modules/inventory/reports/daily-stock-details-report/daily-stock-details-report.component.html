@@ -20,7 +20,7 @@
             (dateChange)="checkEndDate($event)"
             placeholder="{{ currentLanguageSet?.inventory?.startDate }}"
             formControlName="startDate"
-            max="maxEndDate"
+            [max]="maxEndDate"
             [disabled]="true"
           />
           <mat-datepicker-toggle
@@ -42,9 +42,9 @@
             id="endDate"
             placeholder="{{ currentLanguageSet?.inventory?.endDate }}"
             formControlName="endDate"
-            min="minEndDate"
+            [min]="minEndDate"
             (dateChange)="checkStartDate($event)"
-            max="maxEndDate"
+            [max]="maxEndDate"
             [disabled]="true"
           />
           <mat-datepicker-toggle

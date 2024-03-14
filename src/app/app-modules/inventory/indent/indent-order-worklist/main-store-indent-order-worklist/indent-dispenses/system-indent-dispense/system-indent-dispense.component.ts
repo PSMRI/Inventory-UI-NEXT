@@ -105,7 +105,7 @@ export class SystemIndentDispenseComponent implements OnInit, DoCheck {
     this.inventoryService
       .viewItemListForMainStore(viewItemReqObj)
       .subscribe((viewItemResponse) => {
-        if (viewItemResponse.statusCode == 200) {
+        if (viewItemResponse.statusCode === 200) {
           this.mainStoreItemList = viewItemResponse.data;
           this.manipulateMainStoreItem();
         }
@@ -127,7 +127,7 @@ export class SystemIndentDispenseComponent implements OnInit, DoCheck {
     console.log('itemList in system', JSON.stringify(itemList, null, 4));
     this.inventoryService.allocateBatch(itemList).subscribe(
       (response) => {
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           if (response.data.length > 0) {
             const itemBatchList = response.data;
             this.openModalToShowBatchList(itemBatchList, item);
@@ -193,7 +193,7 @@ export class SystemIndentDispenseComponent implements OnInit, DoCheck {
   disableBatchSelcetion(selectedItem: any, mainStoreItemList: any) {
     this.mainStoreItemListForDispense = mainStoreItemList.filter(
       (dispenseItem: any) => {
-        if (selectedItem.itemName == dispenseItem.itemName) {
+        if (selectedItem.itemName === dispenseItem.itemName) {
           const selectedFlag = true;
           Object.assign(dispenseItem, {
             selectedFlag: selectedFlag,
@@ -219,7 +219,7 @@ export class SystemIndentDispenseComponent implements OnInit, DoCheck {
     console.log('deletedItem', deletedItem);
     this.mainStoreItemListForDispense = mainStoreItemList.filter(
       (dispenseItem: any) => {
-        if (deletedItem.itemDetails.itemName == dispenseItem.itemName) {
+        if (deletedItem.itemDetails.itemName === dispenseItem.itemName) {
           const selectedFlag = false;
           Object.assign(dispenseItem, {
             selectedFlag: selectedFlag,
@@ -285,7 +285,8 @@ export class SystemIndentDispenseComponent implements OnInit, DoCheck {
     });
     console.log('batchListDetails', this.batchListDetails);
     if (
-      this.systemDispenseList.length != this.mainStoreItemListForDispense.length
+      this.systemDispenseList.length !==
+      this.mainStoreItemListForDispense.length
     ) {
       this.confirmationService
         .confirm(
@@ -301,7 +302,8 @@ export class SystemIndentDispenseComponent implements OnInit, DoCheck {
         });
     }
     if (
-      this.systemDispenseList.length == this.mainStoreItemListForDispense.length
+      this.systemDispenseList.length ===
+      this.mainStoreItemListForDispense.length
     ) {
       this.saveAPICall();
     }
@@ -311,7 +313,7 @@ export class SystemIndentDispenseComponent implements OnInit, DoCheck {
       .saveDispenseList(this.batchListDetails)
       .subscribe((response) => {
         console.log('Response for save data', response);
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           this.confirmationService.alert(response.data.response, 'success');
           this.router.navigate(['/inventory/mainStoreIndentOrderWorklist']);
           this.resetLocalstorageData();
