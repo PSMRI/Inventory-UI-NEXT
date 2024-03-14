@@ -46,5 +46,5 @@ jobs:
     - name: Upload WAR file as artifact
       uses: actions/upload-artifact@v2 
       with:
-        name: INVENTORY-UI
+        name: Inventory-UI
         path: inventory-ui-next.war 

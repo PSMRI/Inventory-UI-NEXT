@@ -47,5 +47,5 @@ jobs:
     - name: Upload WAR file as artifact
       uses: actions/upload-artifact@v2 
       with:
-        name: MMU-UI
+        name: Inventory-UI
         path: dist/inventory-ui-next/inventory-ui-next.war
