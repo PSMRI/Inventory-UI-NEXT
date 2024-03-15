@@ -1,147 +1,179 @@
-<nav class="navbar navbar-iemr">
+<nav class="navbar navbar-expand-lg navbar-iemr">
   <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <a class="navbar-brand">
         <img src="assets/images/logo.png" alt="Logo" />
       </a>
     </div>
 
-    <div class="alignHead">
-      <span class="alignWord" *ngIf="isAuthenticated"
-        >{{ currentLanguageSet?.inventory?.selectLanguage }} :</span
-      >
-      <select
-        *ngIf="isAuthenticated"
-        class="form-control drop-arrow border-radius-20"
-        name="language"
-        [(ngModel)]="language"
-        (change)="changeLanguage(language)"
-      >
-        <option
-          *ngFor="let language of languageArray"
-          [value]="language.languageName"
-        >
-          {{ language.languageName }}
-        </option>
-      </select>
+    <button
+      class="navbar-toggler ms-auto"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-navbar,#main-navbar"
+    >
+      <mat-icon class="white-icon">menu</mat-icon>
+    </button>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse menu-font" id="top-navbar">
+      <ul class="navbar-nav ms-auto flex-row">
+        <li *ngIf="isAuthenticated" class="nav-item alignWord menu-font">
+          <span>{{ currentLanguageSet?.inventory?.selectLanguage }} : </span>
+        </li>
+        <li *ngIf="isAuthenticated" class="nav-item alignDropDown">
+          <select
+            style="font-size: 13px"
+            class="menu-font drop-arrow border-radius-20 height-30 width120px pull-right"
+            name="language"
+            [(ngModel)]="language"
+            (change)="changeLanguage(language)"
+          >
+            <option
+              *ngFor="let language of languageArray"
+              [value]="language.languageName"
+            >
+              {{ language.languageName }}
+            </option>
+          </select>
+        </li>
 
-      <a
-        *ngIf="userName"
-        matTooltip="{{ currentLanguageSet?.inventory?.user }}"
-      >
-        <img
-          src="assets/images/user1.png"
-          alt="user"
-          style="padding: 5px"
-          [matMenuTriggerFor]="userInfo"
-        />
-        <mat-menu
-          class="userInfo role-menu"
-          #userInfo
-          xPosition="after"
-          yPosition="below"
-          [overlapTrigger]="false"
+        <!-- userDetails -->
+        <li
+          *ngIf="userName"
+          matTooltip="{{ currentLanguageSet?.inventory?.user }}"
         >
-          <button class="userInfo-btn" mat-menu-item *ngIf="userName">
-            <span class="material-icons">{{
-              currentLanguageSet?.inventory?.accountCircle
-            }}</span>
-            <span>{{ userName | titlecase }}</span>
+          <img
+            src="assets/images/user1.png"
+            alt="user"
+            style="padding: 5px"
+            [matMenuTriggerFor]="userInfo"
+          />
+          <mat-menu
+            class="userInfo role-menu"
+            #userInfo
+            xPosition="after"
+            yPosition="below"
+            [overlapTrigger]="false"
+          >
+            <button class="userInfo-btn" mat-menu-item *ngIf="userName">
+              <span class="material-icons">{{
+                currentLanguageSet?.inventory?.accountCircle
+              }}</span>
+              <span>{{ userName | titlecase }}</span>
+            </button>
+            <button class="userInfo-btn" mat-menu-item *ngIf="designation">
+              <span class="material-icons">work</span>
+              <span>{{ designation | titlecase }}</span>
+            </button>
+          </mat-menu>
+        </li>
+        <li
+          class="nav-item"
+          style="margin-top: 9px"
+          *ngIf="userName"
+          matTooltip="{{ currentLanguageSet?.inventory?.user }}"
+        >
+          <a>
+            <span style="color: #d9d9d9">
+              {{ currentLanguageSet?.inventory?.welcome }}
+              <span style="color: #ffffff">{{ userName | titlecase }}</span>
+            </span>
+          </a>
+        </li>
+        <!-- help line -->
+        <li
+          class="nav-item cursorPointer"
+          *ngIf="isAuthenticated"
+          style="margin-top: 6px"
+        >
+          <mat-icon
+            alt="Help"
+            [matMenuTriggerFor]="knowAboutUs"
+            matTooltip="{{ currentLanguageSet?.inventory?.help }}"
+            >help_outline</mat-icon
+          >
+        </li>
+        <mat-menu #knowAboutUs x-position="before" class="m-t-40">
+          <button mat-menu-item (click)="showVersionAndCommitDetails()">
+            {{ currentLanguageSet?.inventory?.version }} : {{ versionUI }}
           </button>
-          <button class="userInfo-btn" mat-menu-item *ngIf="designation">
-            <span class="material-icons">work</span>
-            <span>{{ designation | titlecase }}</span>
+          <button mat-menu-item>
+            <a target="_blank" rel="noopener noreferrer" href="{{ license }}">{{
+              currentLanguageSet?.inventory?.licenseInfo
+            }}</a>
           </button>
         </mat-menu>
-      </a>
+        <!-- store name -->
 
-      <a
-        *ngIf="userName"
-        class="hidden-xs hidden-sm"
-        matTooltip="{{ currentLanguageSet?.inventory?.user }}"
-      >
-        <span style="color: #d9d9d9">
-          {{ currentLanguageSet?.inventory?.welcome }}
-          <span style="color: #ffffff">{{ userName | titlecase }}</span>
-        </span>
-      </a>
-
-      <span
-        class="cursorPointer fa fa-question-circle helpAlign"
-        matTooltip="{{ currentLanguageSet?.inventory?.help }}"
-        *ngIf="isAuthenticated"
-        alt="Help"
-        [matMenuTriggerFor]="knowAboutUs"
-        aria-label="Known about us"
-      >
-        <mat-icon>help_outline</mat-icon>
-      </span>
-
-      <mat-menu #knowAboutUs x-position="before" class="m-t-40 role-menu">
-        <button mat-menu-item (click)="showVersionAndCommitDetails()">
-          {{ currentLanguageSet?.inventory?.version }} : {{ versionUI }}
-        </button>
-        <button mat-menu-item>
-          <a target="_blank" rel="noopener noreferrer" href="{{ license }}">{{
-            currentLanguageSet?.inventory?.licenseInfo
-          }}</a>
-        </button>
-      </mat-menu>
-      <a
-        *ngIf="providerServiceID && !isExternal && storeName"
-        class="servicePoint cursorPointer"
-        [routerLink]="'/facility'"
-        matTooltip="{{ currentLanguageSet?.inventory?.storeSelection }}"
-      >
-        <img src="assets/images/pharmacy (4).png" alt="Pharmacy" /> &nbsp;
-        &nbsp;
-        <span style="color: #d9d9d9"
-          >{{ currentLanguageSet?.inventory?.store }}
-          <span style="color: #d9d9d9">:</span>
-          <span style="color: #ffffff">{{ storeName | titlecase }}</span>
-        </span>
-      </a>
-      <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events -->
-      <a
-        style="padding-left: 5px"
-        *ngIf="isAuthenticated && !isExternal"
-        class="logout cursorPointer"
-        matTooltip="{{ currentLanguageSet?.inventory?.logout }}"
-        (click)="logout()"
-        href="#"
-      >
-        <span class="logoutIcon"></span>
-      </a>
+        <li
+          *ngIf="providerServiceID && !isExternal && storeName"
+          class="nav-item servicePoint cursorPointer"
+          style="margin-top: 6px"
+          [routerLink]="'/facility'"
+          matTooltip="{{ currentLanguageSet?.inventory?.storeSelection }}"
+        >
+          <a>
+            <img src="assets/images/pharmacy (4).png" alt="Pharmacy" />
+            <span style="color: #d9d9d9"
+              >{{ currentLanguageSet?.inventory?.store }}
+              <span style="color: #d9d9d9">:</span>
+              <span style="color: #ffffff">{{ storeName | titlecase }}</span>
+            </span>
+          </a>
+        </li>
+        <!-- logout -->
+        <li
+          *ngIf="isAuthenticated && !isExternal"
+          class="nav-item logout cursorPointer"
+          style="margin-top: 6px"
+          matTooltip="{{ currentLanguageSet?.inventory?.logout }}"
+        >
+          <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events -->
+          <a tabindex="{0}" (click)="logout()">
+            <mat-icon color="warn">power_settings_new</mat-icon>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
-<div *ngIf="showRoles && !isExternal" class="fluid-activities" id="main-navbar">
-  <div *ngFor="let item of navigation">
-    <button mat-button [matMenuTriggerFor]="items" class="nav navbar-nav">
-      {{ item.role }}
-      <span class="caret"></span>
-    </button>
-    <mat-menu
-      class="role-menu"
-      #items="matMenu"
-      yPosition="below"
-      [overlapTrigger]="false"
-    >
-      <button
-        mat-menu-item
-        *ngFor="let value of item.work"
-        [routerLink]="[value.link]"
-        routerLinkActive="active"
-      >
-        {{ value.label }}
-      </button>
-    </mat-menu>
-  </div>
-</div>
-<div *ngIf="showRoles && isExternal" class="fluid-activities" id="main-navbar">
-  <div>
-    <button mat-button (click)="backToParent()" class="nav navbar-nav">
-      {{ currentLanguageSet?.itemDispense?.pharmacist }}
-    </button>
-  </div>
+
+<div *ngIf="showRoles" class="container-fluid">
+  <nav class="navbar navbar-expand-lg">
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav ml-auto" *ngFor="let item of navigation">
+        <li class="nav-item" *ngIf="item.role !== 'isExternal'">
+          <!-- <li class="nav-item" *ngIf="!isExternal"> -->
+
+          <button class="nav-btn" mat-button [matMenuTriggerFor]="items">
+            {{ item.role }}
+            <span class="caret"></span>
+          </button>
+          <mat-menu
+            class="role-menu"
+            #items="matMenu"
+            yPosition="below"
+            xPosition="after"
+            [overlapTrigger]="false"
+          >
+            <button
+              mat-menu-item
+              *ngFor="let value of item.work"
+              [routerLink]="[value.link]"
+              routerLinkActive="active"
+            >
+              {{ value.label }}
+            </button>
+          </mat-menu>
+        </li>
+        <li class="nav-item" *ngIf="item.role === 'isExternal'">
+          <!-- <li class="nav-item" *ngIf="isExternal"> -->
+          <button class="nav-btn" mat-button (click)="backToParent()">
+            {{ currentLanguageSet?.itemDispense?.pharmacist }}
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </div>
