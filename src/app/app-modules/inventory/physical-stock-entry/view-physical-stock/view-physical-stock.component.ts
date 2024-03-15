@@ -19,13 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Component,
-  OnInit,
-  HostListener,
-  ViewChild,
-  DoCheck,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, DoCheck } from '@angular/core';
 import { ViewPhysicalStockDetailsComponent } from './view-physical-stock-details/view-physical-stock-details.component';
 import { Location } from '@angular/common';
 import { InventoryService } from '../../shared/service/inventory.service';
@@ -52,7 +46,6 @@ export class ViewPhysicalStockComponent implements OnInit, DoCheck {
 
   _stockEntryList: any = [];
   _filteredStockEntryList = new MatTableDataSource<any>();
-  // _filteredStockEntryList: MatTableDataSource<any> = new MatTableDataSource<any>();
   blankTable = [1, 2, 3, 4, 5];
   filterTerm: any;
 

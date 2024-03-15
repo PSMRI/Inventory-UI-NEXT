@@ -147,12 +147,8 @@ export class RxDashboardComponent implements OnInit, DoCheck {
       .saveStockExit(reqObj)
       .subscribe((res: any) => {
         if (res.statusCode === 200) {
-          // this.confirmationService.confirm('info', 'Items Dispensed').subscribe(
-          // () => {
           const language = localStorage.getItem('currentLanguage');
           window.location.href = `${this.parent_url}?resolve=Y&currentLanguage=${language}`;
-          // }
-          // );
         } else {
           this.confirmationService.alert(res.errorMessage, 'warn');
         }

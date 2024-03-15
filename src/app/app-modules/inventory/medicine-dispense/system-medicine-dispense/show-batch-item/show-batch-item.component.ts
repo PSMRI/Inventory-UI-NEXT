@@ -42,7 +42,6 @@ export class ShowBatchItemComponent implements OnInit, DoCheck {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public mdDialogRef: MatDialogRef<ShowBatchItemComponent>,
   ) {}
-  // issuedBatchList: any = [];
   issuedBatchList = new MatTableDataSource<any>();
   beneficaryDetail: any;
   ngOnInit() {

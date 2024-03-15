@@ -42,7 +42,6 @@ export class PatientReturnPreviousRecordComponent implements OnInit, DoCheck {
 
   filterTerm: any;
   filteredPatientReturnList = new MatTableDataSource<any>();
-  // filteredPatientReturnList: any = [];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
 

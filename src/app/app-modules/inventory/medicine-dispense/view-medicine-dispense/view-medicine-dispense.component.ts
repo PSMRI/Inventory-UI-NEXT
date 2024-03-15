@@ -19,15 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Component,
-  OnInit,
-  HostListener,
-  ViewChild,
-  DoCheck,
-} from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { ViewMedicineDispenseDetailsComponent } from './view-medicine-dispense-details/view-medicine-dispense-details.component';
-import * as moment from 'moment';
 import { Location } from '@angular/common';
 import { InventoryService } from '../../shared/service/inventory.service';
 import { DataStorageService } from './../../shared/service/data-storage.service';
@@ -51,7 +44,6 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
 
   _dispenseList: any = [];
   _filteredDispenseList = new MatTableDataSource<any>();
-  // _filteredDispenseList: any = [];
   blankTable = [1, 2, 3, 4, 5];
   filterTerm: any;
   searched = false;
@@ -79,9 +71,6 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
     this._dateRange[0] = this._today;
     this._dateRange[1] = this._today;
     this._minDate.setFullYear(this._today.getFullYear() - 1);
-    // const date = new Date(); // Now
-    // date.setDate(date.getDate() - 30);
-    // this._dateRange = [date, new Date()]
     console.log(this._dateRange, 'dateRange');
   }
 
@@ -126,22 +115,12 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
   }
 
   updateDate() {
-    // if (this._dateRange[0] != this._dateRangePrevious[0] || this._dateRange[1] != this._dateRangePrevious[1]) {
     this._dateRangePrevious = this._dateRange;
-    // console.log(JSON.stringify(this._dateRange, null, 4), 'callservice');
     this.getPastDispense();
-
-    // }
   }
 
   loadDispense(dispenseObject: any) {
     console.log(dispenseObject);
-    // if (dispenseObject) {
-    //   dispenseObject.forEach(element => {
-    //     element.createdDate = moment(element.createdDate).utc().format('DD/MM/YYYY HH:mm') || 'Not Available'
-
-    //   });
-    // }
     this._dispenseList = dispenseObject.data;
     this._filteredDispenseList.data = dispenseObject.data;
     this.filterTerm = '';

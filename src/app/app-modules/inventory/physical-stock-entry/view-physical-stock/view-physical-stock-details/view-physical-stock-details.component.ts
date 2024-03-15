@@ -43,7 +43,6 @@ export class ViewPhysicalStockDetailsComponent
 {
   _filterTerm = '';
   _detailedList: any = [];
-  // _filteredDetailedList: any = [];
   _filteredDetailedList = new MatTableDataSource<any>();
   blankTable = [1, 2, 3, 4, 5];
   languageComponent!: SetLanguageComponent;
@@ -59,19 +58,15 @@ export class ViewPhysicalStockDetailsComponent
 
   ngOnInit() {
     this.populateStockEntryItems(this.data);
-    // this.dataSourceList.data = this.data;
     this.fetchLanguageResponse();
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
     this.data = '';
   }
   populateStockEntryItems(data: any) {
     console.log(data);
     if (data && data.entryDetails && data.stockEntry) {
-      // this.dataSourceList.data = this.data.stockEntry;
       const entries = data.entryDetails;
       const stockEntries = JSON.parse(JSON.stringify(data.stockEntry));
       this.dataSourceList.data.push(stockEntries);

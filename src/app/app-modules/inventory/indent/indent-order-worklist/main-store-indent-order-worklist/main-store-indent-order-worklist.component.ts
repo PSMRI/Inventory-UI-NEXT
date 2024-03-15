@@ -28,7 +28,6 @@ import { MainStoreItemModelComponent } from './main-store-item-model/main-store-
 import { RejectItemFromMainstoreModelComponent } from './reject-item-from-mainstore-model/reject-item-from-mainstore-model.component';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
-// import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -87,12 +86,8 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
           this.mainstoreOrderlist,
         );
       });
-    // this.dataSource = new MatTableDataSource<any>(this.mainstoreOrderlist);
   }
 
-  // ngAfterViewInit() {
-  //   this.dataSource.paginator = this.paginator;
-  // }
   viewItemListDetails(orderList: any) {
     this.dialog.open(MainStoreItemModelComponent, {
       width: '80%',
@@ -107,7 +102,6 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
     window.localStorage.setItem('toFacilityID', itemData.fromFacilityID);
     window.localStorage.setItem('fromFacilityName', itemData.fromFacilityName);
     window.localStorage.setItem('fromFacilityID', itemData.toFacilityID);
-    // this.router.navigate(['/inventory/mainStoreIndentDispenses/97/3'])
     this.router.navigate([
       '/inventory/mainStoreIndentDispenses/',
       itemData.fromFacilityID,
@@ -115,7 +109,6 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
     ]);
   }
   rejectIndent(rejectOrder: any) {
-    // let rejectOrderObj = Object.assign({}, rejectOrder, {"action": "Rejected" });
     const dialogRef = this.dialog.open(RejectItemFromMainstoreModelComponent, {
       width: '40%',
       height: '40%',

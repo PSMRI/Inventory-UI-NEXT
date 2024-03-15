@@ -85,13 +85,7 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
       const selectedFlag = false;
       this.mainStoreItemList.forEach((dispenseItem: any) => {
         const itemdata = Object.assign(dispenseItem, { selectedFlag });
-        // console.log('itemdata+++++++++++++++++++++', itemdata);
-
         this.mainStoreItemListForDispense.push(itemdata);
-        // console.log(
-        //   'mainStoreItemListForDispense*********************in manual',
-        //   this.mainStoreItemListForDispense,
-        // );
       });
     } else {
       console.log('mainstoreItemList is empty');

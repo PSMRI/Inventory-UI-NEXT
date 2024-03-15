@@ -48,8 +48,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private confirmationService: ConfirmationService,
-    //private router: Router) { }
-
     private router: Router,
   ) {
     this._keySize = 256;
@@ -66,7 +64,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // roleObj: any;
   roleArray: any = [];
 
   get keySize() {

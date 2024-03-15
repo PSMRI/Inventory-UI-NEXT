@@ -204,8 +204,6 @@ export class StoreStockTransferComponent implements OnInit, DoCheck {
     }
 
     if (index === 0 && length === 1) {
-      // this.addTransfer();
-      // stockArray.removeAt(index);
       stockArray.reset();
       stockArray?.reset();
       stockArray.enable();

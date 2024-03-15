@@ -19,14 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Directive,
-  HostListener,
-  Inject,
-  Input,
-  ElementRef,
-} from '@angular/core';
-import { NgControl } from '@angular/forms';
+import { Directive, HostListener, Input, ElementRef } from '@angular/core';
 import { IndentItemListComponent } from '../components/indent-item-list/indent-item-list.component';
 import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -40,7 +33,6 @@ export class IndentRequestDirective {
 
   @Input()
   itemListForm!: any;
-  // itemListForm!: FormGroup;
 
   @HostListener('keyup.enter') onKeyDown() {
     this.openDialog();

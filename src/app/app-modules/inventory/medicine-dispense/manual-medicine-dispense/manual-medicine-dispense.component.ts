@@ -139,9 +139,6 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
     return this.manualItemDispenseForm.controls['quantityInHand'].value;
   }
 
-  // manualDispenseList: any = [];
-  // manualDispenseList = new MatTableDataSource<any>();
-
   selectBatch() {
     const batchList = <FormArray>(
       this.manualItemDispenseForm.controls['batchList']

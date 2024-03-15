@@ -46,7 +46,6 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
   filterTerm: any;
   filteredStockAdjustmentList = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
-  // filteredStockAdjustmentList: any = [];
   currentLanguageSet: any;
   languageComponent!: SetLanguageComponent;
   dataSource = new MatTableDataSource<any>();

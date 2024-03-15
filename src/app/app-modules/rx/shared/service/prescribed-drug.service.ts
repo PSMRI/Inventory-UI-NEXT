@@ -66,10 +66,7 @@ export class PrescribedDrugService {
     const vanID = localStorage.getItem('vanID');
     const parkingPlaceID = localStorage.getItem('parkingPlaceID');
     const msgObj = Object.assign(reqObj, { vanID }, { parkingPlaceID });
-
-    // return Observable.of(this.dummify);
     return this.http.post(environment.getPrescriptions, msgObj);
-    // .map(res => res.json());
   }
 
   allocateBatches(list: any, facilityID: any) {
@@ -77,7 +74,6 @@ export class PrescribedDrugService {
       `${environment.allocateBatchStockUrl}/${facilityID}`,
       list,
     );
-    // .map(res => res.json());
   }
 
   saveStockExit(dispensingItem: any) {
@@ -87,6 +83,5 @@ export class PrescribedDrugService {
     console.log('dispensingItem', JSON.stringify(dispensingItem, null, 4));
 
     return this.http.post(environment.saveStockExitUrl, msgObj);
-    // .map(res => res.json());
   }
 }

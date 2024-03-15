@@ -19,9 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SpinnerState, SpinnerService } from '../../services/spinner.service';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-spinner',

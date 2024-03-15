@@ -139,9 +139,7 @@ export class StringValidatorDirective {
     const maxlength = event.target.maxLength;
 
     const inserted = this.findDelta(val, lastVal);
-    // get removed chars
     const removed = this.findDelta(lastVal, val);
-    // determine if user pasted content
     const pasted = inserted.length >= 1 || (!inserted && !removed);
 
     if (maxlength > 0 && val.length > maxlength) {

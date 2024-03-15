@@ -13,12 +13,6 @@
     overflow: hidden;
 }
 
-/* 
-.mat-form-field-placeholder {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-} */
-
 .mat-mdc-raised-button.mat-accent {
     --mdc-protected-button-container-color: #0277bd !important;
   }
@@ -107,9 +101,6 @@
     --mdc-checkbox-unselected-pressed-state-layer-color: black;
   }
 
-/* .mdc-checkbox--selected {
-    --mat-option-selected-state-label-text-color: #0277bd !important;
-} */
 
 .inline-block {
     display: inline-block;

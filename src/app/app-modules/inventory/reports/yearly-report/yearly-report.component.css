@@ -50,11 +50,6 @@
     margin-right: 5px;
   }
   
-  /* .scrolling-content{
-    overflow: auto;
-    max-height: 80vh;
-  } */
-
   .mat_form_field_background_color>>>.mdc-text-field--filled,
 .mdc-text-field--focused,
 .mat-mdc-form-field-focus-overlay,

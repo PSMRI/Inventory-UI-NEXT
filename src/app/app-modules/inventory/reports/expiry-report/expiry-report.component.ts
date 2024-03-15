@@ -20,9 +20,7 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-// import * as XLSX from 'xlsx';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 
@@ -61,7 +59,6 @@ export class ExpiryReportComponent implements OnInit, DoCheck {
     this.fetchLanguageResponse();
 
     this.dateOffset = 24 * 60 * 60 * 1000;
-    // this.maxEndDate = new Date(this.today.setTime(this.today.getTime()));
     this.maxEndDate = new Date();
     this.maxEndDate.setDate(this.today.getDate() - 1);
   }

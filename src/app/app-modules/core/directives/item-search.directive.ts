@@ -19,17 +19,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Directive,
-  HostListener,
-  Inject,
-  Input,
-  ElementRef,
-} from '@angular/core';
+import { Directive, HostListener, Input, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ItemSearchComponent } from '../components/item-search/item-search.component';
-// import { ItemSearchComponent } from '../components/item-search/item-search.component';
 
 @Directive({
   selector: '[appItemSearch]',
@@ -70,8 +63,6 @@ export class ItemSearchDirective {
         if (this.stockForm.controls['isMedical'])
           this.stockForm.controls['isMedical'].setValue(result.isMedical);
         this.stockForm.markAsDirty();
-      } else {
-        // this.stockForm.control.parent.reset();
       }
     });
   }

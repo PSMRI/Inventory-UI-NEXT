@@ -45,7 +45,6 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
 
   filterTerm: any;
   filteredStockAdjustmentList = new MatTableDataSource<any>();
-  // filteredStockAdjustmentList: any = [];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
   dataSource = new MatTableDataSource<any>();

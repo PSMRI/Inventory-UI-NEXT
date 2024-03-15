@@ -312,9 +312,6 @@ export class SetSecurityQuestionsComponent implements OnInit {
     console.log(response);
     this.confirmationService.alert('Password changed successfully', 'success');
     this.logout();
-    // localStorage.clear();
-    // sessionStorage.clear();
-    // this.router.navigate(['/']);
   }
 
   logout() {

@@ -43,7 +43,6 @@ export class ViewStoreSelfConsumptionDetailsComponent
 {
   _filterTerm = '';
   _detailedList: any = [];
-  // _filteredDetailedList: any = [];
   _filteredDetailedList = new MatTableDataSource<any>();
   _dataStoreSelfList = new MatTableDataSource<any>();
   dataSource = new MatTableDataSource<any>();
@@ -96,8 +95,6 @@ export class ViewStoreSelfConsumptionDetailsComponent
       );
       this.dataSource.paginator = this.paginator;
       console.log(' this.dataSource ', this.dataSource.data);
-
-      //  this.dataSource = new MatTableDataSource<any>(this.filteredStockAdjustmentList.data[0].data);
     }
   }
 

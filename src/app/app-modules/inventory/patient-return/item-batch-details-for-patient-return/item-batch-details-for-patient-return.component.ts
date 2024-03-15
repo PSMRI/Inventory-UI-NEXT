@@ -62,12 +62,9 @@ export class ItemBatchDetailsForPatientReturnComponent
   resetBenDetails: EventEmitter<any> = new EventEmitter();
 
   itemReturnForm!: FormGroup;
-  // batchList: any;
   batchList = new MatTableDataSource<any>();
   selectedItemList: any = [];
   filterItemList: any = [];
-
-  // selectedBatchList: any = [];
   selectedBatchList = new MatTableDataSource<any>();
   patientReturnList: any = [];
 

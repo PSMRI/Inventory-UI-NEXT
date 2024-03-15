@@ -55,8 +55,6 @@ export class DynamicPrintComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.today = new Date();
     this.fetchLanguageResponse();
-    // let dataStore = this.route.snapshot.params['printablePage'];
-    // this.printableData = this.dataStorageService[dataStore];
     const dataStore = this.route.snapshot.params[
       'printablePage'
     ] as keyof DataStorageService;

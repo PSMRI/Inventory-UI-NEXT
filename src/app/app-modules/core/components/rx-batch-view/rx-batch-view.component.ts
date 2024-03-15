@@ -23,7 +23,6 @@ import { Component, DoCheck, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormArray,
-  FormControl,
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
@@ -85,10 +84,6 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
       });
     }
     formItemsTick.at(index).get('selection')?.disable();
-    // if (this.editSelection === 1) {
-    //   formItemsTick.at(index).get('selection')?.disable();
-    //   console.log('formItems-Disbale', formItemsTick);
-    // }
   }
 
   checkQuant(formArrayVals: any, index: any) {

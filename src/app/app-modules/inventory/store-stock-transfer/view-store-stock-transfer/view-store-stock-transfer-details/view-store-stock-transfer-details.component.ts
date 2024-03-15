@@ -43,7 +43,6 @@ export class ViewStoreStockTransferDetailsComponent
 {
   _filterTerm = '';
   _detailedList = [];
-  // _filteredDetailedList = [];
   blankTable = [1, 2, 3, 4, 5];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;

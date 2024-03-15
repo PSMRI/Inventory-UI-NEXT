@@ -53,12 +53,9 @@ export class CommonDialogComponent implements OnInit {
   public mandatories: any;
 
   public provideDraftDesc!: boolean;
-
-  // Choose from Radio Button
   public choice!: boolean;
   public values: any;
   public selectedValue: any;
-  // Choose from Radio Button Ends
 
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;

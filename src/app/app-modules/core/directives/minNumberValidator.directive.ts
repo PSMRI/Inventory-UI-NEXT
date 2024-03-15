@@ -22,7 +22,6 @@
 import {
   Directive,
   ElementRef,
-  Attribute,
   HostListener,
   Input,
   Injector,

@@ -24,7 +24,6 @@ import {
   OnInit,
   ViewChild,
   ChangeDetectorRef,
-  AfterViewChecked,
   DoCheck,
 } from '@angular/core';
 import { ConfirmationService } from '../../services/confirmation.service';
@@ -59,7 +58,6 @@ export class SearchComponent implements OnInit, DoCheck {
   countryId = environment.countryId;
   searched = false;
   beneficiaryList: any = [];
-  // filteredBeneficiaryList: any = [];
   filteredBeneficiaryList = new MatTableDataSource<any>();
   blankTable = [{}, {}, {}, {}, {}];
   displayedColumns: string[] = [
@@ -138,7 +136,6 @@ export class SearchComponent implements OnInit, DoCheck {
     this.beneficiaryList = [];
     this.filteredBeneficiaryList.data = [];
     this.searched = false;
-    // this.getStatesData()
   }
 
   getSearchResult() {
@@ -176,9 +173,6 @@ export class SearchComponent implements OnInit, DoCheck {
     );
   }
 
-  /**
-   * ReStruct the response object of Identity Search to be as per search table requirements
-   */
   searchRestruct(benList: any, benObject: any) {
     const requiredBenData: any = [];
     benList.forEach((element: any, i: any) => {

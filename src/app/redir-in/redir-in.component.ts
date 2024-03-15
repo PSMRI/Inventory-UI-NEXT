@@ -21,9 +21,6 @@
  */
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
-  Params,
-  RouterModule,
-  Routes,
   Router,
   ActivatedRoute,
   NavigationStart,
@@ -72,9 +69,6 @@ export class RedirInComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // localStorage.clear();
-
-    // sessionStorage.clear();
     sessionStorage.removeItem('parentBen');
     sessionStorage.removeItem('parentBenVisit');
     sessionStorage.removeItem('isExternal');
@@ -142,8 +136,6 @@ export class RedirInComponent implements OnInit {
         params['healthID'] === 'undefined' ? undefined : params['healthID'];
     });
     console.log('PSMRI', this.externalSession);
-
-    // this.savetoStorage();
     this.storeSession();
   }
 
@@ -222,9 +214,6 @@ export class RedirInComponent implements OnInit {
     localStorage.removeItem('parkingPlaceID');
     localStorage.removeItem('vanID');
     localStorage.removeItem('inventoryServiceName');
-
-    // localStorage.removeItem('benRegID');
-
     localStorage.removeItem('facilityDetail');
   }
 
@@ -233,10 +222,7 @@ export class RedirInComponent implements OnInit {
       if (res && res.statusCode === 200) {
         this.checkANDSetAuthenticatedDetails(res.data);
       } else if (res.statusCode === 5002) {
-        // sessionStorage.clear();
-        // localStorage.clear();
         this.deleteParentSessioning();
-
         console.log(res, 'fallback');
         window.location.href = this.fallback;
       }
@@ -326,7 +312,6 @@ export class RedirInComponent implements OnInit {
       .subscribe((res) => {
         if (res && res.statusCode === 200 && res.data) {
           localStorage.setItem('facilityDetail', JSON.stringify(res.data));
-          // this.router.navigate(['/inventory/medicineDispense']);
           this.router.navigate([
             '/rx/disperse/' + this.externalSession.benRegID,
           ]);

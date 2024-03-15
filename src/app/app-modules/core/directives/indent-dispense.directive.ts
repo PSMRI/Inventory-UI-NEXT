@@ -19,15 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Directive,
-  HostListener,
-  Inject,
-  Input,
-  ElementRef,
-} from '@angular/core';
-import { NgControl, FormGroup } from '@angular/forms';
-import { ItemDispenseComponent } from './../components/item-dispense/item-dispense.component';
+import { Directive, HostListener, Input, ElementRef } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 @Directive({
@@ -55,21 +48,6 @@ export class IndentDispenseDirective {
 
   openDialog(): void {
     const searchTerm = this.stockForm.value.itemName;
-
     console.log('indent dispense directive form', this.stockForm);
-
-    //   let dialogRef = this.dialog.open(ItemDispenseComponent, {
-    //     // width: '80%',
-    //     // height: '90%',
-    //     panelClass: 'fit-screen',
-    //     data: { searchTerm: searchTerm, indentDispenseList: this.indentDispenseList }
-    //   });
-
-    //   dialogRef.afterClosed().subscribe(result => {
-    //     if (result) {
-    //       this.stockForm.controls['itemName'].setValue(result.item.itemName);
-    //       this.stockForm.controls['requestedQty'].setValue(result.requestedQty);
-    //     }
-    //   });
   }
 }

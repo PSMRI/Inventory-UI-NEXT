@@ -19,15 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Directive,
-  HostListener,
-  Inject,
-  Input,
-  ElementRef,
-} from '@angular/core';
+import { Directive, HostListener, Input, ElementRef } from '@angular/core';
 import { BatchAdjustmentComponent } from '../components/batch-adjustment/batch-adjustment.component';
-import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 @Directive({
@@ -55,13 +49,10 @@ export class BatchAdjustmentDirective {
   ) {}
 
   openDialog(): void {
-    // const searchTerm = this.stockForm.controls['itemName'].value;
     const searchTerm = this.stockForm.value.itemName;
     console.log('SEACHTEREM', searchTerm);
 
     const dialogRef = this.dialog.open(BatchAdjustmentComponent, {
-      // width: '80%',
-      // height: '90%',
       panelClass: 'fit-screen',
       data: { searchTerm: searchTerm, addedStock: this.previousSelected },
     });

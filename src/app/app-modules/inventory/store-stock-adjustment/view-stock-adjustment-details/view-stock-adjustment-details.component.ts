@@ -37,7 +37,6 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
 
   stock: any;
   adjustmentList: any = [];
-  // filteredAdjustmentList: any = [];
   filteredAdjustmentList = new MatTableDataSource<any>();
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;

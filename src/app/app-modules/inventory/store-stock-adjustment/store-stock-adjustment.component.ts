@@ -50,9 +50,6 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
   languageComponent!: SetLanguageComponent;
   isMainStore = false;
   lastUpdatedStockDate: any;
-  // dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
-  // dataSource!: MatTableDataSource<AbstractControl>;
-
   displayedColumns: string[] = [
     'index',
     'itemName',
@@ -78,14 +75,12 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
   dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {
-    // this.storeStockAdjustmentForm = this.createStoreStockAdjustmentForm();
     this.storeStockAdjustmentForm = this.fb.group({
       refNo: [''],
       adjustmentDate: { value: new Date(), disabled: true },
       stockAdjustmentDraftID: [''],
       draftDesc: [''],
       stockAdjustmentList: this.fb.array([]),
-      // stockAdjustmentList: this.fb.array([this.initStockAdjustmentList()]),
     });
     this.initStockAdjustmentList();
     this.draftID = this.route.snapshot.paramMap.get('draftID');
@@ -188,7 +183,6 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
 
     if (stockArrForm.length > 1) {
       stockArrForm.removeAt(index);
-      // stockForm.clear();
       this.loadStockAdjData();
     } else {
       if (stockForm) {
@@ -244,7 +238,6 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
                 this.currentLanguageSet.inventory.updatedSuccessfully,
                 'success',
               );
-              // this.getStockAdjustmentDraftDetails(this.draftID);
               this.storeStockAdjustmentForm.reset({
                 adjustmentDate: new Date(),
               });
@@ -299,7 +292,6 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
           this.currentLanguageSet.inventory.savedsuccessfully,
           'success',
         );
-        // this.getStockAdjustmentDraftDetails(this.draftID);
         this.storeStockAdjustmentForm.reset({ adjustmentDate: new Date() });
         this.location.back();
       } else {
@@ -321,7 +313,6 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
       .subscribe((response) => {
         const stockAdjustmentList = response.stockAdjustmentItemDraftEdit;
 
-        // Clear the existing data in the MatTableDataSource
         this.dataSource.data = [];
 
         for (let i = 0; i < stockAdjustmentList.length; i++) {

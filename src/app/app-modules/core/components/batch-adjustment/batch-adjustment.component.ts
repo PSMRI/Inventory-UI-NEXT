@@ -23,8 +23,7 @@ import { Component, OnInit, Inject, DoCheck, ViewChild } from '@angular/core';
 import { BatchSearchService } from '../../services/batch-search.service';
 import { ConfirmationService } from '../../services/confirmation.service';
 
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { SetLanguageComponent } from '../set-language.component';
 import { LanguageService } from '../../services/language.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';

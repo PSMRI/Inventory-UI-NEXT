@@ -21,7 +21,7 @@
  */
 import { Component, OnInit, Inject, DoCheck, ViewChild } from '@angular/core';
 import { ConfirmationService } from '../../services/confirmation.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { BatchSearchService } from '../../services/batch-search.service';
 import { SetLanguageComponent } from '../set-language.component';
 import { LanguageService } from '../../services/language.service';

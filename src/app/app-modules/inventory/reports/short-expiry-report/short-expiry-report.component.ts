@@ -20,9 +20,7 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-// import * as XLSX from 'xlsx';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 
@@ -79,8 +77,6 @@ export class ShortExpiryReportComponent implements OnInit, DoCheck {
 
   searchReport() {
     const startDate: Date = new Date(this.shortExpiryForm.value.startDate);
-    // let endDate: Date = new Date(this.shortExpiryForm.value.endDate);
-
     startDate.setHours(0);
     startDate.setMinutes(0);
     startDate.setSeconds(0);
@@ -119,7 +115,6 @@ export class ShortExpiryReportComponent implements OnInit, DoCheck {
   getResponseOfSearchThenDo() {
     const criteria: any = [];
     criteria.push({ Filter_Name: 'Start_Date', value: this.startDate });
-    // criteria.push({ 'Filter_Name': 'End_Date', 'value': this.endDate });
     this.exportToxlsx(criteria);
   }
   exportToxlsx(criteria: any) {

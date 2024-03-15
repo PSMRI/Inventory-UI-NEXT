@@ -44,7 +44,6 @@ export class ViewMedicineDispenseDetailsComponent
 {
   _filterTerm = '';
   _detailedList: any = [];
-  // _filteredDetailedList: any = [];
   blankTable = [1, 2, 3, 4, 5];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
@@ -73,8 +72,6 @@ export class ViewMedicineDispenseDetailsComponent
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
     this.data = '';
   }
   populateDispenseRecords(data: any) {

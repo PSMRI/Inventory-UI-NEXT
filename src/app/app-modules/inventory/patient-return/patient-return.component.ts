@@ -20,12 +20,7 @@
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
 import { Component, DoCheck, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  Validators,
-  FormGroup,
-  FormControl,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { InventoryService } from './../../inventory/shared/service/inventory.service';
 import { ConfirmationService } from './../../core/services/confirmation.service';
 import { SetLanguageComponent } from '../../core/components/set-language.component';

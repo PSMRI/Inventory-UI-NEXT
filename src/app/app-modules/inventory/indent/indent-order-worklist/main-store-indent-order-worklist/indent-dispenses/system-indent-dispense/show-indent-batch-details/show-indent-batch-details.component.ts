@@ -23,7 +23,6 @@ import { Component, OnInit, Inject, DoCheck } from '@angular/core';
 import {
   MatDialogRef,
   MatDialog,
-  MatDialogConfig,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';

@@ -19,13 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Component,
-  OnInit,
-  HostListener,
-  ViewChild,
-  DoCheck,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, DoCheck } from '@angular/core';
 import { ViewStoreStockTransferDetailsComponent } from './view-store-stock-transfer-details/view-store-stock-transfer-details.component';
 import { Location } from '@angular/common';
 import { InventoryService } from '../../shared/service/inventory.service';
@@ -82,10 +76,6 @@ export class ViewStoreStockTransferComponent implements OnInit, DoCheck {
     this._minDate.setFullYear(this._today.getFullYear() - 1);
     this._dateRange[0] = this._today;
     this._dateRange[1] = this._today;
-
-    // const date = new Date(); // Now
-    // date.setDate(date.getDate() - 30);
-    // this._dateRange = [date, new Date()]
     console.log(this._dateRange, 'dateRange');
   }
 

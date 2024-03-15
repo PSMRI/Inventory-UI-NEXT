@@ -21,8 +21,6 @@
  */
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-// import * as XLSX from 'xlsx';
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 
@@ -69,7 +67,6 @@ export class DailyStockDetailsReportComponent implements OnInit, DoCheck {
     this.setSelectedFacility();
 
     this.dateOffset = 24 * 60 * 60 * 1000;
-    // this.maxEndDate = new Date(this.today.setTime(this.today.getTime()));
     this.maxEndDate = new Date();
     this.maxEndDate.setDate(this.today.getDate() - 1);
   }

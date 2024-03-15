@@ -327,7 +327,5 @@ export class AppHeaderComponent implements OnInit, OnChanges {
     }
     window.location.href = `${this.parent_url}?currentLanguage=${language}`;
     localStorage.removeItem('currentLanguage');
-    // }
-    // })
   }
 }

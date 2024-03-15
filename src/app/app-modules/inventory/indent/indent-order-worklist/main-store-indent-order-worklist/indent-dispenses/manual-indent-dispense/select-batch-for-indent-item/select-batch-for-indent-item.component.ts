@@ -69,8 +69,6 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.fetchLanguageResponse();
     console.log('Data received in modal window', this.data);
-
-    // this.batchForm = this.createBatchForm();
     this.batchForm = this.fb.group({
       item: [''],
       itemName: [''],
@@ -78,7 +76,6 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
       quantityInHand: [''],
       quantityDispensed: [''],
       quantityRequired: [''],
-      // batchList: new FormArray([]),
       batchList: this.fb.array([]),
     });
     this.itemBatchList = this.data.batchList;
@@ -190,7 +187,6 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
         });
         this.filteredBatchList.push(resultBatch.slice());
       }
-      // batchList.push(this.initBatchForm());
       batchList.push(
         this.fb.group({
           batchNo: null,
@@ -200,9 +196,6 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
         }),
       );
     }
-    // else {
-    //   this.confirmationService.alert('No further batches available')
-    // }
   }
   showPopUp() {
     if (this.itemBatchList.length === this.tempBatch.length) {
@@ -247,7 +240,6 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
     });
   }
 
-  // string | number | Date
   getQuantityAndFilterItem(
     selectedBatch: { expiryDate: string | number | Date; quantityInHand: any },
     i: number,

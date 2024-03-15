@@ -39,7 +39,6 @@ export class ViewStockAdjustmentDraftDetailsComponent
 
   stock: any;
   adjustmentList: any = [];
-  // filteredAdjustmentList: any = [];
   filteredAdjustmentList = new MatTableDataSource<any>();
   currentLanguageSet: any;
   languageComponent!: SetLanguageComponent;

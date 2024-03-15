@@ -78,8 +78,6 @@ export class ConfirmationService {
     dialogRef.componentInstance.alert = true;
     dialogRef.componentInstance.remarks = false;
     dialogRef.componentInstance.editRemarks = false;
-    // dialogRef.componentInstance.comments = null;
-
     return dialogRef;
   }
 

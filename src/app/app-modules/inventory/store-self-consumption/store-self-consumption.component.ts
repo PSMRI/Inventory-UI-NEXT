@@ -84,7 +84,6 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
       this.router.navigate(['/inventory']);
     }
 
-    // this.storeSelfConsumptionForm = this.createStoreSelfConsumptionForm();
     this.storeSelfConsumptionForm = this.fb.group({
       referenceNumber: [''],
       dispenseReason: [''],
@@ -92,7 +91,6 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
     });
     this.initDispensedStock();
     this.loadStockConsumptionData();
-    // this.dataSource = new MatTableDataSource<any>(this.storeSelfTableData());
   }
   loadStockConsumptionData() {
     const dataFromFun: any = this.storeSelfTableData();
@@ -109,7 +107,6 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
     return this.fb.group({
       referenceNumber: null,
       dispenseReason: null,
-      // dispensedStock: new FormArray([this.initDispensedStock()]),
     });
   }
 
@@ -169,7 +166,6 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
 
     if (stockForm.length > 1) {
       stockForm.removeAt(index);
-      // stockForm.clear();
       this.loadStockConsumptionData();
     } else {
       if (stock) {
@@ -203,9 +199,6 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
       vanID: localStorage.getItem('vanID'),
       parkingPlaceID: localStorage.getItem('parkingPlaceID'),
     };
-
-    // console.log("Self Stock Consumption", JSON.stringify(requestBody, null, 4));
-
     this.inventoryService.storeSelfConsumption(requestBody).subscribe(
       (response) => {
         if (response.statusCode === 200) {
@@ -253,8 +246,6 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
   }
 
   removeAllDispensedStock(dispensedStockArray: FormArray) {
-    // let len = dispensedStockArray.length;
-    // for (let i = 0; i < len - 1; i++) {
     while (dispensedStockArray.length > 1) {
       dispensedStockArray.removeAt(0);
     }

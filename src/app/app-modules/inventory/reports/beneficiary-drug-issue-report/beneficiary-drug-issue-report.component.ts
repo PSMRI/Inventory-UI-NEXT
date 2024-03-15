@@ -21,13 +21,8 @@
  */
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-// import * as XLSX from 'xlsx';
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
-
-// import * as Excel from 'exceljs/dist/exceljs.min.js'
-
 import { InventoryService } from '../../shared/service/inventory.service';
 import { ConfirmationService } from '../../../core/services/confirmation.service';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
@@ -70,7 +65,6 @@ export class BeneficiaryDrugIssueReportComponent implements OnInit, DoCheck {
     this.fetchLanguageResponse();
 
     this.dateOffset = 24 * 60 * 60 * 1000;
-    // this.maxEndDate = new Date(this.today.setTime(this.today.getTime()));
     this.maxEndDate = new Date();
     this.maxEndDate.setDate(this.today.getDate() - 1);
   }

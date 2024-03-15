@@ -81,7 +81,6 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
         this.title = this.currentLanguageSet.itemDispense.batchSelection;
         const item = this.data.editBatch;
         console.log('Item', JSON.stringify(item, null, 4));
-        // this.setItem(item);
       }
       this.title;
       console.log('this.data', this.data);
@@ -194,7 +193,6 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
         returnQuantity: null,
       });
     }
-    // const quantityOnBatch = selectedBatch.quantityInHand;
   }
 
   stroreStockTableData(): AbstractControl[] {
@@ -238,7 +236,6 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
         dateOfIssue: null,
         returnQuantity: null,
       });
-      // this.calculateDispenseQuantity();
     } else {
       const removedBatch = this.selectedBatchList[i];
       this.filteredBatchList.map((item: any, t: any) => {
@@ -249,7 +246,6 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
       this.selectedBatchList.splice(i, 1);
       this.filteredBatchList.splice(i, 1);
       batchList.removeAt(i);
-      // this.calculateDispenseQuantity();
     }
   }
 
