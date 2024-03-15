@@ -6,7 +6,10 @@
       </h4>
     </div>
     <div class="col-xs-12 col-sm-3 box">
-      <mat-form-field class="input-full-width" style="padding: 2px">
+      <mat-form-field
+        class="input-full-width mat_form_field_background_color"
+        style="padding: 2px"
+      >
         <mat-label>{{ currentLanguageSet?.inventory?.fromDate }}</mat-label>
         <input
           matInput
@@ -32,7 +35,10 @@
       </mat-form-field>
     </div>
     <div class="col-xs-12 col-sm-3 box">
-      <mat-form-field class="input-full-width" style="padding: 2px">
+      <mat-form-field
+        class="input-full-width mat_form_field_background_color"
+        style="padding: 2px"
+      >
         <mat-label>{{ currentLanguageSet?.inventory?.toDate }}</mat-label>
         <input
           matInput
@@ -63,7 +69,7 @@
         >{{ currentLanguageSet?.inventory?.toDateCannotBeBeforeFromDate }}</span
       >
     </div>
-    <div class="col-xs-12 col-sm-2 box">
+    <div class="col-xs-12 col-sm-2 box" style="margin-top: 15px">
       <button
         mat-raised-button
         [disabled]="
@@ -81,7 +87,7 @@
     <div class="col-xs-12">
       <mat-card class="m-b-40">
         <mat-card-content>
-          <div class="row">
+          <div class="">
             <div class="col-xs-12 text-right">
               <mat-form-field id="filterbox">
                 <input
@@ -95,7 +101,7 @@
                 <mat-icon matSuffix>search</mat-icon>
               </mat-form-field>
             </div>
-            <section class="col-xs-12 table-responsive">
+            <section class="table-responsive">
               <mat-table
                 [dataSource]="_filteredDispenseList"
                 class="mat-elevation-z8"

@@ -2,7 +2,11 @@
   <h3 class="title info">{{ title }}</h3>
   <div class="message">{{ message }}</div>
   <div class="action">
-    <button mat-button (click)="dialogRef.close(false)">
+    <button
+      mat-button
+      (click)="dialogRef.close(false)"
+      style="margin-right: 10px"
+    >
       {{ btnCancelText }}
     </button>
     <button mat-button (click)="dialogRef.close(true)" cdkFocusInitial>

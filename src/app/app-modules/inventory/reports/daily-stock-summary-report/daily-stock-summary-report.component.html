@@ -6,9 +6,11 @@
   </div>
 
   <div class="m-b-10">
-    <form [formGroup]="dailyStockSummaryForm">
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-        <mat-form-field class="input-full-width">
+    <form [formGroup]="dailyStockSummaryForm" class="row">
+      <div class="col-4">
+        <mat-form-field
+          class="input-full-width mat_form_field_background_color mat_form_field_background_width"
+        >
           <mat-label>
             {{ currentLanguageSet?.inventory?.startDate }}
           </mat-label>
@@ -30,8 +32,10 @@
           <mat-datepicker [style.width]="'100%'" #pickerStart></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-        <mat-form-field class="input-full-width">
+      <div class="col-4">
+        <mat-form-field
+          class="input-full-width mat_form_field_background_color mat_form_field_background_width"
+        >
           <mat-label>
             {{ currentLanguageSet?.inventory?.endDate }}
           </mat-label>
@@ -54,15 +58,16 @@
           <mat-datepicker [style.width]="'100%'" #pickerEnds></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-        <mat-form-field class="input-full-width">
+      <div class="col-4">
+        <mat-form-field
+          class="mat_form_field_background_color mat_form_field_background_width"
+        >
           <mat-label>
             {{ currentLanguageSet?.inventory?.facility }}
           </mat-label>
           <mat-select
             [style.width]="'100%'"
             placeholder="{{ currentLanguageSet?.inventory.facility }}"
-            class="input-full-width"
             formControlName="facilityName"
           >
             <mat-option *ngFor="let item of facilities" [value]="item">{{
@@ -72,7 +77,7 @@
         </mat-form-field>
       </div>
     </form>
-    <div class="m-t-10 col-xs-12 col-sm-12 col-md-12 col-lg-3">
+    <div class="m-t-10 col-12" style="text-align: end">
       <button
         mat-raised-button
         color="accent"

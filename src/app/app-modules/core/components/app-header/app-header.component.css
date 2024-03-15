@@ -72,7 +72,7 @@ button.mat-button {
   font-size: 26px;
   vertical-align: middle;
   text-align: center;
-  padding: 0px;
+  padding: 5px;
   color: rgba(245, 245, 245, 0.877);
   margin-top: 4px;
 }
@@ -129,17 +129,19 @@ button.mat-button {
 .form-control {
   display: block;
   width: 20%;
-  border-radius: 20px !important;
+  /* border-radius: 20px !important; */
   /* padding: 0.375rem 0.75rem; */
   /* font-size: 1rem; */
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
   font-weight: 400;
   line-height: 1.5;
   color: var(--bs-body-color);
   appearance: none;
   background-color: var(--bs-body-bg);
   background-clip: padding-box;
-  border: var(--bs-border-width) solid var(--bs-border-color);
-  border-radius: var(--bs-border-radius);
+  /* border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius); */
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
  
@@ -150,4 +152,9 @@ button.mat-button {
     display: flex;
     align-items: center;
     position: relative;
+    width: 40rem;
+}
+a {
+  color: unset !important; 
+  text-decoration: unset !important;
 }

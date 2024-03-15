@@ -6,43 +6,54 @@
   </div>
 
   <div class="m-b-10">
-    <form [formGroup]="yearlyForm">
-      <mat-form-field>
-        <mat-label>
-          {{ currentLanguageSet?.inventory?.selectyear }}
-        </mat-label>
-        <mat-select
-          [style.width]="'100%'"
-          placeholder="{{ currentLanguageSet?.inventory?.selectyear }}"
-          name="year"
-          id="year"
-          formControlName="year"
-          required
-        >
-          <mat-option *ngFor="let year of years" [value]="year">{{
-            year
-          }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div class="col-12">
+      <form [formGroup]="yearlyForm" class="row">
+        <div class="col-4">
+          <mat-form-field
+            class="mat_form_field_background_color mat_form_field_background_width"
+          >
+            <mat-label>
+              {{ currentLanguageSet?.inventory?.selectyear }}
+            </mat-label>
+            <mat-select
+              [style.width]="'100%'"
+              placeholder="{{ currentLanguageSet?.inventory?.selectyear }}"
+              name="year"
+              id="year"
+              formControlName="year"
+              required
+            >
+              <mat-option *ngFor="let year of years" [value]="year">{{
+                year
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field
+            class="mat_form_field_background_color mat_form_field_background_width"
+          >
+            <mat-label>
+              {{ currentLanguageSet?.inventory?.facility }}
+            </mat-label>
+            <mat-select
+              [style.width]="'100%'"
+              placeholder="{{ currentLanguageSet?.inventory?.facility }}"
+              class="input-full-width"
+              formControlName="facilityName"
+            >
+              <mat-option *ngFor="let item of facilities" [value]="item">{{
+                item
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-      <mat-form-field>
-        <mat-label>
-          {{ currentLanguageSet?.inventory?.facility }}
-        </mat-label>
-        <mat-select
-          [style.width]="'100%'"
-          placeholder="{{ currentLanguageSet?.inventory?.facility }}"
-          class="input-full-width"
-          formControlName="facilityName"
-        >
-          <mat-option *ngFor="let item of facilities" [value]="item">{{
-            item
-          }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <!-- </div> -->
-    </form>
-    <div class="m-t-10 col-xs-12 col-sm-12 col-md-12 col-lg-3">
+        <!-- </div> -->
+      </form>
+    </div>
+
+    <div class="m-t-10 col-12" style="text-align: end">
       <button
         mat-raised-button
         color="accent"

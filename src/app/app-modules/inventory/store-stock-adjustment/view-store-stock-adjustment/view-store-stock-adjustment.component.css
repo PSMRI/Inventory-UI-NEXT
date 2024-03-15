@@ -11,7 +11,7 @@
 }
 
 .back-btn-container {
-    margin: -26px 15px 15px;
+    margin-left: 9px;
 }
 
 
@@ -34,14 +34,14 @@
     justify-content: center;padding-top: 14px;
   }
 
-  #topBtn {
-    display: flex; 
-    justify-content: flex-end;
-    padding-top: 12px;
-}
+ 
 
 @media screen and (max-width: 768px) {
     .previous-btn {
         width: 100%;
     }
 }
+
+.mat_form_field_background_color >>> .mdc-text-field--filled, .mdc-text-field--focused, .mat-mdc-form-field-focus-overlay, .mat-mdc-form-field:hover .mat-mdc-form-field-focus-overlay, .mat-mdc-form-field.mat-focused .mat-mdc-form-field-focus-overlay {
+    background-color: #f2f2f0 !important;
+  }

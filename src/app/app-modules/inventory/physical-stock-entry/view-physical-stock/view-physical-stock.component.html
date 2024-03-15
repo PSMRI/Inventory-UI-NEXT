@@ -7,7 +7,10 @@
     </div>
 
     <div class="col-xs-12 col-sm-3 box">
-      <mat-form-field class="input-full-width" style="padding: 2px">
+      <mat-form-field
+        class="input-full-width mat_form_field_background_color"
+        style="padding: 2px"
+      >
         <mat-label>{{ currentLanguageSet?.inventory?.fromDate }}</mat-label>
         <input
           matInput
@@ -30,7 +33,10 @@
     </div>
 
     <div class="col-xs-12 col-sm-3 box">
-      <mat-form-field class="input-full-width" style="padding: 2px">
+      <mat-form-field
+        class="input-full-width mat_form_field_background_color"
+        style="padding: 2px"
+      >
         <mat-label>{{ currentLanguageSet?.inventory?.toDate }}</mat-label>
         <input
           matInput
@@ -60,7 +66,7 @@
         {{ currentLanguageSet?.inventory?.toDateCannotBeBeforeFromDate }}
       </span>
     </div>
-    <div class="col-xs-12 col-sm-2 box" style="padding-top: 15px">
+    <div class="col-xs-12 col-sm-2 box" style="margin-top: 15px">
       <button
         mat-raised-button
         [disabled]="
