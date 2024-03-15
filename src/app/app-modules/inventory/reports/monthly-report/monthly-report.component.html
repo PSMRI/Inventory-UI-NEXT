@@ -9,47 +9,65 @@
     <div class="col-12">
       <form [formGroup]="monthlyForm" class="row">
         <div class="col-4 box">
-          <mat-select
-            class="mat_form_field_background_margin"
-            [style.width]="'100%'"
-            placeholder="{{ currentLanguageSet?.inventory?.selectmonth }}"
-            name="month"
-            id="month"
-            formControlName="month"
-            required
+          <mat-form-field
+            class="input-full-width mat_form_field_background_margin"
           >
-            <mat-option *ngFor="let month of months" [value]="month">{{
-              month.name
-            }}</mat-option>
-          </mat-select>
+            <mat-label>
+              {{ currentLanguageSet?.inventory?.selectmonth }}
+            </mat-label>
+            <mat-select
+              [style.width]="'100%'"
+              placeholder="{{ currentLanguageSet?.inventory?.selectmonth }}"
+              name="month"
+              id="month"
+              formControlName="month"
+              required
+            >
+              <mat-option *ngFor="let month of months" [value]="month">{{
+                month.name
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
 
         <div class="col-4 box">
-          <mat-select
-            [style.width]="'100%'"
-            class="mat_form_field_background_margin"
-            placeholder="{{ currentLanguageSet?.inventory?.selectyear }}"
-            name="year"
-            id="year"
-            formControlName="year"
-            required
+          <mat-form-field
+            class="input-full-width mat_form_field_background_margin"
           >
-            <mat-option *ngFor="let year of years" [value]="year">{{
-              year
-            }}</mat-option>
-          </mat-select>
+            <mat-label>
+              {{ currentLanguageSet?.inventory?.selectyear }}
+            </mat-label>
+            <mat-select
+              [style.width]="'100%'"
+              placeholder="{{ currentLanguageSet?.inventory?.selectyear }}"
+              name="year"
+              id="year"
+              formControlName="year"
+              required
+            >
+              <mat-option *ngFor="let year of years" [value]="year">{{
+                year
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="col-4">
-          <mat-select
-            [style.width]="'100%'"
-            placeholder="{{ currentLanguageSet?.inventory.facility }}"
+          <mat-form-field
             class="input-full-width mat_form_field_background_margin"
-            formControlName="facilityName"
           >
-            <mat-option *ngFor="let item of facilities" [value]="item">{{
-              item
-            }}</mat-option>
-          </mat-select>
+            <mat-label>
+              {{ currentLanguageSet?.inventory?.facility }}
+            </mat-label>
+            <mat-select
+              [style.width]="'100%'"
+              placeholder="{{ currentLanguageSet?.inventory.facility }}"
+              formControlName="facilityName"
+            >
+              <mat-option *ngFor="let item of facilities" [value]="item">{{
+                item
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </form>
     </div>

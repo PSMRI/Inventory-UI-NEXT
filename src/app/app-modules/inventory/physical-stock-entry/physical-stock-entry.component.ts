@@ -65,8 +65,7 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
   stockItemName: any;
   physicalStockEntryForm!: FormGroup;
   matTableStockForm!: FormGroup;
-  // dataSource!: MatTableDataSource<any>;
-  // dataSource = new BehaviorSubject<FormArray | null>(null);
+  isDisabled = true;
   otherDetails: any;
   physicalStockList: any = [];
   physicalStockTableDataList: any = [];
@@ -227,7 +226,7 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
     this.inventoryService.savePhysicalStock(temp).subscribe(
       (response) => {
         if (
-          response.statusCode == 200 &&
+          response.statusCode === 200 &&
           response.data &&
           response.data.phyEntryID
         ) {
@@ -282,12 +281,12 @@ export class PhysicalStockEntryComponent implements OnInit, OnChanges, DoCheck {
     const batchNo = stockForm.value.batchNo;
 
     const temp = stockList.filter((stock: any, i: any) => {
-      if (i != index)
+      if (i !== index)
         return (
           itemID &&
-          stock.itemID == itemID &&
+          stock.itemID === itemID &&
           batchNo &&
-          stock.batchNo == batchNo
+          stock.batchNo === batchNo
         );
       else return false;
     });

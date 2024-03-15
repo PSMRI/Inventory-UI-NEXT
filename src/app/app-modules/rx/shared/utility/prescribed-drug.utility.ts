@@ -31,7 +31,7 @@ export class PrescribedDrugsUtils {
       quantity: batch.quantity,
       quantityInHand: batch.qty || batch.quantityInHand,
       expiresIn: batch.expiresIn,
-      selection: batch.selection && selection == '1' ? true : false,
+      selection: batch.selection && selection === '1' ? true : false,
       itemStockEntryID: batch.itemStockEntryID,
     });
   }

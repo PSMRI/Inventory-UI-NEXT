@@ -60,6 +60,7 @@ export class ViewStockAdjustmentDraftDetailsComponent
     'batchNo',
     'quantityOnHand',
     'adjustmentType',
+    'adjustedQuantity',
     'reason',
   ];
 
@@ -103,15 +104,15 @@ export class ViewStockAdjustmentDraftDetailsComponent
       this.adjustmentList.forEach((item: any) => {
         for (const key in item) {
           if (
-            key == 'itemName' ||
-            key == 'batchID' ||
-            key == 'reason' ||
-            key == 'quantityInHand' ||
-            key == 'adjustedQuantity' ||
-            key == 'isAdded'
+            key === 'itemName' ||
+            key === 'batchID' ||
+            key === 'reason' ||
+            key === 'quantityInHand' ||
+            key === 'adjustedQuantity' ||
+            key === 'isAdded'
           ) {
             const value: string = '' + item[key];
-            if (key == 'isAdded') {
+            if (key === 'isAdded') {
               if (
                 'receipt'.indexOf(filterTerm.toLowerCase()) >= 0 &&
                 item[key]

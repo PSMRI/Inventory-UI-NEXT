@@ -46,6 +46,39 @@
     <div class="row">
       <div class="col-xs-12">
         <section class="table-responsive">
+          <!-- <table [md2Data]="batchWiseItemList" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1" class="table table-striped responsive-table-view" aria-describedby="subStoreItemDetails">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th id=""></th>
+                <th id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
+                <th id="quantityOnHand">{{currentLanguageSet?.inventory?.quantityOnHand}}</th>
+                <th id="requiredQuantity">{{currentLanguageSet?.inventory?.requiredQuantity}}</th>
+                <th id="remarks">{{currentLanguageSet?.inventory?.remarks}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of md2.data">
+                <td data-title="S.No.">{{ batchWiseItemList.indexOf(item)+1 }}</td>
+                <td data-title="Item Name">{{item?.itemName}}</td>
+                <td data-title="Quantity On Hand">{{item?.qOH}}</td>
+                <td data-title="Required Quantity">{{item?.requiredQty}}</td>
+                <td data-title="Remarks">{{item?.remarks}}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr *ngIf="batchWiseItemList.length > 0">
+                <td colspan="3" class="total-count">
+                  <div> {{currentLanguageSet?.inventory?.totalCount}} : {{ batchWiseItemList.length }}</div>
+                </td>
+
+                <td colspan="2" style="text-align: right">
+                  <md2-pagination></md2-pagination>
+                </td>
+              </tr>
+            </tfoot>
+          </table> -->
+
           <table mat-table [dataSource]="batchWiseItemList">
             <ng-container matColumnDef="SNo">
               <th mat-header-cell *matHeaderCellDef></th>

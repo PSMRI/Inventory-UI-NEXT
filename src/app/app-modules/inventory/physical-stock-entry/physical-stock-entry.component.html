@@ -24,15 +24,15 @@
         <mat-form-field
           class="input-full-width mat_form_field_background_color mat_form_field_background_color_padding"
         >
+          <mat-label>{{
+            currentLanguageSet?.inventory?.referenceNumber
+          }}</mat-label>
           <input
             matInput
             allowText="alphanumeric"
             maxlength="20"
             name="referenceNumber"
             formControlName="referenceNumber"
-            placeholder="{{
-              currentLanguageSet?.inventory?.referenceNumber + ' *'
-            }}"
             #referenceNumber
             required
           />
@@ -57,15 +57,16 @@
         >
           <mat-label>{{ currentLanguageSet?.inventory?.date }}</mat-label>
           <input
+            readonly
             matInput
             [matDatepicker]="picker"
             name="stockEntryDate"
             placeholder="{{ currentLanguageSet?.inventory?.date }}"
             [formControl]="stockEntryDate"
-            [disabled]="true"
           />
           <mat-datepicker-toggle
-            matSuffix
+            [disabled]="true"
+            matPrefix
             [for]="picker"
           ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
@@ -91,9 +92,11 @@
                 </ng-container>
 
                 <ng-container matColumnDef="itemName">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.itemName
-                  }}</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef
+                    ><b>{{
+                      currentLanguageSet?.inventory?.itemName
+                    }}</b></mat-header-cell
+                  >
                   <mat-cell
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
@@ -101,14 +104,14 @@
                     <mat-form-field
                       class="input-full-width mat_form_field_background_color_table"
                     >
+                      <mat-label>{{
+                        currentLanguageSet?.inventory?.itemName
+                      }}</mat-label>
                       <input
                         matInput
                         allowText="itemNameSearchValidator"
                         appItemSearch
                         [stockForm]="stock"
-                        placeholder="{{
-                          currentLanguageSet?.inventory?.itemName + ' *'
-                        }}"
                         required
                         name="itemName"
                         formControlName="itemName"
@@ -128,9 +131,11 @@
                 </ng-container>
 
                 <ng-container matColumnDef="quantity">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.qtyInLowestUnit
-                  }}</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef
+                    ><b>{{
+                      currentLanguageSet?.inventory?.qtyInLowestUnit
+                    }}</b></mat-header-cell
+                  >
                   <mat-cell
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
@@ -138,11 +143,11 @@
                     <mat-form-field
                       class="input-full-width mat_form_field_background_color_table"
                     >
+                      <mat-label>{{
+                        currentLanguageSet?.inventory?.qtyInLowestUnit
+                      }}</mat-label>
                       <input
                         matInput
-                        placeholder="{{
-                          currentLanguageSet?.inventory?.qtyInLowestUnit + ' *'
-                        }}"
                         allowText="number"
                         name="quantity"
                         formControlName="quantity"
@@ -156,9 +161,11 @@
                 </ng-container>
 
                 <ng-container matColumnDef="totalCostPrice">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.unitCostPrice
-                  }}</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef
+                    ><b>{{
+                      currentLanguageSet?.inventory?.unitCostPrice
+                    }}</b></mat-header-cell
+                  >
                   <mat-cell
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
@@ -166,11 +173,11 @@
                     <mat-form-field
                       class="input-full-width mat_form_field_background_color_table"
                     >
+                      <mat-label>{{
+                        currentLanguageSet?.inventory?.unitCostPrice
+                      }}</mat-label>
                       <input
                         matInput
-                        placeholder="{{
-                          currentLanguageSet?.inventory?.unitCostPrice + ' *'
-                        }}"
                         allowText="decimal"
                         maxlength="5"
                         name="totalCostPrice"
@@ -183,9 +190,11 @@
                 </ng-container>
 
                 <ng-container matColumnDef="batchNo">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.itemDispense?.batchNo
-                  }}</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef
+                    ><b>{{
+                      currentLanguageSet?.itemDispense?.batchNo
+                    }}</b></mat-header-cell
+                  >
                   <mat-cell
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
@@ -193,11 +202,11 @@
                     <mat-form-field
                       class="input-full-width mat_form_field_background_color_table"
                     >
+                      <mat-label>{{
+                        currentLanguageSet?.itemDispense?.batchNo
+                      }}</mat-label>
                       <input
                         matInput
-                        placeholder="{{
-                          currentLanguageSet?.itemDispense?.batchNo + ' *'
-                        }}"
                         appAllowText="alphanumeric"
                         maxlength="45"
                         name="batchNo"
@@ -211,9 +220,11 @@
                 </ng-container>
 
                 <ng-container matColumnDef="expiryDate">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.itemDispense?.expiryDate
-                  }}</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef
+                    ><b>{{
+                      currentLanguageSet?.itemDispense?.expiryDate
+                    }}</b></mat-header-cell
+                  >
                   <mat-cell
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
@@ -222,21 +233,22 @@
                     <mat-form-field
                       class="input-full-width mat_form_field_background_color_table"
                     >
+                      <mat-label>{{
+                        currentLanguageSet?.itemDispense?.expiryDate
+                      }}</mat-label>
                       <input
                         matInput
                         [matDatepicker]="expDate"
                         name="expiryDate"
                         [min]="today"
-                        placeholder="{{
-                          currentLanguageSet?.itemDispense?.expiryDate
-                        }}"
                         [required]="stock.value.isMedical"
-                        [readonly]="!stock.value.itemID"
+                        [disabled]="!stock.value.itemID"
                         name="expiryDate"
                         formControlName="expiryDate"
                         (keydown)="preventTyping($event)"
                       />
                       <mat-datepicker-toggle
+                        [disabled]="!stock.value.itemID"
                         matSuffix
                         [for]="expDate"
                       ></mat-datepicker-toggle>

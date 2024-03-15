@@ -109,9 +109,9 @@ export class PatientReturnComponent implements OnInit, DoCheck {
   }
 
   identityQuickSearch(beneficiaryIDOrPhoneNumber: string) {
-    if (beneficiaryIDOrPhoneNumber.length == 10) {
+    if (beneficiaryIDOrPhoneNumber.length === 10) {
       this.phoneNumberSearch(beneficiaryIDOrPhoneNumber);
-    } else if (beneficiaryIDOrPhoneNumber.length == 12) {
+    } else if (beneficiaryIDOrPhoneNumber.length === 12) {
       this.beneficiarySearch(beneficiaryIDOrPhoneNumber);
     }
   }
@@ -147,7 +147,7 @@ export class PatientReturnComponent implements OnInit, DoCheck {
   }
 
   reponseDataCheck(response: any) {
-    if (response.statusCode == 200) {
+    if (response.statusCode === 200) {
       if (response.data.length > 0) {
         this.beneficiaryDetailsList = response.data;
         this.openBenDetailsModal();
@@ -185,7 +185,7 @@ export class PatientReturnComponent implements OnInit, DoCheck {
 
   itemSearch(beneficiary: any) {
     console.log('Beneficiary details..', beneficiary);
-    if (beneficiary != undefined) {
+    if (beneficiary !== undefined) {
       this.inventoryService
         .getItemList({
           benRegID: beneficiary.beneficiaryRegID,

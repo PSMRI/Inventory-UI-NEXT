@@ -95,7 +95,7 @@ export class ViewMedicineDispenseDetailsComponent
       this._filteredDetailedList.data = [];
       this._detailedList.forEach((item: any) => {
         for (const key in item) {
-          if (key == 'batchNo' || key == 'itemName' || key == 'quantity') {
+          if (key === 'batchNo' || key === 'itemName' || key === 'quantity') {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this._filteredDetailedList.data.push(item);
@@ -122,7 +122,7 @@ export class ViewMedicineDispenseDetailsComponent
     const facilityName = facilityDetail.facilityName;
     const printableData: any = [];
     let i = 0;
-    this.data.dispenseItem.forEach((dispenseItem: any) => {
+    this.data.dispenseItem.data.forEach((dispenseItem: any) => {
       i = i + 1;
       const dispensedItem = {
         sNo: i,

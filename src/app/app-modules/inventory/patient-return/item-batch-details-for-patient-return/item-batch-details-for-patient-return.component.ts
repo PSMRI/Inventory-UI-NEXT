@@ -121,7 +121,7 @@ export class ItemBatchDetailsForPatientReturnComponent
   getBatchDetail(formvalue: any, editIndex: any) {
     let batchReq;
     let data: any;
-    if (editIndex == null) {
+    if (editIndex === null) {
       batchReq = {
         benRegID: this.benRegId,
         itemID: formvalue.itemID,
@@ -140,7 +140,7 @@ export class ItemBatchDetailsForPatientReturnComponent
     }
     this.inventoryService.getBatchDetails(batchReq).subscribe((response) => {
       console.log('Response of item batch list', response);
-      if (response.statusCode == 200) {
+      if (response.statusCode === 200) {
         this.batchList.data = response.data;
         this.popOutBenAndItemDetails(this.batchList.data, data, editIndex);
       }
@@ -166,7 +166,7 @@ export class ItemBatchDetailsForPatientReturnComponent
       });
     matDialogRef.afterClosed().subscribe((selectedBatchList: any) => {
       if (selectedBatchList) {
-        if (editIndex != null) {
+        if (editIndex !== null) {
           this.selectedBatchList.data.splice(editIndex, 1);
           this.selectedBatchList.data.push(selectedBatchList.value);
           this.itemReturnForm.patchValue({
@@ -199,8 +199,8 @@ export class ItemBatchDetailsForPatientReturnComponent
     console.log('selectedItemList', this.selectedItemList);
     this.filterItemList = [];
     this.filterItemList = filterItemMasterList.filter((item: any) => {
-      if (itemName && itemName.itemName && itemName.itemName != null) {
-        return itemName.itemName != item.itemName;
+      if (itemName && itemName.itemName && itemName.itemName !== null) {
+        return itemName.itemName !== item.itemName;
       }
     });
   }
@@ -240,7 +240,7 @@ export class ItemBatchDetailsForPatientReturnComponent
     this.inventoryService
       .updateQuantityReturned(finalData)
       .subscribe((response) => {
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           this.confirmationService.alert(response.data.response, 'success');
           this.resetFieldsAfterSubmit();
           this.resetBenDetails.emit(false);

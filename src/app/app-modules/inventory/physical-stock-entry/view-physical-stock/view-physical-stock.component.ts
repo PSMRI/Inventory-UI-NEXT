@@ -150,10 +150,10 @@ export class ViewPhysicalStockComponent implements OnInit, DoCheck {
       this._stockEntryList.forEach((item: any) => {
         for (const key in item) {
           if (
-            key == 'phyEntryID' ||
-            key == 'refNo' ||
-            key == 'status' ||
-            key == 'createdBy'
+            key === 'phyEntryID' ||
+            key === 'refNo' ||
+            key === 'status' ||
+            key === 'createdBy'
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0) {
@@ -190,7 +190,7 @@ export class ViewPhysicalStockComponent implements OnInit, DoCheck {
         });
       matDialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          if (result.print != null && result.print == true) {
+          if (result.print !== null && result.print === true) {
             if (result.print) {
               const printableData = this.createPrintableData(
                 entry,
@@ -215,7 +215,7 @@ export class ViewPhysicalStockComponent implements OnInit, DoCheck {
       'stockEntryResponse',
       JSON.stringify(stockEntryResponse, null, 4),
     );
-    stockEntryResponse.forEach((batch: any) => {
+    stockEntryResponse.data.forEach((batch: any) => {
       i = i + 1;
       const consumedBatch = {
         sNo: i,

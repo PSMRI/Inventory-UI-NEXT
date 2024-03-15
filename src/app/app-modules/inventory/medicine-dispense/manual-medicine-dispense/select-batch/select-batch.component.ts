@@ -67,7 +67,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
       this.itemBatchList = this.data.batchList;
     }
     this.batchForm = this.createBatchForm();
-    if (this.data.editIndex != null) {
+    if (this.data.editIndex !== null) {
       this.title = this.currentLanguageSet.inventory.editBatchSelection;
     } else {
       this.title = this.currentLanguageSet.itemDispense.batchSelection;
@@ -75,7 +75,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
     this.title;
     console.log('this.data', this.data);
 
-    if (this.data.editBatch != null) {
+    if (this.data.editBatch !== null) {
       if (this.data.editBatch.batchList.length > 0) {
         this.enableEditMode = true;
         this.editBatchList = this.data.editBatch;
@@ -104,7 +104,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
 
     for (let i = 0; i < temp.length; i++) {
       const batchArray = this.masterItemBatchList.filter((item: any) => {
-        return item.batchNo == temp[i].batchNo.batchNo;
+        return item.batchNo === temp[i].batchNo.batchNo;
       });
 
       if (batchArray.length > 0) {
@@ -138,14 +138,14 @@ export class SelectBatchComponent implements OnInit, DoCheck {
     const selectedBatchList = this.selectedBatchList[i];
     this.filteredBatchList.map((item: any, t: any) => {
       const index = item.indexOf(selectedBatch);
-      if (index != -1 && t != i) {
+      if (index !== -1 && t !== i) {
         item = item.splice(index, 1);
       }
     });
     this.selectedBatchList[i] = selectedBatch;
 
     const expiryDate = (this.today = new Date(selectedBatch.value.expiryDate));
-    if (batchForm != undefined) {
+    if (batchForm !== undefined) {
       batchForm.patchValue({
         quantityOnBatch: selectedBatch.value.quantityInHand,
         expiryDate: expiryDate,
@@ -160,7 +160,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
     const batchListValue = batchList.value;
     let totalQuantity = 0;
     batchListValue.filter((quantity: any) => {
-      if (quantity.quantityOfDispense && quantity.quantityOfDispense != null) {
+      if (quantity.quantityOfDispense && quantity.quantityOfDispense !== null) {
         totalQuantity = +totalQuantity + +quantity.quantityOfDispense;
       }
     });
@@ -185,13 +185,13 @@ export class SelectBatchComponent implements OnInit, DoCheck {
           const batchArray = tempBatch.filter((item: any) => {
             if (
               item.batchNo &&
-              item.batchNo != null &&
-              item.batchNo.batchNo != null
+              item.batchNo !== null &&
+              item.batchNo.batchNo !== null
             ) {
-              return item.batchNo.batchNo == batch.batchNo;
+              return item.batchNo.batchNo === batch.batchNo;
             }
           });
-          const batchFlag = batchArray.length == 0 ? true : false;
+          const batchFlag = batchArray.length === 0 ? true : false;
           return batchFlag;
         });
         this.filteredBatchList.push(resultBatch.slice());
@@ -216,7 +216,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
 
   removeBatch(i: any, batchForm: any) {
     const batchList = <FormArray>this.batchForm.controls['batchList'];
-    if (batchList.length == 1 && !!batchForm) {
+    if (batchList.length === 1 && !!batchForm) {
       batchForm.patchValue({
         batchNo: null,
         quantityOnBatch: null,
@@ -229,7 +229,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
     } else {
       const removedValue = this.selectedBatchList[i];
       this.filteredBatchList.map((item: any, t: any) => {
-        if (t != i && removedValue) {
+        if (t !== i && removedValue) {
           item.push(removedValue);
         }
       });
@@ -244,7 +244,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
   checkValidity(batchForm: FormGroup) {
     const batchList = <FormArray>this.batchForm.controls['batchList'];
     const tempBatch = batchForm.value;
-    if (batchList.length != this.masterItemBatchList.length) {
+    if (batchList.length !== this.masterItemBatchList.length) {
       if (tempBatch.quantityOfDispense) {
         return false;
       } else {
@@ -257,7 +257,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
 
   checkQuantity(batch: FormGroup) {
     const quantity = batch.value.quantityOfDispense;
-    if (batch.value.quantityOfDispense == 0) {
+    if (batch.value.quantityOfDispense === 0) {
       this.confirmationService.alert(
         this.currentLanguageSet.inventory
           .pleaseenterquantitygreaterthanzeroandlessthanorequaltoQtyinBatch,

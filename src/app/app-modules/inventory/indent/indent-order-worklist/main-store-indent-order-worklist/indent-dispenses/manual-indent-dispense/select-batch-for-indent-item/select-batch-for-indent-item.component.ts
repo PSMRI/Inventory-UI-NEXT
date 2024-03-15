@@ -83,7 +83,7 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
     });
     this.itemBatchList = this.data.batchList;
     this.masterItemBatchList = this.data.batchList;
-    if (this.data.editIndex != null) {
+    if (this.data.editIndex !== null) {
       this.setEditValue();
       this.handleAddBatch();
       this.handleBatchData();
@@ -144,9 +144,9 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
       this.quantityDispensed,
       this.quantityRequired,
     );
-    if (select == true) {
+    if (select === true) {
       if (
-        this.quantityDispensed != this.quantityRequired &&
+        this.quantityDispensed !== this.quantityRequired &&
         this.quantityDispensed < this.quantityRequired
       ) {
         this.handleAddBatch();
@@ -178,14 +178,14 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
             (item: { batchNo: { batchNo: null } | null }) => {
               if (
                 item.batchNo &&
-                item.batchNo != null &&
-                item.batchNo.batchNo != null
+                item.batchNo !== null &&
+                item.batchNo.batchNo !== null
               ) {
-                return item.batchNo.batchNo == batch.batchNo;
+                return item.batchNo.batchNo === batch.batchNo;
               }
             },
           );
-          const batchFlag = batchArray.length == 0 ? true : false;
+          const batchFlag = batchArray.length === 0 ? true : false;
           return batchFlag;
         });
         this.filteredBatchList.push(resultBatch.slice());
@@ -205,7 +205,7 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
     // }
   }
   showPopUp() {
-    if (this.itemBatchList.length == this.tempBatch.length) {
+    if (this.itemBatchList.length === this.tempBatch.length) {
       this.confirmationService.alert(
         this.currentLanguageSet.inventory.nofurtherbatchesavailable,
       );
@@ -219,7 +219,7 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
     console.log('Temp', temp);
     for (let i = 0; i < temp.length; i++) {
       const batchArray = this.masterItemBatchList.filter((item: any) => {
-        return item.batchNo == temp[i].batchNo.batchNo;
+        return item.batchNo === temp[i].batchNo.batchNo;
       });
 
       if (batchArray.length > 0) {
@@ -256,14 +256,14 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
     const selectedBatchList = this.selectedBatchList[i];
     this.filteredBatchList.map((item, t) => {
       const index = item.indexOf(selectedBatch);
-      if (index != -1 && t != i) {
+      if (index !== -1 && t !== i) {
         item = item.splice(index, 1);
       }
     });
     this.selectedBatchList[i] = selectedBatch;
 
     const expiryDate = (this.today = new Date(selectedBatch.expiryDate));
-    if (batchForm != undefined) {
+    if (batchForm !== undefined) {
       batchForm.patchValue({
         quantityOnBatch: selectedBatch.quantityInHand,
         expiryDate: expiryDate,
@@ -281,7 +281,7 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
       (quantity: { quantityOfDispense: string | number | null }) => {
         if (
           quantity.quantityOfDispense &&
-          quantity.quantityOfDispense != null
+          quantity.quantityOfDispense !== null
         ) {
           totalQuantity = +totalQuantity + +quantity.quantityOfDispense;
         }
@@ -292,7 +292,7 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
 
   checkQuantity(batch?: FormGroup) {
     const quantity = batch?.value.quantityOfDispense;
-    if (batch?.value.quantityOfDispense == 0) {
+    if (batch?.value.quantityOfDispense === 0) {
       this.confirmationService.alert(
         this.currentLanguageSet.inventory
           .pleaseenterquantitygreaterthanzeroandlessthanorequaltoQtyinBatch,
@@ -323,7 +323,7 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
     },
   ) {
     const batchList = <FormArray>this.batchForm.controls['batchList'];
-    if (batchList.length == 1 && !!batchForm) {
+    if (batchList.length === 1 && !!batchForm) {
       batchForm.patchValue({
         batchNo: null,
         quantityOnBatch: null,
@@ -335,7 +335,7 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
     } else {
       const removedValue = this.selectedBatchList[i];
       this.filteredBatchList.map((item, t) => {
-        if (t != i && removedValue) {
+        if (t !== i && removedValue) {
           item.push(removedValue);
         }
       });
@@ -350,7 +350,7 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
     if (this.quantityDispensed <= this.quantityRequired) {
       if (
         this.quantityDispensed < this.quantityRequired &&
-        this.masterItemBatchList.length != 0
+        this.masterItemBatchList.length !== 0
       ) {
         this.confirmationService
           .confirm(
@@ -365,7 +365,7 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
             }
           });
       } else {
-        if (this.masterItemBatchList.length != 0) {
+        if (this.masterItemBatchList.length !== 0) {
           this.closeModal();
         }
       }

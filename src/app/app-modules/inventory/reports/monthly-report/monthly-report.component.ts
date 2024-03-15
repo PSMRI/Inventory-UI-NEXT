@@ -140,7 +140,7 @@ export class MonthlyReportComponent implements OnInit, DoCheck {
           'Json data of response: ',
           JSON.stringify(response, null, 4),
         );
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           this.consumptionList = response.data;
           this.getResponseOfSearchThenDo();
         }
@@ -151,7 +151,7 @@ export class MonthlyReportComponent implements OnInit, DoCheck {
   }
 
   downloadReport(downloadFlag: boolean) {
-    if (downloadFlag == true) {
+    if (downloadFlag === true) {
       this.searchReport();
     }
   }
@@ -166,13 +166,13 @@ export class MonthlyReportComponent implements OnInit, DoCheck {
     if (criteria.length > 0) {
       const criteriaArray = criteria.filter(function (obj: any) {
         for (const key in obj) {
-          if (obj[key] == null) {
+          if (obj[key] === null) {
             obj[key] = '';
           }
         }
         return obj;
       });
-      if (criteriaArray.length != 0) {
+      if (criteriaArray.length !== 0) {
         this.criteriaHead = Object.keys(criteriaArray[0]);
         console.log('this.criteriaHead', this.criteriaHead);
       }
@@ -198,13 +198,13 @@ export class MonthlyReportComponent implements OnInit, DoCheck {
       ];
       const array = this.consumptionList.filter(function (obj: any) {
         for (const key in obj) {
-          if (obj[key] == null) {
+          if (obj[key] === null) {
             obj[key] = '';
           }
         }
         return obj;
       });
-      if (array.length != 0) {
+      if (array.length !== 0) {
         // var head = Object.keys(array[0]);
         console.log(' head', headers);
         const wb_name = 'Monthly Report';
@@ -222,7 +222,7 @@ export class MonthlyReportComponent implements OnInit, DoCheck {
           }
           const cellPosition = String.fromCharCode(j);
           let finalCellName: any;
-          if (count == 0) {
+          if (count === 0) {
             finalCellName = cellPosition + '1';
             console.log(finalCellName);
           } else {
@@ -233,7 +233,7 @@ export class MonthlyReportComponent implements OnInit, DoCheck {
           const newName = this.modifyHeader(headers, i);
           // delete report_worksheet[finalCellName].w; report_worksheet[finalCellName].v = newName;
           i++;
-          if (i == 91 + count * 26) {
+          if (i === 91 + count * 26) {
             // i = 65;
             count++;
           }

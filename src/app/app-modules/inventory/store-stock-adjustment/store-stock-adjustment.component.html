@@ -102,7 +102,7 @@
               [dataSource]="dataSource"
               aria-describedby="storeStockDetails"
             >
-              <ng-container matColumnDef="noValue">
+              <ng-container matColumnDef="index">
                 <mat-header-cell *matHeaderCellDef>{{
                   currentLanguageSet?.inventory?.index
                 }}</mat-header-cell>
@@ -116,7 +116,7 @@
               <!-- Item Name Column -->
               <ng-container matColumnDef="itemName">
                 <th mat-header-cell *matHeaderCellDef>
-                  {{ currentLanguageSet?.inventory?.itemName }}
+                  <b>{{ currentLanguageSet?.inventory?.itemName }}</b>
                 </th>
                 <td
                   mat-cell
@@ -126,6 +126,9 @@
                   [formGroup]="stock"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.itemName
+                    }}</mat-label>
                     <input
                       matInput
                       allowText="itemNameSearchValidator"
@@ -134,9 +137,6 @@
                         storeStockAdjustmentForm.value.stockAdjustmentList
                       "
                       [stockForm]="stock"
-                      placeholder="{{
-                        currentLanguageSet?.inventory?.itemName
-                      }}*"
                       name="itemName"
                       formControlName="itemName"
                       maxlength="100"
@@ -160,7 +160,7 @@
               <!-- Batch ID Column -->
               <ng-container matColumnDef="batchID">
                 <th mat-header-cell *matHeaderCellDef>
-                  {{ currentLanguageSet?.inventory?.batchID }}
+                  <b>{{ currentLanguageSet?.inventory?.batchID }}</b>
                 </th>
                 <td
                   mat-cell
@@ -168,11 +168,11 @@
                   [formGroup]="stock"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.batchID
+                    }}</mat-label>
                     <input
                       matInput
-                      placeholder="{{
-                        currentLanguageSet?.inventory?.batchID
-                      }}*"
                       name="batchID"
                       formControlName="batchID"
                       required
@@ -185,7 +185,7 @@
               <!-- Quantity On Hand Column -->
               <ng-container matColumnDef="quantityOnHand">
                 <th mat-header-cell *matHeaderCellDef>
-                  {{ currentLanguageSet?.inventory?.quantityOnHand }}
+                  <b>{{ currentLanguageSet?.inventory?.quantityOnHand }}</b>
                 </th>
                 <td
                   mat-cell
@@ -193,10 +193,12 @@
                   [formGroup]="stock"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>
+                      {{ currentLanguageSet?.inventory?.qOH }}
+                    </mat-label>
                     <input
                       matInput
                       allowText="number"
-                      placeholder="{{ currentLanguageSet?.inventory?.qOH }}*"
                       name="quantityInHand"
                       formControlName="quantityInHand"
                       required
@@ -209,7 +211,7 @@
               <!-- Adjustment Type Column -->
               <ng-container matColumnDef="adjustmentType">
                 <th mat-header-cell *matHeaderCellDef>
-                  {{ currentLanguageSet?.inventory?.adjustmentType }}
+                  <b>{{ currentLanguageSet?.inventory?.adjustmentType }}</b>
                 </th>
                 <td
                   mat-cell
@@ -217,11 +219,11 @@
                   [formGroup]="stock"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.adjustmentType
+                    }}</mat-label>
                     <mat-select
                       class="input-full-width"
-                      placeholder="{{
-                        currentLanguageSet?.inventory?.adjustmentType
-                      }}*"
                       name="adjustmentType"
                       formControlName="adjustmentType"
                       (change)="calculateQOHAfterAdjustment(stock)"
@@ -240,7 +242,7 @@
               <!-- Adjustment Quantity Column -->
               <ng-container matColumnDef="adjustmentQuantity">
                 <th mat-header-cell *matHeaderCellDef>
-                  {{ currentLanguageSet?.inventory?.adjustmentQuantity }}
+                  <b>{{ currentLanguageSet?.inventory?.adjustmentQuantity }}</b>
                 </th>
                 <td
                   mat-cell
@@ -251,12 +253,12 @@
                     class="input-full-width"
                     *ngIf="stock.adjustmentType === 'Issue'"
                   >
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.adjustmentQuantity
+                    }}</mat-label>
                     <input
                       matInput
                       allowText="number"
-                      placeholder="{{
-                        currentLanguageSet?.inventory?.adjustmentQuantity
-                      }}"
                       name="adjustedQuantity"
                       formControlName="adjustedQuantity"
                       (input)="calculateQOHAfterAdjustment(stock)"
@@ -269,12 +271,12 @@
                     class="input-full-width"
                     *ngIf="stock?.adjustmentType !== 'Issue'"
                   >
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.adjustmentQuantity
+                    }}</mat-label>
                     <input
                       matInput
                       allowText="number"
-                      placeholder="{{
-                        currentLanguageSet?.inventory?.adjustmentQuantity
-                      }}"
                       name="adjustedQuantity"
                       formControlName="adjustedQuantity"
                       (input)="calculateQOHAfterAdjustment(stock)"
@@ -288,7 +290,7 @@
               <!-- QOH After Adjustment Column -->
               <ng-container matColumnDef="qOHAfterAdjustment">
                 <th mat-header-cell *matHeaderCellDef>
-                  {{ currentLanguageSet?.inventory?.qOHAfterAdjustment }}
+                  <b>{{ currentLanguageSet?.inventory?.qOHAfterAdjustment }}</b>
                 </th>
                 <td
                   mat-cell
@@ -296,12 +298,12 @@
                   [formGroup]="stock"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.qOHAfterAdjustment
+                    }}</mat-label>
                     <input
                       matInput
                       allowText="number"
-                      placeholder="{{
-                        currentLanguageSet?.inventory?.qOHAfterAdjustment
-                      }}"
                       name="qohAfterAdjustment"
                       formControlName="qohAfterAdjustment"
                       required
@@ -313,7 +315,7 @@
               <!-- Reason Column -->
               <ng-container matColumnDef="reason">
                 <th mat-header-cell *matHeaderCellDef>
-                  {{ currentLanguageSet?.inventory?.reason }}
+                  <b>{{ currentLanguageSet?.inventory?.reason }}</b>
                 </th>
                 <td
                   mat-cell
@@ -321,10 +323,12 @@
                   [formGroup]="stock"
                 >
                   <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.reason
+                    }}</mat-label>
                     <input
                       matInput
                       allowText="alphaspace"
-                      placeholder="{{ currentLanguageSet?.inventory?.reason }}*"
                       name="reason"
                       formControlName="reason"
                       required
@@ -336,7 +340,7 @@
               <!-- Action Column -->
               <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef>
-                  {{ currentLanguageSet?.inventory?.action }}
+                  <b>{{ currentLanguageSet?.inventory?.action }}</b>
                 </th>
                 <td
                   mat-cell

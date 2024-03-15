@@ -6,10 +6,7 @@
       </h4>
     </div>
     <div class="col-xs-12 col-sm-3 box">
-      <mat-form-field
-        class="input-full-width mat_form_field_background_color"
-        style="padding: 2px"
-      >
+      <mat-form-field class="input-full-width" style="padding: 2px">
         <mat-label>{{ currentLanguageSet?.inventory?.fromDate }}</mat-label>
         <input
           matInput
@@ -30,10 +27,7 @@
       </mat-form-field>
     </div>
     <div class="col-xs-12 col-sm-3 box">
-      <mat-form-field
-        class="input-full-width mat_form_field_background_color"
-        style="padding: 2px"
-      >
+      <mat-form-field class="input-full-width" style="padding: 2px">
         <mat-label>{{ currentLanguageSet?.inventory?.toDate }}</mat-label>
         <input
           matInput
@@ -60,7 +54,7 @@
         >{{ currentLanguageSet?.inventory?.toDateCannotBeBeforeFromDate }}</span
       >
     </div>
-    <div class="col-xs-12 col-sm-2 box" id="topBtn" style="margin-top: 15px">
+    <div class="col-xs-12 col-sm-2 box" style="margin-top: 15px">
       <button
         mat-raised-button
         [disabled]="!fromDate || !toDate || endDate.value < startDate.value"
@@ -105,7 +99,9 @@
 
                   <ng-container matColumnDef="stockAdjustmentID">
                     <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.stockAdjustmentID }}
+                      <b>{{
+                        currentLanguageSet?.inventory?.stockAdjustmentID
+                      }}</b>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let adjustment">
                       {{ adjustment?.stockAdjustmentID }}
@@ -114,7 +110,7 @@
 
                   <ng-container matColumnDef="refNo">
                     <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.refNo }}
+                      <b>{{ currentLanguageSet?.inventory?.refNo }}</b>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let adjustment">
                       {{ adjustment?.refNo }}
@@ -123,7 +119,7 @@
 
                   <ng-container matColumnDef="createdBy">
                     <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.createdBy }}
+                      <b>{{ currentLanguageSet?.inventory?.createdBy }}</b>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let adjustment">
                       {{ adjustment?.createdBy }}
@@ -132,7 +128,7 @@
 
                   <ng-container matColumnDef="createdDate">
                     <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.createdDate }}
+                      <b>{{ currentLanguageSet?.inventory?.createdDate }}</b>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let adjustment">
                       {{ adjustment?.createdDate | istDate: "dd/MM/yyyy" }}
@@ -141,7 +137,7 @@
 
                   <ng-container matColumnDef="view">
                     <mat-header-cell *matHeaderCellDef>
-                      {{ currentLanguageSet?.inventory?.view }}
+                      <b>{{ currentLanguageSet?.inventory?.view }}</b>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let adjustment">
                       <mat-icon

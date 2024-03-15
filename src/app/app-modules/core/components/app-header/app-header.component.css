@@ -55,7 +55,6 @@ span.logoutIcon:hover {
   background-color: rgba(37, 55, 70, 0.2);
   box-shadow: inset 0px 0px 5px 2px rgba(0, 0, 0, 0.1);
 }
-
 .active {
   background: rgba(37, 55, 70, 0.1);
 }

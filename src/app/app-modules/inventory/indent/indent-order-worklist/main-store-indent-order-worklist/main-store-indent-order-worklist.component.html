@@ -27,6 +27,50 @@
                 class="table-responsive"
                 *ngIf="mainstoreOrderlist.length > 0"
               >
+                <!-- <table [md2Data]="mainstoreOrderlist" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1" class="table table-striped responsive-table-view" aria-describedby="workListDetails">
+                  <caption></caption>  
+                  <thead>
+                    <tr class="text-nowrap">
+                      <th id="noValue" class="width5"></th>
+                      <th id="indentID" class="width15">{{currentLanguageSet?.inventory?.indentID}}</th>
+                      <th id="refernceNo" class="width15">{{currentLanguageSet?.inventory?.referenceNo}}</th>
+                      <th id="requestDate" class="width15" md2SortBy="createdDate">{{currentLanguageSet?.inventory?.requestDate}}</th>
+                      <th id="view" class="width10">{{currentLanguageSet?.inventory?.view}}</th>
+                      <th id="action" class="width15">{{currentLanguageSet?.bendetails?.action}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let orderlist of md2.data" class="table-hover">
+                      <td data-title="S.No.">{{ mainstoreOrderlist.indexOf(orderlist)+1 }}</td>
+                      <td data-title="Indent ID">{{orderlist?.indentID}}</td>
+                      <td data-title="Reference No.">{{orderlist?.refNo}}</td>
+                      <td data-title="Request Date">{{orderlist?.createdDate | utcDate | date : 'dd/MM/yyyy'}}</td>
+                      <td data-title="View">
+                        <md-icon (click)="viewItemListDetails(orderlist)">remove_red_eye</md-icon>
+                      </td>
+                      <td>
+                        <button md-raised-button class="button-full-width" type="button" color="accent" (click)="viewItemListDetailsForDispense(orderlist)">{{currentLanguageSet?.inventory?.accept}}</button>
+                        <button md-raised-button class="button-full-width" type="button" color="warn" (click)="rejectIndent(orderlist)">{{currentLanguageSet?.inventory?.reject}}</button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="mainstoreOrderlist.length == 0">
+                      <td colspan="6" style="text-align: center; font-size: 16px">
+                        <strong>{{currentLanguageSet?.inventory?.norecordsfound}}</strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr *ngIf="mainstoreOrderlist.length > 0">
+                      <td colspan="3" class="total-count">
+                        <div> {{currentLanguageSet?.inventory?.totalCount}} : {{ mainstoreOrderlist.length }}</div>
+                      </td>
+                      <td colspan="3" style="text-align:right">
+                        <md2-pagination></md2-pagination>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table> -->
+
                 <div class="mat-elevation-z8">
                   <table mat-table [dataSource]="mainstoreOrderlist">
                     <ng-container matColumnDef="SNo">
@@ -71,6 +115,7 @@
                       <th mat-header-cell *matHeaderCellDef>
                         {{ currentLanguageSet?.inventory?.view }}
                       </th>
+                      <!-- <td mat-cell *matCellDef="let element"> {{element.view}} </td> -->
                       <mat-icon
                         *matCellDef="let element"
                         (click)="viewItemListDetails(element)"

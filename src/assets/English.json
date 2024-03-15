@@ -109,7 +109,7 @@
             "previousStoreConsumption": "Previous Store Consumption",
             "consumptionID": "Consumption ID",
             "consumptionDetails": "Consumption Details",
-            "storeAdjustment": "Store Adjustment",
+            "storeAdjustment": "Stock Adjustment",
             "previousDraftRecords": "Previous Draft Records",
             "adjustmentType": "Adjustment Type",
             "adjustmentQuantity": "Adjustment Quantity",

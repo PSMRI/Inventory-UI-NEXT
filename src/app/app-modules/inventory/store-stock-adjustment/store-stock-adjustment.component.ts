@@ -54,6 +54,7 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
   // dataSource!: MatTableDataSource<AbstractControl>;
 
   displayedColumns: string[] = [
+    'index',
     'itemName',
     'batchID',
     'quantityOnHand',
@@ -213,7 +214,7 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
 
     const stockAdjustmentItemDraft =
       storeStockAdjustment.stockAdjustmentList.map((item: any) => {
-        item.isAdded = item.adjustmentType == 'Receipt' ? true : false;
+        item.isAdded = item.adjustmentType === 'Receipt' ? true : false;
         item.adjustedQuantity = item.adjustedQuantity
           ? +item.adjustedQuantity
           : 0;
@@ -278,7 +279,7 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
 
     const stockAdjustmentItemDraft =
       storeStockAdjustment.stockAdjustmentList.map((item: any) => {
-        item.isAdded = item.adjustmentType == 'Receipt' ? true : false;
+        item.isAdded = item.adjustmentType === 'Receipt' ? true : false;
         item.adjustedQuantity = item.adjustedQuantity
           ? +item.adjustedQuantity
           : 0;
@@ -349,10 +350,10 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
     const adjustedQuantity = parseInt(stockForm.value.adjustedQuantity) || 0;
     const adjustmentType = stockForm.value.adjustmentType;
 
-    if (adjustmentType == 'Receipt') {
+    if (adjustmentType === 'Receipt') {
       if (qoh >= 0 && adjustedQuantity >= 0)
         stockForm.patchValue({ qohAfterAdjustment: qoh + adjustedQuantity });
-    } else if (adjustmentType == 'Issue') {
+    } else if (adjustmentType === 'Issue') {
       if (qoh > 0 && adjustedQuantity >= 0 && adjustedQuantity <= qoh)
         stockForm.patchValue({ qohAfterAdjustment: qoh - adjustedQuantity });
     }
@@ -394,7 +395,7 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
     this.inventoryService.addEAushadhiItemsToAmrit(reqObj).subscribe(
       (response) => {
         if (
-          response != null &&
+          response !== null &&
           response !== undefined &&
           response.statusCode === 200
         ) {
@@ -417,7 +418,7 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
       (logResponse) => {
         console.log('response stock', logResponse);
         if (
-          logResponse != null &&
+          logResponse !== null &&
           logResponse !== undefined &&
           logResponse.statusCode === 200
         ) {

@@ -87,8 +87,12 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
           this.mainstoreOrderlist,
         );
       });
+    // this.dataSource = new MatTableDataSource<any>(this.mainstoreOrderlist);
   }
 
+  // ngAfterViewInit() {
+  //   this.dataSource.paginator = this.paginator;
+  // }
   viewItemListDetails(orderList: any) {
     this.dialog.open(MainStoreItemModelComponent, {
       width: '80%',
@@ -138,7 +142,7 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
 
     if (
       this.isMainStore &&
-      (this.mainFacilityID != null || this.mainFacilityID != undefined)
+      (this.mainFacilityID !== null || this.mainFacilityID !== undefined)
     ) {
       this.enableIndentReceipt = true;
     }

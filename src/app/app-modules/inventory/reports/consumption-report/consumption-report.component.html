@@ -23,7 +23,7 @@
               placeholder="{{ currentLanguageSet?.inventory?.startDate }}"
               formControlName="startDate"
               (change)="checkEndDate()"
-              max="maxEndDate"
+              [max]="maxEndDate"
               [disabled]="true"
             />
             <mat-datepicker-toggle
@@ -48,8 +48,8 @@
               placeholder="{{ currentLanguageSet?.inventory?.endDate }}"
               formControlName="endDate"
               [disabled]="true"
-              min="minEndDate"
-              max="maxEndDate"
+              [min]="minEndDate"
+              [max]="maxEndDate"
             />
             <mat-datepicker-toggle
               matSuffix
@@ -59,16 +59,23 @@
           </mat-form-field>
         </div>
         <div class="col-4">
-          <mat-select
-            [style.width]="'100%'"
-            placeholder="{{ currentLanguageSet?.inventory.facility }}"
+          <mat-form-field
             class="input-full-width mat_form_field_background_margin"
-            formControlName="facilityName"
           >
-            <mat-option *ngFor="let item of facilities" [value]="item">{{
-              item
-            }}</mat-option>
-          </mat-select>
+            <mat-label>
+              {{ currentLanguageSet?.inventory?.facility }}
+            </mat-label>
+            <mat-select
+              [style.width]="'100%'"
+              placeholder="{{ currentLanguageSet?.inventory.facility }}"
+              class="input-full-width"
+              formControlName="facilityName"
+            >
+              <mat-option *ngFor="let item of facilities" [value]="item">{{
+                item
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </form>
     </div>

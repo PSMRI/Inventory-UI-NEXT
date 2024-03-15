@@ -22,7 +22,7 @@
     >
       <ng-container matColumnDef="stockTransferID">
         <th mat-header-cell *matHeaderCellDef>
-          {{ currentLanguageSet?.inventory?.stockTransferID }}
+          <b>{{ currentLanguageSet?.inventory?.stockTransferID }}</b>
         </th>
         <td mat-cell *matCellDef="let item">
           {{ item?.stockEntry?.stockTransferID }}
@@ -31,14 +31,14 @@
 
       <ng-container matColumnDef="refNo">
         <th mat-header-cell *matHeaderCellDef>
-          {{ currentLanguageSet?.inventory?.refNo }}
+          <b>{{ currentLanguageSet?.inventory?.refNo }}</b>
         </th>
         <td mat-cell *matCellDef="let item">{{ item?.stockEntry?.refNo }}</td>
       </ng-container>
 
       <ng-container matColumnDef="transferFrom">
         <th mat-header-cell *matHeaderCellDef>
-          {{ currentLanguageSet?.inventory?.transferFrom }}
+          <b>{{ currentLanguageSet?.inventory?.transferFrom }}</b>
         </th>
         <td mat-cell *matCellDef="let item">
           {{ item?.stockEntry?.transferFromFacility }}
@@ -47,7 +47,7 @@
 
       <ng-container matColumnDef="transferTo">
         <th mat-header-cell *matHeaderCellDef>
-          {{ currentLanguageSet?.inventory?.transferTo }}
+          <b>{{ currentLanguageSet?.inventory?.transferTo }}</b>
         </th>
         <td mat-cell *matCellDef="let item">
           {{ item?.stockEntry?.transferToFacility }}
@@ -56,7 +56,7 @@
 
       <ng-container matColumnDef="createdBy">
         <th mat-header-cell *matHeaderCellDef>
-          {{ currentLanguageSet?.inventory?.createdBy }}
+          <b>{{ currentLanguageSet?.inventory?.createdBy }}</b>
         </th>
         <td mat-cell *matCellDef="let item">
           {{ item?.stockEntry?.createdBy }}
@@ -65,7 +65,7 @@
 
       <ng-container matColumnDef="createdDate">
         <th mat-header-cell *matHeaderCellDef>
-          {{ currentLanguageSet?.inventory?.createdDate }}
+          <b>{{ currentLanguageSet?.inventory?.createdDate }}</b>
         </th>
         <td mat-cell *matCellDef="let item">
           {{ item?.stockEntry?.createdDate | istDate: "dd/MM/yyyy" }}
@@ -134,21 +134,21 @@
 
             <ng-container matColumnDef="itemName">
               <th mat-header-cell *matHeaderCellDef>
-                {{ currentLanguageSet?.inventory?.itemName }}
+                <b>{{ currentLanguageSet?.inventory?.itemName }}</b>
               </th>
               <td mat-cell *matCellDef="let item">{{ item?.itemName }}</td>
             </ng-container>
 
             <ng-container matColumnDef="batchNo">
               <th mat-header-cell *matHeaderCellDef>
-                {{ currentLanguageSet?.itemDispense?.batchNo }}
+                <b>{{ currentLanguageSet?.itemDispense?.batchNo }}</b>
               </th>
               <td mat-cell *matCellDef="let item">{{ item?.batchNo }}</td>
             </ng-container>
 
             <ng-container matColumnDef="expiryDate">
               <th mat-header-cell *matHeaderCellDef>
-                {{ currentLanguageSet?.itemDispense?.expiryDate }}
+                <b>{{ currentLanguageSet?.itemDispense?.expiryDate }}</b>
               </th>
               <td mat-cell *matCellDef="let item">
                 {{ item?.expiryDate | istDate: "dd/MM/yyyy" }}
@@ -157,7 +157,7 @@
 
             <ng-container matColumnDef="quantity">
               <th mat-header-cell *matHeaderCellDef>
-                {{ currentLanguageSet?.inventory?.quantity }}
+                <b>{{ currentLanguageSet?.inventory?.quantity }}</b>
               </th>
               <td mat-cell *matCellDef="let item">{{ item?.quantity }}</td>
             </ng-container>
@@ -201,6 +201,7 @@
       <div class="col-xs-12" style="display: flex; justify-content: end">
         <button
           class="pull-right"
+          color="primary"
           mat-raised-button
           type="button"
           tabindex="-1"

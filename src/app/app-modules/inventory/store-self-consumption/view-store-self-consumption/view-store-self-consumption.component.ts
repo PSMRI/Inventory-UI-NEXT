@@ -167,10 +167,10 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
       this._consumptionList.forEach((item: any) => {
         for (const key in item) {
           if (
-            key == 'consumptionID' ||
-            key == 'refNo' ||
-            key == 'reason' ||
-            key == 'createdBy'
+            key === 'consumptionID' ||
+            key === 'refNo' ||
+            key === 'reason' ||
+            key === 'createdBy'
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0) {
@@ -208,7 +208,7 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
         });
       mdDialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          if (result.print != null && result.print == true) {
+          if (result.print !== null && result.print === true) {
             if (result.print) {
               const printableData = this.createPrintableData(
                 consumptionDetails,
@@ -230,7 +230,7 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
     const facilityName = facilityDetail.facilityName;
     const printableData: any = [];
     let i = 0;
-    consumptionResponse.forEach((batch: any) => {
+    consumptionResponse.data.forEach((batch: any) => {
       i = i + 1;
       const consumedBatch = {
         sNo: i,

@@ -98,7 +98,7 @@ export class RejectItemFromMainstoreModelComponent implements OnInit, DoCheck {
     this.inventoryService
       .rejectIndentOrder(this.rejectOrderList)
       .subscribe((rejectIndentResponse) => {
-        if (rejectIndentResponse.statusCode == 200) {
+        if (rejectIndentResponse.statusCode === 200) {
           this.confirmationService.alert(
             rejectIndentResponse.data.response,
             'success',

@@ -23,6 +23,57 @@
           <div class="row">
             <div class="col-xs-12 m-t-10">
               <div class="table-responsive">
+                <!-- <table [md2Data]="substoreOrderlist" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1" class="table table-striped responsive-table-view" aria-describedby="subStoreDetails">
+                  <caption></caption> 
+                  <thead>
+                    <tr class="text-nowrap">
+                      <th class="width5" id=""></th>
+                      <th class="width15" id="indentID">{{currentLanguageSet?.inventory?.indentID}}</th>
+                      <th class="width15" id="referenceNo">{{currentLanguageSet?.inventory?.referenceNo}}</th>
+                      <th class="width15" id="requestDate" md2SortBy="createdDate">{{currentLanguageSet?.inventory?.requestDate}}</th>
+                      <th class="width10" id="view">{{currentLanguageSet?.inventory?.view}}</th>
+                      <th class="width10" id="edit">{{currentLanguageSet?.bendetails?.edit}}</th>
+                      <th class="width15" id="action">{{currentLanguageSet?.bendetails?.action}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let orderlist of md2.data" class="table-hover">
+                      <td data-title="S.No.">{{ substoreOrderlist.indexOf(orderlist)+1 }}</td>
+                      <td data-title="Indent ID">{{orderlist?.indentID}}</td>
+                      <td data-title="Reference No.">{{orderlist?.refNo}}</td>
+                      <td data-title="Request Date">{{orderlist?.createdDate | utcDate | date : 'dd/MM/yyyy' }}</td>
+                      <td data-title="View">
+                        <mat-icon (click)="viewItemListDetails(orderlist)">remove_red_eye</mat-icon>
+                      </td>
+                      <td data-title="Edit">
+                        <mat-icon *ngIf="orderlist.status == 'Pending' && (orderlist.processed == 'N' || orderlist.processed == 'U')" (click)="goToUpdateIndentRequest(orderlist)">edit</mat-icon>
+                      </td>
+                      <td>
+                        <button mat-raised-button class="button-full-width" type="button" color="accent" *ngIf="orderlist.status == 'Issued'" (click)="receiveIndent(orderlist)">{{currentLanguageSet?.inventory?.receive}}</button>
+                        <button mat-raised-button class="button-full-width" type="button" color="primary" *ngIf="orderlist.status == 'Pending'" (click)="cancelIndent(orderlist)">{{currentLanguageSet?.inventory?.cancel}}</button>
+                        <button mat-raised-button class="button-full-width" type="button" color="primary"  *ngIf="orderlist.status == 'Cancelled'" [disabled]='true'>{{currentLanguageSet?.inventory?.cancelled}}</button>
+                        <button mat-raised-button class="button-full-width" type="button" color="primary"  *ngIf="orderlist.status == 'Closed'" [disabled]='true'>{{currentLanguageSet?.inventory?.closed}}</button>
+                        <button mat-raised-button class="button-full-width" type="button" color="primary"  *ngIf="orderlist.status == 'Rejected'" [disabled]='true'>{{currentLanguageSet?.inventory?.rejected}}</button>
+                      </td>
+                    </tr>
+                      <tr *ngIf="substoreOrderlist.length == 0">
+                        <td colspan="6" style="text-align: center; font-size: 16px">
+                          <strong>{{currentLanguageSet?.inventory?.norecordsfound}}</strong>
+                        </td>
+                      </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr *ngIf="substoreOrderlist.length > 0">
+                      <td colspan="4" class="total-count">
+                        <div> {{currentLanguageSet?.inventory?.totalCount}} : {{ substoreOrderlist.length }}</div>
+                      </td>
+                      <td colspan="3" style="text-align:right">
+                        <md2-pagination></md2-pagination>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table> -->
+
                 <table mat-table [dataSource]="substoreOrderlist">
                   <ng-container matColumnDef="SNo">
                     <th mat-header-cell *matHeaderCellDef></th>

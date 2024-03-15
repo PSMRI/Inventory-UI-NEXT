@@ -98,7 +98,7 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
         endDate.valueOf() - 1 * endDate.getTimezoneOffset() * 60 * 1000,
       ),
       facilityID: localStorage.getItem('facilityID')
-        ? +localStorage.getItem('facilityID')!
+        ? " +localStorage.getItem('facilityID') || '{}' "
         : undefined,
     };
 
@@ -123,10 +123,10 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
       this.stockAdjustmentList.forEach((item: any) => {
         for (const key in item) {
           if (
-            key == 'stockAdjustmentDraftID' ||
-            key == 'refNo' ||
-            key == 'reason' ||
-            key == 'createdBy'
+            key === 'stockAdjustmentDraftID' ||
+            key === 'refNo' ||
+            key === 'reason' ||
+            key === 'createdBy'
           ) {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
@@ -184,7 +184,7 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
         quantityInHand: stock.quantityInHand,
         adjustedQuantity: stock.adjustedQuantity,
         adjustmentType:
-          stock.isAdded != undefined && stock.isAdded ? 'Receipt' : 'Issue',
+          stock.isAdded !== undefined && stock.isAdded ? 'Receipt' : 'Issue',
         reason: stock.reason,
       };
       adjustedItemList.push(temp);

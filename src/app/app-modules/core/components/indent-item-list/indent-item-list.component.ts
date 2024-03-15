@@ -81,7 +81,7 @@ export class IndentItemListComponent implements OnInit, DoCheck {
   disableSelection(item: any) {
     const addedIndent = this.input.addedIndent;
     const temp = addedIndent.filter(
-      (indent: any) => indent.itemName == item.itemName,
+      (indent: any) => indent.itemName === item.itemName,
     );
     if (temp.length > 0) return true;
     else return false;

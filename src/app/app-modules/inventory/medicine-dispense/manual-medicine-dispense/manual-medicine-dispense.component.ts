@@ -165,7 +165,7 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
     };
     this.inventoryService.getItemBatchList(requestObjectGetBatchList).subscribe(
       (response) => {
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           if (response.data.length > 0) {
             itemBatchList = response.data;
             this.openModalTOSelectBatch(editIndex, formValue, itemBatchList);
@@ -200,7 +200,7 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
     mdDialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         console.log("result['batchList']", result.value['batchList']);
-        if (editIndex != null) {
+        if (editIndex !== null) {
           this.manualDispenseList.data.splice(editIndex, 1);
           this.manualDispenseList.data.push(result.value);
           this.manualItemDispenseForm.reset();
@@ -263,7 +263,7 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
     console.log('dispensingItem', dispensingItem);
     this.inventoryService.saveStockExit(dispensingItem).subscribe(
       (response) => {
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           if (print) {
             this.saveAndPrintPage();
           } else {
