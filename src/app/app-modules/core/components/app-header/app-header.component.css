@@ -1,3 +1,44 @@
+.helpAlign {
+  font-size: 24px;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0px;
+  margin-top:5px !important;
+  color: white
+}
+.white-icon { 
+  color: white; /* Set the color to white */
+}
+.w85 { 
+  width : 85%;
+}
+.nav-btn{
+  background-color: #c9cdce;
+  box-sizing: border-box;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  outline: 0;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: baseline;
+  text-align: center;
+  margin: 0;
+  min-width: 88px;
+  line-height: 36px;
+  padding: 0 16px;
+  border-radius: 2px;
+
+}
+.menu-font{
+  font-size: 14px !important;
+}
 .navbar-iemr {
   background-color: #253746;
   color: white;
@@ -19,16 +60,17 @@
 li a {
   outline: none;
 }
-.navbar-iemr .nav li a {
-  padding: 6px 8px;
+
+.navbar-iemr li {
+  float: right !important;
 }
 
-span.logoutIcon {
-  height: 21px;
-  width: 24px;
-  display: inline-block;
-  vertical-align: middle;
-  background: url(../../../../../assets/images/logoutIcon.png) no-repeat;
+.navbar-iemr li a:hover {
+  background: unset;
+}
+
+.navbar-iemr .nav li a {
+  padding: 6px 8px;
 }
 
 li.telemed a img {
@@ -36,7 +78,7 @@ li.telemed a img {
   width: 24px;
 }
 
-span.logoutIcon:hover {
+li.logout a span.logoutIcon:hover {
   background-position-y: -21px;
 }
 
@@ -46,6 +88,7 @@ span.logoutIcon:hover {
   background-color: rgba(37, 55, 70, 0.2);
   box-shadow: inset 0px 0px 5px 2px rgba(0, 0, 0, 0.1);
 }
+
 .active {
   background: rgba(37, 55, 70, 0.1);
 }
@@ -55,97 +98,34 @@ button.mat-button {
   width: 100%;
 }
 
-.role-menu {
+mat-menu {
   width: 100%;
-}
-
-.helpAlign {
-  font-size: 26px;
-  vertical-align: middle;
-  text-align: center;
-  padding: 5px;
-  color: rgba(245, 245, 245, 0.877);
-  margin-top: 4px;
-}
-
-@media (max-width: 500px) {
-  .container-fluid .navbar-collapse,
-  .container-fluid .navbar-header {
-    margin-left: 0px;
-    margin-right: 0px;
-  }
 }
 
 @media (max-width: 760px) {
   .navbar-brand {
-    padding: 5px 15px;
+      padding: 5px 15px;
   }
 }
 
-.userInfo-btn {
-  width: 200px;
-  display: flex;
-  align-items: center;
+
+.iot {
+  font-size: 26px;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0px;
+  color: rgba(245, 245, 245, 0.877);
+  margin-top: 4px;
 }
 
-/* .userInfo-btn span {
-  margin-left: 10px;
-} */
-
+.connected{
+  color:green;
+  }
+  
 .alignDropDown {
-  margin-top: 3px;
+  margin-top: 9px;
 }
 .alignWord {
-  margin: auto;
+  margin: 8px 10px;
 
-}
-.container-fluid {
-  display: flex;
-  justify-content: space-between  ;
-}
-.fluid-activities{
-  display: flex;
-}
-.caret {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  margin-left: 2px;
-  vertical-align: middle;
-  border-top: 4px dashed;
-  border-top: 4px solid\9;
-  border-right: 4px solid transparent;
-  border-left: 4px solid transparent;
-}
-.form-control {
-  display: block;
-  width: 20%;
-  /* border-radius: 20px !important; */
-  /* padding: 0.375rem 0.75rem; */
-  /* font-size: 1rem; */
-  border: 1px solid #ccc !important;
-  border-radius: 4px !important;
-  font-weight: 400;
-  line-height: 1.5;
-  color: var(--bs-body-color);
-  appearance: none;
-  background-color: var(--bs-body-bg);
-  background-clip: padding-box;
-  /* border: var(--bs-border-width) solid var(--bs-border-color);
-  border-radius: var(--bs-border-radius); */
-  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
- 
-.alignHead {
-  text-align: right;
-    /* margin-top: auto; */
-    justify-content: space-between;
-    display: flex;
-    align-items: center;
-    position: relative;
-    width: 40rem;
-}
-a {
-  color: unset !important; 
-  text-decoration: unset !important;
 }
