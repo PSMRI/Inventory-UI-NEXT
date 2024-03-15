@@ -118,7 +118,7 @@ export class LoginComponent implements OnInit {
       .login(this.userName.trim(), encryptPassword, false)
       .subscribe(
         (res: any) => {
-          if (res.statusCode == '200') {
+          if (res.statusCode === 200) {
             if (res.data.previlegeObj && res.data.previlegeObj[0]) {
               localStorage.setItem(
                 'loginDataResponse',
@@ -143,14 +143,15 @@ export class LoginComponent implements OnInit {
                     this.authService
                       .userlogoutPreviousSession(this.userName)
                       .subscribe((userlogoutPreviousSession) => {
-                        if (userlogoutPreviousSession.statusCode == '200') {
+                        if (userlogoutPreviousSession.statusCode === 200) {
                           this.authService
                             .login(this.userName, encryptPassword, true)
                             .subscribe((userLoggedIn) => {
-                              if (userLoggedIn.statusCode == '200') {
+                              if (userLoggedIn.statusCode === 200) {
                                 if (
-                                  userLoggedIn.data.previlegeObj != null &&
-                                  userLoggedIn.data.previlegeObj != undefined &&
+                                  userLoggedIn.data.previlegeObj !== null &&
+                                  userLoggedIn.data.previlegeObj !==
+                                    undefined &&
                                   userLoggedIn.data.previlegeObj[0]
                                 ) {
                                   this.checkRoleMapped(userLoggedIn.data);
@@ -231,7 +232,7 @@ export class LoginComponent implements OnInit {
       loginDataResponse.designation.designationName
     ) {
       this.designation = loginDataResponse.designation.designationName;
-      if (this.designation != null) {
+      if (this.designation !== null) {
         this.checkDesignationWithRole(loginDataResponse);
       } else {
         this.confirmationService.alert(
@@ -257,9 +258,9 @@ export class LoginComponent implements OnInit {
       const services = loginDataResponse.previlegeObj.map((item: any) => {
         if (
           item.roles[0].serviceRoleScreenMappings[0].providerServiceMapping
-            .serviceID == '4' ||
+            .serviceID === 4 ||
           item.roles[0].serviceRoleScreenMappings[0].providerServiceMapping
-            .serviceID == '2'
+            .serviceID === 2
         ) {
           return {
             serviceID:
@@ -274,7 +275,7 @@ export class LoginComponent implements OnInit {
       if (services.length > 0) {
         localStorage.setItem('services', JSON.stringify(services));
 
-        if (loginDataResponse.Status.toLowerCase() == 'new') {
+        if (loginDataResponse.Status.toLowerCase() === 'new') {
           this.router.navigate(['/set-security-questions']);
         } else {
           sessionStorage.setItem(
