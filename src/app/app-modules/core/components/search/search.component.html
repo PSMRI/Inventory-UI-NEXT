@@ -15,7 +15,10 @@
     <form #newSearchForm="ngForm">
       <section class="row">
         <div class="col-xs-12 col-sm-3 box">
-          <mat-form-field [style.width]="'100%'">
+          <mat-form-field
+            [style.width]="'100%'"
+            class="mat_form_field_background_width"
+          >
             <mat-label>{{
               currentLanguageSet?.inventory?.firstName
             }}</mat-label>
@@ -40,7 +43,11 @@
         </div>
 
         <div class="col-xs-12 col-sm-3 box">
-          <mat-form-field appMyName [style.width]="'100%'">
+          <mat-form-field
+            appMyName
+            [style.width]="'100%'"
+            class="mat_form_field_background_width"
+          >
             <mat-label>{{ currentLanguageSet?.inventory?.lastName }}</mat-label>
             <input
               autocomplete="off"
@@ -63,7 +70,6 @@
             <mat-select
               class="p-t-12"
               required
-              style="border-bottom: solid 1px; border-color: grey"
               [style.width]="'100%'"
               name="gender"
               [(ngModel)]="beneficiary.gender"
@@ -84,7 +90,6 @@
               (selectionChange)="onStateChange()"
               required
               [style.width]="'100%'"
-              style="border-bottom: solid 1px; border-color: grey"
               name="state"
               [(ngModel)]="beneficiary.stateID"
             >
@@ -101,7 +106,6 @@
               class="p-t-12"
               required
               [disabled]="!beneficiary.stateID"
-              style="border-bottom: solid 1px; border-color: grey"
               [style.width]="'100%'"
               name="district"
               [(ngModel)]="beneficiary.districtID"
