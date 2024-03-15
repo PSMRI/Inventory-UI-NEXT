@@ -59,7 +59,6 @@
           <mat-select
             class="p-t-12"
             required
-            style="border-bottom: solid 1px; border-color: grey"
             [style.width]="'100%'"
             placeholder="{{ currentLanguageSet?.bendetails?.gender }}*"
             name="gender"
@@ -76,7 +75,6 @@
             (change)="onStateChange()"
             required
             [style.width]="'100%'"
-            style="border-bottom: solid 1px; border-color: grey"
             placeholder="{{ currentLanguageSet?.inventory?.state }}*"
             name="state"
             [(ngModel)]="beneficiary.stateID"
@@ -91,7 +89,6 @@
             class="p-t-12"
             required
             [disabled]="!beneficiary.stateID"
-            style="border-bottom: solid 1px; border-color: grey"
             [style.width]="'100%'"
             placeholder="{{ currentLanguageSet?.inventory?.district }}*"
             name="district"

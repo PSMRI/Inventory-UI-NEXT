@@ -50,3 +50,19 @@
         margin-top: 3px;
     }
 }
+.mat_form_field_background_color >>> .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: #f2f2f0 !important;
+}
+.mat_form_field_background_color_table >>> .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: #f9f9f9 !important;
+}
+.mat_form_field_background_color_table >>> .mdc-text-field{
+    padding: unset !important;
+}
+.mat_form_field_background_color_table >>> .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
+    padding-top: 20px !important; 
+    padding-bottom:unset !important;
+}
+.mat_form_field_background_color_padding >>> .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
+    padding-top: 24px !important; 
+}

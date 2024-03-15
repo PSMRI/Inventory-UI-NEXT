@@ -21,7 +21,9 @@
 
     <div class="row m-t-10">
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-        <mat-form-field class="input-full-width">
+        <mat-form-field
+          class="input-full-width mat_form_field_background_color mat_form_field_background_color_padding"
+        >
           <input
             matInput
             allowText="alphanumeric"
@@ -50,7 +52,9 @@
       </div>
 
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-        <mat-form-field class="input-full-width">
+        <mat-form-field
+          class="input-full-width mat_form_field_background_color"
+        >
           <mat-label>{{ currentLanguageSet?.inventory?.date }}</mat-label>
           <input
             matInput
@@ -94,7 +98,9 @@
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
                   >
-                    <mat-form-field class="input-full-width">
+                    <mat-form-field
+                      class="input-full-width mat_form_field_background_color_table"
+                    >
                       <input
                         matInput
                         allowText="itemNameSearchValidator"
@@ -129,7 +135,9 @@
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
                   >
-                    <mat-form-field class="input-full-width">
+                    <mat-form-field
+                      class="input-full-width mat_form_field_background_color_table"
+                    >
                       <input
                         matInput
                         placeholder="{{
@@ -155,7 +163,9 @@
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
                   >
-                    <mat-form-field class="input-full-width">
+                    <mat-form-field
+                      class="input-full-width mat_form_field_background_color_table"
+                    >
                       <input
                         matInput
                         placeholder="{{
@@ -180,7 +190,9 @@
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
                   >
-                    <mat-form-field class="input-full-width">
+                    <mat-form-field
+                      class="input-full-width mat_form_field_background_color_table"
+                    >
                       <input
                         matInput
                         placeholder="{{
@@ -207,7 +219,9 @@
                     [formGroup]="stock"
                     class="input-full-width input-datepicker"
                   >
-                    <mat-form-field class="input-full-width">
+                    <mat-form-field
+                      class="input-full-width mat_form_field_background_color_table"
+                    >
                       <input
                         matInput
                         [matDatepicker]="expDate"

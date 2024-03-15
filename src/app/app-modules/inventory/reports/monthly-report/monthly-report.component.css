@@ -49,3 +49,9 @@
     overflow: auto;
     max-height: 80vh;
   } */
+
+  .mat_form_field_background_margin>>>.mat-mdc-select-trigger {
+
+    margin-top: 24px !important;
+    width: 85% !important;
+}
