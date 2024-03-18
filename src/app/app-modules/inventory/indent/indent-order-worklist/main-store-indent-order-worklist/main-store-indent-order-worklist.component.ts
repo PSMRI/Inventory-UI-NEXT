@@ -133,10 +133,8 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
       localStorage.getItem('facilityDetail') || '{}',
     ).mainFacilityID;
 
-    if (
-      this.isMainStore &&
-      (this.mainFacilityID !== null || this.mainFacilityID !== undefined)
-    ) {
+    if (this.isMainStore && this.mainFacilityID !== undefined) {
+      // this.mainFacilityID !== null ||
       this.enableIndentReceipt = true;
     }
   }

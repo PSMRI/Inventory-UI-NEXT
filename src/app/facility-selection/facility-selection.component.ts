@@ -89,7 +89,7 @@ export class FacilitySelectionComponent implements OnInit, DoCheck {
     const facility: any = this.facilityForm.controls['facility'].value;
     const subFacility: any = this.facilityForm.controls['subFacility'].value;
     if (
-      this.facilityForm.controls.isMainStore.value &&
+      this.facilityForm.controls.isMainStore.value === 'true' &&
       this.facilityForm.controls.facility.value
     ) {
       this.enableContinue = true;

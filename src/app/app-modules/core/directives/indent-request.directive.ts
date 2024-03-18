@@ -32,7 +32,8 @@ export class IndentRequestDirective {
   previousSelected: any;
 
   @Input()
-  itemListForm!: any;
+  // itemListForm!: any;
+  itemListForm!: FormGroup;
 
   @HostListener('keyup.enter') onKeyDown() {
     this.openDialog();
@@ -47,7 +48,8 @@ export class IndentRequestDirective {
   ) {}
 
   openDialog(): void {
-    const searchTerm = this.itemListForm.itemNameView;
+    // const searchTerm = this.itemListForm.itemNameView;
+    const searchTerm = this.itemListForm.controls['itemNameView'].value;
     const dialogRef = this.dialog.open(IndentItemListComponent, {
       width: '80%',
       //   height: '90%',
