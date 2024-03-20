@@ -44,43 +44,50 @@
               </div>
               <div class="col-xs-12 m-t-25">
                 <!-- style="border-bottom: solid 1px; border-color: grey" -->
-
-                <mat-select
-                  [style.width]="'100%'"
-                  name="facility"
-                  formControlName="facility"
-                  placeholder="{{ currentLanguageSet?.inventory?.facility }}"
-                  (selectionChange)="getSubFacility()"
-                  (selectionChange)="toContinue()"
-                >
-                  <mat-option
-                    *ngFor="let facility of facilities"
-                    [value]="facility"
+                <mat-form-field>
+                  <mat-label>{{
+                    currentLanguageSet?.inventory?.facility
+                  }}</mat-label>
+                  <mat-select
+                    [style.width]="'100%'"
+                    name="facility"
+                    formControlName="facility"
+                    (selectionChange)="getSubFacility()"
+                    (selectionChange)="toContinue()"
                   >
-                    {{ facility.facilityName }}
-                  </mat-option>
-                </mat-select>
+                    <mat-option
+                      *ngFor="let facility of facilities"
+                      [value]="facility"
+                    >
+                      {{ facility.facilityName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
               <div class="col-xs-12 m-t-25">
-                <mat-select
-                  [style.width]="'100%'"
-                  name="subFacility"
-                  formControlName="subFacility"
-                  placeholder="{{ currentLanguageSet?.inventory?.subFacility }}"
-                  (selectionChange)="toContinue()"
-                  [disabled]="
-                    facilityForm.controls.isMainStore.value === 'true'
-                      ? true
-                      : false
-                  "
-                >
-                  <mat-option
-                    *ngFor="let subFacility of subFacilities"
-                    [value]="subFacility"
+                <mat-form-field>
+                  <mat-label>{{
+                    currentLanguageSet?.inventory?.subFacility
+                  }}</mat-label>
+                  <mat-select
+                    [style.width]="'100%'"
+                    name="subFacility"
+                    formControlName="subFacility"
+                    (selectionChange)="toContinue()"
+                    [disabled]="
+                      facilityForm.controls.isMainStore.value === 'true'
+                        ? true
+                        : false
+                    "
                   >
-                    {{ subFacility.facilityName }}
-                  </mat-option>
-                </mat-select>
+                    <mat-option
+                      *ngFor="let subFacility of subFacilities"
+                      [value]="subFacility"
+                    >
+                      {{ subFacility.facilityName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
             </div>
             <div class="row m-t-10 m-b-10">
