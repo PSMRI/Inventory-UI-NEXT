@@ -53,8 +53,18 @@
           </mat-accordion>
         </div>
       </div>
-      <div class="row m-t-20" style="margin-bottom: 30px">
-        <div class="col-sm-12 step-btn actionButton">
+      <div class="row m-t-20 col-12" style="margin-bottom: 30px">
+        <div class="col-6" style="position: fixed; margin-top: 15px">
+          <button
+            mat-mini-fab
+            class="example-fab"
+            color="primary"
+            (click)="sideNavModeChange(sidenav)"
+          >
+            <mat-icon>account_box</mat-icon>
+          </button>
+        </div>
+        <div class="col-6 step-btn actionButton">
           <button
             mat-raised-button
             id="submitButton"
@@ -66,16 +76,6 @@
             {{ currentLanguageSet?.common?.submit }}
           </button>
         </div>
-      </div>
-      <div style="position: fixed">
-        <button
-          mat-mini-fab
-          class="example-fab"
-          color="primary"
-          (click)="sideNavModeChange(sidenav)"
-        >
-          <mat-icon>account_box</mat-icon>
-        </button>
       </div>
     </div>
   </mat-sidenav-container>
