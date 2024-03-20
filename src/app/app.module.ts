@@ -26,30 +26,10 @@ import { AppComponent } from './app.component';
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomRouteReuseStrategy } from './custom-route-reuse-strategy';
 import { MatDialogModule } from '@angular/material/dialog';
-
-import { FormsModule } from '@angular/forms';
-// import { HttpModule } from '@angular/http';
-// import { Md2Module } from 'md2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { Ng2GoogleChartsModule } from 'ng2-google-charts';
-
-// Import custom route module....
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './app-modules/core/core.module';
-
-// Custom components import....
 import { LoginComponent } from './login/login.component';
-
-// Custom services import....
-// import { ServiceComponent } from './service/service.component';
-// import { ResetPasswordComponent } from './reset-password/reset-password.component';
-// import { SetPasswordComponent } from './set-password/set-password.component';
-// import { SetSecurityQuestionsComponent } from './set-security-questions/set-security-questions.component';
-// import { FacilitySelectionComponent } from './facility-selection/facility-selection.component';
-// import { FaciltyService } from './facility-selection/facilty.service';
-// import { RedirInComponent } from './redir-in/redir-in.component';
-// import { LoadStoreDetailsComponent } from './load-store-details/load-store-details.component';
-//   import { from } from 'rxjs/observable/from';
 import { AuthService } from './app-modules/core/services/auth.service';
 import { LanguageService } from './app-modules/core/services/language.service';
 import { AuthenticationService } from './login/authentication.service';
@@ -63,27 +43,46 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ServiceComponent } from 'src/service/service.component';
+import { MatListModule } from '@angular/material/list';
+import { FacilitySelectionComponent } from './facility-selection/facility-selection.component';
+import { FaciltyService } from './facility-selection/facilty.service';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoadStoreDetailsComponent } from './load-store-details/load-store-details.component';
+import { MaterialModule } from './app-modules/core/material.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { HttpInterceptorService } from './app-modules/core/services/http-interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SetPasswordComponent } from './set-password/set-password.component';
+import { SetSecurityQuestionsComponent } from './set-security-questions/set-security-questions.component';
+import { RedirInComponent } from './redir-in/redir-in.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    // ServiceComponent,
-    // ResetPasswordComponent,
-    // SetPasswordComponent,
-    // SetSecurityQuestionsComponent,
-    // FacilitySelectionComponent,
-    // RedirInComponent,
-    // LoadStoreDetailsComponent,
+    ServiceComponent,
+    ResetPasswordComponent,
+    SetPasswordComponent,
+    SetSecurityQuestionsComponent,
+    FacilitySelectionComponent,
+    RedirInComponent,
+    LoadStoreDetailsComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    // HttpModule,
-    // Md2Module,
     BrowserAnimationsModule,
+    MatGridListModule,
     AppRoutingModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatPaginatorModule,
     MatInputModule,
     MatTableModule,
     MatTooltipModule,
@@ -93,15 +92,25 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatCardModule,
     MatRadioModule,
     MatDatepickerModule,
+    MatListModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MaterialModule,
     CoreModule.forRoot(),
-    // Ng2GoogleChartsModule
   ],
   providers: [
     AuthenticationService,
     LanguageService,
     AuthService,
-    // FaciltyService,
-    { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy },
+    FaciltyService,
+    HttpInterceptorService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

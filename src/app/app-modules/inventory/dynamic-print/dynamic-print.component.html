@@ -1,0 +1,112 @@
+<div class="container">
+  <div class="row m-t-10">
+    <div class="col-xs-12 text-right">
+      <p>
+        <strong>{{ currentLanguageSet?.inventory?.date }} : </strong
+        >{{ today | date: "dd/MM/yyyy" }}
+      </p>
+    </div>
+    <div class="col-xs-12 text-center">
+      <img id="logo" src="assets/images/piramal-swasthya.png" alt="Piramal" />
+    </div>
+  </div>
+
+  <div class="row m-t-20">
+    <div class="col-xs-6 text-left">
+      <p>
+        <strong>{{ currentLanguageSet?.inventory?.facilityName }} : </strong
+        >{{ headerDetail?.facilityName }}
+      </p>
+    </div>
+    <div
+      class="col-xs-6 text-right"
+      *ngIf="headerDetail && headerDetail?.issueType !== null"
+    >
+      <p>
+        <strong>{{ currentLanguageSet?.inventory?.dispenseType }} : </strong>
+        {{ headerDetail?.issueType }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Beneficiary Details -->
+  <div class="row m-t-10">
+    <div class="col-xs-12">
+      <h4>{{ title?.headerTitle }}</h4>
+    </div>
+    <div class="col-xs-12">
+      <table class="table table-no-border" aria-describedby="printDetails">
+        <caption></caption>
+        <!-- Table discription added SonarQube Fix -->
+        <ng-container
+          *ngFor="
+            let column of headerColumn;
+            let iseven = even;
+            let isodd = odd
+          "
+        >
+          <tr *ngIf="iseven">
+            <th id="columnName for even" rowspan="2">
+              {{ column?.columnName }}
+            </th>
+            <td rowspan="2">{{ headerDetail[column?.keyName] }}</td>
+          </tr>
+          <tr *ngIf="isodd">
+            <th id="columnName for odd">{{ column?.columnName }}</th>
+            <td>{{ headerDetail[column?.keyName] }}</td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+  </div>
+  <!-- End of Beneficiary Details -->
+
+  <div class="row">
+    <section class="col-xs-12">
+      <table
+        class="table table-bordered table-striped"
+        aria-describedby="printDetails"
+      >
+        <caption></caption>
+        <!-- Table discription added SonarQube Fix -->
+        <thead>
+          <tr class="column">
+            <th id="columnList" *ngFor="let column of columnList">
+              {{ column.columnName }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of fieldData">
+            <td *ngFor="let column of columnList">
+              {{ data[column.keyName] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>
+
+<div class="container bg-unset non-printable m-t-10 m-b-100">
+  <div class="row" style="justify-content: space-between">
+    <button
+      mat-raised-button
+      color="primary"
+      class="pull-right"
+      (click)="downloadList()"
+      style="width: 30px"
+    >
+      {{ currentLanguageSet?.inventory?.print }}
+    </button>
+    <button
+      class="pull-left"
+      style="width: 30px"
+      mat-raised-button
+      color="primary"
+      (click)="goBack()"
+    >
+      {{ currentLanguageSet?.inventory?.back }}
+    </button>
+  </div>
+</div>

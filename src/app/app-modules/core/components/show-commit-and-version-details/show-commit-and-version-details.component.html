@@ -1,0 +1,33 @@
+<div class="row title">
+  <h4>{{ currentLanguageSet?.inventory?.versionDetails }}</h4>
+  <button class="pull-right exit" [matDialogClose]="true" mat-icon-button>
+    <mat-icon class="md-24">close</mat-icon>
+  </button>
+</div>
+<div class="container-fluid">
+  <mat-dialog-content>
+    <div class="table-responsive">
+      <table aria-describedby="Version Details" class="tableTableStriped">
+        <thead>
+          <tr>
+            <th class="width20" id="emptyID"></th>
+            <th class="width40" id="api">API</th>
+            <th class="width40" id="ui">UI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-hover">
+            <th id="vesrsion">{{ currentLanguageSet?.inventory?.version }}</th>
+            <td>{{ input.commitDetailsAPI.version }}</td>
+            <td>{{ input.commitDetailsUI.version }}</td>
+          </tr>
+          <tr class="table-hover">
+            <th id="commit">{{ currentLanguageSet?.inventory?.commit }}</th>
+            <td>{{ input.commitDetailsAPI.commit }}</td>
+            <td>{{ input.commitDetailsUI.commit }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-dialog-content>
+</div>

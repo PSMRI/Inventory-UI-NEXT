@@ -1,0 +1,222 @@
+<div class="container-fluid">
+  <div class="row">
+    <form [formGroup]="manualItemDispenseForm" style="display: flex">
+      <div class="col-xs-12 col-sm-6 col-md-3 box">
+        <mat-form-field class="input-full-width">
+          <mat-label>{{ currentLanguageSet?.inventory?.item }}</mat-label>
+          <input
+            matInput
+            autocomplete="off"
+            appItemDispense
+            [stockForm]="manualItemDispenseForm"
+            [dispenseItemList]="manualDispenseList"
+            name="itemName"
+            formControlName="itemName"
+            (keyup)="resetDependent()"
+            maxlength="100"
+            required
+          />
+          <mat-icon
+            *ngIf="!manualItemDispenseForm.controls['itemName'].disabled"
+            class="search-btn"
+            matSuffix
+            appItemDispense
+            [stockForm]="manualItemDispenseForm"
+            [dispenseItemList]="manualDispenseList"
+            name="itemName"
+            >search</mat-icon
+          >
+        </mat-form-field>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-3 box" style="margin-left: 12px">
+        <mat-form-field class="input-full-width">
+          <mat-label>{{
+            currentLanguageSet?.inventory?.quantityOnHand
+          }}</mat-label>
+          <input
+            autocomplete="off"
+            matInput
+            appDefaultNull
+            allowText="number"
+            name="quantityInHand"
+            formControlName="quantityInHand"
+            [readonly]="true"
+            required
+          />
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+
+  <div class="row" *ngIf="manualDispenseList.data.length > 0">
+    <div class="col-xs-12">
+      <h4>{{ currentLanguageSet?.inventory?.dispensingItem }}</h4>
+    </div>
+
+    <div class="col-xs-12">
+      <div class="table-responsive">
+        <table mat-table [dataSource]="manualDispenseList">
+          <ng-container matColumnDef="SNo">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.inventory?.sNo }}
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              [formGroup]="i"
+            >
+              {{ i + 1 }}
+            </td>
+            <!-- <td mat-cell *matCellDef="let element"> {{ manualDispenseList.indexOf(element)+1 }}</td> -->
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="itemName">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.inventory?.item }}
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              {{ element.itemName }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="quantityInHand">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.inventory?.quantityOnHand }}
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              {{ element.quantityInHand }}
+            </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="quantityDispensed">
+            <!-- <th mat-header-cell *matHeaderCellDef> {{currentLanguageSet?.inventory?.batchNo}} </th> -->
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.itemDispense?.quantityDispensed }}
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              {{ element.quantityDispensed }}
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="batchNo">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.itemDispense?.batchNo }}
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <table>
+                <tr *ngFor="let x of element.batchNo">
+                  <td>{{ x.batchNo }}</td>
+                </tr>
+              </table>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="quantityOnBatch">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.inventory?.quantityOnHand }}
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <table>
+                <tr *ngFor="let x of element.batchNo">
+                  <td>{{ x.quantityInHand }}</td>
+                </tr>
+              </table>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expiryDate">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.itemDispense?.expiryDate }}
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <table>
+                <tr *ngFor="let x of element.batchNo">
+                  <td>{{ x.expiryDate | date: "dd/MM/yyyy" }}</td>
+                </tr>
+              </table>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="quantityOfDispense">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.itemDispense?.quantityDispensed }}
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <table>
+                <tr *ngFor="let x of element.quantityOfDispense">
+                  <td>{{ x }}</td>
+                </tr>
+              </table>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.bendetails?.edit }}
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-icon
+                matTooltip="{{ currentLanguageSet?.bendetails?.edit }}"
+                class="mat-icon material-icons"
+                role="img"
+                aria-hidden="true"
+                style="cursor: Pointer"
+                (click)="editItem(element, i)"
+                >edit</mat-icon
+              >
+            </td></ng-container
+          >
+
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.inventory?.delete }}
+            </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-icon
+                class="icon-remove cursorPointer"
+                matTooltip="{{ currentLanguageSet?.inventory?.delete }}"
+                (click)="removeManualDispenseItem(i)"
+                >delete</mat-icon
+              >
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div
+      class="col-xs-12"
+      id="topBtn"
+      style="display: flex; justify-content: end"
+    >
+      <button
+        style="margin-right: 5px"
+        mat-raised-button
+        class="pull-right"
+        *ngIf="manualDispenseList.data.length > 0"
+        type="button"
+        [disabled]="!(manualDispenseList.data.length > 0)"
+        (click)="save(false)"
+      >
+        {{ currentLanguageSet?.common?.save }}
+      </button>
+      <button
+        mat-raised-button
+        class="pull-right m-r-5"
+        *ngIf="manualDispenseList.data.length > 0"
+        type="button"
+        [disabled]="!(manualDispenseList.data.length > 0)"
+        (click)="save(true)"
+      >
+        {{ currentLanguageSet?.inventory?.saveAndPrint }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="container-fluid">
+  <div class="row m-t-10">
+    <div class="col-xs-12 col-sm-6">
+      <h4>{{ currentLanguageSet?.inventory?.expiryReport }}</h4>
+    </div>
+  </div>
+
+  <div class="m-b-10">
+    <div class="col-12">
+      <form [formGroup]="expiryForm" class="row">
+        <div class="col-4">
+          <mat-form-field
+            class="input-full-width mat_form_field_background_color mat_form_field_background_width"
+          >
+            <mat-label>
+              {{ currentLanguageSet?.inventory?.startDate }}
+            </mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              name="startDate"
+              id="startDate"
+              placeholder="{{ currentLanguageSet?.inventory?.startDate }}"
+              formControlName="startDate"
+              (change)="checkEndDate()"
+              [max]="maxEndDate"
+              [disabled]="true"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker [style.width]="'100%'" #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <mat-form-field
+            class="input-full-width mat_form_field_background_color mat_form_field_background_width"
+          >
+            <mat-label>
+              {{ currentLanguageSet?.inventory?.endDate }}
+            </mat-label>
+            <input
+              matInput
+              [matDatepicker]="pickerEnd"
+              name="endDate"
+              id="endDate"
+              placeholder="{{ currentLanguageSet?.inventory?.endDate }}"
+              formControlName="endDate"
+              [min]="minEndDate"
+              [max]="maxEndDate"
+              [disabled]="true"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="pickerEnd"
+            ></mat-datepicker-toggle>
+            <mat-datepicker [style.width]="'100%'" #pickerEnd></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+
+    <div class="m-t-10 col-12" style="text-align: end">
+      <button
+        mat-raised-button
+        color="accent"
+        type="submit"
+        [disabled]="!expiryForm.valid"
+        (click)="downloadReport(true)"
+      >
+        {{ currentLanguageSet?.inventory?.download }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,237 @@
+<section class="container-fluid">
+  <section class="row m-t-10 no-gutters">
+    <div class="col-xs-12 col-sm-4 box" style="padding-top: 12px">
+      <h4 style="font-size: larger">
+        {{ currentLanguageSet?.inventory?.previousPatientReturn }}
+      </h4>
+    </div>
+    <div class="col-xs-12 col-sm-3 box">
+      <mat-form-field
+        class="input-full-width mat_form_field_background_color"
+        style="padding: 2px"
+      >
+        <mat-label>{{ currentLanguageSet?.inventory?.fromDate }}</mat-label>
+        <input
+          matInput
+          [matDatepicker]="fromDatePicker"
+          placeholder="{{ currentLanguageSet?.inventory?.fromDate }}"
+          [(ngModel)]="fromDate"
+          [max]="today"
+          #startDate="ngModel"
+          ngModel
+        />
+        <mat-datepicker-toggle
+          matPrefix
+          [for]="fromDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #fromDatePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col-xs-12 col-sm-3 box">
+      <mat-form-field
+        class="input-full-width mat_form_field_background_color"
+        style="padding: 2px"
+      >
+        <mat-label>{{ currentLanguageSet?.inventory?.toDate }}</mat-label>
+        <input
+          matInput
+          [matDatepicker]="toDatePicker"
+          placeholder="{{ currentLanguageSet?.inventory?.toDate }}"
+          [(ngModel)]="toDate"
+          [max]="today"
+          #endDate="ngModel"
+          ngModel
+        />
+        <mat-datepicker-toggle
+          matPrefix
+          [for]="toDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #toDatePicker></mat-datepicker>
+      </mat-form-field>
+      <span
+        class="errorText f-s-10 p-l-10"
+        *ngIf="endDate.value < startDate.value"
+        >{{ currentLanguageSet?.inventory?.toDateCannotBeBeforeFromDate }}</span
+      >
+    </div>
+    <div class="col-xs-12 col-sm-2 box" style="margin-top: 15px">
+      <button
+        mat-raised-button
+        [disabled]="!fromDate || !toDate || endDate.value < startDate.value"
+        type="button"
+        (click)="viewRecords()"
+      >
+        {{ currentLanguageSet?.inventory?.viewRecords }}
+      </button>
+    </div>
+  </section>
+
+  <section class="row m-t-20 m-b-40">
+    <div class="col-xs-12">
+      <mat-card>
+        <mat-card-content>
+          <div class="">
+            <div class="col-xs-12 text-right">
+              <mat-form-field id="filterbox">
+                <input
+                  autocomplete="off"
+                  matInput
+                  placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
+                  [(ngModel)]="filterTerm"
+                  name="filterTerm"
+                  (keyup)="filterPatientReturnList(filterTerm)"
+                />
+                <mat-icon class="mdIcon" matSuffix>search</mat-icon>
+              </mat-form-field>
+            </div>
+            <section class="col-xs-12">
+              <div class="table-responsive">
+                <table
+                  mat-table
+                  class="mat-elevation-z8"
+                  aria-describedby="patientReturnBatchDetails"
+                  [dataSource]="filteredPatientReturnList"
+                >
+                  <ng-container matColumnDef="sNo">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.sNo }}
+                    </th>
+                    <td mat-cell *matCellDef="let return; let i = index">
+                      {{ i + 1 }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="patientName">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.patientName }}
+                    </th>
+                    <td mat-cell *matCellDef="let return">
+                      {{ return?.patientName }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="itemName">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.itemName }}
+                    </th>
+                    <td mat-cell *matCellDef="let return">
+                      {{ return?.itemName }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="batchNo">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.itemDispense?.batchNo }}
+                    </th>
+                    <td mat-cell *matCellDef="let return">
+                      {{ return?.batchNo }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="dateOfIssue">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.dateOfIssue }}
+                    </th>
+                    <td mat-cell *matCellDef="let return">
+                      {{ return?.dateofIssue | istDate: "dd/MM/yyyy" }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="dateOfReturn">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.dateOfReturn }}
+                    </th>
+                    <td mat-cell *matCellDef="let return">
+                      {{ return?.returnDate | istDate: "dd/MM/yyyy" }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="issuedQuantity">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.itemDispense?.quantityinHand }}
+                    </th>
+                    <td mat-cell *matCellDef="let return">
+                      {{ return?.issuedQuantity }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container
+                    *ngIf="filteredPatientReturnList.data.length > 0"
+                  >
+                    <div class="total-count">
+                      {{ currentLanguageSet?.inventory?.totalCount }} :
+                      {{ filteredPatientReturnList.data.length }}
+                    </div>
+                    <div style="text-align: right">
+                      <mat-paginator
+                        [pageSizeOptions]="[5, 10, 25]"
+                        [pageSize]="5"
+                        showFirstLastButtons
+                      ></mat-paginator>
+                    </div>
+                  </ng-container>
+
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="[
+                      'sNo',
+                      'patientName',
+                      'itemName',
+                      'batchNo',
+                      'dateOfIssue',
+                      'dateOfReturn',
+                      'issuedQuantity'
+                    ]"
+                  ></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="
+                      let row;
+                      columns: [
+                        'sNo',
+                        'patientName',
+                        'itemName',
+                        'batchNo',
+                        'dateOfIssue',
+                        'dateOfReturn',
+                        'issuedQuantity'
+                      ]
+                    "
+                  ></tr>
+                </table>
+                <div
+                  *ngIf="
+                    filteredPatientReturnList &&
+                    filteredPatientReturnList.data.length === 0
+                  "
+                  class="noRecord"
+                >
+                  <tr>
+                    <td colspan="6">
+                      <strong>{{
+                        currentLanguageSet?.inventory?.norecordsfound
+                      }}</strong>
+                    </td>
+                  </tr>
+                </div>
+              </div>
+            </section>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="back-btn-container">
+            <button
+              mat-raised-button
+              matTooltip="{{ currentLanguageSet?.inventory?.back }}"
+              matTooltipPosition="right"
+              color="primary"
+              (click)="goBack()"
+            >
+              {{ currentLanguageSet?.inventory?.back }}
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </section>
+</section>

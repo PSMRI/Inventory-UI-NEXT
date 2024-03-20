@@ -1,0 +1,33 @@
+<div class="title">
+  <h4>{{ currentLanguageSet?.inventory?.reasonForReject }}</h4>
+  <button mat-icon-button [mat-dialog-close] class="pull-right exit width-20px">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<form [formGroup]="rejectRequestForm" autocomplete="off">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-t-20">
+    <mat-form-field [style.width]="'100%'">
+      <input
+        required="true"
+        matInput
+        placeholder="{{ currentLanguageSet?.inventory?.reason }}"
+        allowText="alphanumericspace"
+        maxlength="250"
+        formControlName="rejectReason"
+      />
+    </mat-form-field>
+  </div>
+</form>
+<div class="col-xs-12">
+  <button
+    class="pull-right"
+    mat-raised-button
+    color="primary"
+    tabindex="-1"
+    type="button"
+    [disabled]="rejectRequestForm.invalid"
+    (click)="rejectIndentRequest()"
+  >
+    {{ currentLanguageSet?.common?.ok }}
+  </button>
+</div>

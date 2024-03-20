@@ -1,0 +1,87 @@
+<div class="container-fluid">
+  <div class="row m-t-10">
+    <div class="col-xs-12 col-sm-6">
+      <h4>{{ currentLanguageSet?.inventory?.monthlyReport }}</h4>
+    </div>
+  </div>
+
+  <div class="m-b-10">
+    <div class="col-12">
+      <form [formGroup]="monthlyForm" class="row">
+        <div class="col-4 box">
+          <mat-form-field
+            class="input-full-width mat_form_field_background_margin mat_form_field_background_color"
+          >
+            <mat-label>
+              {{ currentLanguageSet?.inventory?.selectmonth }}
+            </mat-label>
+            <mat-select
+              [style.width]="'100%'"
+              placeholder="{{ currentLanguageSet?.inventory?.selectmonth }}"
+              name="month"
+              id="month"
+              formControlName="month"
+              required
+            >
+              <mat-option *ngFor="let month of months" [value]="month">{{
+                month.name
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-4 box">
+          <mat-form-field
+            class="input-full-width mat_form_field_background_margin mat_form_field_background_color"
+          >
+            <mat-label>
+              {{ currentLanguageSet?.inventory?.selectyear }}
+            </mat-label>
+            <mat-select
+              [style.width]="'100%'"
+              placeholder="{{ currentLanguageSet?.inventory?.selectyear }}"
+              name="year"
+              id="year"
+              formControlName="year"
+              required
+            >
+              <mat-option *ngFor="let year of years" [value]="year">{{
+                year
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field
+            class="input-full-width mat_form_field_background_margin mat_form_field_background_color"
+          >
+            <mat-label>
+              {{ currentLanguageSet?.inventory?.facility }}
+            </mat-label>
+            <mat-select
+              [style.width]="'100%'"
+              placeholder="{{ currentLanguageSet?.inventory.facility }}"
+              formControlName="facilityName"
+            >
+              <mat-option *ngFor="let item of facilities" [value]="item">{{
+                item
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+
+    <div class="m-t-10 col-12" style="text-align: end">
+      <button
+        mat-raised-button
+        color="accent"
+        type="submit"
+        [disabled]="!monthlyForm.valid"
+        (click)="downloadReport(true)"
+      >
+        {{ currentLanguageSet?.inventory?.download }}
+      </button>
+    </div>
+  </div>
+</div>

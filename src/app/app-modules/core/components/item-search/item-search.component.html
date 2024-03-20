@@ -1,0 +1,139 @@
+<div class="title" style="display: flex; justify-content: space-between">
+  <h4>{{ currentLanguageSet?.inventory?.itemSelection }}</h4>
+  <button
+    mat-icon-button
+    matDialogClose
+    matTooltip="{{ currentLanguageSet?.inventory?.close }}"
+    class="pull-right exit width-20px"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div class="container-fluid">
+  <div class="row no-gutters">
+    <div class="col-xs-12 col-sm-4" style="display: flex; align-items: center">
+      <mat-form-field class="input-full-width">
+        <mat-label>{{ currentLanguageSet?.inventory?.drugItem }}</mat-label>
+        <input
+          autocomplete="off"
+          allowText="itemNameSearchValidator"
+          maxlength="100"
+          matInput
+          [(ngModel)]="input.searchTerm"
+          (keyup.enter)="search(input.searchTerm)"
+        />
+      </mat-form-field>
+    </div>
+    <div
+      class="col-xs-12 col-sm-8"
+      style="display: flex; align-items: center; padding-left: 10px"
+    >
+      <button
+        class="search-btn"
+        mat-raised-button
+        type="button"
+        (click)="search(input.searchTerm)"
+      >
+        {{ currentLanguageSet?.inventory?.search }}
+      </button>
+    </div>
+  </div>
+
+  <div class="m-t-30"></div>
+
+  <mat-dialog-content>
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" aria-describedby="itemDetails">
+        <!-- Item Code Column -->
+
+        <ng-container matColumnDef="itemCode">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.itemCode }}
+          </th>
+          <td mat-cell *matCellDef="let item">{{ item?.itemCode }}</td>
+        </ng-container>
+
+        <!-- Item Name Column -->
+        <ng-container matColumnDef="itemName">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.itemName }}
+          </th>
+          <td mat-cell *matCellDef="let item">{{ item?.itemName }}</td>
+        </ng-container>
+
+        <!-- Item Category Column -->
+        <ng-container matColumnDef="itemCategory">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.itemCategory }}
+          </th>
+          <td mat-cell *matCellDef="let item">
+            {{ item?.itemCategory?.itemCategoryName }}
+          </td>
+        </ng-container>
+
+        <!-- Item Form Column -->
+        <ng-container matColumnDef="itemForm">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.itemForm }}
+          </th>
+          <td mat-cell *matCellDef="let item">
+            {{ item?.itemForm?.itemForm }}
+          </td>
+        </ng-container>
+
+        <!-- Pharmacological Category Column -->
+        <ng-container matColumnDef="pharmacologicalCategory">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.pharmacologicalCategory }}
+          </th>
+          <td mat-cell *matCellDef="let item">
+            {{ item?.pharmacologyCategory?.pharmCategoryName }}
+          </td>
+        </ng-container>
+
+        <!-- Strength Column -->
+        <ng-container matColumnDef="strength">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.strength }}
+          </th>
+          <td mat-cell *matCellDef="let item">
+            {{ item?.strength ? item?.strength : " " }}
+            {{ item?.uom?.uOMName ? item?.uom?.uOMName : " " }}
+          </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.action }}
+          </th>
+          <td mat-cell *matCellDef="let item" class="text-center">
+            <button mat-raised-button [matDialogClose]="item" class="blueBttn">
+              {{ currentLanguageSet?.inventory?.select }}
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Header Row -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+        <!-- Data Rows -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <div class="noRecord" *ngIf="dataSource.data.length === 0">
+        <strong>{{ currentLanguageSet?.inventory?.norecordsfound }}</strong>
+      </div>
+      <div class="total-count" *ngIf="dataSource.data.length > 0">
+        {{ currentLanguageSet?.inventory?.totalCount }} :
+        {{ dataSource.data.length }}
+      </div>
+      <mat-paginator
+        [hidden]="dataSource.data.length === 0"
+        [pageSizeOptions]="[5, 10, 25]"
+        [pageSize]="5"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </mat-dialog-content>
+</div>

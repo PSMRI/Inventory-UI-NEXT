@@ -35,7 +35,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './common-dialog.component.html',
   styleUrls: ['./common-dialog.component.css'],
 })
-export class CommonDialogComponent implements OnInit, DoCheck {
+export class CommonDialogComponent implements OnInit {
   @Output() cancelEvent = new EventEmitter();
 
   public title!: string;
@@ -53,12 +53,9 @@ export class CommonDialogComponent implements OnInit, DoCheck {
   public mandatories: any;
 
   public provideDraftDesc!: boolean;
-
-  // Choose from Radio Button
   public choice!: boolean;
   public values: any;
   public selectedValue: any;
-  // Choose from Radio Button Ends
 
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
@@ -67,9 +64,6 @@ export class CommonDialogComponent implements OnInit, DoCheck {
     public dialogRef: MatDialogRef<CommonDialogComponent>,
     public http_service: LanguageService,
   ) {}
-  ngDoCheck(): void {
-    throw new Error('Method not implemented.');
-  }
 
   ngOnInit() {
     this.fetchLanguageResponse();
@@ -91,7 +85,7 @@ export class CommonDialogComponent implements OnInit, DoCheck {
 
     if (timer && timer > 0) {
       this.intervalRef = setInterval(() => {
-        if (timer == 0) {
+        if (timer === 0) {
           clearInterval(this.intervalRef);
           this.dialogRef.close({ action: 'timeout' });
         } else {

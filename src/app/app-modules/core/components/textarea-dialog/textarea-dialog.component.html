@@ -1,0 +1,16 @@
+<div mat-dialog-content>
+  <mat-form-field class="textarea-full-width">
+    <textarea
+      matInput
+      matTextareaAutosize
+      matAutosizeMinRows="5"
+      #message
+      [maxlength]="data.length"
+      placeholder="{{ currentLanguageSet?.inventory?.typeyourdata }}"
+      [(ngModel)]="data.observations"
+    ></textarea>
+    <mat-hint align="end"
+      >{{ message.value.length }} / {{ data.length }}</mat-hint
+    >
+  </mat-form-field>
+</div>

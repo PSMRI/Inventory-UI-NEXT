@@ -1,0 +1,226 @@
+<div class="dialog-container">
+  <div
+    class="dialog-title"
+    style="display: flex; justify-content: space-between"
+  >
+    <h4>{{ currentLanguageSet?.inventory?.batchSelection }}</h4>
+    <button
+      mat-icon-button
+      matDialogClose
+      matTooltip="{{ currentLanguageSet?.inventory?.close }}"
+      class="pull-right exit width-20px"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="container-fluid">
+    <div class="scrolling-content">
+      <div class="row m-t-10 no-gutters">
+        <div
+          class="col-xs-12 col-sm-4"
+          style="display: flex; align-items: center"
+        >
+          <mat-form-field class="input-full-width">
+            <input
+              autocomplete="off"
+              allowText="itemNameSearchValidator"
+              matInput
+              placeholder="{{ currentLanguageSet?.inventory?.itemNameCode }}"
+              maxlength="100"
+              [(ngModel)]="input.searchTerm"
+              (keyup.enter)="search(input.searchTerm)"
+            />
+          </mat-form-field>
+        </div>
+        <div
+          class="col-xs-12 col-sm-8"
+          style="display: flex; align-items: center; padding-left: 10px"
+        >
+          <button
+            class="search-btn"
+            mat-raised-button
+            color="accent"
+            type="button"
+            (click)="search(input.searchTerm)"
+          >
+            {{ currentLanguageSet?.inventory?.search }}
+          </button>
+        </div>
+      </div>
+
+      <div class="row m-t-10">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table
+              mat-table
+              class="mat-elevation-z8"
+              aria-describedby="batchDetails"
+              [dataSource]="dataSource"
+            >
+              <ng-container matColumnDef="itemCode">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.itemCode }}
+                </th>
+                <td mat-cell *matCellDef="let batch">
+                  {{ batch?.item?.itemCode }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="itemName">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.itemName }}
+                </th>
+                <td mat-cell *matCellDef="let batch">
+                  {{ batch?.item?.itemName }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="batchNo">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.batchNo }}
+                </th>
+                <td mat-cell *matCellDef="let batch">{{ batch?.batchNo }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="itemCategory">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.itemCategory }}
+                </th>
+                <td mat-cell *matCellDef="let batch">
+                  {{ batch?.item?.itemCategory?.itemCategoryName }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="itemForm">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.itemForm }}
+                </th>
+                <td mat-cell *matCellDef="let batch">
+                  {{ batch?.item?.itemForm?.itemForm }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="pharmacologicalCategory">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.pharmacologicalCategory }}
+                </th>
+                <td mat-cell *matCellDef="let batch">
+                  {{ batch?.item?.pharmacologyCategory?.pharmCategoryName }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="strength">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.strength }}
+                </th>
+                <td mat-cell *matCellDef="let batch">
+                  {{
+                    batch?.item?.strength
+                      ? batch?.item?.strength +
+                        " " +
+                        (batch?.item?.uom?.uOMName || "")
+                      : ""
+                  }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="quantityOnHand">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.quantityOnHand }}
+                </th>
+                <td mat-cell *matCellDef="let batch">
+                  {{ batch?.quantityInHand }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="expiryDate">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.expiryDate }}
+                </th>
+                <td mat-cell *matCellDef="let batch">
+                  {{ batch?.expiryDate | date: "dd-MM-yyyy" }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.action }}
+                </th>
+                <td mat-cell *matCellDef="let batch" class="text-center">
+                  <mat-checkbox
+                    (change)="selectBatch($event, batch)"
+                    [checked]="disableSelection(batch) || batch.selected"
+                    [disabled]="disableSelection(batch)"
+                  ></mat-checkbox>
+                </td>
+              </ng-container>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="[
+                  'itemCode',
+                  'itemName',
+                  'batchNo',
+                  'itemCategory',
+                  'itemForm',
+                  'pharmacologicalCategory',
+                  'strength',
+                  'quantityOnHand',
+                  'expiryDate',
+                  'action'
+                ]"
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="
+                  let batch;
+                  columns: [
+                    'itemCode',
+                    'itemName',
+                    'batchNo',
+                    'itemCategory',
+                    'itemForm',
+                    'pharmacologicalCategory',
+                    'strength',
+                    'quantityOnHand',
+                    'expiryDate',
+                    'action'
+                  ]
+                "
+              ></tr>
+            </table>
+            <div class="noRecord" *ngIf="dataSource.data.length === 0">
+              <strong>{{
+                currentLanguageSet?.inventory?.norecordsfound
+              }}</strong>
+            </div>
+            <div class="total-count" *ngIf="dataSource.data.length > 0">
+              {{ currentLanguageSet?.inventory?.totalCount }} :
+              {{ dataSource.data.length }}
+            </div>
+            <mat-paginator
+              [hidden]="dataSource.data.length === 0"
+              [pageSizeOptions]="[5, 10, 25]"
+              [pageSize]="5"
+              showFirstLastButtons
+            ></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row m-t-10 m-b-10">
+      <div class="col-xs-12" style="display: flex; justify-content: end">
+        <button
+          mat-raised-button
+          (click)="submitBatch()"
+          [disabled]="selectedBatchList.length === 0"
+          class="pull-right"
+          color="primary"
+        >
+          {{ currentLanguageSet?.inventory?.submit }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

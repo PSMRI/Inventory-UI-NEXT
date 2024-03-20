@@ -1,0 +1,149 @@
+<div class="title" style="display: flex; justify-content: space-between">
+  <h4>{{ currentLanguageSet?.inventory?.itemForIndentRequest }}</h4>
+  <button
+    mat-icon-button
+    matDialogClose
+    matTooltip="{{ currentLanguageSet?.inventory?.close }}"
+    class="pull-right exit width-20px"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div class="container-fluid">
+  <div class="row m-t-10 no-gutters">
+    <div class="col-xs-12 col-sm-6">
+      <mat-form-field class="input-full-width">
+        <input
+          autocomplete="off"
+          allowText="itemNameSearchValidator"
+          matInput
+          placeholder="{{ currentLanguageSet?.inventory?.itemNameCode }}"
+          maxlength="100"
+          [(ngModel)]="input.searchTerm"
+          (keyup.enter)="search(input.searchTerm)"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <button
+        class="search-btn"
+        mat-raised-button
+        color="accent"
+        type="button"
+        (click)="search(input.searchTerm)"
+      >
+        {{ currentLanguageSet?.inventory?.search }}
+      </button>
+    </div>
+  </div>
+
+  <mat-dialog-content>
+    <div class="table-responsive">
+      <table
+        mat-table
+        class="mat-elevation-z8"
+        aria-describedby="itemListDetails"
+        [dataSource]="dataSource"
+      >
+        <ng-container matColumnDef="itemCode">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.itemCode }}
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.itemCode }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="itemName">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.itemName }}
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.itemName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="itemCategory">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.itemCategory }}
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.itemCategory }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="itemForm">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.itemForm }}
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.itemForm }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="strength">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.strength }}
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.strength ? row.strength : " " }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantityOnHand">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.quantityOnHand }}
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.qoh }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ currentLanguageSet?.inventory?.action }}
+          </th>
+          <td mat-cell *matCellDef="let row" class="text-center">
+            <mat-checkbox
+              (change)="selectItem($event, row)"
+              [checked]="disableSelection(row) || row.selected"
+              [disabled]="disableSelection(row)"
+            ></mat-checkbox>
+          </td>
+        </ng-container>
+        <tr
+          mat-row
+          *matRowDef="
+            let row;
+            columns: [
+              'itemCode',
+              'itemName',
+              'itemCategory',
+              'itemForm',
+              'strength',
+              'quantityOnHand',
+              'action'
+            ]
+          "
+        ></tr>
+      </table>
+      <div class="noRecord" *ngIf="dataSource.data.length === 0">
+        <strong>{{ currentLanguageSet?.inventory?.norecordsfound }}</strong>
+      </div>
+      <div class="total-count" *ngIf="dataSource.data.length > 0">
+        {{ currentLanguageSet?.inventory?.totalCount }} :
+        {{ dataSource.data.length }}
+      </div>
+      <mat-paginator
+        [hidden]="dataSource.data.length === 0"
+        [pageSizeOptions]="[5, 10, 25]"
+        [pageSize]="5"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </mat-dialog-content>
+  <div class="row m-t-10 m-b-10">
+    <div class="col-xs-12">
+      <button
+        mat-raised-button
+        class="pull-right"
+        (click)="submitIndentList()"
+        [disabled]="selectedItemList.length === 0"
+        color="primary"
+      >
+        {{ currentLanguageSet?.inventory?.submit }}
+      </button>
+    </div>
+  </div>
+</div>

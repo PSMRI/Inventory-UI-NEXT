@@ -1,0 +1,191 @@
+<div id="head" style="display: flex; justify-content: space-between">
+  <h4 id="dialog_head" class="pull-left">
+    {{ currentLanguageSet?.inventory?.dispenseDetails }}
+  </h4>
+  <mat-icon
+    id="cross"
+    class="pull-right"
+    mat-dialog-close
+    matTooltip="{{ currentLanguageSet?.inventory?.close }}"
+    (click)="dialogRef.close(false)"
+    >close</mat-icon
+  >
+</div>
+
+<div class="scrolling-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12">
+        <table
+          mat-table
+          class="table"
+          aria-describedby="medicineDetailsDetails"
+          [dataSource]="medicineDetailList"
+        >
+          <!-- Define columns -->
+          <ng-container matColumnDef="patientName">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.inventory?.patientName }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.patientName }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="issueType">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.inventory?.issueType }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.issueType }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="createdBy">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.inventory?.createdBy }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.createdBy }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="reference">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.inventory?.reference }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.reference }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="createdDate">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ currentLanguageSet?.inventory?.createdDate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.createdDate | istDate: "dd/MM/yyyy" }}
+            </td>
+          </ng-container>
+
+          <!-- Header and row definitions -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 text-right">
+        <mat-form-field id="filterbox">
+          <input
+            matInput
+            autocomplete="off"
+            tabindex="-1"
+            matInput
+            placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
+            [(ngModel)]="_filterTerm"
+            name="filterTerm"
+            (keyup)="filterDetails(_filterTerm)"
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <section class="table-responsive">
+          <mat-table
+            class="mat-elevation-z8"
+            aria-describedby="viewStoreStockDetails"
+            [dataSource]="dataSource"
+          >
+            <ng-container matColumnDef="noValue">
+              <mat-header-cell *matHeaderCellDef>{{
+                currentLanguageSet?.inventory?.sNo
+              }}</mat-header-cell>
+              <mat-cell *matCellDef="let item; let i = index">{{
+                i + 1
+              }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="itemName">
+              <mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.inventory?.itemName }}
+              </mat-header-cell>
+              <mat-cell *matCellDef="let item">
+                {{ item?.itemName }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="batchNo">
+              <mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.itemDispense?.batchNo }}
+              </mat-header-cell>
+              <mat-cell *matCellDef="let item">
+                {{ item?.batchNo }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="expiryDate">
+              <mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.itemDispense?.expiryDate }}
+              </mat-header-cell>
+              <mat-cell *matCellDef="let item">
+                {{ item?.expiryDate | date: "dd/MM/yyyy" }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="quantity">
+              <mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.inventory?.quantity }}
+              </mat-header-cell>
+              <mat-cell *matCellDef="let item">
+                {{ item?.quantity }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container *ngIf="dataSource.data.length > 0">
+              <div class="total-count">
+                {{ currentLanguageSet?.inventory?.totalCount }} :
+                {{ dataSource.data.length }}
+              </div>
+              <div style="text-align: right">
+                <mat-paginator
+                  [pageSizeOptions]="[5, 10, 25]"
+                  [pageSize]="5"
+                  showFirstLastButtons
+                ></mat-paginator>
+              </div>
+            </ng-container>
+            <!-- Header row -->
+            <mat-header-row *matHeaderRowDef="itemListColumns"></mat-header-row>
+            <!-- Data row -->
+            <mat-row *matRowDef="let row; columns: itemListColumns"> </mat-row>
+          </mat-table>
+          <div
+            *ngIf="dataSource && dataSource.data.length === 0"
+            class="noRecord"
+          >
+            <tr>
+              <td colspan="6" style="text-align: center; font-size: 16px">
+                <strong>{{
+                  currentLanguageSet?.inventory?.norecordsfound
+                }}</strong>
+              </td>
+            </tr>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="row m-b-15">
+      <div class="col-xs-12" style="display: flex; justify-content: end">
+        <button
+          class="pull-right"
+          mat-raised-button
+          type="button"
+          (click)="print()"
+          tabindex="-1"
+        >
+          {{ currentLanguageSet?.inventory?.print }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

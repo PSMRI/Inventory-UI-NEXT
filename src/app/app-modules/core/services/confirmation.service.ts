@@ -62,14 +62,15 @@ export class ConfirmationService {
     return dialogRef.afterClosed();
   }
 
-  public alert(message: string, status = 'info', btnOkText = 'OK'): void {
+  public alert(
+    message: string,
+    status = 'info',
+    btnOkText = 'OK',
+  ): MatDialogRef<CommonDialogComponent> {
     const config = {
       width: '420px',
     };
-    const dialogRef: MatDialogRef<CommonDialogComponent> = this.dialog.open(
-      CommonDialogComponent,
-      config,
-    );
+    const dialogRef = this.dialog.open(CommonDialogComponent, config);
     dialogRef.componentInstance.message = message;
     dialogRef.componentInstance.status = status.toLowerCase();
     dialogRef.componentInstance.btnOkText = btnOkText;
@@ -77,6 +78,7 @@ export class ConfirmationService {
     dialogRef.componentInstance.alert = true;
     dialogRef.componentInstance.remarks = false;
     dialogRef.componentInstance.editRemarks = false;
+    return dialogRef;
   }
 
   public remarks(

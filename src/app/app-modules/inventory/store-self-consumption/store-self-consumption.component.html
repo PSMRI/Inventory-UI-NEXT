@@ -1,0 +1,276 @@
+<div class="container-fluid">
+  <form [formGroup]="storeSelfConsumptionForm" autocomplete="off" novalidate>
+    <div class="row m-t-10">
+      <div class="col-xs-12 col-sm-6" style="padding-top: 12px">
+        <h4 style="font-size: larger">
+          {{ currentLanguageSet?.inventory?.storeConsumption }}
+        </h4>
+      </div>
+
+      <div class="col-xs-12 col-sm-6" id="topBtn">
+        <button
+          mat-raised-button
+          class="pull-right button-full-width"
+          type="button"
+          color="primary"
+          routerLink="View"
+        >
+          {{ currentLanguageSet?.inventory?.previousRecords }}
+        </button>
+      </div>
+    </div>
+
+    <div class="row m-t-10">
+      <div
+        class="col-xs-12 col-sm-4 col-md-4 col-lg-3 mat_form_field_background_color"
+      >
+        <mat-form-field class="input-full-width">
+          <mat-label>{{
+            currentLanguageSet?.inventory?.referenceNumber
+          }}</mat-label>
+          <input
+            matInput
+            required
+            allowText="alphanumeric"
+            maxlength="20"
+            name="referenceNumber"
+            formControlName="referenceNumber"
+            #referenceNumber
+          />
+        </mat-form-field>
+        <mat-hint>
+          <span
+            class="error_text"
+            *ngIf="
+              storeSelfConsumptionForm.get('referenceNumber')?.invalid &&
+              (storeSelfConsumptionForm.get('referenceNumber')?.dirty ||
+                storeSelfConsumptionForm.get('referenceNumber')?.touched)
+            "
+          >
+            {{ currentLanguageSet?.inventory?.pleaseenterReferenceNumber }}
+          </span>
+        </mat-hint>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+        <mat-form-field
+          class="input-full-width mat_form_field_background_color"
+        >
+          <mat-label>{{
+            currentLanguageSet?.inventory?.consumptionReason
+          }}</mat-label>
+          <input
+            matInput
+            required
+            allowText="alphanumericspace"
+            maxlength="100"
+            name="dispenseReason"
+            formControlName="dispenseReason"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row m-t-10">
+      <div class="col-xs-12">
+        <mat-card>
+          <div class="table-responsive mat_form_field_background_color_table">
+            <ng-container formArrayName="dispensedStock"></ng-container>
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+              <ng-container matColumnDef="index">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.index }}
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element; let i = index"
+                  [formGroup]="element"
+                >
+                  {{ i + 1 }}
+                </td>
+              </ng-container>
+              <!-- Name Column -->
+              <ng-container matColumnDef="itemName">
+                <th mat-header-cell *matHeaderCellDef>
+                  <b>{{ currentLanguageSet?.inventory?.itemName }}</b>
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element; let i = index"
+                  [formGroup]="element"
+                >
+                  <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.itemName
+                    }}</mat-label>
+                    <input
+                      matInput
+                      allowText="itemNameSearchValidator"
+                      maxlength="100"
+                      appBatchSearch
+                      [previousSelected]="
+                        storeSelfConsumptionForm.value.dispensedStock
+                      "
+                      [stockForm]="element"
+                      required
+                      name="itemName"
+                      formControlName="itemName"
+                    />
+                    <mat-icon
+                      *ngIf="!element.controls?.['itemName']?.disabled"
+                      class="search-btn"
+                      matSuffix
+                      appBatchSearch
+                      [previousSelected]="
+                        storeSelfConsumptionForm.value.dispensedStock
+                      "
+                      [stockForm]="element"
+                      >search</mat-icon
+                    >
+                  </mat-form-field>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="batchNo">
+                <th mat-header-cell *matHeaderCellDef>
+                  <b>{{ currentLanguageSet?.itemDispense?.batchNo }}</b>
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element; let i = index"
+                  [formGroup]="element"
+                >
+                  <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.itemDispense?.batchNo
+                    }}</mat-label>
+                    <input
+                      matInput
+                      required
+                      name="batchNo"
+                      formControlName="batchNo"
+                      readonly
+                    />
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <!-- Quantity in Hand Column -->
+              <ng-container matColumnDef="quantityInHand">
+                <th mat-header-cell *matHeaderCellDef>
+                  <b>{{ currentLanguageSet?.inventory?.qOH }}</b>
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element; let i = index"
+                  [formGroup]="element"
+                >
+                  <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.qOH
+                    }}</mat-label>
+                    <input
+                      matInput
+                      required
+                      name="quantityInHand"
+                      formControlName="quantityInHand"
+                      readonly
+                    />
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <!-- Quantity Column -->
+              <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef>
+                  <b>{{ currentLanguageSet?.inventory?.quantity }}</b>
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let element; let i = index"
+                  [formGroup]="element"
+                >
+                  <mat-form-field class="input-full-width">
+                    <mat-label>{{
+                      currentLanguageSet?.inventory?.quantity
+                    }}</mat-label>
+                    <input
+                      matInput
+                      appAllowMin="1"
+                      allowText="number"
+                      required
+                      name="quantity"
+                      formControlName="quantity"
+                      [readonly]="!element.value.itemID"
+                      [attr.maxlength]="
+                        ('' + element.value?.quantityInHand).length
+                      "
+                      (blur)="validateRequestedQuantity(element)"
+                    />
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <!-- Delete Column -->
+              <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td
+                  mat-cell
+                  *matCellDef="let element; let i = index"
+                  [formGroup]="element"
+                >
+                  <mat-icon
+                    class="icon-remove cursorPointer"
+                    matTooltip="{{ currentLanguageSet?.inventory?.delete }}"
+                    (click)="removeDispensedStock(i, element)"
+                    >delete</mat-icon
+                  >
+                </td>
+              </ng-container>
+
+              <!-- Batch No Column -->
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <div
+              class="text-right"
+              *ngIf="storeSelfConsumptionForm.controls['dispensedStock'].valid"
+            >
+              <button
+                mat-mini-fab
+                type="button"
+                class="pull-right"
+                color="primary"
+                (click)="addDispensedStock()"
+              >
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="row m-t-10 m-b-40">
+      <div class="col-xs-12" id="topBtn">
+        <button
+          type="button"
+          mat-raised-button
+          class="pull-right m-r-5"
+          [disabled]="storeSelfConsumptionForm.invalid"
+          (click)="saveSelfConsumptionStock()"
+        >
+          {{ currentLanguageSet?.common?.save }}
+        </button>
+        <button
+          type="button"
+          mat-raised-button
+          class="pull-right m-r-5"
+          [disabled]="storeSelfConsumptionForm.pristine"
+          (click)="reset()"
+        >
+          {{ currentLanguageSet?.inventory?.clear }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,163 @@
+<div class="container-fluid">
+  <form [formGroup]="systemDispenseForm">
+    <div class="row m-t-10">
+      <div class="col-xs-12 col-sm-12">
+        <div class="table-responsive">
+          <ng-container formArrayName="systemItemDispenseList"></ng-container>
+          <mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+            <ng-container matColumnDef="sNo">
+              <mat-header-cell *matHeaderCellDef>{{
+                currentLanguageSet?.inventory?.sNo
+              }}</mat-header-cell>
+              <mat-cell
+                *matCellDef="let element; let i = index"
+                [formGroup]="element"
+                >{{ i + 1 }}</mat-cell
+              >
+            </ng-container>
+
+            <ng-container matColumnDef="itemName">
+              <mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.inventory?.item }}
+              </mat-header-cell>
+              <mat-cell
+                *matCellDef="let element; let i = index"
+                [formGroup]="element"
+              >
+                <mat-form-field class="input-full-width">
+                  <mat-label>{{
+                    currentLanguageSet?.inventory?.item
+                  }}</mat-label>
+                  <input
+                    matInput
+                    allowText="itemNameSearchValidator"
+                    autocomplete="off"
+                    appItemDispense
+                    [stockForm]="element"
+                    [dispenseItemList]="dataSource"
+                    name="itemName"
+                    formControlName="itemName"
+                    (keyup)="resetDependent(element)"
+                    maxlength="100"
+                    required
+                  />
+                  <mat-icon
+                    *ngIf="!element.controls['itemName'].disabled"
+                    class="search-btn"
+                    matSuffix
+                    appItemDispense
+                    [stockForm]="element"
+                    [dispenseItemList]="dataSource"
+                    >search</mat-icon
+                  >
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="quantity">
+              <mat-header-cell *matHeaderCellDef>{{
+                currentLanguageSet?.inventory?.qtyinHand
+              }}</mat-header-cell>
+              <mat-cell
+                *matCellDef="let element; let i = index"
+                [formGroup]="element"
+              >
+                <mat-form-field class="input-full-width">
+                  <mat-label>{{
+                    currentLanguageSet?.inventory?.qtyinHand
+                  }}</mat-label>
+                  <input
+                    matInput
+                    required
+                    appDefaultNull
+                    allowText="number"
+                    name="quantityInHand"
+                    formControlName="quantityInHand"
+                    [readonly]="true"
+                    [required]="true"
+                  />
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="totalCostPrice">
+              <mat-header-cell *matHeaderCellDef>{{
+                currentLanguageSet?.inventory?.qtyRequired
+              }}</mat-header-cell>
+              <mat-cell
+                *matCellDef="let element; let i = index"
+                [formGroup]="element"
+              >
+                <mat-form-field class="input-full-width">
+                  <mat-label>{{
+                    currentLanguageSet?.inventory?.qtyRequired
+                  }}</mat-label>
+                  <input
+                    matInput
+                    required
+                    appDefaultNull
+                    allowText="number"
+                    [attr.maxlength]="
+                      ('' + element.value.quantityInHand).length
+                    "
+                    name="quantityRequired"
+                    formControlName="quantityRequired"
+                    (blur)="validateRequestedQuantity(element)"
+                    [readonly]="!element.value.quantityInHand"
+                  />
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef>{{
+                currentLanguageSet?.inventory?.action
+              }}</mat-header-cell>
+              <mat-cell
+                *matCellDef="let element; let i = index"
+                [formGroup]="element"
+                class="text-right"
+              >
+                <mat-icon
+                  class="icon-remove cursorPointer"
+                  (click)="removeItem(i, element)"
+                  matTooltip="{{ currentLanguageSet?.inventory?.delete }}"
+                  >delete</mat-icon
+                >
+              </mat-cell>
+            </ng-container>
+            <mat-header-row
+              *matHeaderRowDef="displayedColumns"
+            ></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+          </mat-table>
+          <div
+            class="text-right"
+            *ngIf="systemDispenseForm.controls['systemItemDispenseList'].valid"
+          >
+            <button
+              mat-mini-fab
+              color="primary"
+              (click)="initSystemDispenseMode()"
+            >
+              <mat-icon class="md-18 cursorPointer">add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="col-xs-12" style="display: flex; justify-content: end">
+      <button
+        mat-raised-button
+        type="button"
+        [disabled]="!systemDispenseForm.valid"
+        (click)="allocateBatch()"
+      >
+        {{ currentLanguageSet?.inventory?.allocateBatch }}
+      </button>
+    </div>
+  </div>
+</div>

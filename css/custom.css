@@ -81,7 +81,6 @@ body {
   float: left;
   color: #fff !important;
   font-family: SF-UI-Display-Regular;
-  /* margin:3px;    color: #ecf0f1;*/
 }
 
 .radioBtn {
@@ -94,7 +93,6 @@ body {
   color: #fff;
   font-family: SF-UI-Display-Regular;
   border: 1px solid #069;
-  /* margin:3px;    color: #ecf0f1;*/
 }
 
 .btn>* {
@@ -181,7 +179,6 @@ ul.parentIcon li button {
   border-radius: 5px;
   padding: 1px 4px 4px 4px;
   background: transparent;
-  /* background: url(../assets/images/logoutIcon.png) no-repeat; */
 }
 
 ul.topIcon li {
@@ -241,13 +238,10 @@ ul.topIcon li.help a:hover {
 
 .badge-corner {
   position: relative;
-  /* top:-20px;
-    right: 15px;*/
   left: 58px;
   width: 0;
   height: 0;
   border-top: 30px solid #008c44;
-  /* border-top-color: rgba(0, 0, 0, 0.3);*/
   border-left: 40px solid transparent;
   padding: 0;
   background-color: transparent;
@@ -330,12 +324,6 @@ ul.topIcon li.help a:hover {
 .sidebar-toggle:before {
   content: "\f105";
 }
-
-/*.sidebar-toggle:after {
-
-  content: "\f104";
-}*/
-
 .circleOuterDiv {
   width: 180px;
   height: 160px;
@@ -393,12 +381,6 @@ input {
   cursor: pointer !important;
   color: #337ab7 !important;
 }
-
-/* input:-webkit-autofill, input:-webkit-autofill:focus, input:-webkit-autofill:hover {
-  -webkit-box-shadow: 0 0 0 20px white inset;
-  border-bottom: 2px solid #e6e6e6;
-  bottom: 1px;
-} */
 
 .md2-datepicker-arrow {
   display: none;

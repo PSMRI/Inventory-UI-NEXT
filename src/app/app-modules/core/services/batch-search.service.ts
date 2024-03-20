@@ -44,7 +44,6 @@ export class BatchSearchService {
 
     return this.http.post<any>(environment.searchBatchUrl, body);
   }
-  /* Service for indent-item-list component */
   searchItem(searchTerm: string) {
     const reqObj = {
       itemName: searchTerm,

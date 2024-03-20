@@ -1,0 +1,188 @@
+<div id="head" style="display: flex; justify-content: space-between">
+  <h4 id="dialog_head" class="pull-left">
+    {{ currentLanguageSet?.inventory?.adjustmentDraftDetails }}
+  </h4>
+  <mat-icon
+    id="cross"
+    class="pull-right"
+    mat-dialog-close
+    matTooltip="{{ currentLanguageSet?.inventory?.close }}"
+    (click)="dialogRef.close(false)"
+    >clear</mat-icon
+  >
+</div>
+
+<div class="scrolling-content">
+  <div class="container-fluid">
+    <mat-table
+      class="mat-elevation-z8"
+      class="table"
+      aria-describedby="viewStoreStockDetails"
+      [dataSource]="dataSource"
+    >
+      <!-- Define columns for mat-table -->
+      <ng-container matColumnDef="stockAdjustmentDraftID">
+        <mat-header-cell *matHeaderCellDef>
+          {{ currentLanguageSet?.inventory?.stockAdjustmentDraftID }}
+        </mat-header-cell>
+        <mat-cell *matCellDef>
+          {{ stock?.stockAdjustmentDraftID }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="refNo">
+        <mat-header-cell *matHeaderCellDef>
+          {{ currentLanguageSet?.inventory?.refNo }}
+        </mat-header-cell>
+        <mat-cell *matCellDef>
+          {{ stock?.refNo }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="draftDescription">
+        <mat-header-cell *matHeaderCellDef>
+          {{ currentLanguageSet?.inventory?.draftDescription }}
+        </mat-header-cell>
+        <mat-cell *matCellDef>
+          {{ stock?.draftDesc }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="createdBy">
+        <mat-header-cell *matHeaderCellDef>
+          {{ currentLanguageSet?.inventory?.createdBy }}
+        </mat-header-cell>
+        <mat-cell *matCellDef>
+          {{ stock?.createdBy }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="createdDate">
+        <mat-header-cell *matHeaderCellDef>
+          {{ currentLanguageSet?.inventory?.createdDate }}
+        </mat-header-cell>
+        <mat-cell *matCellDef>
+          {{ stock?.createdDate | istDate: "dd/MM/yyyy" }}
+        </mat-cell>
+      </ng-container>
+      <!-- Header row -->
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <!-- Data row -->
+      <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+    </mat-table>
+
+    <div class="row" *ngIf="adjustmentList?.length > 0">
+      <div class="col-xs-12 col-sm-12 text-right">
+        <mat-form-field id="filterbox">
+          <input
+            autocomplete="off"
+            tabindex="-1"
+            matInput
+            placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
+            [(ngModel)]="filterTerm"
+            name="filterTerm"
+            (keyup)="filterDetails(filterTerm)"
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <section class="table-responsive">
+          <mat-table
+            class="mat-elevation-z8"
+            aria-describedby="viewStoreStockDetails"
+            [dataSource]="newDataSource"
+          >
+            <!-- Define columns for mat-table -->
+            <ng-container matColumnDef="noValue">
+              <mat-header-cell *matHeaderCellDef>{{
+                currentLanguageSet?.inventory?.sNo
+              }}</mat-header-cell>
+              <mat-cell *matCellDef="let adjustment; let i = index">{{
+                i + 1
+              }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="itemName">
+              <mat-header-cell *matHeaderCellDef>
+                <b>{{ currentLanguageSet?.inventory?.itemName }}</b>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let adjustment; let i = index">
+                {{ adjustment?.itemName }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="batchNo">
+              <mat-header-cell *matHeaderCellDef>
+                <b>{{ currentLanguageSet?.itemDispense?.batchNo }}</b>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let adjustment; let i = index">
+                {{ adjustment?.batchID }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="quantityOnHand">
+              <mat-header-cell *matHeaderCellDef>
+                <b>{{ currentLanguageSet?.inventory?.quantityOnHand }}</b>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let adjustment; let i = index">
+                {{ adjustment?.quantityInHand }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="adjustmentType">
+              <mat-header-cell *matHeaderCellDef>
+                <b>{{ currentLanguageSet?.inventory?.adjustmentType }}</b>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let adjustment; let i = index">
+                {{ adjustment?.isAdded ? "Receipt" : "Issue" }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="adjustedQuantity">
+              <mat-header-cell *matHeaderCellDef>
+                <b>{{ currentLanguageSet?.inventory?.adjustedQuantity }}</b>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let adjustment; let i = index">
+                {{ adjustment?.adjustedQuantity }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="reason">
+              <mat-header-cell *matHeaderCellDef>
+                <b>{{ currentLanguageSet?.inventory?.reason }}</b>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let adjustment; let i = index">
+                {{ adjustment?.reason }}
+              </mat-cell>
+            </ng-container>
+            <mat-header-row
+              *matHeaderRowDef="adjustmentListColumns"
+            ></mat-header-row>
+            <!-- Data row -->
+            <mat-row *matRowDef="let row; columns: adjustmentListColumns">
+            </mat-row>
+          </mat-table>
+        </section>
+      </div>
+    </div>
+
+    <div class="row m-b-15">
+      <div class="col-xs-12" style="display: flex; justify-content: end">
+        <button
+          color="primary"
+          class="pull-right"
+          mat-raised-button
+          type="button"
+          tabindex="-1"
+          (click)="dialogRef.close(stock)"
+        >
+          {{ currentLanguageSet?.inventory?.print }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

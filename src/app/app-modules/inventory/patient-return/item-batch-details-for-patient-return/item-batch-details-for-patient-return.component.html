@@ -1,0 +1,176 @@
+<form [formGroup]="itemReturnForm" autocomplete="off">
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
+    <mat-select
+      style="border-bottom: solid 1px; border-color: grey"
+      class="input-full-width"
+      name="itemName"
+      id="itemName"
+      formControlName="itemName"
+      placeholder="{{ currentLanguageSet?.inventory?.item }}"
+      (change)="getBatchDetail(itemName, null)"
+    >
+      <mat-option *ngFor="let item of filterItemList" [value]="item">
+        {{ item.itemName }}
+      </mat-option>
+    </mat-select>
+  </div>
+</form>
+<div class="container-fluid">
+  <div class="row" *ngIf="selectedBatchList.data.length > 0">
+    <div class="col-xs-12">
+      <h4>{{ currentLanguageSet?.inventory?.dispensingItem }}</h4>
+    </div>
+
+    <div class="col-xs-12">
+      <div class="table-responsive">
+        <table
+          mat-table
+          class="table table-bordered table-striped"
+          [dataSource]="selectedBatchList"
+          aria-describedby="itemBatchDetails"
+        >
+          <!-- Main Table Columns -->
+          <ng-container matColumnDef="sNo">
+            <th mat-header-cell *matHeaderCellDef class="width-percent-5">
+              {{ currentLanguageSet?.inventory?.sNo }}
+            </th>
+            <td mat-cell *matCellDef="let i = index" class="width-percent-5">
+              {{ i + 1 }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="itemName">
+            <th mat-header-cell *matHeaderCellDef class="width-percent-10">
+              {{ currentLanguageSet?.inventory?.itemName }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="width-percent-10">
+              {{ element?.itemName.itemName }}
+            </td>
+          </ng-container>
+          <!-- Inner Table Column -->
+          <ng-container matColumnDef="noValue">
+            <!-- Inner table for batchList -->
+            <table
+              mat-table
+              [dataSource]="batchList"
+              class="table inner_table table-striped"
+              aria-describedby="itemBatchDetails"
+            >
+              <!-- Inner Table Columns -->
+              <ng-container matColumnDef="batchNo">
+                <th mat-header-cell *matHeaderCellDef class="width-percent-25">
+                  {{ currentLanguageSet?.itemDispense?.batchNo }}
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let batchElement"
+                  class="width-percent-25"
+                >
+                  {{ batchElement?.batchNo?.batchNo }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="issuedQuantity">
+                <th mat-header-cell *matHeaderCellDef class="width-percent-10">
+                  {{ currentLanguageSet?.inventory?.issueQuantity }}
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let batchElement"
+                  class="width-percent-10"
+                >
+                  {{ batchElement?.batchNo?.issuedQuantity }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="dateofIssue">
+                <th mat-header-cell *matHeaderCellDef class="width-percent-10">
+                  {{ currentLanguageSet?.inventory?.dateOfIssue }}
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let batchElement"
+                  class="width-percent-10"
+                >
+                  {{ batchElement?.batchNo?.dateofIssue }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="returnQuantity">
+                <th mat-header-cell *matHeaderCellDef class="width-percent-25">
+                  {{ currentLanguageSet?.inventory?.returnQuantity }}
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let batchElement"
+                  class="width-percent-25"
+                >
+                  {{ batchElement?.batchNo?.returnQuantity }}
+                </td>
+              </ng-container>
+            </table>
+          </ng-container>
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef class="width-percent-10">
+              {{ currentLanguageSet?.bendetails?.edit }}
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              class="width-percent-10"
+            >
+              <mat-icon
+                matTooltip="{{ currentLanguageSet?.bendetails.edit }}"
+                class="mat-icon material-icons"
+                role="img"
+                aria-hidden="true"
+                style="cursor: pointer"
+                (click)="editItem(element, i)"
+                >edit</mat-icon
+              >
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef class="width-percent-10">
+              {{ currentLanguageSet?.inventory?.delete }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="width-percent-10">
+              <mat-icon
+                class="icon-remove cursorPointer"
+                matTooltip="{{ currentLanguageSet?.inventory?.delete }}"
+                (click)="removeAddedItem(element)"
+                >delete</mat-icon
+              >
+            </td>
+          </ng-container>
+          <!-- Header and row definitions for main table -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row m-t-10 m-b-40">
+    <div class="col-xs-12" id="topBtn">
+      <button
+        type="button"
+        mat-raised-button
+        class="pull-right m-r-5"
+        *ngIf="selectedBatchList.data.length > 0"
+        (click)="manipulateFinalData()"
+      >
+        {{ currentLanguageSet?.common?.save }}
+      </button>
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        class="pull-right m-r-5"
+        (click)="resetOnClear()"
+      >
+        {{ currentLanguageSet?.inventory?.clear }}
+      </button>
+    </div>
+  </div>
+</div>
