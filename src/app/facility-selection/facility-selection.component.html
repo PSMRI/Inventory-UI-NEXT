@@ -1,5 +1,4 @@
 <app-header [showRoles]="false"></app-header>
-
 <div class="container" style="margin-top: 5%">
   <section>
     <div class="col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
@@ -14,7 +13,7 @@
           </mat-card-header>
           <mat-card-content>
             <div class="row">
-              <div class="col-xs-12 m-t-25">
+              <div class="col-xs-12 m-t-25" style="text-align: center">
                 <mat-radio-group
                   name="isMainStore"
                   formControlName="isMainStore"
@@ -44,7 +43,7 @@
               </div>
               <div class="col-xs-12 m-t-25">
                 <!-- style="border-bottom: solid 1px; border-color: grey" -->
-                <mat-form-field>
+                <mat-form-field class="mat_form_field_width">
                   <mat-label>{{
                     currentLanguageSet?.inventory?.facility
                   }}</mat-label>
@@ -65,7 +64,7 @@
                 </mat-form-field>
               </div>
               <div class="col-xs-12 m-t-25">
-                <mat-form-field>
+                <mat-form-field class="mat_form_field_width">
                   <mat-label>{{
                     currentLanguageSet?.inventory?.subFacility
                   }}</mat-label>

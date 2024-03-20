@@ -10,7 +10,7 @@
         <!-- <mat-datepicker class="input-full-width" autocomplete="off"
           placeholder="{{currentLanguageSet?.inventory?.indentDate}}" name="requestDate" formControlName="requestDate"
           [disabled]='true'></mat-datepicker> -->
-        <mat-form-field>
+        <mat-form-field class="mat_form_field_background_color">
           <mat-label>
             {{ currentLanguageSet?.inventory?.indentDate }}
           </mat-label>
@@ -44,7 +44,10 @@
         </mat-form-field> -->
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-        <mat-form-field [style.width]="'100%'">
+        <mat-form-field
+          [style.width]="'100%'"
+          class="mat_form_field_background_color"
+        >
           <mat-label>
             {{ currentLanguageSet?.inventory?.referenceNo }}
           </mat-label>
@@ -59,7 +62,10 @@
         </mat-form-field>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-        <mat-form-field [style.width]="'100%'">
+        <mat-form-field
+          [style.width]="'100%'"
+          class="mat_form_field_background_color"
+        >
           <mat-label>
             {{ currentLanguageSet?.inventory?.reason }}
           </mat-label>
@@ -339,7 +345,7 @@
       </div>
     </div>
     <div class="row m-t-10 m-b-40">
-      <div class="col-xs-12">
+      <div class="col-xs-12" style="margin-top: 15px">
         <button
           type="button"
           class="pull-left"

@@ -1,15 +1,6 @@
 <app-header [showRoles]="true"></app-header>
 
 <div class="container-fluid">
-  <button
-    mat-mini-fab
-    class="example-fab"
-    color="primary"
-    (click)="sideNavModeChange(sidenav)"
-  >
-    <mat-icon>account_box</mat-icon>
-  </button>
-
   <mat-sidenav-container class="example-sidenav-fab-container">
     <mat-sidenav class="sideNav" #sidenav mode="side" opened="false">
       <div class="example-scrolling-content sidenav">
@@ -75,6 +66,16 @@
             {{ currentLanguageSet?.common?.submit }}
           </button>
         </div>
+      </div>
+      <div style="position: fixed">
+        <button
+          mat-mini-fab
+          class="example-fab"
+          color="primary"
+          (click)="sideNavModeChange(sidenav)"
+        >
+          <mat-icon>account_box</mat-icon>
+        </button>
       </div>
     </div>
   </mat-sidenav-container>

@@ -14,6 +14,7 @@
 .step-btn button {
   float: right;
   margin-left: 5px;
+  margin-top: 15px;
 }
 
 md-card {
@@ -63,7 +64,7 @@ md-card {
 @media only screen and (max-width: 700px) {
 
 
-  .example-sidenav-fab-container{
+  .example-sidenav-fab-container {
     height: stretch;
   }
 

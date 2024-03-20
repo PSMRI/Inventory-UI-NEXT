@@ -80,11 +80,23 @@
           <div class="table-responsive">
             <ng-container formArrayName="physicalStock">
               <mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+                <ng-container matColumnDef="position">
+                  <th mat-header-cell *matHeaderCellDef>No.</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let stock; let i = index"
+                    [formGroup]="stock"
+                  >
+                    {{ i + 1 }}
+                  </td> </ng-container
+                >t
+
                 <ng-container matColumnDef="index">
-                  <mat-header-cell *matHeaderCellDef>{{
+                  <mat-header-cell *matHeaderCellDef class="mat_cell_size">{{
                     currentLanguageSet?.inventory?.index
                   }}</mat-header-cell>
                   <mat-cell
+                    class="mat_cell_size"
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
                     >{{ i + 1 }}</mat-cell

@@ -66,3 +66,23 @@
 .mat_form_field_background_color_padding >>> .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
     padding-top: 24px !important; 
 }
+/* .mat_cell_size >>>.mat-mdc-table tbody, .mat-mdc-table tfoot, .mat-mdc-table thead, .mat-mdc-cell, .mat-mdc-footer-cell, .mat-mdc-header-row, .mat-mdc-row, .mat-mdc-footer-row, .mat-mdc-table .mat-mdc-header-cell {
+    background: inherit;
+    width: 35% !important;
+} */
+/* .index{
+
+  width: 35% !important;
+ 
+} */
+mat-cell,
+mat-footer-cell {
+  width: 14% !important;
+  flex: none;
+  justify-content: center;
+}
+
+mat-header-cell{
+    width: 14% !important;
+    flex: none;   
+}

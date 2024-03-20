@@ -56,6 +56,7 @@ legend {
   .right-padding-remove-desktop {
     padding-right: 0 !important;
   }
+
   .left-padding-remove-desktop {
     padding-left: 0 !important;
   }
@@ -71,4 +72,8 @@ legend {
 
 .width20 {
   width: 20%;
+}
+
+.mat_form_field_background_color>>>.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #f7fafa !important;
 }
