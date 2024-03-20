@@ -1,3 +1,4 @@
+
 .title {
   margin: 0px;
   padding: 15px 24px 15px;
@@ -6,13 +7,12 @@
   line-height: 32px;
   font-weight: 400;
 }
-
-
-
+ 
+ 
+ 
 .input-full-width {
   width: 100%;
 }
-
 .action {
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -21,62 +21,64 @@
   text-align: right;
   /* border-top: 1px solid lightgrey; */
 }
-
+ 
 ::ng-deep.md2-datepicker-disabled .md2-datepicker-button {
-  display: none !important;
+  display:none !important;
 }
-
-/* .action button {
-  border: 1px solid lightgray;
-} */
-
+ 
+.action button {
+  /* border: 1px solid lightgray; */
+}
+ 
 .success {
   background: #43a047;
 }
-
+ 
 .info {
   background: #0277bd;
 }
-
+ 
 .warn,
 .error {
   background: #F44336;
 }
-
+ 
 .center-btn {
   justify-content: center !important;
   display: flex !important;
 }
-
+ 
 .checkbox-fix {
   height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .p-5 {
   padding: 5px;
 }
-
+ 
 .alert-border {
-  border: 1px solid #F44336;
+  border: 1px solid  #F44336;
 }
-
+ 
 .row-shade:nth-child(odd) {
-  background-color: rgba(240, 245, 245, 0.5);
+background-color: rgba(240, 245, 245, 0.5);
 }
-
+ 
 @media only screen and (min-width: 980px) {
   .right-padding-remove-desktop {
     padding-right: 0 !important;
   }
-
   .left-padding-remove-desktop {
     padding-left: 0 !important;
   }
 }
-
-.mat_form_field_background_color>>>.mdc-text-field--filled:not(.mdc-text-field--disabled) {
-  background-color: #fff !important;
+ 
+/* .mat_form_field_background_color >>>.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #f7fafa !important;
+} */
+.mat_form_field_background_color >>>.mdc-text-field--filled, .mdc-text-field--focused {
+  background-color: #f7fafa !important;
 }
+ 
