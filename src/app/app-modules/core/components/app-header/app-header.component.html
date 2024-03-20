@@ -139,7 +139,7 @@
   </div>
 </nav>
 
-<div *ngIf="showRoles" class="container-fluid">
+<div *ngIf="showRoles && !isExternal" class="container-fluid">
   <nav class="navbar navbar-expand-lg">
     <div class="collapse navbar-collapse" id="main-navbar">
       <ul class="nav navbar-nav ml-auto" *ngFor="let item of navigation">
@@ -179,13 +179,15 @@
 </div>
 
 <div *ngIf="showRoles && isExternal" class="container-fluid">
-  <div class="collapse navbar-collapse" id="main-navbar">
-    <ul class="nav navbar-nav">
-      <li>
-        <button md-button (click)="backToParent()">
-          {{ currentLanguageSet?.itemDispense?.pharmacist }}
-        </button>
-      </li>
-    </ul>
-  </div>
+  <nav class="navbar navbar-expand-lg">
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav">
+        <li>
+          <button md-button (click)="backToParent()">
+            {{ currentLanguageSet?.itemDispense?.pharmacist }}
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </div>
