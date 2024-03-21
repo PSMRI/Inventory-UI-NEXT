@@ -158,6 +158,7 @@
             [overlapTrigger]="false"
           >
             <button
+              class="nav-item alignDropDown"
               mat-menu-item
               *ngFor="let value of item.work"
               [routerLink]="[value.link]"
@@ -167,7 +168,7 @@
             </button>
           </mat-menu>
         </li>
-        <li class="nav-item" *ngIf="item.role === 'isExternal'">
+        <li class="nav-item alignDropDown" *ngIf="item.role === 'isExternal'">
           <!-- <li class="nav-item" *ngIf="isExternal"> -->
           <button class="nav-btn" mat-button (click)="backToParent()">
             {{ currentLanguageSet?.itemDispense?.pharmacist }}

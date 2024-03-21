@@ -101,94 +101,107 @@
                 <mat-icon matSuffix>search</mat-icon>
               </mat-form-field>
             </div>
-            <section class="table-responsive">
+            <section
+              class="table-responsive mat_form_field_background_color_table"
+            >
               <mat-table
                 [dataSource]="_filteredDispenseList"
                 class="mat-elevation-z8"
               >
                 <!-- S.No. Column -->
                 <ng-container matColumnDef="noValue">
-                  <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-                  <mat-cell *matCellDef="let element; let i = index">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element; let i = index">
                     {{ i + 1 }}
-                  </mat-cell>
+                  </td>
                 </ng-container>
 
                 <!-- Issue ID Column -->
                 <ng-container matColumnDef="issueID">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.issueID
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.issueID }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let element"
                     (click)="loadDispenseDetails(element)"
-                    >{{ element?.patientIssueID }}</mat-cell
                   >
+                    {{ element?.patientIssueID }}
+                  </td>
                 </ng-container>
 
                 <!-- Patient Name Column -->
                 <ng-container matColumnDef="patientName">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.patientName
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.patientName }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let element"
                     (click)="loadDispenseDetails(element)"
-                    >{{ element?.patientName }}</mat-cell
                   >
+                    {{ element?.patientName }}
+                  </td>
                 </ng-container>
 
                 <!-- Reference Column -->
                 <ng-container matColumnDef="reference">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.reference
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.reference }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let element"
                     (click)="loadDispenseDetails(element)"
-                    >{{ element?.reference }}</mat-cell
                   >
+                    {{ element?.reference }}
+                  </td>
                 </ng-container>
 
                 <!-- Issue Type Column -->
                 <ng-container matColumnDef="issueType">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.issueType
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.issueType }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let element"
                     (click)="loadDispenseDetails(element)"
-                    >{{ element?.issueType }}</mat-cell
                   >
+                    {{ element?.issueType }}
+                  </td>
                 </ng-container>
 
                 <!-- Created By Column -->
                 <ng-container matColumnDef="createdBy">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.createdBy
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.createdBy }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let element"
                     (click)="loadDispenseDetails(element)"
-                    >{{ element?.createdBy }}</mat-cell
                   >
+                    {{ element?.createdBy }}
+                  </td>
                 </ng-container>
 
                 <!-- Created Date Column -->
                 <ng-container matColumnDef="createdDate">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.createdDate
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.createdDate }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let element"
                     (click)="loadDispenseDetails(element)"
-                    >{{
-                      element?.createdDate | istDate: "dd/MM/yyyy"
-                    }}</mat-cell
                   >
+                    {{ element?.createdDate | istDate: "dd/MM/yyyy" }}
+                  </td>
                 </ng-container>
 
-                <mat-header-row
+                <tr
+                  mat-header-row
                   *matHeaderRowDef="[
                     'noValue',
                     'issueID',
@@ -198,9 +211,9 @@
                     'createdBy',
                     'createdDate'
                   ]"
-                >
-                </mat-header-row>
-                <mat-row
+                ></tr>
+                <tr
+                  mat-row
                   *matRowDef="
                     let row;
                     columns: [
@@ -214,7 +227,7 @@
                     ]
                   "
                   class="table-hover"
-                ></mat-row>
+                ></tr>
               </mat-table>
               <div
                 *ngIf="

@@ -37,7 +37,7 @@
           </tfoot>
         </table> -->
         <div
-          class="table-responsive"
+          class="table-responsive mat_form_field_background_color_table"
           *ngIf="mainStoreItemListForDispense.length > 0"
         >
           <table mat-table [dataSource]="mainStoreItemListForDispense">
@@ -142,7 +142,10 @@
       <h4>{{ currentLanguageSet?.inventory?.dispensingItem }}</h4>
     </div>
     <div class="col-xs-12">
-      <div class="table-responsive" *ngIf="manualDispenseList.length > 0">
+      <div
+        class="table-responsive mat_form_field_background_color_table"
+        *ngIf="manualDispenseList.length > 0"
+      >
         <!-- <table class="table table-bordered table-striped" [md2Data]="manualDispenseList" #md2="md2DataTable" aria-describedby="dispenseDetails">
           <caption></caption>
           <thead>

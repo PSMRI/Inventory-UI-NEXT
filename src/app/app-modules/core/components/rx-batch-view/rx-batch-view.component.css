@@ -76,9 +76,6 @@ background-color: rgba(240, 245, 245, 0.5);
   }
 }
  
-/* .mat_form_field_background_color >>>.mdc-text-field--filled:not(.mdc-text-field--disabled) {
-  background-color: #f7fafa !important;
-} */
 .mat_form_field_background_color >>>.mdc-text-field--filled, .mdc-text-field--focused {
   background-color: #f7fafa !important;
 }
