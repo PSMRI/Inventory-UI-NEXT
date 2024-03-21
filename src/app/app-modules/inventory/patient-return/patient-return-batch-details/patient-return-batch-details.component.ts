@@ -52,8 +52,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
   title!: string;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
-  dataSource!: MatTableDataSource<AbstractControl>;
-
+  dataSource = new MatTableDataSource<any>();
   constructor(
     public dialogRef: MatDialogRef<PatientReturnBatchDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -65,10 +64,23 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
   filterItemList: any = [];
   ngOnInit() {
     this.fetchLanguageResponse();
-    this.batchForm = this.createBatchForm();
+    // this.batchForm = this.createBatchForm();
+    this.batchForm = this.formBuilder.group({
+      itemName: [''],
+      itemDetails: [''],
+      batchList: this.formBuilder.array([]),
+    });
+
+    this.initBatchForm();
     console.log('Data', this.data);
     this.filterItemList.push(this.data.editBatch.itemName);
     this.initAfterNg();
+    this.loadstroreStockTableData();
+  }
+
+  loadstroreStockTableData() {
+    const dataFromFun: any = this.stroreStockTableData();
+    this.dataSource.data = dataFromFun;
   }
 
   initAfterNg() {
@@ -118,7 +130,6 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
     return this.formBuilder.group({
       itemName: null,
       itemDetails: null,
-      batchList: this.formBuilder.array([]),
     });
   }
 
@@ -156,13 +167,29 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
     }
   }
 
-  initBatchForm(): FormGroup {
+  initBatchForm() {
+    const frmArr = this.batchForm.get('batchList') as FormArray;
+    frmArr.push(
+      this.formBuilder.group({
+        batchNo: [''],
+        issuedQuantity: [''],
+        dateOfIssue: [''],
+        returnQuantity: [''],
+      }),
+    );
+  }
+
+  initBatchFormData() {
     return this.formBuilder.group({
-      batchNo: null,
-      issuedQuantity: null,
-      dateOfIssue: null,
-      returnQuantity: null,
+      batchNo: [''],
+      issuedQuantity: [''],
+      dateOfIssue: [''],
+      returnQuantity: [''],
     });
+  }
+
+  get batchList() {
+    return this.batchForm.get('batchList') as FormArray;
   }
 
   getQuantityAndFilterItem(selectedBatch: any, i: any, batchForm?: FormGroup) {
@@ -195,14 +222,13 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
     }
   }
 
-  stroreStockTableData(): AbstractControl[] {
+  stroreStockTableData(): any {
     return (this.batchForm.get('batchList') as FormArray).controls;
   }
-
   addBatch() {
-    const batchList = <FormArray>this.batchForm.controls['batchList'];
-    const tempBatch = batchList.value;
-    if (this.itemBatchList.length > tempBatch.length) {
+    // const batchList = <FormArray>this.batchForm.controls['batchList'];
+    const tempBatch = this.batchList.value;
+    if (this.itemBatchList.length >= tempBatch.length) {
       if (this.itemBatchList) {
         const resultBatch = this.itemBatchList.filter((batch: any) => {
           const batchArray = tempBatch.filter((item: any) => {
@@ -219,23 +245,21 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
         });
         this.filteredBatchList.push(resultBatch.slice());
       }
-      batchList.push(this.initBatchForm());
+      // this.batchList.push(this.initBatchFormData());
+      // this.loadstroreStockTableData();
+      // batchList.push(this.initBatchFormData());
     } else {
       this.confirmationService.alert(
         this.currentLanguageSet.inventory.nofurtherbatchesavailable,
       );
     }
   }
+  removeBatch(i: any, batchForm: FormGroup) {
+    const patientReturnForm = this.batchForm.get('batchList') as FormArray;
 
-  removeBatch(i: any, batchForm: any) {
-    const batchList = <FormArray>this.batchForm.controls['batchList'];
-    if (batchList.length === 1 && !!batchForm) {
-      batchForm.patchValue({
-        batchNo: null,
-        issuedQuantity: null,
-        dateOfIssue: null,
-        returnQuantity: null,
-      });
+    if (patientReturnForm.length > 1) {
+      patientReturnForm.removeAt(i);
+      this.loadstroreStockTableData();
     } else {
       const removedBatch = this.selectedBatchList[i];
       this.filteredBatchList.map((item: any, t: any) => {
@@ -245,7 +269,8 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
       });
       this.selectedBatchList.splice(i, 1);
       this.filteredBatchList.splice(i, 1);
-      batchList.removeAt(i);
+      // patientReturnForm.removeAt(i);
+      patientReturnForm.reset();
     }
   }
 
