@@ -48,7 +48,7 @@ export class ExpiryReportComponent implements OnInit, DoCheck {
   ) {}
   today!: Date;
   minEndDate!: Date;
-  maxDate: any;
+  maxDate!: Date;
   maxEndDate!: Date;
   expiryList = [];
   dateOffset: any;

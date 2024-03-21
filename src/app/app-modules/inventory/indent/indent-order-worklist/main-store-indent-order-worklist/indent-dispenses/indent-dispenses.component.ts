@@ -29,7 +29,7 @@ import { LanguageService } from 'src/app/app-modules/core/services/language.serv
   styleUrls: ['./indent-dispenses.component.css'],
 })
 export class IndentDispensesComponent implements OnInit, DoCheck {
-  issueType = 0;
+  issueType: any = 0;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
 
