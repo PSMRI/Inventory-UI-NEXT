@@ -51,7 +51,7 @@ export class InwardStockReportComponent implements OnInit, DoCheck {
 
   today!: Date;
   minEndDate!: Date;
-  maxDate: any;
+  maxDate!: Date;
   maxEndDate!: Date;
   inwardStockList = [];
   dateOffset: any;

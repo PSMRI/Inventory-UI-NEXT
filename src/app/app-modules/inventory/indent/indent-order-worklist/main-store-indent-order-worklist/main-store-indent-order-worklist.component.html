@@ -23,10 +23,7 @@
         <mat-card-content>
           <div class="row">
             <div class="col-xs-12 m-t-10">
-              <div
-                class="table-responsive"
-                *ngIf="mainstoreOrderlist.length > 0"
-              >
+              <div class="table-responsive">
                 <!-- <table [md2Data]="mainstoreOrderlist" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1" class="table table-striped responsive-table-view" aria-describedby="workListDetails">
                   <caption></caption>  
                   <thead>
@@ -157,9 +154,12 @@
                       mat-row
                       *matRowDef="let row; columns: displayedColumns"
                     ></tr>
+                  </table>
 
-                    <tr *ngIf="mainstoreOrderlist.length === 0">
-                      <td
+                  <!-- <ng-container  *ngIf="mainstoreOrderlist.length === 0">
+                      <td mat-footer-cell *matFooterCellDef>No records found.</td>
+                    </ng-container> -->
+                  <!-- <td
                         mat-cell
                         colspan="6"
                         style="text-align: center; font-size: 16px"
@@ -167,9 +167,13 @@
                         <strong>{{
                           currentLanguageSet?.inventory?.norecordsfound
                         }}</strong>
-                      </td>
-                    </tr>
-                  </table>
+                      </td> -->
+
+                  <!-- NO DATA -->
+                  <div *ngIf="mainstoreOrderlist.length === 0">
+                    No Record found
+                  </div>
+
                   <ng-container matFooterRow>
                     <tr *ngIf="mainstoreOrderlist.length > 0">
                       <td
