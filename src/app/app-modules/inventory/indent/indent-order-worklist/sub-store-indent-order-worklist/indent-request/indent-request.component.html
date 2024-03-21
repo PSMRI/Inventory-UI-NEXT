@@ -82,65 +82,6 @@
     </div>
     <div class="row m-t-10">
       <div class="col-xs-12">
-        <!-- <md-card>
-          <div class="table-responsive">
-            <table class="table table-striped responsive-table-form" aria-describedby="indentRequestDetails">
-              <caption></caption> 
-              <thead>
-                <tr>
-                  <th class="width5" id=""></th>
-                  <th class="width15" id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
-                  <th class="width15" id="quantityOnHand">{{currentLanguageSet?.inventory?.quantityOnHand}}</th>
-                  <th class="width10" id="requiredQuantity">{{currentLanguageSet?.inventory?.requiredQuantity}}</th>
-                  <th class="width10" id="remarks">{{currentLanguageSet?.inventory?.remarks}}</th>
-                  <th class="width5" id=""></th>
-                </tr>
-              </thead>
-              <tbody formArrayName="indentItemList">
-                <ng-container *ngFor="let itemList of indentRequestForm.controls['indentItemList']['controls']; let i = index; let isLast=last;">
-                  <tr [formGroup]="i">
-                    <td class="vertical-align-middle"> {{ i+1 }} </td>
-                    <td>
-                      <md-form-field class="input-full-width">
-                        <input mdInput allowText = "itemNameSearchValidator" placeholder="{{currentLanguageSet?.inventory?.itemName}}" name="itemNameView" formControlName="itemNameView" maxlength="100" appIndentRequest
-                          [previousSelected]="indentRequestForm?.value?.indentItemList" [itemListForm]="itemList" required>
-                        <md-icon *ngIf="!(itemList.controls['itemNameView'].disabled)" appIndentRequest [previousSelected]="indentRequestForm?.value?.indentItemList"
-                          [itemListForm]="itemList" class="search-btn" mdSuffix>search</md-icon>
-                      </md-form-field>
-                    </td>
-                    <td>
-                      <md-form-field class="input-full-width readonly">
-                        <input mdInput allowText="number" placeholder="{{currentLanguageSet?.inventory?.qOH}}" name="qOH" formControlName="qOH" required readonly>
-                      </md-form-field>
-                    </td>
-                    <td>
-                      <md-form-field class="input-full-width">
-                        <input mdInput allowText="number" placeholder="{{currentLanguageSet?.inventory?.quantityRequired}}" name="requiredQty" formControlName="requiredQty" [attr.maxlength]="(''+itemList.value.quantityOnHand).length"
-                          (blur)='checkQuantity(itemList)' required>
-                      </md-form-field>
-                    </td>
-                    <td>
-                      <md-form-field class="input-full-width">
-                        <input mdInput placeholder="{{currentLanguageSet?.inventory?.remarks}}" name="remarks" formControlName="remarks" allowText="alphanumericspace">
-                      </md-form-field>
-                    </td>
-                    <td class="text-right">
-                      <md-icon class="icon-remove cursorPointer" mdTooltip="{{currentLanguageSet?.inventory?.delete}}" (click)="removeFromindentItemList(i, itemList)">delete</md-icon>
-                    </td>
-                  </tr>
-                </ng-container>
-                <tr *ngIf="indentRequestForm.controls['indentItemList'].valid">
-                  <td colspan="6">
-                    <button md-mini-fab type="button" class="pull-right" color="primary" (click)="addToindentItemList()">
-                      <md-icon>add</md-icon>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </md-card> -->
-
         <mat-card>
           <div class="table-responsive">
             <ng-container formArrayName="indentItemList">

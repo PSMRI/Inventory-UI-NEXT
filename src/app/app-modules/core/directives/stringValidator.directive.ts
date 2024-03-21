@@ -31,7 +31,7 @@ import { AbstractControl, ValidatorFn, NgControl } from '@angular/forms';
 
 @Directive({
   selector:
-    '[appAllowText][formControlName],[appAllowText][formControl],[appAllowText][ngModel],[appAllowText]',
+    '[app-allowText][formControlName],[allowText][formControl],[allowText][ngModel],[allowText]',
 })
 export class StringValidatorDirective {
   @Input()

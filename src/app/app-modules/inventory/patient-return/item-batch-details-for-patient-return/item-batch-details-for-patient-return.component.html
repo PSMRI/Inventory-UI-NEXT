@@ -7,7 +7,7 @@
       id="itemName"
       formControlName="itemName"
       placeholder="{{ currentLanguageSet?.inventory?.item }}"
-      (change)="getBatchDetail(itemName, null)"
+      (selectionChange)="getBatchDetail(itemName, null)"
     >
       <mat-option *ngFor="let item of filterItemList" [value]="item">
         {{ item.itemName }}
