@@ -60,15 +60,17 @@ export class BatchSearchComponent implements OnInit, DoCheck {
 
   search(term: string): void {
     this.items$ = this.batchSearchService.searchItemBatch(term);
-    this.items$.subscribe((data) => {
-      if (data) {
-        this.dataSource.data = data.data;
-        this.dataSource.paginator = this.paginator;
-        this.noRecordsFlag = true;
-      } else {
-        this.noRecordsFlag = false;
-      }
-    });
+    if (term) {
+      this.items$.subscribe((data) => {
+        if (data) {
+          this.dataSource.data = data.data;
+          this.dataSource.paginator = this.paginator;
+          this.noRecordsFlag = true;
+        } else {
+          this.noRecordsFlag = false;
+        }
+      });
+    }
   }
 
   selectBatch(event: any, batch: any) {

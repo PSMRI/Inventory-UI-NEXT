@@ -166,11 +166,19 @@ export class ItemBatchDetailsForPatientReturnComponent
         if (editIndex !== null) {
           this.selectedBatchList.data.splice(editIndex, 1);
           this.selectedBatchList.data.push(selectedBatchList.value);
+          console.log(
+            ' this.selectedBatchList.data',
+            this.selectedBatchList.data,
+          );
           this.itemReturnForm.patchValue({
             itemName: null,
           });
         } else {
           this.selectedBatchList.data.push(selectedBatchList.value);
+          console.log(
+            ' this.selectedBatchList.data',
+            this.selectedBatchList.data,
+          );
           this.itemReturnForm.patchValue({
             itemName: null,
           });

@@ -19,44 +19,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import {
-  Directive,
-  ElementRef,
-  HostListener,
-  Input,
-  Injector,
-} from '@angular/core';
-import { AbstractControl, NgControl } from '@angular/forms';
 
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 @Directive({
   selector:
-    '[appAllowMax][formControlName],[appAllowMax][formControl],[appAllowMax][ngModel],[appAllowMax]',
+    '[app-allowMax][formControlName],[allowMax][formControl],[allowMax][ngModel],[allowMax]',
 })
 export class NumberValidatorDirective {
   @Input()
-  public appAllowMax!: number;
+  public allowMax!: string;
 
-  constructor(
-    private elementRef: ElementRef,
-    private injector: Injector,
-  ) {}
+  constructor(private elementRef: ElementRef) {}
 
   validate(input: any) {
-    const max = this.appAllowMax;
+    const allowMax = this.allowMax;
 
-    if (+input <= +max) return true;
+    if (+input <= +allowMax) return true;
     else return false;
   }
 
   @HostListener('input', ['$event'])
   onInput(event: any) {
-    const ngControl: any = this.injector.get(NgControl, null) as NgControl;
     const value = event.target.value;
 
-    if (!this.validate(value)) {
-      if (ngControl) ngControl.control.setValue(this.lastValue);
-      else event.target.value = this.lastValue;
-    }
+    if (!this.validate(value)) event.target.value = this.lastValue;
 
     this.lastValue = event.target.value;
   }

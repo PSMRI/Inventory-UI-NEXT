@@ -26,6 +26,7 @@ import {
   FormArray,
   Validators,
   FormGroup,
+  FormControl,
 } from '@angular/forms';
 import { ConfirmationService } from 'src/app/app-modules/core/services';
 import { InventoryService } from 'src/app/app-modules/inventory/shared/service/inventory.service';
@@ -75,10 +76,12 @@ export class IndentRequestComponent implements OnInit, DoCheck {
   ) {}
 
   ngOnInit() {
+    // this.indentRequestForm = this.createIndentRequestForm();
     this.indentRequestForm = this.fb.group({
       requestDate: new Date(),
       referenceNumber: ['', Validators.required],
       indentReason: ['', Validators.required],
+      // indentItemList: this.fb.array([this.initIndentItemList()])
       indentItemList: this.fb.array([]),
     });
 
@@ -91,6 +94,11 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     this.fetchLanguageResponse();
     this.initIndentItemList();
     this.loadIndentData();
+    // this.indentItemListArray = this.indentRequestForm.value.indentItemList;
+    // console.log(
+    //   'this.indentItemListArray**********from indent',
+    //   this.indentItemListArray,
+    // );
   }
 
   methodForIndentEdit() {
@@ -164,14 +172,26 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       itemList?.patchValue({ requiredQty: null });
       itemList?.markAsPristine();
     }
+    // else if (itemList.value.qOH < quantity) {
+    //   this.confirmationService.alert('Please enter quantity less than or equal to Qty in qoh')
+    //   itemList.patchValue({ requiredQty: null });
+    //   itemList.markAsPristine();
+    // }
   }
 
   get indentItemList() {
     return this.indentRequestForm.get('indentItemList') as FormArray;
   }
   addToindentItemList() {
+    // const IndentItemListArray = this.indentRequestForm.controls[
+    //   'indentItemList'
+    // ] as FormArray;
+    // IndentItemListArray.push(this.initIndentItemList());
     this.indentItemList.push(this.loadIndentItemList());
     this.loadIndentData();
+    // IndentItemListArray.push(
+    //   this.loadIndentItemList()
+    // );
   }
 
   loadIndentItemList() {
@@ -202,6 +222,11 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     const IndentItemListArray = this.indentRequestForm.get(
       'indentItemList',
     ) as FormArray;
+    // const stockForm = this.physicalStockEntryForm.get(
+    //   'physicalStock',
+    // ) as FormArray;
+
+    // if (IndentItemListArray.length > 1)
 
     if (IndentItemListArray.length > 1) {
       this.deleted = true;

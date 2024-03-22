@@ -94,6 +94,7 @@ export class StoreStockTransferComponent implements OnInit, DoCheck {
 
   checkFacility() {
     this.facilityID = localStorage.getItem('facilityID');
+    console.log('CSKDHONI**', this.facilityID);
     if (this.facilityID === null || this.facilityID <= 0) {
       this.router.navigate(['/inventory']);
     }
@@ -114,7 +115,7 @@ export class StoreStockTransferComponent implements OnInit, DoCheck {
 
   filterSubStore(storeList: any, facilityID: any) {
     const source = storeList.filter(
-      (item: any) => item.facilityID === facilityID,
+      (item: any) => item.facilityID == facilityID,
     );
 
     const children = [];

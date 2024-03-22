@@ -83,7 +83,11 @@ export class BatchAdjustmentDirective {
           (<FormGroup>formArray.at(i)).controls['itemName'].disable();
           // (<FormGroup>formArray.at(i)).controls['quantity'].enable();
           (<FormGroup>formArray.at(i)).markAsDirty();
+          const dataLength = result.length - 1;
 
+          // for(let k =0; k < dataLength; k++){
+          //   formArray.push(this.initStockAdjustmentList());
+          // }
           if (formArray.length < len + result.length - 1)
             formArray.push(this.initStockAdjustmentList());
         }
