@@ -104,7 +104,8 @@
             <section
               class="table-responsive mat_form_field_background_color_table"
             >
-              <mat-table
+              <table
+                mat-table
                 [dataSource]="_filteredDispenseList"
                 class="mat-elevation-z8"
               >
@@ -228,7 +229,7 @@
                   "
                   class="table-hover"
                 ></tr>
-              </mat-table>
+              </table>
               <div
                 *ngIf="
                   _filteredDispenseList &&

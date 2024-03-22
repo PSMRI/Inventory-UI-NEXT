@@ -14,7 +14,8 @@
 
 <div class="scrolling-content">
   <div class="container-fluid mat_form_field_background_color_table">
-    <mat-table
+    <table
+      mat-table
       class="mat-elevation-z8"
       class="table"
       aria-describedby="viewStoreStockDetails"
@@ -59,7 +60,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <!-- Data row -->
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </mat-table>
+    </table>
 
     <div class="row" *ngIf="adjustmentList?.length > 0">
       <div class="col-xs-12 col-sm-12 text-right">
@@ -81,7 +82,8 @@
     <div class="row">
       <div class="col-xs-12">
         <section class="table-responsive mat_form_field_background_color_table">
-          <mat-table
+          <table
+            mat-table
             class="mat-elevation-z8"
             aria-describedby="viewStoreStockDetails"
             [dataSource]="dataSource2"
@@ -152,7 +154,7 @@
             <tr mat-header-row *matHeaderRowDef="storeListColumns"></tr>
             <!-- Data row -->
             <tr mat-row *matRowDef="let row; columns: storeListColumns"></tr>
-          </mat-table>
+          </table>
           <div class="total-count" *ngIf="dataSource2.data.length > 0">
             {{ currentLanguageSet?.inventory?.totalCount }} :
             {{ dataSource2.data.length }}
