@@ -212,10 +212,13 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
 
     this.selectedBatchList[i] = selectedBatch;
 
-    const dateOfIssue = (this.today = new Date(selectedBatch.dateofIssue));
+    const dateOfIssue = (this.today = new Date(
+      selectedBatch.value.dateofIssue,
+    ));
+    console.log('batchForm--', batchForm);
     if (batchForm !== undefined) {
       batchForm.patchValue({
-        issuedQuantity: selectedBatch.issuedQuantity,
+        issuedQuantity: selectedBatch.value.issuedQuantity,
         dateOfIssue: dateOfIssue,
         returnQuantity: null,
       });

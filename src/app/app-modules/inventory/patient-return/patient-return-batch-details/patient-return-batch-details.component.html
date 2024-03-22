@@ -70,7 +70,9 @@
                           class="input-full-width"
                           formControlName="batchNo"
                           name="batchNo"
-                          (change)="getQuantityAndFilterItem($event, i, batch)"
+                          (selectionChange)="
+                            getQuantityAndFilterItem($event, i, batch)
+                          "
                           required
                         >
                           <mat-option
@@ -149,7 +151,7 @@
                         }}</mat-label>
                         <input
                           matInput
-                          [readonly]="true"
+                          [readonly]="!batch.value.batchNo"
                           formControlName="returnQuantity"
                           (blur)="checkQuantity(batch)"
                           required
