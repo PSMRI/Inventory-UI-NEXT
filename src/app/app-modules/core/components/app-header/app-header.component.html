@@ -147,8 +147,10 @@
           <!-- <li class="nav-item" *ngIf="!isExternal"> -->
 
           <button class="nav-btn" mat-button [matMenuTriggerFor]="items">
+            <mat-icon matSuffix style="margin-top: 10px; margin-right: -5px"
+              >keyboard_arrow_down</mat-icon
+            >
             {{ item.role }}
-            <span class="caret"></span>
           </button>
           <mat-menu
             class="role-menu"

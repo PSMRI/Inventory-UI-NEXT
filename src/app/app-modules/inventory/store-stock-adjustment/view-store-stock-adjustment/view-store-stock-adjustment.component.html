@@ -94,7 +94,11 @@
               <div
                 class="table-responsive mat_form_field_background_color_table"
               >
-                <mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+                <table
+                  mat-table
+                  class="mat-elevation-z8"
+                  [dataSource]="dataSource"
+                >
                   <!-- Define columns for mat-table -->
                   <ng-container matColumnDef="noValue">
                     <th mat-header-cell *matHeaderCellDef>
@@ -165,7 +169,7 @@
                     mat-row
                     *matRowDef="let row; columns: displayedColumns"
                   ></tr>
-                </mat-table>
+                </table>
                 <div
                   *ngIf="dataSource && dataSource.data.length === 0"
                   class="noRecord"

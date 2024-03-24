@@ -85,69 +85,73 @@
               <div
                 class="table-responsive mat_form_field_background_color_table"
               >
-                <mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+                <table
+                  mat-table
+                  class="mat-elevation-z8"
+                  [dataSource]="dataSource"
+                >
                   <!-- Define columns for mat-table -->
                   <ng-container matColumnDef="noValue">
-                    <mat-header-cell *matHeaderCellDef>{{
-                      currentLanguageSet?.inventory?.index
-                    }}</mat-header-cell>
-                    <mat-cell *matCellDef="let stock; let i = index">{{
-                      i + 1
-                    }}</mat-cell>
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ currentLanguageSet?.inventory?.index }}
+                    </th>
+                    <td mat-cell *matCellDef="let stock; let i = index">
+                      {{ i + 1 }}
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="draftID">
-                    <mat-header-cell *matHeaderCellDef>
+                    <th mat-header-cell *matHeaderCellDef>
                       <b>{{ currentLanguageSet?.inventory?.draftID }}</b>
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let adjustment; let i = index">
+                    </th>
+                    <td mat-cell *matCellDef="let adjustment; let i = index">
                       {{ adjustment?.stockAdjustmentDraftID }}
-                    </mat-cell>
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="refNo">
-                    <mat-header-cell *matHeaderCellDef>
+                    <th mat-header-cell *matHeaderCellDef>
                       <b>{{ currentLanguageSet?.inventory?.refNo }}</b>
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let adjustment; let i = index">
+                    </th>
+                    <td mat-cell *matCellDef="let adjustment; let i = index">
                       {{ adjustment?.refNo }}
-                    </mat-cell>
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="draftDescription">
-                    <mat-header-cell *matHeaderCellDef>
+                    <th mat-header-cell *matHeaderCellDef>
                       <b>{{
                         currentLanguageSet?.inventory?.draftDescription
                       }}</b>
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let adjustment; let i = index">
+                    </th>
+                    <td mat-cell *matCellDef="let adjustment; let i = index">
                       {{ adjustment?.draftDescription }}
-                    </mat-cell>
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="createdBy">
-                    <mat-header-cell *matHeaderCellDef>
+                    <th mat-header-cell *matHeaderCellDef>
                       <b>{{ currentLanguageSet?.inventory?.createdBy }}</b>
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let adjustment; let i = index">
+                    </th>
+                    <td mat-cell *matCellDef="let adjustment; let i = index">
                       {{ adjustment?.createdBy }}
-                    </mat-cell>
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="createdDate">
-                    <mat-header-cell *matHeaderCellDef>
+                    <th mat-header-cell *matHeaderCellDef>
                       <b>{{ currentLanguageSet?.inventory?.createdDate }}</b>
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let adjustment; let i = index">
+                    </th>
+                    <td mat-cell *matCellDef="let adjustment; let i = index">
                       {{ adjustment?.createdDate | istDate: "dd/MM/yyyy" }}
-                    </mat-cell>
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="Edit">
-                    <mat-header-cell *matHeaderCellDef>
+                    <th mat-header-cell *matHeaderCellDef>
                       <b>{{ currentLanguageSet?.bendetails?.edit }}</b>
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let adjustment; let i = index">
+                    </th>
+                    <td mat-cell *matCellDef="let adjustment; let i = index">
                       <mat-icon
                         class="cursorPointer filterTest"
                         (click)="
@@ -157,14 +161,14 @@
                         "
                         >remove_red_eye</mat-icon
                       >
-                    </mat-cell>
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="view">
-                    <mat-header-cell *matHeaderCellDef>
+                    <th mat-header-cell *matHeaderCellDef>
                       <b>{{ currentLanguageSet?.inventory?.view }}</b>
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let adjustment; let i = index">
+                    </th>
+                    <td mat-cell *matCellDef="let adjustment; let i = index">
                       <mat-icon
                         class="cursorPointer filterTest"
                         (click)="
@@ -174,15 +178,15 @@
                         "
                         >remove_red_eye</mat-icon
                       >
-                    </mat-cell>
+                    </td>
                   </ng-container>
-                  <mat-header-row
-                    *matHeaderRowDef="displayedColumns"
-                  ></mat-header-row>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <!-- Data row -->
-                  <mat-row *matRowDef="let row; columns: displayedColumns">
-                  </mat-row>
-                </mat-table>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumns"
+                  ></tr>
+                </table>
                 <div
                   *ngIf="dataSource && dataSource.data.length === 0"
                   class="noRecord"
