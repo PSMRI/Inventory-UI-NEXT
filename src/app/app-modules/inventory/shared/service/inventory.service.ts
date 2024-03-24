@@ -22,12 +22,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class InventoryService {
+  private dialogClosedSubject = new Subject<void>();
   constructor(private http: HttpClient) {}
+
+  dialogClosed(): void {
+    this.dialogClosedSubject.next();
+  }
+  getDialogClosedObservable(): Observable<void> {
+    return this.dialogClosedSubject.asObservable();
+  }
 
   getAvailableItemInStore() {
     const storeID = localStorage.getItem('facilityID');

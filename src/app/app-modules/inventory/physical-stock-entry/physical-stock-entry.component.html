@@ -208,7 +208,6 @@
                       }}</mat-label>
                       <input
                         matInput
-                        allowMax="alphanumeric"
                         maxlength="45"
                         name="batchNo"
                         formControlName="batchNo"
@@ -249,7 +248,7 @@
                       />
                       <mat-datepicker-toggle
                         [disabled]="!stock.value.itemID"
-                        matSuffix
+                        matPrefix
                         [for]="expDate"
                       ></mat-datepicker-toggle>
                       <mat-datepicker #expDate></mat-datepicker>

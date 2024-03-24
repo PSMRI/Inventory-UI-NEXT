@@ -24,6 +24,7 @@ import { Directive, HostListener, Input, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BatchSearchComponent } from '../components/batch-search/batch-search.component';
+import { InventoryService } from '../../inventory/shared/service/inventory.service';
 
 @Directive({
   selector: '[appBatchSearch]',
@@ -49,6 +50,7 @@ export class BatchSearchDirective {
     private el: ElementRef,
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private inventoryService: InventoryService,
   ) {}
 
   openDialog(): void {
@@ -88,6 +90,7 @@ export class BatchSearchDirective {
 
           if (formArray.length < len + result.length - 1)
             formArray.push(this.initDispensedStock());
+          this.inventoryService.dialogClosed();
         }
       }
     });

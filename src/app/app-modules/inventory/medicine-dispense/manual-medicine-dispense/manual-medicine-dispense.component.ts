@@ -182,6 +182,8 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
   }
 
   openModalTOSelectBatch(editIndex: any, formValue: any, itemBatchList: any) {
+    console.log('formValue', formValue);
+    this.inventoryService.dialogClosed();
     const mdDialogRef: MatDialogRef<SelectBatchComponent> = this.dialog.open(
       SelectBatchComponent,
       {
@@ -195,11 +197,25 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
       },
     );
     mdDialogRef.afterClosed().subscribe((result: any) => {
+      this.manualDispenseList = new MatTableDataSource<any>();
+      this.batchNumberDataList = [];
+      this.otherData = [];
       if (result) {
         console.log("result['batchList']", result.value['batchList']);
         if (editIndex !== null) {
           this.manualDispenseList.data.splice(editIndex, 1);
           this.manualDispenseList.data.push(result.value);
+          this.manualDispenseList.data.forEach((item: any) => {
+            this.manualDispenseList.data[0].batchList.forEach((item: any) => {
+              this.batchNumberDataList.push(item.batchNo);
+              this.otherData.push(item.quantityOfDispense);
+            });
+            this.manualDispenseList.data.forEach((element: any) => {
+              element['batchNo'] = this.batchNumberDataList;
+              element['quantityOfDispense'] = this.otherData;
+            });
+          });
+          console.log('this.manualDispenseList', this.manualDispenseList.data);
           this.manualItemDispenseForm.reset();
         } else {
           this.manualDispenseList.data.push(result.value);

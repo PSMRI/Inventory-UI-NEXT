@@ -162,6 +162,7 @@ export class ItemBatchDetailsForPatientReturnComponent
         disableClose: false,
       });
     matDialogRef.afterClosed().subscribe((selectedBatchList: any) => {
+      this.selectedBatchList = new MatTableDataSource<any>();
       if (selectedBatchList) {
         if (editIndex !== null) {
           this.selectedBatchList.data.splice(editIndex, 1);

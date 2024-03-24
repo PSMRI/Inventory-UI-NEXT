@@ -48,7 +48,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
   editBatchList: any;
   selectedBatchList: any = [];
   filteredBatchList: any = [];
-
+  patientReturnBool = false;
   title!: string;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
@@ -66,12 +66,12 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
     this.fetchLanguageResponse();
     // this.batchForm = this.createBatchForm();
     this.batchForm = this.formBuilder.group({
-      itemName: [''],
-      itemDetails: [''],
+      itemName: [],
+      itemDetails: [],
       batchList: this.formBuilder.array([]),
     });
 
-    this.initBatchForm();
+    // this.initBatchForm();
     console.log('Data', this.data);
     this.filterItemList.push(this.data.editBatch.itemName);
     this.initAfterNg();
@@ -139,6 +139,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
   }
 
   handleBatchData() {
+    this.patientReturnBool = true;
     const formBatchList = <FormArray>this.batchForm.controls['batchList'];
     const temp = this.data.editBatch.batchList.slice();
 
@@ -171,20 +172,20 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
     const frmArr = this.batchForm.get('batchList') as FormArray;
     frmArr.push(
       this.formBuilder.group({
-        batchNo: [''],
-        issuedQuantity: [''],
-        dateOfIssue: [''],
-        returnQuantity: [''],
+        batchNo: [],
+        issuedQuantity: [],
+        dateOfIssue: [],
+        returnQuantity: [],
       }),
     );
   }
 
   initBatchFormData() {
     return this.formBuilder.group({
-      batchNo: [''],
-      issuedQuantity: [''],
-      dateOfIssue: [''],
-      returnQuantity: [''],
+      batchNo: [],
+      issuedQuantity: [],
+      dateOfIssue: [],
+      returnQuantity: [],
     });
   }
 
@@ -211,17 +212,28 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
     console.log('filteredBatchList', this.filteredBatchList);
 
     this.selectedBatchList[i] = selectedBatch;
-
-    const dateOfIssue = (this.today = new Date(
-      selectedBatch.value.dateofIssue,
-    ));
-    console.log('batchForm--', batchForm);
-    if (batchForm !== undefined) {
-      batchForm.patchValue({
-        issuedQuantity: selectedBatch.value.issuedQuantity,
-        dateOfIssue: dateOfIssue,
-        returnQuantity: null,
-      });
+    if (this.patientReturnBool) {
+      const dateOfIssue = (this.today = new Date(selectedBatch.dateofIssue));
+      console.log('batchForm--', batchForm);
+      if (batchForm !== undefined) {
+        batchForm.patchValue({
+          issuedQuantity: selectedBatch.issuedQuantity,
+          dateOfIssue: dateOfIssue,
+          returnQuantity: null,
+        });
+      }
+    } else {
+      const dateOfIssue = (this.today = new Date(
+        selectedBatch.value.dateofIssue,
+      ));
+      console.log('batchForm--', batchForm);
+      if (batchForm !== undefined) {
+        batchForm.patchValue({
+          issuedQuantity: selectedBatch.value.issuedQuantity,
+          dateOfIssue: dateOfIssue,
+          returnQuantity: null,
+        });
+      }
     }
   }
 
@@ -231,7 +243,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
   addBatch() {
     // const batchList = <FormArray>this.batchForm.controls['batchList'];
     const tempBatch = this.batchList.value;
-    if (this.itemBatchList.length >= tempBatch.length) {
+    if (this.itemBatchList.length > tempBatch.length) {
       if (this.itemBatchList) {
         const resultBatch = this.itemBatchList.filter((batch: any) => {
           const batchArray = tempBatch.filter((item: any) => {
@@ -248,8 +260,8 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
         });
         this.filteredBatchList.push(resultBatch.slice());
       }
-      // this.batchList.push(this.initBatchFormData());
-      // this.loadstroreStockTableData();
+      this.batchList.push(this.initBatchFormData());
+      this.loadstroreStockTableData();
       // batchList.push(this.initBatchFormData());
     } else {
       this.confirmationService.alert(

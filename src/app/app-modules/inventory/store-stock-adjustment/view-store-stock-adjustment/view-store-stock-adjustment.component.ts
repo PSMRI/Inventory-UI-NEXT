@@ -42,6 +42,7 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
   fromDate: any;
   toDate: any;
   stockAdjustmentList: any = [];
+  ResponseWar: any = [];
   _minDate: any;
   filterTerm: any;
   filteredStockAdjustmentList = new MatTableDataSource<any>();
@@ -105,6 +106,7 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
       .getStockAdjustmentList(temp)
       .subscribe((response: any) => {
         this.stockAdjustmentList = response;
+        this.ResponseWar = response;
         this.filteredStockAdjustmentList.data.push(response);
         this.dataSource = new MatTableDataSource<any>(
           this.filteredStockAdjustmentList.data[0].data,
@@ -115,14 +117,26 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
   }
 
   filterStockAdjustmentList(filterTerm: any) {
-    if (!filterTerm)
-      this.filteredStockAdjustmentList.data = this.stockAdjustmentList.slice();
-    else {
+    if (!filterTerm) {
+      // this.viewRecords();
+      console.log('stockAdjustmentList', this.stockAdjustmentList);
+      console.log(
+        'filteredStockAdjustmentList',
+        this.filteredStockAdjustmentList.data,
+      );
+      this.filteredStockAdjustmentList.data.push(this.stockAdjustmentList);
+      const len = this.filteredStockAdjustmentList.data.length;
+      this.dataSource = new MatTableDataSource<any>(
+        this.filteredStockAdjustmentList.data[len - 1].data,
+      );
+      this.dataSource.paginator = this.paginator;
+    } else {
       this.filteredStockAdjustmentList.data = [];
-      this.stockAdjustmentList.forEach((item: any) => {
+      this.stockAdjustmentList.data.forEach((item: any) => {
         for (const key in item) {
           if (
             key === 'stockAdjustmentDraftID' ||
+            key === 'stockAdjustmentID' ||
             key === 'refNo' ||
             key === 'reason' ||
             key === 'createdBy'
@@ -130,6 +144,10 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this.filteredStockAdjustmentList.data.push(item);
+              this.dataSource = new MatTableDataSource<any>(
+                this.filteredStockAdjustmentList.data,
+              );
+              this.dataSource.paginator = this.paginator;
               break;
             }
           }

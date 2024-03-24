@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -34,13 +34,16 @@ import { LanguageService } from '../../core/services/language.service';
 import { ConfirmationService } from '../../core/services/confirmation.service';
 import { InventoryService } from '../shared/service/inventory.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-store-stock-adjustment',
   templateUrl: './store-stock-adjustment.component.html',
   styleUrls: ['./store-stock-adjustment.component.css'],
 })
-export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
+export class StoreStockAdjustmentComponent
+  implements OnInit, DoCheck, OnDestroy
+{
   storeStockAdjustmentForm!: FormGroup;
   adjustmentTypeList = ['Issue', 'Receipt'];
   draftID: any;
@@ -62,6 +65,7 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
     'action',
   ];
   stockItemName: any;
+  private subs: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -71,7 +75,13 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private inventoryService: InventoryService,
-  ) {}
+  ) {
+    this.subs = this.inventoryService
+      .getDialogClosedObservable()
+      .subscribe(() => {
+        this.loadStockAdjData();
+      });
+  }
   dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {
@@ -97,6 +107,10 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
     this.isMainStore = JSON.parse(isMainStore).isMainFacility;
     this.showLastUpdatedStockLog();
     this.loadStockAdjData();
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 
   loadStockAdjData() {

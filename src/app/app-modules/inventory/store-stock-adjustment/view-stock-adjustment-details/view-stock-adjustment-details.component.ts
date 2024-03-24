@@ -89,7 +89,7 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
         this.dataSource = new MatTableDataSource<any>(
           this.stockAdjustmentList.data,
         );
-        this.adjustmentList.push(response.stockAdjustmentItemDraftEdit);
+        this.adjustmentList.push(response.data.stockAdjustmentItemDraftEdit);
         this.filteredAdjustmentList.data.push(this.stock);
         this.dataSource2 = new MatTableDataSource<any>(
           this.filteredAdjustmentList.data[0].data.stockAdjustmentItemDraftEdit,
@@ -99,11 +99,15 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
   }
 
   filterDetails(filterTerm: any) {
-    if (!filterTerm)
-      this.filteredAdjustmentList.data = this.adjustmentList.slice();
-    else {
+    if (!filterTerm) {
+      this.filteredAdjustmentList.data = this.adjustmentList;
+      console.log('CC', this.filteredAdjustmentList.data);
+      this.dataSource2 = new MatTableDataSource<any>(
+        this.filteredAdjustmentList.data[0],
+      );
+    } else {
       this.filteredAdjustmentList.data = [];
-      this.adjustmentList.forEach((item: any) => {
+      this.adjustmentList[0].forEach((item: any) => {
         for (const key in item) {
           if (
             key === 'itemName' ||
@@ -131,6 +135,10 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
             }
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this.filteredAdjustmentList.data.push(item);
+              console.log('Real', this.filteredAdjustmentList.data[0]);
+              this.dataSource2 = new MatTableDataSource<any>(
+                this.filteredAdjustmentList.data,
+              );
               break;
             }
           }
