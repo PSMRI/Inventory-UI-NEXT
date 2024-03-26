@@ -26,6 +26,7 @@ import {
   EventEmitter,
   Output,
   DoCheck,
+  ViewChild,
 } from '@angular/core';
 import {
   NgForm,
@@ -43,6 +44,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { PatientReturnBatchDetailsComponent } from '../patient-return-batch-details/patient-return-batch-details.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-item-batch-details-for-patient-return',
@@ -72,6 +74,7 @@ export class ItemBatchDetailsForPatientReturnComponent
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
   hide = false;
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   displayedColumns: string[] = [
     'sNo',
     'itemName',
@@ -162,11 +165,11 @@ export class ItemBatchDetailsForPatientReturnComponent
         disableClose: false,
       });
     matDialogRef.afterClosed().subscribe((selectedBatchList: any) => {
-      this.selectedBatchList = new MatTableDataSource<any>();
       if (selectedBatchList) {
         if (editIndex !== null) {
           this.selectedBatchList.data.splice(editIndex, 1);
           this.selectedBatchList.data.push(selectedBatchList.value);
+          this.selectedBatchList.paginator = this.paginator;
           console.log(
             ' this.selectedBatchList.data',
             this.selectedBatchList.data,
@@ -176,6 +179,7 @@ export class ItemBatchDetailsForPatientReturnComponent
           });
         } else {
           this.selectedBatchList.data.push(selectedBatchList.value);
+          this.selectedBatchList.paginator = this.paginator;
           console.log(
             ' this.selectedBatchList.data',
             this.selectedBatchList.data,
@@ -196,8 +200,11 @@ export class ItemBatchDetailsForPatientReturnComponent
 
   removeAddedItem(i: any) {
     const removedItem = this.selectedBatchList.data[i];
+    console.log('removedItem', removedItem);
+    // console.log("removedItem", removedItem);
     this.filterItemList.push(removedItem.itemName);
     this.selectedBatchList.data.splice(i, 1);
+    this.selectedBatchList.paginator = this.paginator;
   }
 
   filterItem(itemName: any, filterItemMasterList: any) {
@@ -257,6 +264,7 @@ export class ItemBatchDetailsForPatientReturnComponent
   resetFieldsAfterSubmit() {
     this.itemReturnForm.reset();
     this.selectedBatchList.data = [];
+    this.selectedBatchList.paginator = this.paginator;
   }
   resetOnClear() {
     this.resetFieldsAfterSubmit();
