@@ -20,7 +20,7 @@
     </div>
     <div
       class="col-xs-6 text-right"
-      *ngIf="headerDetail && headerDetail?.issueType !== null"
+      *ngIf="headerDetail?.issueType && headerDetail?.issueType !== null"
     >
       <p>
         <strong>{{ currentLanguageSet?.inventory?.dispenseType }} : </strong>
