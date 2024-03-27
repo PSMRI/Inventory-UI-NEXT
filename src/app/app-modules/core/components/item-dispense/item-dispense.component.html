@@ -15,11 +15,11 @@
   <div class="row no-gutters">
     <div class="col-xs-12 col-sm-4">
       <mat-form-field class="input-full-width">
+        <mat-label>{{ currentLanguageSet?.inventory?.itemNameCode }}</mat-label>
         <input
           autocomplete="off"
           allowText="itemNameSearchValidator"
           matInput
-          placeholder="{{ currentLanguageSet?.inventory?.itemNameCode }}"
           [(ngModel)]="input.searchTerm"
           (keyup.enter)="search(input.searchTerm)"
           maxlength="100"

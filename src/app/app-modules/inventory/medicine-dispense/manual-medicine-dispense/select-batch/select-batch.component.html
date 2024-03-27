@@ -167,9 +167,13 @@
                       }}"
                       name="expiryDate"
                       formControlName="expiryDate"
-                      [disabled]="true"
+                      [readonly]="true"
                     />
-                    <mat-datepicker-toggle matPrefix [for]="expiryDatePicker">
+                    <mat-datepicker-toggle
+                      matPrefix
+                      [disabled]="true"
+                      [for]="expiryDatePicker"
+                    >
                     </mat-datepicker-toggle>
                     <mat-datepicker #expiryDatePicker></mat-datepicker>
                   </mat-form-field>
