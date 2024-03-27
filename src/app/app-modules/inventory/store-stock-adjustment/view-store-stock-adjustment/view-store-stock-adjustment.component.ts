@@ -191,28 +191,32 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
     const facilityName = facilityDetail.facilityName;
     const adjustedItemList: any = [];
     let i = 0;
+    console.log('adjustmentDetials', adjustmentDetials);
+    console.log('adjustmentDetials', adjustmentDetials.data);
 
-    adjustmentDetials.stockAdjustmentItemDraftEdit.forEach((stock: any) => {
-      i = i + 1;
-      const temp = {
-        sNo: i,
-        itemName: stock.itemName,
-        batchID: stock.batchID,
-        quantityInHand: stock.quantityInHand,
-        adjustedQuantity: stock.adjustedQuantity,
-        adjustmentType:
-          stock.isAdded !== undefined && stock.isAdded ? 'Receipt' : 'Issue',
-        reason: stock.reason,
-      };
-      adjustedItemList.push(temp);
-    });
+    adjustmentDetials.data.stockAdjustmentItemDraftEdit.forEach(
+      (stock: any) => {
+        i = i + 1;
+        const temp = {
+          sNo: i,
+          itemName: stock.itemName,
+          batchID: stock.batchID,
+          quantityInHand: stock.quantityInHand,
+          adjustedQuantity: stock.adjustedQuantity,
+          adjustmentType:
+            stock.isAdded !== undefined && stock.isAdded ? 'Receipt' : 'Issue',
+          reason: stock.reason,
+        };
+        adjustedItemList.push(temp);
+      },
+    );
 
     const headerDetails = Object.assign(
       {
         facilityName: facilityName,
         createDate: moment(adjustmentDetials.createdDate).format('DD-MM-YYYY'),
       },
-      adjustmentDetials,
+      adjustmentDetials.data,
     );
     const printableData = Object.assign(
       {},

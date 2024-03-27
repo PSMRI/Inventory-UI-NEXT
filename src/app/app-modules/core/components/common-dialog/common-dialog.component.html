@@ -77,10 +77,12 @@
   <h3 class="title info">{{ message }}</h3>
   <div class="message">
     <mat-form-field [style.width]="'100%'">
+      <mat-label>{{
+        currentLanguageSet?.inventory?.provideDraftDesc
+      }}</mat-label>
       <textarea
         matInput
         matTextareaAutosize
-        placeholder="{{ currentLanguageSet?.inventory?.provideDraftDesc }}"
         name="draftDescription"
         maxLength="500"
         [value]="comments"
