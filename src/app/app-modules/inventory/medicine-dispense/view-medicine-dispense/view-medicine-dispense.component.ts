@@ -127,8 +127,12 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
   }
 
   filterConsumptionList(searchTerm: string) {
-    if (!searchTerm) this._filteredDispenseList.data = this._dispenseList;
-    else {
+    if (!searchTerm) {
+      this._filteredDispenseList.data = this._dispenseList;
+      this._filteredDispenseList = new MatTableDataSource<any>(
+        this._filteredDispenseList.data,
+      );
+    } else {
       this._filteredDispenseList.data = [];
       this._dispenseList.forEach((item: any) => {
         for (const key in item) {
@@ -142,6 +146,9 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0) {
               this._filteredDispenseList.data.push(item);
+              this._filteredDispenseList = new MatTableDataSource<any>(
+                this._filteredDispenseList.data,
+              );
               break;
             }
           }
