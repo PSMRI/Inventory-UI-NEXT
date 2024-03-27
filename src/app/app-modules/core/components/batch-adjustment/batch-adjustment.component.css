@@ -1,6 +1,6 @@
 .dialog-container {
     height: 100%;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 }
 
 .dialog-title {
@@ -45,4 +45,4 @@
     }
 }
 
-.enableScroll { height: 250px; flex: auto; }
+/* .enableScroll { height: 250px; flex: auto; } */

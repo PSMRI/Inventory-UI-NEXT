@@ -175,8 +175,8 @@ export class ViewPhysicalStockComponent implements OnInit, DoCheck {
     if (stockEntryResponse) {
       const matDialogRef: MatDialogRef<ViewPhysicalStockDetailsComponent> =
         this.dialog.open(ViewPhysicalStockDetailsComponent, {
-          // height: '90%',
-          width: '80%',
+          width: '55%',
+          height: '90%',
           panelClass: 'fit-screen',
           data: { stockEntry: entry, entryDetails: stockEntryResponse },
           disableClose: false,

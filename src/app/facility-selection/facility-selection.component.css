@@ -20,7 +20,7 @@
   }
  
 .matCardService {
-    width: 500px;
+    width: 410px;
     margin-left: 10px;
     margin-right: 10px;
     border-radius: 5px;
@@ -28,5 +28,5 @@
     min-height: 240px;
   }
  .mat_form_field_width>>> .mat-mdc-text-field-wrapper {
-    width: 220%;
+    width: 178%;
 }

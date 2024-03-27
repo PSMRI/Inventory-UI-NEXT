@@ -195,8 +195,8 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
     const matDialogRef: MatDialogRef<SearchComponent> = this.dialog.open(
       SearchComponent,
       {
-        height: '80%',
-        width: '65%',
+        width: '55%',
+        height: '90%',
         panelClass: 'fit-screen',
         disableClose: false,
       },

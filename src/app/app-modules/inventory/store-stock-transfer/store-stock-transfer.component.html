@@ -68,8 +68,131 @@
       <div class="col-xs-12">
         <mat-card>
           <div class="table-responsive">
+            <!-- 
             <table
-              class="table table-striped responsive-table-form"
+            mat-table
+            [dataSource]="dataSource"
+            aria-describedby="searchDetails"
+          >
+            <ng-container matColumnDef="itemCode">
+              <th mat-header-cell *matHeaderCellDef>
+                
+              </th>
+              <td mat-cell *matCellDef="let item">{{ i + 1 }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="itemName">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.inventory?.itemName }}
+              </th>
+              <td mat-cell *matCellDef="let item"> <mat-form-field class="input-full-width">
+                <mat-label>{{
+                  currentLanguageSet?.inventory?.itemName
+                }}</mat-label>
+                <input
+                  maxlength="100"
+                  allowText="itemNameSearchValidator"
+                  matInput
+                  appItemTransfer
+                  [stockForm]="transfers"
+                  [previousSelected]="stockTransferForm.value.itemArray"
+                  name="itemName"
+                  formControlName="itemName"
+                />
+                <mat-icon
+                  *ngIf="!transfers.controls['itemName'].disabled"
+                  class="search-btn"
+                  matSuffix
+                  appItemTransfer
+                  [stockForm]="transfers"
+                  [previousSelected]="stockTransferForm.value.itemArray"
+                  >search</mat-icon
+                >
+              </mat-form-field></td>
+            </ng-container>
+
+            <ng-container matColumnDef="batchNo">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.itemDispense?.batchNo }}
+              </th>
+              <td mat-cell *matCellDef="let item">
+                <mat-form-field class="input-full-width">
+                  <mat-label>{{
+                    currentLanguageSet?.itemDispense?.batchNo
+                  }}</mat-label>
+                  <input
+                    matInput
+                    name="batchNo"
+                    formControlName="batchNo"
+                    readonly
+                  />
+                </mat-form-field>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="itemCategory">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.inventory?.qOH }}
+              </th>
+              <td mat-cell *matCellDef="let item">
+                <mat-form-field class="input-full-width">
+                  <mat-label>{{
+                    currentLanguageSet?.inventory?.qOH
+                  }}</mat-label>
+                  <input
+                    matInput
+                    name="qoh"
+                    formControlName="qoh"
+                    readonly
+                  />
+                </mat-form-field>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="itemForm">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.inventory?.quantity }}
+              </th>
+              <td mat-cell *matCellDef="let item">
+                <mat-form-field class="input-full-width">
+                  <mat-label>{{
+                    currentLanguageSet?.inventory?.quantity
+                  }}</mat-label>
+                  <input
+                    matInput
+                    name="quantity"
+                    allowText="number"
+                    formControlName="quantity"
+                    [attr.maxlength]="('' + transfers.value.qoh).length"
+                    (change)="checkQuantityAvailable(i)"
+                    [disabled]="!transfers.value.itemStockEntryID"
+                  />
+                </mat-form-field>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="pharmacologicalCategory">
+              <th mat-header-cell *matHeaderCellDef>
+              </th>
+              <td mat-cell *matCellDef="let item">
+                <mat-icon
+                class="icon-remove cursorPointer"
+                matTooltip="{{ currentLanguageSet?.inventory?.delete }}"
+                (click)="
+                  removeTransfer(
+                    i,
+                    stroreStockTransferTableData().length
+                  )
+                "
+                >delete</mat-icon
+              >
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table> -->
+
+            <table
+              class="table table-striped responsive-table-form mat_form_field_background_color_table"
               aria-describedby="storeStockDetails"
             >
               <caption></caption>
@@ -186,7 +309,10 @@
                     </td>
                   </tr>
                 </ng-container>
-                <tr *ngIf="stockTransferForm.controls['itemArray'].valid">
+                <tr
+                  *ngIf="stockTransferForm.controls['itemArray'].valid"
+                  style="text-align: end"
+                >
                   <td colspan="6">
                     <button
                       mat-mini-fab

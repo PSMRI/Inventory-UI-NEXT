@@ -154,8 +154,8 @@ export class ItemBatchDetailsForPatientReturnComponent
     console.log('Itemmmmm', itemName);
     const matDialogRef: MatDialogRef<PatientReturnBatchDetailsComponent> =
       this.dialog.open(PatientReturnBatchDetailsComponent, {
-        // height: '90%',
-        // width: '80%',
+        width: '55%',
+        height: '90%',
         panelClass: 'fit-screen',
         data: {
           batchList: batchList,
@@ -221,8 +221,8 @@ export class ItemBatchDetailsForPatientReturnComponent
     const mdDialogRef: MatDialogRef<SearchComponent> = this.dialog.open(
       SearchComponent,
       {
-        // height: '80%',
-        // width: '80%',
+        width: '55%',
+        height: '90%',
         panelClass: 'fit-screen',
         disableClose: false,
       },

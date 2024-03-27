@@ -52,9 +52,7 @@
 
       <div class="row m-t-10">
         <div class="col-xs-12">
-          <div
-            class="table-responsive enableScroll mat_form_field_background_color_table"
-          >
+          <div class="table-responsive mat_form_field_background_color_table">
             <table
               mat-table
               class="mat-elevation-z8"
@@ -199,10 +197,10 @@
                 currentLanguageSet?.inventory?.norecordsfound
               }}</strong>
             </div>
-            <div class="total-count" *ngIf="dataSource.data.length > 0">
+            <!-- <div class="total-count" *ngIf="dataSource.data.length > 0">
               {{ currentLanguageSet?.inventory?.totalCount }} :
               {{ dataSource.data.length }}
-            </div>
+            </div> -->
             <mat-paginator
               [hidden]="dataSource.data.length === 0"
               [pageSizeOptions]="[5, 10, 25]"
@@ -214,8 +212,11 @@
       </div>
     </div>
 
-    <div class="row m-t-10 m-b-10">
-      <div class="col-xs-12" style="display: flex; justify-content: end">
+    <div class="row m-b-10">
+      <div
+        class="col-xs-12"
+        style="display: flex; justify-content: end; margin-top: 10px"
+      >
         <button
           mat-raised-button
           class="pull-right"

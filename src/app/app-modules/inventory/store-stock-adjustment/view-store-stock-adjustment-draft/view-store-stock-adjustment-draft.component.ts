@@ -142,7 +142,8 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
   viewStockAdjustmentDraftDetails(draftID: any) {
     this.dialog
       .open(ViewStockAdjustmentDraftDetailsComponent, {
-        width: '80%',
+        width: '55%',
+        height: '90%',
         panelClass: 'fit-screen',
         data: {
           adjustmentID: draftID,

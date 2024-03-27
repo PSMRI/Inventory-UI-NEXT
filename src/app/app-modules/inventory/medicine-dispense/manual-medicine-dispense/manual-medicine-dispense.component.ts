@@ -195,6 +195,8 @@ export class ManualMedicineDispenseComponent implements OnInit, DoCheck {
           editBatch: formValue,
           editIndex: editIndex,
         },
+        width: '55%',
+        height: '90%',
         panelClass: 'fit-screen',
         disableClose: false,
       },

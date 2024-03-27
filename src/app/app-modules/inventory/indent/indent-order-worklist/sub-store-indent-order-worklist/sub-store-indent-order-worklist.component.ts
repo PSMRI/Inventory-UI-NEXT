@@ -91,7 +91,8 @@ export class SubStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
 
   viewItemListDetails(orderlist: any) {
     this.dialog.open(SubStoreItemModelComponent, {
-      width: '80%',
+      width: '55%',
+      height: '90%',
       panelClass: 'fit-screen',
       data: {
         itemListDetails: orderlist,

@@ -75,7 +75,11 @@
         <mat-card>
           <div class="table-responsive mat_form_field_background_color_table">
             <ng-container formArrayName="dispensedStock"></ng-container>
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <table
+              mat-table
+              [dataSource]="dataSource"
+              class="mat-elevation-z8 mat_form_field_background_color_table"
+            >
               <ng-container matColumnDef="index">
                 <th mat-header-cell *matHeaderCellDef>
                   {{ currentLanguageSet?.inventory?.index }}

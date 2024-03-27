@@ -182,8 +182,8 @@ export class ViewStoreSelfConsumptionComponent implements OnInit, DoCheck {
     if (consumptionResponse) {
       const mdDialogRef: MatDialogRef<ViewStoreSelfConsumptionDetailsComponent> =
         this.dialog.open(ViewStoreSelfConsumptionDetailsComponent, {
-          // height: '90%',
-          width: '80%',
+          width: '55%',
+          height: '90%',
           panelClass: 'fit-screen',
           data: {
             consumptionDetails: consumptionDetails,

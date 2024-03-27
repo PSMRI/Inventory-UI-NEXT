@@ -1,7 +1,9 @@
 .input-full-width {
   width: 100%;
 }
-
+.radio-btn{
+  font-weight: bold !important;
+}
 .box {
   height: 70px;
 }

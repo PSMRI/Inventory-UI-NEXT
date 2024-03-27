@@ -63,6 +63,8 @@ export class ItemDispenseDirective {
     const dialogRef = this.dialog.open(ItemDispenseComponent, {
       // width: '80%',
       // height: '90%',
+      width: '55%',
+      height: '90%',
       panelClass: 'fit-screen',
       data: { searchTerm: searchTerm, dispenseItemList: this.dispenseItemList },
     });

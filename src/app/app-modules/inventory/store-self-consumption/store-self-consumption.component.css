@@ -61,4 +61,5 @@
 }
 .mat_form_field_background_color_table >>> .mdc-text-field{
   padding: unset !important;
+  background-color:unset !important;
 }

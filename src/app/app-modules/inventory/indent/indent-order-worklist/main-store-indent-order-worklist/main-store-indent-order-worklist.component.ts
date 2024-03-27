@@ -90,7 +90,8 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
 
   viewItemListDetails(orderList: any) {
     this.dialog.open(MainStoreItemModelComponent, {
-      width: '80%',
+      width: '55%',
+      height: '90%',
       panelClass: 'fit-screen',
       data: {
         itemListDetails: orderList,
@@ -110,8 +111,8 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
   }
   rejectIndent(rejectOrder: any) {
     const dialogRef = this.dialog.open(RejectItemFromMainstoreModelComponent, {
-      width: '40%',
-      height: '40%',
+      width: '55%',
+      height: '90%',
       panelClass: 'fit-screen',
       data: {
         rejectItem: rejectOrder,

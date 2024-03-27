@@ -286,50 +286,56 @@
       </div>
     </div>
     <div class="row m-t-10 m-b-40">
-      <div class="col-xs-12" style="margin-top: 15px">
-        <button
-          type="button"
-          class="pull-left"
-          color="primary"
-          mat-raised-button
-          matTooltip="{{ currentLanguageSet?.inventory?.back }}"
-          matTooltipPosition="right"
-          (click)="goBack()"
-        >
-          {{ currentLanguageSet?.inventory?.back }}
-        </button>
-        <button
-          type="button"
-          mat-raised-button
-          color="accent"
-          class="pull-right m-r-5"
-          *ngIf="!editMode"
-          [disabled]="indentRequestForm.invalid"
-          (click)="submitIndentRequest(indentRequestForm)"
-        >
-          {{ currentLanguageSet?.common?.save }}
-        </button>
-        <button
-          type="button"
-          mat-raised-button
-          color="accent"
-          class="pull-right m-r-5"
-          *ngIf="editMode"
-          [disabled]="indentRequestForm.invalid"
-          (click)="updateIndentRequest(indentRequestForm)"
-        >
-          {{ currentLanguageSet?.inventory?.update }}
-        </button>
-        <button
-          type="button"
-          mat-raised-button
-          color="primary"
-          class="pull-right m-r-5"
-          [disabled]="indentRequestForm.pristine"
-          (click)="resetIndentRequestForm()"
-        >
-          {{ currentLanguageSet?.inventory?.clear }}
-        </button>
+      <div class="col-12 row" style="margin-top: 15px">
+        <div class="col-6">
+          <button
+            type="button"
+            class="pull-left"
+            color="primary"
+            style="text-align: left"
+            mat-raised-button
+            matTooltip="{{ currentLanguageSet?.inventory?.back }}"
+            matTooltipPosition="right"
+            (click)="goBack()"
+          >
+            {{ currentLanguageSet?.inventory?.back }}
+          </button>
+        </div>
+
+        <div class="col-6" style="text-align: end">
+          <button
+            type="button"
+            mat-raised-button
+            color="accent"
+            class="pull-right m-r-5"
+            *ngIf="!editMode"
+            [disabled]="indentRequestForm.invalid"
+            (click)="submitIndentRequest(indentRequestForm)"
+          >
+            {{ currentLanguageSet?.common?.save }}
+          </button>
+          <button
+            type="button"
+            mat-raised-button
+            color="accent"
+            class="pull-right m-r-5"
+            *ngIf="editMode"
+            [disabled]="indentRequestForm.invalid"
+            (click)="updateIndentRequest(indentRequestForm)"
+          >
+            {{ currentLanguageSet?.inventory?.update }}
+          </button>
+          <button
+            type="button"
+            mat-raised-button
+            color="primary"
+            class="pull-right m-r-5"
+            [disabled]="indentRequestForm.pristine"
+            (click)="resetIndentRequestForm()"
+          >
+            {{ currentLanguageSet?.inventory?.clear }}
+          </button>
+        </div>
       </div>
     </div>
   </form>
