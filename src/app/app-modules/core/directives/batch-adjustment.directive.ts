@@ -55,8 +55,8 @@ export class BatchAdjustmentDirective {
     console.log('SEACHTEREM', searchTerm);
 
     const dialogRef = this.dialog.open(BatchAdjustmentComponent, {
-      width: '55%',
-      height: '90%',
+      width: '1200px',
+      height: 'auto',
       panelClass: 'fit-screen',
       data: { searchTerm: searchTerm, addedStock: this.previousSelected },
     });

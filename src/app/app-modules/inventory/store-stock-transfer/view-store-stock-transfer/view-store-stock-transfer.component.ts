@@ -192,8 +192,8 @@ export class ViewStoreStockTransferComponent implements OnInit, DoCheck {
     if (stockEntryResponse) {
       const mdDialogRef: MatDialogRef<ViewStoreStockTransferDetailsComponent> =
         this.dialog.open(ViewStoreStockTransferDetailsComponent, {
-          width: '55%',
-          height: '90%',
+          width: '1200px',
+          height: 'auto',
           panelClass: 'fit-screen',
           data: { stockEntry: entry, entryDetails: stockEntryResponse },
           disableClose: false,

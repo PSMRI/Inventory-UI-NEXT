@@ -57,8 +57,8 @@ export class BatchSearchDirective {
     const searchTerm = this.stockForm.value.itemName;
 
     const dialogRef = this.dialog.open(BatchSearchComponent, {
-      width: '55%',
-      height: '90%',
+      width: '1200px',
+      height: 'auto',
       panelClass: 'fit-screen',
       data: { searchTerm: searchTerm, addedStock: this.previousSelected },
     });
