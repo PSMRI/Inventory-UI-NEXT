@@ -177,6 +177,7 @@
               >
               <div class="clearfix"></div>
               <mat-radio-group
+                class="radio_btn_fontsize"
                 id="medicineDispenseType"
                 name="medicineDispenseType"
                 formControlName="medicineDispenseType"
@@ -185,16 +186,15 @@
               >
                 <mat-radio-button
                   color="primary"
-                  class="radio-btn"
+                  class="radio_btn_fontsize"
                   value="Manual"
-                  style="font-size: large"
                   >{{
                     currentLanguageSet?.inventory?.manualDispense
                   }}</mat-radio-button
                 >
                 <mat-radio-button
                   color="primary"
-                  class="radio-btn"
+                  class="radio_btn_fontsize"
                   value="System"
                   >{{
                     currentLanguageSet?.inventory?.systemDispense

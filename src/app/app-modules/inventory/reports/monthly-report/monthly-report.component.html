@@ -17,7 +17,6 @@
             </mat-label>
             <mat-select
               [style.width]="'100%'"
-              placeholder="{{ currentLanguageSet?.inventory?.selectmonth }}"
               name="month"
               id="month"
               formControlName="month"
@@ -39,7 +38,6 @@
             </mat-label>
             <mat-select
               [style.width]="'100%'"
-              placeholder="{{ currentLanguageSet?.inventory?.selectyear }}"
               name="year"
               id="year"
               formControlName="year"
@@ -58,11 +56,7 @@
             <mat-label>
               {{ currentLanguageSet?.inventory?.facility }}
             </mat-label>
-            <mat-select
-              [style.width]="'100%'"
-              placeholder="{{ currentLanguageSet?.inventory.facility }}"
-              formControlName="facilityName"
-            >
+            <mat-select [style.width]="'100%'" formControlName="facilityName">
               <mat-option *ngFor="let item of facilities" [value]="item">{{
                 item
               }}</mat-option>
