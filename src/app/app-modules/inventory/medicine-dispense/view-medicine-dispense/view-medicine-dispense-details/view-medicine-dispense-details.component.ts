@@ -87,15 +87,22 @@ export class ViewMedicineDispenseDetailsComponent
 
   filterDetails(filterTerm: string) {
     console.log(filterTerm);
-    if (!filterTerm) this._filteredDetailedList.data = this._detailedList;
-    else {
+    if (!filterTerm) {
+      this._filteredDetailedList.data = this._detailedList.data;
+      this.dataSource = new MatTableDataSource<any>(
+        this._filteredDetailedList.data,
+      );
+    } else {
       this._filteredDetailedList.data = [];
-      this._detailedList.forEach((item: any) => {
+      this._detailedList.data.forEach((item: any) => {
         for (const key in item) {
           if (key === 'batchNo' || key === 'itemName' || key === 'quantity') {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this._filteredDetailedList.data.push(item);
+              this.dataSource = new MatTableDataSource<any>(
+                this._filteredDetailedList.data,
+              );
               break;
             }
           }

@@ -150,7 +150,8 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
   ) {
     const matDialogRef: MatDialogRef<SelectBatchForIndentItemComponent> =
       this.dialog.open(SelectBatchForIndentItemComponent, {
-        width: '80%',
+        width: '55%',
+        height: '90%',
         panelClass: 'fit-screen',
         data: {
           indentItem: selectedItem,

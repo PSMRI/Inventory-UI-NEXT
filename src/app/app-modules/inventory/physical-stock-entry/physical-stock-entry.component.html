@@ -79,16 +79,16 @@
         <mat-card>
           <div class="table-responsive">
             <ng-container formArrayName="physicalStock">
-              <mat-table
+              <table
+                mat-table
                 class="mat-elevation-z8 mat_form_field_background_color_table"
                 [dataSource]="dataSource"
               >
                 <ng-container matColumnDef="index">
-                  <th th mat-header-cell *matHeaderCellDef>
+                  <th mat-header-cell *matHeaderCellDef>
                     {{ currentLanguageSet?.inventory?.index }}
                   </th>
                   <td
-                    td
                     mat-cell
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
@@ -208,7 +208,6 @@
                       }}</mat-label>
                       <input
                         matInput
-                        allowMax="alphanumeric"
                         maxlength="45"
                         name="batchNo"
                         formControlName="batchNo"
@@ -249,7 +248,7 @@
                       />
                       <mat-datepicker-toggle
                         [disabled]="!stock.value.itemID"
-                        matSuffix
+                        matPrefix
                         [for]="expDate"
                       ></mat-datepicker-toggle>
                       <mat-datepicker #expDate></mat-datepicker>
@@ -281,7 +280,7 @@
                   mat-row
                   *matRowDef="let row; columns: displayedColumns"
                 ></tr>
-              </mat-table>
+              </table>
             </ng-container>
             <div
               class="text-right"

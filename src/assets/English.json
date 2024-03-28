@@ -323,7 +323,7 @@
             "refNo": "Ref. No.",
             "storeID": "Store ID",
             "quantity": "Quantity",
-            "previousPhysicalStoreEntry": "Previous Physical Store Entry",
+            "previousPhysicalStockEntry": "Previous Physical Stock Entry",
             "status": "Status",
             "stockEntryDetail": "Stock Entry Detail",
             "physicalStockEntry": "Physical Stock Entry",

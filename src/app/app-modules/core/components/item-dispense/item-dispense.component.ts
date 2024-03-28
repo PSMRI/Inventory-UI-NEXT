@@ -62,7 +62,17 @@ export class ItemDispenseComponent implements OnInit, DoCheck {
 
   search(term: string): void {
     this.items$ = this.itemSearchService.getItemDetailsByName(term);
-    if (term) {
+    if (term === '%%') {
+      this.items$.subscribe((data) => {
+        if (data) {
+          this.dataSource.data = data.data;
+          this.dataSource.paginator = this.paginator;
+          this.noRecordsFlag = true;
+        } else {
+          this.noRecordsFlag = false;
+        }
+      });
+    } else if (term) {
       this.items$.subscribe((data) => {
         if (data) {
           this.dataSource.data = data.data;

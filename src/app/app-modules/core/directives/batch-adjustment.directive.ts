@@ -23,6 +23,7 @@ import { Directive, HostListener, Input, ElementRef } from '@angular/core';
 import { BatchAdjustmentComponent } from '../components/batch-adjustment/batch-adjustment.component';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { InventoryService } from '../../inventory/shared/service/inventory.service';
 
 @Directive({
   selector: '[appBatchAdjustment]',
@@ -46,6 +47,7 @@ export class BatchAdjustmentDirective {
     private el: ElementRef,
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private inventoryService: InventoryService,
   ) {}
 
   openDialog(): void {
@@ -53,6 +55,8 @@ export class BatchAdjustmentDirective {
     console.log('SEACHTEREM', searchTerm);
 
     const dialogRef = this.dialog.open(BatchAdjustmentComponent, {
+      width: '55%',
+      height: '90%',
       panelClass: 'fit-screen',
       data: { searchTerm: searchTerm, addedStock: this.previousSelected },
     });
@@ -83,13 +87,10 @@ export class BatchAdjustmentDirective {
           (<FormGroup>formArray.at(i)).controls['itemName'].disable();
           // (<FormGroup>formArray.at(i)).controls['quantity'].enable();
           (<FormGroup>formArray.at(i)).markAsDirty();
-          const dataLength = result.length - 1;
-
-          // for(let k =0; k < dataLength; k++){
-          //   formArray.push(this.initStockAdjustmentList());
-          // }
-          if (formArray.length < len + result.length - 1)
+          if (formArray.length < len + result.length - 1) {
             formArray.push(this.initStockAdjustmentList());
+            this.inventoryService.dialogClosed();
+          }
         }
       }
     });

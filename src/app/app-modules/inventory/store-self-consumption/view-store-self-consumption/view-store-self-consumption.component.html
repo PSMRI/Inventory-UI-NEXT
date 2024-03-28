@@ -104,7 +104,8 @@
             <section
               class="col-xs-12 table-responsive mat_form_field_background_color_table"
             >
-              <mat-table
+              <table
+                mat-table
                 class="mat-elevation-z8"
                 [dataSource]="_filteredConsumptionList"
               >
@@ -189,7 +190,7 @@
                   mat-row
                   *matRowDef="let row; columns: displayedColumns"
                 ></tr>
-              </mat-table>
+              </table>
               <div
                 *ngIf="
                   _filteredConsumptionList &&

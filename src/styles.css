@@ -383,4 +383,11 @@ table thead tr th {
     /* background-color: #f9f9f9 !important; */
     background-color:unset !important;
 }
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  /* overflow: hidden !important; */
+  margin-bottom: 10px !important;
+}
+.mat-mdc-paginator{
+  display: unset !important;
+}
 

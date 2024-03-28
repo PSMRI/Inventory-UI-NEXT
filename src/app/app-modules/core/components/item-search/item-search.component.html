@@ -5,12 +5,13 @@
     matDialogClose
     matTooltip="{{ currentLanguageSet?.inventory?.close }}"
     class="pull-right exit width-20px"
+    style="text-align: end"
   >
     <mat-icon>close</mat-icon>
   </button>
 </div>
 
-<div class="container-fluid">
+<div>
   <div class="row no-gutters">
     <div class="col-xs-12 col-sm-4" style="display: flex; align-items: center">
       <mat-form-field class="input-full-width">
@@ -39,9 +40,6 @@
       </button>
     </div>
   </div>
-
-  <div class="m-t-30"></div>
-
   <mat-dialog-content>
     <div class="table-responsive mat_form_field_background_color_table">
       <table mat-table [dataSource]="dataSource" aria-describedby="itemDetails">
@@ -124,10 +122,10 @@
       <div class="noRecord" *ngIf="dataSource.data.length === 0">
         <strong>{{ currentLanguageSet?.inventory?.norecordsfound }}</strong>
       </div>
-      <div class="total-count" *ngIf="dataSource.data.length > 0">
+      <!-- <div class="total-count" *ngIf="dataSource.data.length > 0">
         {{ currentLanguageSet?.inventory?.totalCount }} :
         {{ dataSource.data.length }}
-      </div>
+      </div> -->
       <mat-paginator
         [hidden]="dataSource.data.length === 0"
         [pageSizeOptions]="[5, 10, 25]"
