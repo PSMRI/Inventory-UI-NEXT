@@ -15,8 +15,9 @@
   <div class="row m-t-10 no-gutters">
     <div class="col-xs-12 col-sm-6">
       <mat-form-field class="input-full-width">
-        <mat-label>{{ currentLanguageSet?.inventory?.itemNameCode }}</mat-label>
-
+        <mat-label>
+          {{ currentLanguageSet?.inventory?.itemNameCode }}
+        </mat-label>
         <input
           autocomplete="off"
           allowText="itemNameSearchValidator"
@@ -104,21 +105,8 @@
             ></mat-checkbox>
           </td>
         </ng-container>
-        <tr
-          mat-row
-          *matRowDef="
-            let row;
-            columns: [
-              'itemCode',
-              'itemName',
-              'itemCategory',
-              'itemForm',
-              'strength',
-              'quantityOnHand',
-              'action'
-            ]
-          "
-        ></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
       <div class="noRecord" *ngIf="dataSource.data.length === 0">
         <strong>{{ currentLanguageSet?.inventory?.norecordsfound }}</strong>

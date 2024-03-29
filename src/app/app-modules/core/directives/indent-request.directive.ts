@@ -23,6 +23,7 @@ import { Directive, HostListener, Input, ElementRef } from '@angular/core';
 import { IndentItemListComponent } from '../components/indent-item-list/indent-item-list.component';
 import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { InventoryService } from '../../inventory/shared/service/inventory.service';
 
 @Directive({
   selector: '[appIndentRequest]',
@@ -45,6 +46,7 @@ export class IndentRequestDirective {
     private el: ElementRef,
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private inventoryService: InventoryService,
   ) {}
 
   openDialog(): void {
@@ -76,6 +78,7 @@ export class IndentRequestDirective {
 
           if (formArray.length < len + result.length - 1)
             formArray.push(this.initIndentRequestList());
+          this.inventoryService.dialogClosed();
         }
       }
     });

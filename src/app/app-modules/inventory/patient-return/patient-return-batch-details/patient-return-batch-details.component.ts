@@ -53,6 +53,7 @@ export class PatientReturnBatchDetailsComponent implements OnInit, DoCheck {
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
   dataSource = new MatTableDataSource<any>();
+
   constructor(
     public dialogRef: MatDialogRef<PatientReturnBatchDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
