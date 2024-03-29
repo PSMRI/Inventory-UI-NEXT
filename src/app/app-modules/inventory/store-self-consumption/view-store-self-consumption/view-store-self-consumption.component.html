@@ -203,13 +203,13 @@
                   currentLanguageSet?.inventory?.norecordsfound
                 }}</strong>
               </div>
-              <div
+              <!-- <div
                 class="total-count"
                 *ngIf="_filteredConsumptionList.data.length > 0"
               >
                 {{ currentLanguageSet?.inventory?.totalCount }} :
                 {{ _filteredConsumptionList.data.length }}
-              </div>
+              </div> -->
               <mat-paginator
                 [hidden]="_filteredConsumptionList.data.length === 0"
                 [pageSizeOptions]="[5, 10, 25]"

@@ -54,5 +54,4 @@
 }
 .radio_btn_fontsize >>> .mat-mdc-radio-button .mdc-radio--disabled+label{
   font-weight: bold !important;
-  color: black !important;
 }
