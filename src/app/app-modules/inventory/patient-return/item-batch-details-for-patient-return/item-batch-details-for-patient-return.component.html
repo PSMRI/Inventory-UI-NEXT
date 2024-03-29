@@ -1,18 +1,21 @@
 <form [formGroup]="itemReturnForm" autocomplete="off">
   <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
-    <mat-select
-      style="border-bottom: solid 1px; border-color: grey"
-      class="input-full-width"
-      name="itemName"
-      id="itemName"
-      formControlName="itemName"
-      placeholder="{{ currentLanguageSet?.inventory?.item }}"
-      (selectionChange)="getBatchDetail(itemName, null)"
+    <mat-form-field
+      class="mat_form_field_background_color mat_form_field_background_width"
     >
-      <mat-option *ngFor="let item of filterItemList" [value]="item">
-        {{ item.itemName }}
-      </mat-option>
-    </mat-select>
+      <mat-label>{{ currentLanguageSet?.inventory?.item }}</mat-label>
+      <mat-select
+        class="input-full-width"
+        name="itemName"
+        id="itemName"
+        formControlName="itemName"
+        (selectionChange)="getBatchDetail(itemName, null)"
+      >
+        <mat-option *ngFor="let item of filterItemList" [value]="item">
+          {{ item.itemName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 </form>
 <div class="container-fluid">

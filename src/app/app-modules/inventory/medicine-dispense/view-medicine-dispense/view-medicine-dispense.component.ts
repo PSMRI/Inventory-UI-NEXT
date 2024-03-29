@@ -169,8 +169,8 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
     if (dispenseResponse) {
       const mdDialogRef: MatDialogRef<ViewMedicineDispenseDetailsComponent> =
         this.dialog.open(ViewMedicineDispenseDetailsComponent, {
-          width: '55%',
-          height: '90%',
+          width: '1200px',
+          height: 'auto',
           panelClass: 'fit-screen',
           data: { dispense: dispense, dispenseItem: dispenseResponse },
           disableClose: false,

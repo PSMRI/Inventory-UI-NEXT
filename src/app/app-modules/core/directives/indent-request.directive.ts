@@ -51,8 +51,8 @@ export class IndentRequestDirective {
     // const searchTerm = this.itemListForm.itemNameView;
     const searchTerm = this.itemListForm.controls['itemNameView'].value;
     const dialogRef = this.dialog.open(IndentItemListComponent, {
-      width: '55%',
-      height: '90%',
+      width: '1200px',
+      height: 'auto',
       panelClass: 'fit-screen',
       data: { searchTerm: searchTerm, addedIndent: this.previousSelected },
     });

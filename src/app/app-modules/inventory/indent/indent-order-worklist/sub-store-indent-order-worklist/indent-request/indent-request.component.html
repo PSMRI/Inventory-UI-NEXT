@@ -21,7 +21,6 @@
             [matDatepicker]="picker"
             name="requestDate"
             id="requestDate"
-            placeholder="{{ currentLanguageSet?.inventory?.indentDate }}"
             formControlName="requestDate"
             [disabled]="true"
           />
@@ -54,7 +53,6 @@
           <input
             required="true"
             matInput
-            placeholder="{{ currentLanguageSet?.inventory?.referenceNo }}"
             allowText="alphanumeric"
             maxlength="20"
             formControlName="referenceNumber"
@@ -72,7 +70,6 @@
           <input
             required="true"
             matInput
-            placeholder="{{ currentLanguageSet?.inventory?.reason }}"
             allowText="alphanumericspace"
             maxlength="250"
             formControlName="indentReason"
