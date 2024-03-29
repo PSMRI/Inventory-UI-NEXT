@@ -26,6 +26,7 @@ import {
   OnDestroy,
   DoCheck,
   ViewChild,
+  AfterViewInit,
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -39,14 +40,14 @@ import { LanguageService } from 'src/app/app-modules/core/services/language.serv
   styleUrls: ['./view-store-self-consumption-details.component.css'],
 })
 export class ViewStoreSelfConsumptionDetailsComponent
-  implements OnInit, OnDestroy, DoCheck
+  implements OnInit, OnDestroy, DoCheck, AfterViewInit
 {
   _filterTerm = '';
   _detailedList: any = [];
   _filteredDetailedList = new MatTableDataSource<any>();
   _dataStoreSelfList = new MatTableDataSource<any>();
   dataSource = new MatTableDataSource<any>();
-  blankTable = [1, 2, 3, 4, 5];
+  // blankTable = [1, 2, 3, 4, 5];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
@@ -74,6 +75,10 @@ export class ViewStoreSelfConsumptionDetailsComponent
     this.populateConsumedItems(this.data);
     this.fetchLanguageResponse();
     this._dataStoreSelfList.data.push(this.data);
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   ngOnDestroy(): void {
@@ -105,6 +110,7 @@ export class ViewStoreSelfConsumptionDetailsComponent
       this.dataSource = new MatTableDataSource<any>(
         this._filteredDetailedList.data,
       );
+      this.dataSource.paginator = this.paginator;
     } else {
       this._filteredDetailedList.data = [];
       this._detailedList.data.forEach((item: any) => {
@@ -116,6 +122,7 @@ export class ViewStoreSelfConsumptionDetailsComponent
               this.dataSource = new MatTableDataSource<any>(
                 this._filteredDetailedList.data,
               );
+              this.dataSource.paginator = this.paginator;
               break;
             }
           }

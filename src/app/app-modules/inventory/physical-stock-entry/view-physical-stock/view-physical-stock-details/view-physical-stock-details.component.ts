@@ -26,6 +26,7 @@ import {
   OnDestroy,
   DoCheck,
   ViewChild,
+  AfterViewInit,
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -40,13 +41,13 @@ import { LanguageService } from 'src/app/app-modules/core/services/language.serv
   styleUrls: ['./view-physical-stock-details.component.css'],
 })
 export class ViewPhysicalStockDetailsComponent
-  implements OnInit, OnDestroy, DoCheck
+  implements OnInit, OnDestroy, DoCheck, AfterViewInit
 {
   _filterTerm = '';
   _detailedList: any = [];
   _filteredDetailedList = new MatTableDataSource<any>();
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  blankTable = [1, 2, 3, 4, 5];
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  // blankTable = [1, 2, 3, 4, 5];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
   dataSourceList = new MatTableDataSource<any>();
@@ -64,6 +65,9 @@ export class ViewPhysicalStockDetailsComponent
 
   ngOnDestroy(): void {
     this.data = '';
+  }
+  ngAfterViewInit() {
+    this._filteredDetailedList.paginator = this.paginator;
   }
   populateStockEntryItems(data: any) {
     console.log(data);
@@ -87,10 +91,10 @@ export class ViewPhysicalStockDetailsComponent
     console.log(filterTerm);
     if (!filterTerm) {
       this._filteredDetailedList.data = this._detailedList;
-      // this._filteredDetailedList.paginator = this.paginator;
+      this._filteredDetailedList.paginator = this.paginator;
     } else {
       this._filteredDetailedList.data = [];
-      // this._filteredDetailedList.paginator = this.paginator;
+      this._filteredDetailedList.paginator = this.paginator;
       this._detailedList.forEach((item: any) => {
         for (const key in item) {
           if (key !== 'item') {
@@ -98,7 +102,7 @@ export class ViewPhysicalStockDetailsComponent
               const value: string = '' + item[key];
               if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
                 this._filteredDetailedList.data.push(item);
-                // this._filteredDetailedList.paginator = this.paginator;
+                this._filteredDetailedList.paginator = this.paginator;
                 break;
               }
             }
@@ -108,7 +112,7 @@ export class ViewPhysicalStockDetailsComponent
             const value: string = '' + item.item.itemName;
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this._filteredDetailedList.data.push(item);
-              // this._filteredDetailedList.paginator = this.paginator;
+              this._filteredDetailedList.paginator = this.paginator;
               break;
             }
           }

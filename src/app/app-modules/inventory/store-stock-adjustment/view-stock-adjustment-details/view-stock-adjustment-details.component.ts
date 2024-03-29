@@ -105,6 +105,7 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
       this.dataSource2 = new MatTableDataSource<any>(
         this.filteredAdjustmentList.data[0],
       );
+      this.dataSource2.paginator = this.paginator;
     } else {
       this.filteredAdjustmentList.data = [];
       this.adjustmentList[0].forEach((item: any) => {
@@ -139,6 +140,7 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
               this.dataSource2 = new MatTableDataSource<any>(
                 this.filteredAdjustmentList.data,
               );
+              this.dataSource2.paginator = this.paginator;
               break;
             }
           }

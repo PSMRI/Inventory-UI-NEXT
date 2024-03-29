@@ -92,15 +92,20 @@ export class ViewStockAdjustmentDraftDetailsComponent
         this.newDataSource = new MatTableDataSource<any>(
           this.filteredAdjustmentList.data[0].data.stockAdjustmentItemDraftEdit,
         );
+        this.newDataSource.paginator = this.paginator;
       });
   }
 
   filterDetails(filterTerm: any) {
-    if (!filterTerm)
-      this.filteredAdjustmentList.data = this.adjustmentList.slice();
-    else {
+    if (!filterTerm) {
+      this.filteredAdjustmentList.data = this.adjustmentList;
+      this.newDataSource = new MatTableDataSource<any>(
+        this.filteredAdjustmentList.data[0],
+      );
+      this.newDataSource.paginator = this.paginator;
+    } else {
       this.filteredAdjustmentList.data = [];
-      this.adjustmentList.forEach((item: any) => {
+      this.adjustmentList[0].forEach((item: any) => {
         for (const key in item) {
           if (
             key === 'itemName' ||
@@ -123,6 +128,10 @@ export class ViewStockAdjustmentDraftDetailsComponent
                 !item[key]
               ) {
                 this.filteredAdjustmentList.data.push(item);
+                this.newDataSource = new MatTableDataSource<any>(
+                  this.filteredAdjustmentList.data,
+                );
+                this.newDataSource.paginator = this.paginator;
                 break;
               }
             }
