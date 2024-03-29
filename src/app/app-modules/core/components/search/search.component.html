@@ -196,7 +196,7 @@
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
               >
-                {{ element?.benName | titlecase }}
+                {{ element?.genderName }}
               </td>
             </ng-container>
 
@@ -209,7 +209,7 @@
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
               >
-                {{ element?.benName | titlecase }}
+                {{ element?.age | date: "dd/MM/yyyy" }}
               </td>
             </ng-container>
 
@@ -222,7 +222,7 @@
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
               >
-                {{ element?.benName | titlecase }}
+                {{ element?.fatherName | titlecase }}
               </td>
             </ng-container>
 
@@ -235,7 +235,7 @@
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
               >
-                {{ element?.benName | titlecase }}
+                {{ element?.districtName }}
               </td>
             </ng-container>
 
@@ -248,7 +248,7 @@
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
               >
-                {{ element?.benName | titlecase }}
+                {{ element?.phoneNo }}
               </td>
             </ng-container>
 
@@ -261,13 +261,9 @@
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
               >
-                {{ element?.benName | titlecase }}
+                {{ element?.registeredOn | date: "dd/MM/yyyy" }}
               </td>
             </ng-container>
-            <mat-paginator
-              [pageSizeOptions]="[5, 10, 20]"
-              showFirstLastButtons
-            ></mat-paginator>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
@@ -293,6 +289,12 @@
             {{ filteredBeneficiaryList.data.length }}
           </div>
         </div>
+        <mat-paginator
+          [hidden]="filteredBeneficiaryList.data.length === 0"
+          [pageSizeOptions]="[5, 10, 25]"
+          [pageSize]="5"
+          showFirstLastButtons
+        ></mat-paginator>
       </div>
     </section>
   </section>

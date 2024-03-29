@@ -34,6 +34,7 @@ import { LanguageService } from '../../services/language.service';
 import { environment } from 'src/environments/environment';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 interface Beneficary {
   firstName: string;
@@ -59,6 +60,7 @@ export class SearchComponent implements OnInit, DoCheck {
   searched = false;
   beneficiaryList: any = [];
   filteredBeneficiaryList = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   blankTable = [{}, {}, {}, {}, {}];
   displayedColumns: string[] = [
     'beneficiaryID',
@@ -135,6 +137,7 @@ export class SearchComponent implements OnInit, DoCheck {
     this.form.reset();
     this.beneficiaryList = [];
     this.filteredBeneficiaryList.data = [];
+    this.filteredBeneficiaryList.paginator = this.paginator;
     this.searched = false;
   }
 
@@ -159,10 +162,12 @@ export class SearchComponent implements OnInit, DoCheck {
         ) {
           this.beneficiaryList = [];
           this.filteredBeneficiaryList.data = [];
+          this.filteredBeneficiaryList.paginator = this.paginator;
           this.searched = true;
         } else {
           this.beneficiaryList = this.searchRestruct(beneficiaryList.data, {});
           this.filteredBeneficiaryList.data = this.beneficiaryList;
+          this.filteredBeneficiaryList.paginator = this.paginator;
           this.searched = true;
           console.log(this.beneficiaryList, this.filteredBeneficiaryList.data);
         }

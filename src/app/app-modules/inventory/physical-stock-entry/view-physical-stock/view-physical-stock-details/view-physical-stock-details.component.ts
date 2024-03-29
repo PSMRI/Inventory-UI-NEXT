@@ -29,6 +29,7 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+
 import { MatTableDataSource } from '@angular/material/table';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
@@ -44,11 +45,11 @@ export class ViewPhysicalStockDetailsComponent
   _filterTerm = '';
   _detailedList: any = [];
   _filteredDetailedList = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   blankTable = [1, 2, 3, 4, 5];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
   dataSourceList = new MatTableDataSource<any>();
-  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
   constructor(
     private http_service: LanguageService,
@@ -67,12 +68,18 @@ export class ViewPhysicalStockDetailsComponent
   populateStockEntryItems(data: any) {
     console.log(data);
     if (data && data.entryDetails && data.stockEntry) {
+      console.log('this.paginator2', this.paginator);
       const entries = data.entryDetails;
       const stockEntries = JSON.parse(JSON.stringify(data.stockEntry));
       this.dataSourceList.data.push(stockEntries);
       this._detailedList = entries.data;
       this._filteredDetailedList.data = entries.data;
       this._filteredDetailedList.paginator = this.paginator;
+      console.log('this.paginator', this.paginator);
+      console.log(
+        'this._filteredDetailedList.paginator',
+        this._filteredDetailedList.paginator,
+      );
     }
   }
 
@@ -80,10 +87,10 @@ export class ViewPhysicalStockDetailsComponent
     console.log(filterTerm);
     if (!filterTerm) {
       this._filteredDetailedList.data = this._detailedList;
-      this._filteredDetailedList.paginator = this.paginator;
+      // this._filteredDetailedList.paginator = this.paginator;
     } else {
       this._filteredDetailedList.data = [];
-      this._filteredDetailedList.paginator = this.paginator;
+      // this._filteredDetailedList.paginator = this.paginator;
       this._detailedList.forEach((item: any) => {
         for (const key in item) {
           if (key !== 'item') {
@@ -91,7 +98,7 @@ export class ViewPhysicalStockDetailsComponent
               const value: string = '' + item[key];
               if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
                 this._filteredDetailedList.data.push(item);
-                this._filteredDetailedList.paginator = this.paginator;
+                // this._filteredDetailedList.paginator = this.paginator;
                 break;
               }
             }
@@ -101,7 +108,7 @@ export class ViewPhysicalStockDetailsComponent
             const value: string = '' + item.item.itemName;
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this._filteredDetailedList.data.push(item);
-              this._filteredDetailedList.paginator = this.paginator;
+              // this._filteredDetailedList.paginator = this.paginator;
               break;
             }
           }

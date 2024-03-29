@@ -82,11 +82,11 @@
                   name="visitDate"
                   id="visitDate"
                   formControlName="visitDate"
-                  [readonly]="!dateBool"
+                  [readonly]="true"
                 />
                 <mat-datepicker-toggle
                   matPrefix
-                  [disabled]="!dateBool"
+                  [disabled]="true"
                   [for]="visitDatePicker"
                 ></mat-datepicker-toggle>
                 <mat-datepicker #visitDatePicker></mat-datepicker>
