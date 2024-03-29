@@ -391,4 +391,8 @@ table thead tr th {
 .mat-mdc-paginator{
   display: unset !important;
 }
+.mat-mdc-select {
+  display: unset !important;
+  
+}
 
