@@ -31,6 +31,7 @@ import { InventoryService } from 'src/app/app-modules/inventory/shared/service/i
 import { ConfirmationService } from '../../../../../../../core/services/confirmation.service';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-select-batch-for-indent-item',
@@ -56,6 +57,8 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
     'expiryDate',
     'action',
   ];
+  dataSource = new MatTableDataSource<any>();
+
   constructor(
     private confirmationService: ConfirmationService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -97,7 +100,12 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
 
     this.initBatchForm();
     this.batchFormArray = this.batchForm.value;
-    console.log('this.itemBatchList ********', this.itemBatchList);
+    this.loadstroreStockTableData();
+  }
+
+  loadstroreStockTableData() {
+    const dataFromFun: any = this.stroreStockTableData();
+    this.dataSource.data = dataFromFun;
   }
 
   setEditValue() {
@@ -164,10 +172,19 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
       this.handleAddBatch();
     }
   }
+
+  get batchList() {
+    return this.batchForm.get('batchList') as FormArray;
+  }
+
+  stroreStockTableData(): any {
+    return (this.batchForm.get('batchList') as FormArray).controls;
+  }
+
   tempBatch: any;
   handleAddBatch() {
-    const batchList = <FormArray>this.batchForm.controls['batchList'];
-    this.tempBatch = batchList.value;
+    // const batchList = <FormArray>this.batchForm.controls['batchList'];
+    this.tempBatch = this.batchList.value;
     if (this.itemBatchList.length > this.tempBatch.length) {
       if (this.itemBatchList) {
         const resultBatch = this.itemBatchList.filter((batch: any) => {
@@ -186,8 +203,9 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
           return batchFlag;
         });
         this.filteredBatchList.push(resultBatch.slice());
+        console.log('filteredBatchList', this.filteredBatchList);
       }
-      batchList.push(
+      this.batchList.push(
         this.fb.group({
           batchNo: null,
           quantityOnBatch: null,
@@ -195,6 +213,7 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
           quantityOfDispense: null,
         }),
       );
+      this.loadstroreStockTableData();
     }
   }
   showPopUp() {
@@ -314,7 +333,7 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
       }) => void;
     },
   ) {
-    const batchList = <FormArray>this.batchForm.controls['batchList'];
+    const batchList = this.batchForm.get('batchList') as FormArray;
     if (batchList.length === 1 && !!batchForm) {
       batchForm.patchValue({
         batchNo: null,
@@ -324,6 +343,7 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
         quantityOfDispense: null,
       });
       this.calculateDispenseQuantity();
+      this.loadstroreStockTableData();
     } else {
       const removedValue = this.selectedBatchList[i];
       this.filteredBatchList.map((item, t) => {
@@ -335,6 +355,7 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
       this.filteredBatchList.splice(i, 1);
       batchList.removeAt(i);
       this.calculateDispenseQuantity();
+      this.loadstroreStockTableData();
     }
   }
 

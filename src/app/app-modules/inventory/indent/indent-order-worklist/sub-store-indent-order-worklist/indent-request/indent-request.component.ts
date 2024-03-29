@@ -37,6 +37,7 @@ import { DataStorageService } from '../../../../shared/service/data-storage.serv
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-indent-request',
@@ -63,6 +64,7 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     'action',
   ];
   dataSource = new MatTableDataSource<any>();
+  private subs: Subscription;
 
   constructor(
     private router: Router,
@@ -73,7 +75,13 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     private inventoryService: InventoryService,
     private confirmationService: ConfirmationService,
     private dataStorageService: DataStorageService,
-  ) {}
+  ) {
+    this.subs = this.inventoryService
+      .getDialogClosedObservable()
+      .subscribe(() => {
+        this.loadIndentData();
+      });
+  }
 
   ngOnInit() {
     // this.indentRequestForm = this.createIndentRequestForm();
@@ -276,14 +284,6 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     const indentRequest = JSON.parse(
       JSON.stringify(indentRequestForm.value.indentItemList),
     );
-    console.log(
-      'indentRequestForm under submitIndentRequest',
-      indentRequestForm,
-    );
-    console.log(
-      "JSON.parse(localStorage.getItem('facilityDetail') || '{}').mainFacilityID",
-      JSON.parse(localStorage.getItem('facilityDetail') || '{}').mainFacilityID,
-    );
     const otherDetails = {
       refNo: indentRequestForm.value.referenceNumber,
       reason: indentRequestForm.value.indentReason,
@@ -306,6 +306,7 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       { indentOrder: indentRequest },
       otherDetails,
     );
+    console.log('temp******** under submit', temp);
     this.inventoryService.saveIndentRequest(temp).subscribe((response) => {
       console.log('response+++++++++++ in saveIndentRequest', response);
       if (response.statusCode === 200) {
