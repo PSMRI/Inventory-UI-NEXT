@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, ViewChild } from '@angular/core';
 import { ViewMedicineDispenseDetailsComponent } from './view-medicine-dispense-details/view-medicine-dispense-details.component';
 import { Location } from '@angular/common';
 import { InventoryService } from '../../shared/service/inventory.service';
@@ -29,6 +29,7 @@ import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-la
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-view-medicine-dispense',
@@ -49,6 +50,7 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
   searched = false;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
   constructor(
     private location: Location,
@@ -123,6 +125,7 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
     console.log(dispenseObject);
     this._dispenseList = dispenseObject.data;
     this._filteredDispenseList.data = dispenseObject.data;
+    this._filteredDispenseList.paginator = this.paginator;
     this.filterTerm = '';
   }
 
@@ -132,6 +135,7 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
       this._filteredDispenseList = new MatTableDataSource<any>(
         this._filteredDispenseList.data,
       );
+      this._filteredDispenseList.paginator = this.paginator;
     } else {
       this._filteredDispenseList.data = [];
       this._dispenseList.forEach((item: any) => {
@@ -149,6 +153,7 @@ export class ViewMedicineDispenseComponent implements OnInit, DoCheck {
               this._filteredDispenseList = new MatTableDataSource<any>(
                 this._filteredDispenseList.data,
               );
+              this._filteredDispenseList.paginator = this.paginator;
               break;
             }
           }
