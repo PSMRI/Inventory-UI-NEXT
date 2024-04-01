@@ -304,6 +304,7 @@
                   *matRowDef="let row; columns: displayedColumns"
                 ></tr>
               </table>
+              <div *ngIf="dataSource.data.length === 0">No Record found</div>
             </ng-container>
             <!-- <ng-container
                   *ngIf="
