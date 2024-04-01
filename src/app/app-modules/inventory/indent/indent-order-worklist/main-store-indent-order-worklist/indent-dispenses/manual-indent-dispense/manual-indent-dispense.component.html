@@ -353,6 +353,7 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
+        <div *ngIf="manualDispenseList.data.length === 0">No Record found</div>
       </div>
     </div>
   </div>

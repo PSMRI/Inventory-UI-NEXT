@@ -61,6 +61,10 @@ export class MainStoreItemModelComponent implements OnInit, DoCheck {
       .viewItemListForMainStore(viewItemReqObj)
       .subscribe((viewItemResponse) => {
         this.mainStoreBatchWiseItemList = viewItemResponse.data;
+        console.log(
+          'this.mainStoreBatchWiseItemList nowwwwwwwwwwwwwwwwwwwwwww',
+          this.mainStoreBatchWiseItemList,
+        );
       });
   }
 
