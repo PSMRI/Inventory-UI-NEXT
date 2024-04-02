@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'src/app/app-modules/core/services';
 import { MatDialog } from '@angular/material/dialog';
@@ -28,6 +28,8 @@ import { InventoryService } from '../../../shared/service/inventory.service';
 import { DataStorageService } from '../../../shared/service/data-storage.service';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-sub-store-indent-order-worklist',
@@ -35,10 +37,11 @@ import { LanguageService } from 'src/app/app-modules/core/services/language.serv
   styleUrls: ['./sub-store-indent-order-worklist.component.css'],
 })
 export class SubStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
-  substoreOrderlist: any = [];
+  substoreOrderlist = new MatTableDataSource<any>();
   orderReqObject: any;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   displayedColumns = [
     'SNo',
     'indentID',
@@ -68,7 +71,8 @@ export class SubStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
     this.inventoryService
       .showSubStoreOrderWorklist(orderReqObject)
       .subscribe((orderlistRes) => {
-        this.substoreOrderlist = orderlistRes.data;
+        this.substoreOrderlist.data = orderlistRes.data;
+        this.substoreOrderlist.paginator = this.paginator;
       });
   }
   cancelIndent(indentOrder: any) {

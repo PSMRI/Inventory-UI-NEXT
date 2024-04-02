@@ -80,7 +80,7 @@
                   <ng-container matColumnDef="SNo">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
-                      {{ substoreOrderlist.indexOf(element) + 1 }}
+                      {{ substoreOrderlist.data.indexOf(element) + 1 }}
                     </td>
                   </ng-container>
 
@@ -198,7 +198,7 @@
                     </td>
                   </ng-container>
 
-                  <ng-container *ngIf="substoreOrderlist.length === 0">
+                  <ng-container *ngIf="substoreOrderlist.data.length === 0">
                     <td
                       mat-cell
                       *matCellDef="let element"
@@ -211,43 +211,29 @@
                     </td>
                   </ng-container>
 
-                  <ng-container matFooterRow>
-                    <tr *ngIf="substoreOrderlist.length > 0">
-                      <td
-                        mat-cell
-                        *matCellDef="let element"
-                        colspan="3"
-                        class="total-count"
-                      >
-                        <div>
-                          {{ currentLanguageSet?.inventory?.totalCount }} :
-                          {{ substoreOrderlist.length }}
-                        </div>
-                      </td>
-                      <td>
-                        <mat-paginator
-                          [pageSizeOptions]="[5, 10, 15, 20]"
-                          showFirstLastButtons
-                          aria-label="Select page of sub store Orderlist"
-                        >
-                        </mat-paginator>
-                      </td>
-                    </tr>
-                  </ng-container>
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr
                     mat-row
                     *matRowDef="let row; columns: displayedColumns"
                   ></tr>
                 </table>
-                <div style="text-align: right">
-                  <mat-paginator
-                    [hidden]="substoreOrderlist.length === 0"
-                    [pageSizeOptions]="[5, 10, 25]"
-                    [pageSize]="5"
-                    showFirstLastButtons
-                  ></mat-paginator>
+
+                <div
+                  class="total-count"
+                  *ngIf="substoreOrderlist.data.length > 0"
+                >
+                  {{ currentLanguageSet?.inventory?.totalCount }} :
+                  {{ substoreOrderlist.data.length }}
                 </div>
+
+                <mat-paginator
+                  [hidden]="substoreOrderlist.data.length === 0"
+                  [pageSizeOptions]="[5, 10, 15, 20]"
+                  showFirstLastButtons
+                  [pageSize]="5"
+                  aria-label="Select page of sub store Orderlist"
+                >
+                </mat-paginator>
               </div>
             </div>
           </div>

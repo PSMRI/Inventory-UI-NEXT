@@ -27,7 +27,11 @@
             matSuffix
             [for]="picker"
           ></mat-datepicker-toggle>
-          <mat-datepicker [style.width]="'100%'" #picker></mat-datepicker>
+          <mat-datepicker
+            [disabled]="true"
+            [style.width]="'100%'"
+            #picker
+          ></mat-datepicker>
         </mat-form-field>
       </div>
     </form>
