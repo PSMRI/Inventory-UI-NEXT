@@ -45,3 +45,6 @@ h5 {
   /* background-color: #f9f9f9 !important; */
   background-color:unset !important;
 }
+.mat_form_field_background_color_table >>>.mat-mdc-row:hover {
+  color: unset !important;
+}

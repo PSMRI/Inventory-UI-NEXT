@@ -1,13 +1,12 @@
-<div class="title">
-  <h4>{{ currentLanguageSet?.inventory?.issuedBatch }}</h4>
-  <button
-    mat-icon-button
-    [matDialogClose]="false"
-    class="pull-right exit"
-    style="text-align: end; margin-top: -5px"
-  >
-    <mat-icon>close</mat-icon>
-  </button>
+<div class="title row">
+  <div class="col-6">
+    <h4>{{ currentLanguageSet?.inventory?.issuedBatch }}</h4>
+  </div>
+  <div class="col-6" style="text-align: end; margin-top: -5px">
+    <button mat-icon-button [matDialogClose]="false" class="pull-right exit">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 </div>
 
 <div class="container-fluid">
@@ -110,13 +109,14 @@
     </div>
   </mat-dialog-content>
 
-  <div class="row">
+  <div class="row" style="text-align: end">
     <div class="col-xs-12 actionButton">
       <button
         mat-raised-button
         *ngIf="issuedBatchList.length > 0"
         color="accent"
         type="button"
+        class="mat_green"
         [disabled]="!(issuedBatchList.length > 0)"
         (click)="saveAndUpdateItem()"
       >

@@ -270,13 +270,17 @@
   </div>
 
   <!-- <div class="row m-t-10 m-b-40" *ngIf="systemDispenseList?.length > 0"> -->
-  <div class="row m-t-10 m-b-40" *ngIf="systemDispenseList">
+  <div
+    class="row m-t-10 m-b-40"
+    style="margin-top: 10px; text-align: end"
+    *ngIf="systemDispenseList"
+  >
     <div class="col-xs-12">
       <button
         type="button"
         mat-raised-button
         color="accent"
-        class="pull-right m-r-5"
+        class="pull-right mat_green m-r-5"
         (click)="saveDispenseList()"
       >
         {{ currentLanguageSet?.common?.save }}

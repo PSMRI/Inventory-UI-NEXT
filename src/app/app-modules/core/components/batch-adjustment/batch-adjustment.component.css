@@ -44,5 +44,8 @@
         width: 100%;
     }
 }
+.mat_form_field_background_color_table >>>.mat-mdc-row:hover {
+    color: unset !important;
+  }
 
-/* .enableScroll { height: 250px; flex: auto; } */
+.enableScroll { height: 250px; flex: auto; }

@@ -35,3 +35,7 @@
 .actionButton{
     float: right;
 }
+.mat_form_field_background_color_table >>>.mat-mdc-row:hover {
+    color: unset !important;
+  }
+

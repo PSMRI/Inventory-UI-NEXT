@@ -112,9 +112,6 @@
                       <input
                         matInput
                         allowText="itemNameSearchValidator"
-                        placeholder="{{
-                          currentLanguageSet?.inventory?.itemName
-                        }}"
                         name="itemNameView"
                         formControlName="itemNameView"
                         maxlength="100"
@@ -158,9 +155,6 @@
                       <input
                         matInput
                         allowText="number"
-                        placeholder="{{
-                          currentLanguageSet?.inventory?.quantityOnHand
-                        }}"
                         name="qOH"
                         formControlName="qOH"
                         required
@@ -186,9 +180,6 @@
                       <input
                         matInput
                         allowText="number"
-                        placeholder="{{
-                          currentLanguageSet?.inventory?.quantityRequired
-                        }}"
                         name="requiredQty"
                         formControlName="requiredQty"
                         [attr.maxlength]="('' + element.qOH).length"
@@ -215,9 +206,6 @@
                       </mat-label>
                       <input
                         matInput
-                        placeholder="{{
-                          currentLanguageSet?.inventory?.remarks
-                        }}"
                         name="remarks"
                         formControlName="remarks"
                         allowText="alphanumericspace"
@@ -304,7 +292,7 @@
             type="button"
             mat-raised-button
             color="accent"
-            class="pull-right m-r-5"
+            class="pull-right m-r-5 mat_green"
             *ngIf="!editMode"
             [disabled]="indentRequestForm.invalid"
             (click)="submitIndentRequest(indentRequestForm)"
@@ -314,7 +302,7 @@
           <button
             type="button"
             mat-raised-button
-            color="accent"
+            color="accent mat_green"
             class="pull-right m-r-5"
             *ngIf="editMode"
             [disabled]="indentRequestForm.invalid"

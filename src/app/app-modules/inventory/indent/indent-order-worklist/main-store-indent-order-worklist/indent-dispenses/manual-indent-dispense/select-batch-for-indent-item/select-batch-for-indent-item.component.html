@@ -1,14 +1,16 @@
-<div class="title">
-  <h4>{{ title }}</h4>
-  <button
-    mat-icon-button
-    matTooltip="{{ currentLanguageSet?.inventory?.close }}"
-    [matDialogClose]="false"
-    class="pull-right exit width--20px"
-    style="text-align: end; margin-top: -5px"
-  >
-    <mat-icon>close</mat-icon>
-  </button>
+<div class="title row">
+  <div class="col-6">
+    <h4>{{ title }}</h4>
+  </div>
+  <div class="col-6" style="text-align: end; margin-top: -10px">
+    <button
+      mat-icon-button
+      matTooltip="{{ currentLanguageSet?.inventory?.close }}"
+      [matDialogClose]="false"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 </div>
 <!-- {{batchForm.value | json}} -->
 <div class="scrolling-content">
@@ -337,7 +339,7 @@
         </div>
       </div>
 
-      <div class="row m-t-10 m-b-10">
+      <div class="row m-t-10 m-b-10" style="text-align: end; margin-top: 10px">
         <div class="col-xs-12 actionButton">
           <button
             mat-raised-button

@@ -113,7 +113,9 @@
                         {{ currentLanguageSet?.inventory?.view }}
                       </th>
                       <!-- <td mat-cell *matCellDef="let element"> {{element.view}} </td> -->
+
                       <mat-icon
+                        style="margin: 10px !important"
                         *matCellDef="let element"
                         (click)="viewItemListDetails(element)"
                         >remove_red_eye</mat-icon
@@ -129,7 +131,7 @@
                         <div>
                           <button
                             mat-raised-button
-                            class="button-full-width m-r-5"
+                            class="button-full-width m-r-5 mat_green"
                             type="button"
                             color="accent"
                             (click)="viewItemListDetailsForDispense(element)"
@@ -192,6 +194,7 @@
                       </td>
                       <td>
                         <mat-paginator
+                          style="text-align: end"
                           [pageSizeOptions]="[5, 10, 15, 20]"
                           showFirstLastButtons
                           aria-label="Select page of main store order list"
