@@ -79,6 +79,7 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
   }
 
   viewRecords() {
+    const facilityID: any = localStorage.getItem('facilityID');
     const startDate: Date = new Date(this.fromDate);
     startDate.setHours(0);
     startDate.setMinutes(0);
@@ -98,9 +99,7 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
       toDate: new Date(
         endDate.valueOf() - 1 * endDate.getTimezoneOffset() * 60 * 1000,
       ),
-      facilityID: localStorage.getItem('facilityID')
-        ? " +localStorage.getItem('facilityID') || '{}'"
-        : undefined,
+      facilityID: facilityID ? +facilityID : undefined,
     };
 
     this.inventoryService
