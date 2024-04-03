@@ -15,7 +15,6 @@
         <input
           matInput
           [matDatepicker]="_startDatePicker"
-          placeholder="{{ currentLanguageSet?.inventory?.fromDate }}"
           [min]="_minDate"
           [max]="_today"
           required="true"
@@ -46,7 +45,6 @@
           readonly="true"
           [min]="_dateRange[0]"
           [max]="_today"
-          placeholder="{{ currentLanguageSet?.inventory?.toDate }}"
           required="true"
           id="to-input"
           [(ngModel)]="_dateRange[1]"
@@ -87,11 +85,13 @@
           <div class="row">
             <div class="col-xs-12 col-sm-12 text-right">
               <mat-form-field id="filterbox">
+                <mat-label>{{
+                  currentLanguageSet?.common?.inTableSearch
+                }}</mat-label>
                 <input
                   autocomplete="off"
                   autocomplete="off"
                   matInput
-                  placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
                   [(ngModel)]="filterTerm"
                   name="filterTerm"
                   (keyup)="filterConsumptionList(filterTerm)"
@@ -100,13 +100,11 @@
               </mat-form-field>
             </div>
             <div class="col-xs-12">
-              <section
-                class="table-responsive mat_form_field_background_color_table"
-              >
+              <section class="table-responsive">
                 <table
                   mat-table
                   [dataSource]="_filteredStockEntryList"
-                  class="table table-striped responsive-table-view"
+                  class="mat_form_field_background_color_table"
                   aria-describedby="viewStockDetails"
                 >
                   <ng-container matColumnDef="noValue">
@@ -218,13 +216,13 @@
                     currentLanguageSet?.inventory?.norecordsfound
                   }}</strong>
                 </div>
-                <div
+                <!-- <div
                   class="total-count"
                   *ngIf="_filteredStockEntryList.data.length > 0"
                 >
                   {{ currentLanguageSet?.inventory?.totalCount }} :
                   {{ _filteredStockEntryList.data.length }}
-                </div>
+                </div> -->
                 <div style="text-align: right">
                   <mat-paginator
                     [hidden]="_filteredStockEntryList.data.length === 0"

@@ -2,7 +2,7 @@
   <section class="row m-t-10 no-gutters">
     <div class="col-xs-12 col-sm-4 box" style="padding-top: 12px">
       <h4 style="font-size: larger">
-        {{ currentLanguageSet?.inventory?.previousStoreAdjustment }}
+        {{ currentLanguageSet?.inventory?.previousStockAdjustment }}
       </h4>
     </div>
     <div class="col-xs-12 col-sm-3 box">
@@ -14,7 +14,6 @@
         <input
           matInput
           [matDatepicker]="startDatePicker"
-          placeholder="{{ currentLanguageSet?.inventory?.fromDate }}"
           [(ngModel)]="fromDate"
           [min]="_minDate"
           [max]="today"
@@ -38,7 +37,6 @@
         <input
           matInput
           [matDatepicker]="endDatePicker"
-          placeholder="{{ currentLanguageSet?.inventory?.toDate }}"
           [(ngModel)]="toDate"
           [min]="startDate?.value"
           [max]="today"
@@ -82,7 +80,6 @@
                 <input
                   autocomplete="off"
                   matInput
-                  placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
                   [(ngModel)]="filterTerm"
                   name="filterTerm"
                   (keyup)="filterStockAdjustmentList(filterTerm)"

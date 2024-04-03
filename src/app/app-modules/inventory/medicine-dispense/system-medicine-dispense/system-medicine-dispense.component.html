@@ -19,7 +19,7 @@
             </ng-container>
 
             <ng-container matColumnDef="itemName">
-              <th mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 35px">
                 {{ currentLanguageSet?.inventory?.item }}
               </th>
               <td
@@ -58,7 +58,7 @@
             </ng-container>
 
             <ng-container matColumnDef="quantity">
-              <th mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 35px">
                 {{ currentLanguageSet?.inventory?.qtyinHand }}
               </th>
               <td
@@ -85,7 +85,7 @@
             </ng-container>
 
             <ng-container matColumnDef="totalCostPrice">
-              <th mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 35px">
                 {{ currentLanguageSet?.inventory?.qtyRequired }}
               </th>
               <td
@@ -153,7 +153,10 @@
   </form>
 
   <div class="row">
-    <div class="col-xs-12" style="display: flex; justify-content: end">
+    <div
+      class="col-xs-12"
+      style="display: flex; justify-content: end; margin: 10px 10px 10px 0px"
+    >
       <button
         mat-raised-button
         type="button"

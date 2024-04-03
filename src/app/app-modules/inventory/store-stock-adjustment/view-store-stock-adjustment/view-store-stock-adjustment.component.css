@@ -46,6 +46,3 @@
     background-color: #f2f2f0 !important;
   }
 
-  .mat_form_field_background_color_table >>>.mat-mdc-row:hover {
-    color: unset !important;
-  }

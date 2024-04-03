@@ -111,7 +111,7 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
   }
   rejectIndent(rejectOrder: any) {
     const dialogRef = this.dialog.open(RejectItemFromMainstoreModelComponent, {
-      width: '1200px',
+      width: '600px',
       height: 'auto',
       panelClass: 'fit-screen',
       data: {

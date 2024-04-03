@@ -44,6 +44,7 @@ export class BatchAdjustmentComponent implements OnInit, DoCheck {
   currentLanguageSet: any;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  data: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public input: any,
@@ -56,6 +57,8 @@ export class BatchAdjustmentComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.search(this.input.searchTerm);
     this.fetchLanguageResponse();
+    this.dataSource.data = this.data.data;
+    this.dataSource.paginator = this.paginator;
   }
 
   search(term: string): void {

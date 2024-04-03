@@ -19,7 +19,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, Inject, DoCheck, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  DoCheck,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { InventoryService } from './../../../inventory/shared/service/inventory.service';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
@@ -32,9 +39,11 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './benificiary-details.component.html',
   styleUrls: ['./benificiary-details.component.css'],
 })
-export class BenificiaryDetailsComponent implements OnInit, DoCheck {
-  beneficiaryDetailsList = new MatTableDataSource<any>();
+export class BenificiaryDetailsComponent
+  implements OnInit, DoCheck, AfterViewInit
+{
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  beneficiaryDetailsList = new MatTableDataSource<any>();
   // beneficiaryDetailsList: any = [];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
@@ -62,6 +71,10 @@ export class BenificiaryDetailsComponent implements OnInit, DoCheck {
 
   loadbeneficiaryDetails(beneficiary: any) {
     this.dialogRef.close(beneficiary);
+  }
+  ngAfterViewInit() {
+    this.beneficiaryDetailsList.data = this.data.beneficiaryDetailsList;
+    this.beneficiaryDetailsList.paginator = this.paginator;
   }
 
   //AN40085822 29/9/2021 Integrating Multilingual Functionality --Start--

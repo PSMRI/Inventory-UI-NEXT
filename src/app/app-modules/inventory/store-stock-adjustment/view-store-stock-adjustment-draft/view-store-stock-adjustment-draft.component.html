@@ -195,10 +195,10 @@
                     currentLanguageSet?.inventory?.norecordsfound
                   }}</strong>
                 </div>
-                <div class="total-count" *ngIf="dataSource.data.length > 0">
+                <!-- <div class="total-count" *ngIf="dataSource.data.length > 0">
                   {{ currentLanguageSet?.inventory?.totalCount }} :
                   {{ dataSource.data.length }}
-                </div>
+                </div> -->
                 <mat-paginator
                   [hidden]="dataSource.data.length === 0"
                   [pageSizeOptions]="[5, 10, 25]"

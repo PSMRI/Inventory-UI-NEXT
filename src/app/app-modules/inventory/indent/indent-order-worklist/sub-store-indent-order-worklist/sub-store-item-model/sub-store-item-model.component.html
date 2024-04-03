@@ -1,14 +1,17 @@
-<div class="title">
-  <h4>{{ currentLanguageSet?.inventory?.itemListDetails }}</h4>
-  <button
-    mat-icon-button
-    matDialogClose
-    matTooltip="{{ currentLanguageSet?.inventory?.close }}"
-    class="pull-right exit width-20px"
-    style="text-align: end; margin-top: -5px"
-  >
-    <mat-icon>close</mat-icon>
-  </button>
+<div class="title row">
+  <div class="col-6">
+    <h4>{{ currentLanguageSet?.inventory?.itemListDetails }}</h4>
+  </div>
+  <div class="col-6" style="text-align: end; margin-top: -10px">
+    <button
+      mat-icon-button
+      matDialogClose
+      matTooltip="{{ currentLanguageSet?.inventory?.close }}"
+      class="pull-right exit width-20px"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 </div>
 
 <div class="scrolling-content">
@@ -127,7 +130,7 @@
     </div>
 
     <div class="row m-b-15">
-      <div class="col-xs-12">
+      <div class="col-xs-12" style="text-align: end; margin-top: 10px">
         <button
           class="pull-right"
           mat-raised-button

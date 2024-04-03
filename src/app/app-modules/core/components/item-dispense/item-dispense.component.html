@@ -38,8 +38,6 @@
     </div>
   </div>
 
-  <div class="m-t-30"></div>
-
   <mat-dialog-content>
     <div class="table-responsive mat_form_field_background_color_table">
       <table
@@ -160,10 +158,10 @@
       <div class="noRecord" *ngIf="dataSource.data.length === 0">
         <strong>{{ currentLanguageSet?.inventory?.norecordsfound }}</strong>
       </div>
-      <div class="total-count" *ngIf="dataSource.data.length > 0">
+      <!-- <div class="total-count" *ngIf="dataSource.data.length > 0">
         {{ currentLanguageSet?.inventory?.totalCount }} :
         {{ dataSource.data.length }}
-      </div>
+      </div> -->
       <mat-paginator
         [hidden]="dataSource.data.length === 0"
         [pageSizeOptions]="[5, 10, 25]"

@@ -42,3 +42,6 @@
 .icon-remove {
     margin: 16px;
 }
+.mat_form_field_background_color_table >>>.mat-mdc-row:hover {
+    color: unset !important;
+  }

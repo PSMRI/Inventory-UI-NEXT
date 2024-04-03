@@ -55,3 +55,10 @@
 .radio_btn_fontsize >>> .mat-mdc-radio-button .mdc-radio--disabled+label{
   font-weight: bold !important;
 }
+.radio_btn_fontsize >>>.mdc-form-field>label {
+  margin-left: 0;
+  margin-right: auto;
+  padding-left: 4px;
+  padding-right: 0;
+  font-weight: bold !important;
+}

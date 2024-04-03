@@ -112,14 +112,17 @@
                       <th mat-header-cell *matHeaderCellDef>
                         {{ currentLanguageSet?.inventory?.view }}
                       </th>
-                      <!-- <td mat-cell *matCellDef="let element"> {{element.view}} </td> -->
-
-                      <mat-icon
+                      <td mat-cell *matCellDef="let element">
+                        <mat-icon (click)="viewItemListDetails(element)"
+                          >remove_red_eye</mat-icon
+                        >
+                      </td>
+                      <!-- <td mat-cell *matCellDef="let element"> <mat-icon
                         style="margin: 10px !important"
                         *matCellDef="let element"
                         (click)="viewItemListDetails(element)"
                         >remove_red_eye</mat-icon
-                      >
+                      ></td> -->
                     </ng-container>
 
                     <!-- action Column -->

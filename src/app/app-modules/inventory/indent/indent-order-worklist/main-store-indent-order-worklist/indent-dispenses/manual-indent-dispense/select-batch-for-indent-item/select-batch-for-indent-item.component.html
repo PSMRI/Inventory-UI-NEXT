@@ -27,9 +27,6 @@
               matInput
               allowText="number"
               name="quantityRequired"
-              placeholder="{{
-                currentLanguageSet?.inventory?.requiredQuantity
-              }}"
               formControlName="quantityRequired"
               [readonly]="true"
             />
@@ -45,9 +42,6 @@
               matInput
               allowText="number"
               name="quantityDispensed"
-              placeholder="{{
-                currentLanguageSet?.inventory?.dispensedQuantity
-              }}"
               formControlName="quantityDispensed"
               [readonly]="true"
             />
@@ -146,7 +140,11 @@
                 </ng-container>
 
                 <ng-container matColumnDef="batchNo">
-                  <th mat-header-cell *matHeaderCellDef>
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    style="padding-left: 35px"
+                  >
                     {{ currentLanguageSet?.inventory?.batchNo }}
                   </th>
                   <td
@@ -179,7 +177,11 @@
                 </ng-container>
 
                 <ng-container matColumnDef="qtyinBatch">
-                  <th mat-header-cell *matHeaderCellDef>
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    style="padding-left: 35px"
+                  >
                     {{ currentLanguageSet?.inventory?.qtyinBatch }}
                   </th>
                   <td
@@ -206,7 +208,11 @@
                 </ng-container>
 
                 <ng-container matColumnDef="qtytoDispensed">
-                  <th mat-header-cell *matHeaderCellDef>
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    style="padding-left: 35px"
+                  >
                     {{ currentLanguageSet?.inventory?.qtytoDispensed }}
                   </th>
                   <td
@@ -239,7 +245,11 @@
                 </ng-container>
 
                 <ng-container matColumnDef="expiryDate">
-                  <th mat-header-cell *matHeaderCellDef>
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    style="padding-left: 40px"
+                  >
                     {{ currentLanguageSet?.itemDispense?.expiryDate }}
                   </th>
                   <td
@@ -257,9 +267,6 @@
                         [matDatepicker]="picker"
                         name="expiryDate"
                         id="expiryDate"
-                        placeholder="{{
-                          currentLanguageSet?.itemDispense?.expiryDate
-                        }}"
                         formControlName="expiryDate"
                         [disabled]="true"
                       />
@@ -306,7 +313,12 @@
                   *matRowDef="let row; columns: displayedColumns"
                 ></tr>
               </table>
-              <div *ngIf="dataSource.data.length === 0">No Record found</div>
+              <div
+                *ngIf="dataSource.data.length === 0"
+                style="text-align: center; margin: 20px 0px 20px 0px"
+              >
+                No Record found
+              </div>
             </ng-container>
             <!-- <ng-container
                   *ngIf="
@@ -328,8 +340,10 @@
                 </ng-container> -->
             <div
               class="text-right"
-              style="margin-top: 15px"
-              *ngIf="batchForm.controls['batchList'].valid"
+              *ngIf="
+                batchForm.controls['batchList'].valid &&
+                dataSource.data.length !== 0
+              "
             >
               <button mat-mini-fab color="primary" (click)="addBatch(true)">
                 <mat-icon>add</mat-icon>
