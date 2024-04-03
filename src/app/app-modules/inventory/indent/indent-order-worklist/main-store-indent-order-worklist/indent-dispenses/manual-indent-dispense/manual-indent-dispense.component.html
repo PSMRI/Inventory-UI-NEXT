@@ -322,7 +322,12 @@
                 <mat-icon
                   class="icon-remove cursorPointer"
                   matTooltip="{{ currentLanguageSet?.inventory?.delete }}"
-                  (click)="removeManualDispenseItem(i, element)"
+                  (click)="
+                    removeManualDispenseItem(
+                      element,
+                      manualDispenseList.data.indexOf(element)
+                    )
+                  "
                   >delete</mat-icon
                 >
               </td>

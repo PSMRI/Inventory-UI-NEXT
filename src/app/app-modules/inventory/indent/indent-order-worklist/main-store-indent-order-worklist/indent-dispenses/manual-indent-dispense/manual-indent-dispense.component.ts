@@ -230,6 +230,9 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
         if (editIndex != null) {
           this.manualDispenseList.data.splice(editIndex, 1);
           this.manualDispenseList.data.push(result);
+          this.manualDispenseList = new MatTableDataSource<any>(
+            this.manualDispenseList.data,
+          );
           console.log(
             'this.manualDispenseList***********',
             JSON.stringify(this.manualDispenseList, null, 4),
@@ -281,16 +284,12 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
   }
 
   removeManualDispenseItem(deletedItem: any, deleteIndex: number) {
-    console.log('deletedItem', deletedItem);
-    console.log('deleteIndex', deleteIndex);
+    console.log('deletedItem &&&&&&&&&&&&&&', deletedItem);
     this.manualDispenseList.data.splice(deleteIndex, 1);
     this.enableBatchSelection(deletedItem, this.mainStoreItemListForDispense);
   }
 
-  enableBatchSelection(
-    deletedItem: { itemDetails: { itemName: any } },
-    mainStoreItemList: any[],
-  ) {
+  enableBatchSelection(deletedItem: any, mainStoreItemList: any) {
     console.log('deletedItem', deletedItem);
     this.mainStoreItemListForDispense = mainStoreItemList.filter(
       (dispenseItem: { itemName: any }) => {
