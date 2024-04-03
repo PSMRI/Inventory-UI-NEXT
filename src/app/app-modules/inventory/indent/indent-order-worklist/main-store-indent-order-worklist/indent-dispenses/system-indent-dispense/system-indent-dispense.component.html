@@ -212,7 +212,12 @@
               {{ currentLanguageSet?.itemDispense?.batchNo }}
             </th>
             <td mat-cell *matCellDef="let element">
-              {{ element.itemBatchList.batchNo }}
+              <!-- {{ element.itemBatchList.batchNo }} -->
+              <table>
+                <tr *ngFor="let x of element.itemBatchList">
+                  <td>{{ x.batchNo }}</td>
+                </tr>
+              </table>
             </td>
           </ng-container>
 
@@ -222,7 +227,12 @@
               {{ currentLanguageSet?.inventory?.quantityOnHand }}
             </th>
             <td mat-cell *matCellDef="let element">
-              {{ element.itemBatchList.quantityInHand }}
+              <!-- {{ element.itemBatchList.quantityInHand }} -->
+              <table>
+                <tr *ngFor="let x of element.itemBatchList">
+                  <td>{{ x.quantityInHand }}</td>
+                </tr>
+              </table>
             </td>
           </ng-container>
 
@@ -231,7 +241,12 @@
               {{ currentLanguageSet?.itemDispense?.expiryDate }}
             </th>
             <td mat-cell *matCellDef="let element">
-              {{ element.itemBatchList.expiryDate | date: "dd/MM/yyyy" }}
+              <!-- {{ element.itemBatchList.expiryDate | date: "dd/MM/yyyy" }} -->
+              <table>
+                <tr *ngFor="let x of element.itemBatchList">
+                  <td>{{ x.expiryDate | date: "dd/MM/yyyy" }}</td>
+                </tr>
+              </table>
             </td>
           </ng-container>
 

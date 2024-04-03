@@ -261,13 +261,14 @@
                           currentLanguageSet?.itemDispense?.expiryDate
                         }}"
                         formControlName="expiryDate"
-                        [disabled]="true"
+                        [readonly]="true"
                       />
                       <mat-datepicker-toggle
                         matPrefix
                         [for]="picker"
                       ></mat-datepicker-toggle>
                       <mat-datepicker
+                        [disabled]="true"
                         [style.width]="'100%'"
                         #picker
                       ></mat-datepicker>

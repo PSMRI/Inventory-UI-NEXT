@@ -321,41 +321,66 @@ export class SelectBatchForIndentItemComponent implements OnInit, DoCheck {
     }
   }
 
-  removeBatch(
-    i: number,
-    batchForm: {
-      patchValue: (arg0: {
-        batchNo: null;
-        quantityOnBatch: null;
-        expiryDate: null;
-        entryDate: null;
-        quantityOfDispense: null;
-      }) => void;
-    },
-  ) {
-    const batchList = this.batchForm.get('batchList') as FormArray;
-    if (batchList.length === 1 && !!batchForm) {
-      batchForm.patchValue({
-        batchNo: null,
-        quantityOnBatch: null,
-        expiryDate: null,
-        entryDate: null,
-        quantityOfDispense: null,
-      });
-      this.calculateDispenseQuantity();
+  // removeBatch(
+  //   i: any,
+  //   batchForm: any
+  // ) {
+  //   const batchList = this.batchForm.get('batchList') as FormArray;
+  //   if (batchList.length === 1 && !!batchForm) {
+  //     batchForm.patchValue({
+  //       batchNo: null,
+  //       quantityOnBatch: null,
+  //       expiryDate: null,
+  //       entryDate: null,
+  //       quantityOfDispense: null,
+  //     });
+  //     this.calculateDispenseQuantity();
+  //     this.loadstroreStockTableData();
+  //   } else {
+  //     const removedValue = this.selectedBatchList[i];
+  //     this.filteredBatchList.map((item, t) => {
+  //       if (t !== i && removedValue) {
+  //         item.push(removedValue);
+  //       }
+  //     });
+  //     this.selectedBatchList.splice(i, 1);
+  //     this.filteredBatchList.splice(i, 1);
+  //     // batchList.removeAt(i);
+  //     this.calculateDispenseQuantity();
+  //     this.loadstroreStockTableData();
+  //   }
+  // }
+
+  // removeBatch(i: any, batchForm: FormGroup) {
+  //   const selectBatchForm = this.batchForm.get('batchList') as FormArray;
+
+  //   if (selectBatchForm.length > 1) {
+  //     selectBatchForm.removeAt(i);
+  //     this.loadstroreStockTableData();
+  //   } else {
+  //     const removedBatch = this.selectedBatchList[i];
+  //     this.filteredBatchList.map((item: any, t: any) => {
+  //       if (t !== i && removedBatch) {
+  //         item.push(removedBatch);
+  //       }
+  //     });
+  //     this.selectedBatchList.splice(i, 1);
+  //     this.filteredBatchList.splice(i, 1);
+  //     // selectBatchForm.removeAt(i);
+  //     selectBatchForm.reset();
+  //   }
+  // }
+
+  removeBatch(i: any, batchForm: FormGroup) {
+    const selectBatchForm = this.batchForm.get('batchList') as FormArray;
+    if (selectBatchForm.length > 1) {
+      selectBatchForm.removeAt(i);
       this.loadstroreStockTableData();
     } else {
-      const removedValue = this.selectedBatchList[i];
-      this.filteredBatchList.map((item, t) => {
-        if (t !== i && removedValue) {
-          item.push(removedValue);
-        }
-      });
-      this.selectedBatchList.splice(i, 1);
-      this.filteredBatchList.splice(i, 1);
-      batchList.removeAt(i);
-      this.calculateDispenseQuantity();
-      this.loadstroreStockTableData();
+      if (batchForm) {
+        batchForm.reset();
+        batchForm.controls['itemName'].enable();
+      }
     }
   }
 

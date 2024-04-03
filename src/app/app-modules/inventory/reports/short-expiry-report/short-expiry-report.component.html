@@ -19,10 +19,11 @@
             [matDatepicker]="picker"
             name="startDate"
             id="startDate"
-            formControlName="startDate"
             [max]="maxEndDate"
-            [disabled]="true"
+            formControlName="startDate"
+            [readonly]="true"
           />
+
           <mat-datepicker-toggle
             matSuffix
             [for]="picker"
