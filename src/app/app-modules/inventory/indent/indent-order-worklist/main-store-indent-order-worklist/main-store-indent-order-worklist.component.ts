@@ -41,7 +41,8 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
   isMainStore = false;
   enableIndentReceipt = false;
 
-  mainstoreOrderlist: any = [];
+  mainstoreOrderlist = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   mainStoreItemList: any = [];
   orderReqObject: any;
   rejectOrderList = [];
@@ -49,7 +50,6 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
   mainFacilityID: any;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource!: MatTableDataSource<any>;
   displayedColumns: string[] = [
     'SNo',
@@ -80,11 +80,8 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
     this.inventoryService
       .showMainstoreOrderWorklist(orderReqObject)
       .subscribe((orderlistRes) => {
-        this.mainstoreOrderlist = orderlistRes.data;
-        console.log(
-          'this.mainstoreOrderlist*******main form',
-          this.mainstoreOrderlist,
-        );
+        this.mainstoreOrderlist.data = orderlistRes.data;
+        this.mainstoreOrderlist.paginator = this.paginator;
       });
   }
 
