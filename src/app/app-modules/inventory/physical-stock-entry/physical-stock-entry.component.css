@@ -1,6 +1,6 @@
-.input-full-width {
+/* .input-full-width {
     width: 100%;
-}
+} */
 
 .m-b-40 {
     margin-bottom: 200px;
@@ -71,4 +71,7 @@
 .mat-mdc-table tbody, .mat-mdc-table tfoot, .mat-mdc-table thead, .mat-mdc-cell, .mat-mdc-footer-cell, .mat-mdc-header-row, .mat-mdc-row, .mat-mdc-footer-row, .mat-mdc-table .mat-mdc-header-cell {
     background: inherit;
     padding-top: 15px !important;
+}
+.mat_form_field_background_width >>>.mat-mdc-text-field-wrapper {
+    width: 55% !important;
 }
