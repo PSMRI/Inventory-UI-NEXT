@@ -38,7 +38,7 @@ import { MatPaginator } from '@angular/material/paginator';
 
 interface Beneficary {
   firstName: string;
-  lastName: string;
+  lastName: any;
   gender: string;
   stateID: string;
   districtID: string | null;
@@ -126,7 +126,7 @@ export class SearchComponent implements OnInit, DoCheck {
   createBeneficiaryForm() {
     this.beneficiary = {
       firstName: '',
-      lastName: '',
+      lastName: null,
       gender: '',
       stateID: '',
       districtID: '',

@@ -400,6 +400,6 @@ table thead tr th {
   background-color: #43a047 !important;
 }
 .mat_green:disabled{
-  background-color: grey !important;
+  background-color: #8e8e8e !important;
 }
 

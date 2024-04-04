@@ -47,7 +47,7 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
   filteredStockAdjustmentList = new MatTableDataSource<any>();
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
-  dataSource = new MatTableDataSource<any>();
+  // dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   displayedColumns: string[] = [
     'draftID',
@@ -106,25 +106,29 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
       .getStockAdjustmentDraftList(temp)
       .subscribe((response: any) => {
         this.stockAdjustmentList = response;
-        this.filteredStockAdjustmentList.data.push(response);
+        console.log('response', response);
+        console.log('response.data', response.data);
+        this.filteredStockAdjustmentList.data = response.data;
         console.log(
-          'filteredStockAdjustmentList',
+          'this.filteredStockAdjustmentList.data',
           this.filteredStockAdjustmentList.data,
         );
-        this.dataSource = new MatTableDataSource<any>(
-          this.filteredStockAdjustmentList.data[1].data,
-        );
-        console.log('dataSourcePart1', this.dataSource.data);
+
+        // console.log("dataSource",this.dataSource.data);
         this.filteredStockAdjustmentList.paginator = this.paginator;
       });
   }
 
   filterStockAdjustmentList(filterTerm: any) {
-    if (!filterTerm)
-      this.filteredStockAdjustmentList.data = this.stockAdjustmentList.slice();
-    else {
+    if (!filterTerm) {
+      this.filteredStockAdjustmentList.data = this.stockAdjustmentList.data;
+      this.filteredStockAdjustmentList = new MatTableDataSource<any>(
+        this.filteredStockAdjustmentList.data,
+      );
+      this.filteredStockAdjustmentList.paginator = this.paginator;
+    } else {
       this.filteredStockAdjustmentList.data = [];
-      this.stockAdjustmentList.forEach((item: any) => {
+      this.stockAdjustmentList.data.forEach((item: any) => {
         for (const key in item) {
           if (
             key === 'stockAdjustmentDraftID' ||
@@ -135,6 +139,10 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this.filteredStockAdjustmentList.data.push(item);
+              this.filteredStockAdjustmentList = new MatTableDataSource<any>(
+                this.filteredStockAdjustmentList.data,
+              );
+              this.filteredStockAdjustmentList.paginator = this.paginator;
               break;
             }
           }

@@ -88,7 +88,7 @@ export class StoreStockAdjustmentComponent
     this.storeStockAdjustmentForm = this.fb.group({
       refNo: [''],
       adjustmentDate: { value: new Date(), disabled: true },
-      stockAdjustmentDraftID: [''],
+      stockAdjustmentDraftID: [null],
       draftDesc: [''],
       stockAdjustmentList: this.fb.array([]),
     });
@@ -144,9 +144,9 @@ export class StoreStockAdjustmentComponent
         adjustedQuantity: [''],
         qohAfterAdjustment: [''],
         reason: [''],
-        deleted: [''],
-        stockAdjustmentDraftID: [''],
-        sADraftItemMapID: [''],
+        deleted: [null],
+        stockAdjustmentDraftID: [null],
+        sADraftItemMapID: [null],
       }),
     );
   }
@@ -161,9 +161,9 @@ export class StoreStockAdjustmentComponent
       adjustedQuantity: [''],
       qohAfterAdjustment: [''],
       reason: [''],
-      deleted: [''],
-      stockAdjustmentDraftID: [''],
-      sADraftItemMapID: [''],
+      deleted: [null],
+      stockAdjustmentDraftID: [null],
+      sADraftItemMapID: [null],
     });
   }
 
@@ -361,45 +361,6 @@ export class StoreStockAdjustmentComponent
         this.loadStockAdjData();
       });
   }
-
-  // getStockAdjustmentDraftDetails(draftID: any) {
-  //   const temp = parseInt(draftID);
-  //   this.inventoryService
-  //     .getStockAdjustmentDraftDetails(temp)
-  //     .subscribe((response) => {
-  //       const stockAdjustmentList = response.data.stockAdjustmentItemDraftEdit;
-  //       console.log("response", response);
-  //       console.log("response.stockAdjustmentItemDraftEdit", response.data.stockAdjustmentItemDraftEdit);
-
-  //       console.log("stockAdjustmentList", stockAdjustmentList);
-  //       this.dataSource.data = this.stroreStockTableData();
-  //       this.dataSource.data = [];
-  //       this.dataSource = new MatTableDataSource<any>(
-  //         this.dataSource.data,
-  //       );
-
-  //       for (let i = 0; i < stockAdjustmentList.length; i++) {
-  //         stockAdjustmentList[i].adjustmentType = stockAdjustmentList[i].isAdded
-  //           ? 'Receipt'
-  //           : 'Issue';
-  //         stockAdjustmentList[i].stockAdjustmentDraftID =
-  //           response.stockAdjustmentDraftID;
-  //         this.dataSource.data.push(stockAdjustmentList[i]);
-  //       }
-
-  //       // Assign the modified data to MatTableDataSource
-  //       this.dataSource.data = this.dataSource.data.slice();
-  //       this.loadStockAdjData();
-  //       console.log("parth", this.dataSource.data);
-
-  //       this.storeStockAdjustmentForm.patchValue({
-  //         adjustmentDate: new Date(response.createdDate),
-  //         refNo: response.refNo,
-  //         stockAdjustmentDraftID: response.stockAdjustmentDraftID,
-  //         draftDesc: response.draftDesc,
-  //       });
-  //     });
-  // }
 
   calculateQOHAfterAdjustment(stockForm: FormGroup) {
     const qoh = parseInt(stockForm.value.quantityInHand) || 0;
