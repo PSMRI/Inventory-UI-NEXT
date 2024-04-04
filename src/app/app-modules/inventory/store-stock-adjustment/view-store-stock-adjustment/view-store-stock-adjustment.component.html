@@ -82,6 +82,7 @@
                   matInput
                   [(ngModel)]="filterTerm"
                   name="filterTerm"
+                  placeholder="{{ currentLanguageSet?.common?.inTableSearch }}"
                   (keyup)="filterStockAdjustmentList(filterTerm)"
                 />
                 <mat-icon class="filterTest" matSuffix>search</mat-icon>

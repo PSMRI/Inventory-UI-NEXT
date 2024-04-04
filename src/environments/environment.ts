@@ -137,7 +137,7 @@ export const environment = {
   viewItemListForMainStoreUrl: `${INVENTORY_API}indentController/getIndentOrderWorklist`,
 
   getSaveDispenseListUrl: `${INVENTORY_API}indentController/issueIndent`,
-  receiveIndentOrderUrl: `${INVENTORY_API}/indentController/receiveIndent`,
+  receiveIndentOrderUrl: `${INVENTORY_API}indentController/receiveIndent`,
   updateIndentOrderUrl: `${INVENTORY_API}indentController/updateIndentOrder`,
 
   /* Report URL's*/
