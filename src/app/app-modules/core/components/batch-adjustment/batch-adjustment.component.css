@@ -23,7 +23,7 @@
 
 .scrolling-content {
     max-height: 75vh;
-    overflow-y: hidden;
+    overflow-y: auto !important;
     overflow-x: hidden;
 }
 
@@ -48,4 +48,4 @@
     color: unset !important;
   }
 
-.enableScroll { height: 250px; flex: auto; }
+

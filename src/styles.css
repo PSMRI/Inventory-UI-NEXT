@@ -314,7 +314,7 @@ table thead tr th {
   
   .table-responsive {
     /* margin: 15px; */
-    overflow-y: hidden;
+    overflow-y: auto;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     border: 1px solid #ddd;
   }

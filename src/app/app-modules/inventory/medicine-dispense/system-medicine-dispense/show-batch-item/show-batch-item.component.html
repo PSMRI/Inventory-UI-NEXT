@@ -1,23 +1,22 @@
-<div class="title">
-  <h4>{{ currentLanguageSet?.inventory?.issuedBatch }}</h4>
-  <button
-    mat-icon-button
-    [matDialogClose]="false"
-    class="pull-right exit"
-    style="text-align: end; margin-top: -5px"
-  >
-    <mat-icon>close</mat-icon>
-  </button>
+<div class="title row col-12">
+  <div class="col-6">
+    <h4>{{ currentLanguageSet?.inventory?.issuedBatch }}</h4>
+  </div>
+  <div class="col-6" style="text-align: end; margin-top: -10px">
+    <button mat-icon-button [matDialogClose]="false" class="pull-right exit">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 </div>
 
 <div class="container-fluid">
   <mat-dialog-content>
     <div class="row m-t-10" *ngIf="issuedBatchList.data.length > 0">
-      <div class="col-xs-12 mat_form_field_background_color_table">
+      <div class="col-xs-12">
         <table
           mat-table
           [dataSource]="issuedBatchList"
-          class="mat-elevation-z8"
+          class="mat-elevation-z8 mat_form_field_background_color_table"
         >
           <ng-container matColumnDef="sNo">
             <th mat-header-cell *matHeaderCellDef>
