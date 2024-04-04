@@ -83,6 +83,10 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
         console.log('response##', response);
         this.stockAdjustmentList.data.push(this.stock);
         console.log(
+          ' this.stockAdjustmentList.data',
+          this.stockAdjustmentList.data,
+        );
+        console.log(
           'this.stockAdjustmentList.data',
           this.stockAdjustmentList.data,
         );

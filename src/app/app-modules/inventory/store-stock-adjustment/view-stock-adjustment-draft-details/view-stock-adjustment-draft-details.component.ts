@@ -84,6 +84,10 @@ export class ViewStockAdjustmentDraftDetailsComponent
       .subscribe((response) => {
         this.stock = response;
         this.stockAdjustmentDraftList.data.push(this.stock);
+        console.log(
+          ' this.stockAdjustmentDraftList.data',
+          this.stockAdjustmentDraftList.data,
+        );
         this.dataSource = new MatTableDataSource<any>(
           this.stockAdjustmentDraftList.data,
         );

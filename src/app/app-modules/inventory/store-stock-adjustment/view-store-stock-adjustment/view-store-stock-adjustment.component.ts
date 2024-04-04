@@ -111,6 +111,7 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
         this.dataSource = new MatTableDataSource<any>(
           this.filteredStockAdjustmentList.data[0].data,
         );
+        console.log('dataSourcePart2', this.dataSource.data);
         this.dataSource.paginator = this.paginator;
         console.log('WEEEEE', this.dataSource.data);
       });

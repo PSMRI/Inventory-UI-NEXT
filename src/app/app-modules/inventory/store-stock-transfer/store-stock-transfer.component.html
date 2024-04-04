@@ -55,7 +55,7 @@
           required="true"
           placeholder="{{ currentLanguageSet?.inventory?.transferTo }}"
           formControlName="transferTo"
-          (change)="resetItemArray()"
+          (selectionChange)="resetItemArray()"
         >
           <mat-option *ngFor="let store of filterStore" [value]="store">
             {{ store.facilityName }}

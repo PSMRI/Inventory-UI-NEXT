@@ -27,7 +27,7 @@
           {{ currentLanguageSet?.inventory?.stockAdjustmentDraftID }}
         </th>
         <td mat-cell *matCellDef>
-          {{ stock?.stockAdjustmentDraftID }}
+          {{ stock?.data.stockAdjustmentDraftID }}
         </td>
       </ng-container>
 
@@ -36,7 +36,7 @@
           {{ currentLanguageSet?.inventory?.refNo }}
         </th>
         <td mat-cell *matCellDef>
-          {{ stock?.refNo }}
+          {{ stock?.data.refNo }}
         </td>
       </ng-container>
 
@@ -45,7 +45,7 @@
           {{ currentLanguageSet?.inventory?.draftDescription }}
         </th>
         <td mat-cell *matCellDef>
-          {{ stock?.draftDesc }}
+          {{ stock?.data.draftDesc }}
         </td>
       </ng-container>
 
@@ -54,7 +54,7 @@
           {{ currentLanguageSet?.inventory?.createdBy }}
         </th>
         <td mat-cell *matCellDef>
-          {{ stock?.createdBy }}
+          {{ stock?.data.createdBy }}
         </td>
       </ng-container>
 
@@ -63,7 +63,7 @@
           {{ currentLanguageSet?.inventory?.createdDate }}
         </th>
         <td mat-cell *matCellDef>
-          {{ stock?.createdDate | istDate: "dd/MM/yyyy" }}
+          {{ stock?.data.createdDate | istDate: "dd/MM/yyyy" }}
         </td>
       </ng-container>
       <!-- Header row -->

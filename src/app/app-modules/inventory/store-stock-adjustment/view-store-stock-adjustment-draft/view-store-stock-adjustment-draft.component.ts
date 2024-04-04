@@ -107,9 +107,14 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
       .subscribe((response: any) => {
         this.stockAdjustmentList = response;
         this.filteredStockAdjustmentList.data.push(response);
-        this.dataSource = new MatTableDataSource<any>(
-          this.filteredStockAdjustmentList.data[0].data,
+        console.log(
+          'filteredStockAdjustmentList',
+          this.filteredStockAdjustmentList.data,
         );
+        this.dataSource = new MatTableDataSource<any>(
+          this.filteredStockAdjustmentList.data[1].data,
+        );
+        console.log('dataSourcePart1', this.dataSource.data);
         this.filteredStockAdjustmentList.paginator = this.paginator;
       });
   }
