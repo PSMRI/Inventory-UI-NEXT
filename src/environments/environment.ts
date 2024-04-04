@@ -29,10 +29,10 @@
 // const mmuIP = 'http://183.82.107.186:8080';
 // const FHIRIP = 'http://183.82.107.186:8080';
 
-const commonIP = 'http://183.82.107.186:8080';
-const inventoryIP = 'http://183.82.107.186:8080';
-const mmuIP = 'http://183.82.107.186:8080';
-const FHIRIP = 'http://183.82.107.186:8080';
+const commonIP = 'http://183.82.107.186:8080/';
+const inventoryIP = 'http://183.82.107.186:8080/';
+const mmuIP = 'http://183.82.107.186:8080/';
+const FHIRIP = 'http://183.82.107.186:8080/';
 
 // const COMMON_API_OPEN = `http://${IP}:8080/apiman-gateway/IEMR/Common/open/`;
 // const COMMON_API = `http://${IP}:8080/apiman-gateway/IEMR/Common/1.0/`;
