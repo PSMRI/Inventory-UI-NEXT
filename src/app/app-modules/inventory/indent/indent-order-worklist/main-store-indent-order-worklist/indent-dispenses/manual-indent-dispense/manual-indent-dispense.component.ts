@@ -313,7 +313,6 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
 
   saveDispenseList() {
     let itemDetailsObj: any;
-
     const currentDate = new Date();
     const currentDateManipulated = new Date(
       currentDate.valueOf() - 1 * currentDate.getTimezoneOffset() * 60 * 1000,
