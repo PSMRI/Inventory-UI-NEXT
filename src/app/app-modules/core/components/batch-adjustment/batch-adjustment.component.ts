@@ -84,17 +84,6 @@ export class BatchAdjustmentComponent implements OnInit, DoCheck {
         }
       });
     }
-    // if (term) {
-    //   this.items$.subscribe((data) => {
-    //     if (data) {
-    //       this.dataSource.data = data.data;
-    //       this.dataSource.paginator = this.paginator;
-    //       this.noRecordsFlag = true;
-    //     } else {
-    //       this.noRecordsFlag = false;
-    //     }
-    //   });
-    // }
   }
 
   selectBatch(event: any, batch: any) {

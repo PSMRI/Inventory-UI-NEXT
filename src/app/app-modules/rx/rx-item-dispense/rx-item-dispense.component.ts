@@ -92,8 +92,8 @@ export class RxItemDispenseComponent implements OnInit, OnChanges, DoCheck {
     this.filteredDrugMaster = [];
     drugMasterCopy.itemList.forEach((element: any) => {
       if (
-        element.isEDL != null &&
-        element.isEDL != undefined &&
+        element.isEDL !== null &&
+        element.isEDL !== undefined &&
         (element.isEDL === true || element.batchList.length > 0)
       ) {
         this.filteredDrugMaster.push(element);

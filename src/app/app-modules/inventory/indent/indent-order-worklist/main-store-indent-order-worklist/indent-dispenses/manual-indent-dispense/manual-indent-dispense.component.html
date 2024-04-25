@@ -2,40 +2,6 @@
   <div class="row">
     <div class="col-xs-12">
       <section class="table-responsive">
-        <!-- <table [md2Data]="mainStoreItemListForDispense" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1" class="table table-striped responsive-table-view" aria-describedby="dispenseDetails">
-          <caption></caption>
-          <thead>
-            <tr>
-              <th id="noValue"></th>
-              <th id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
-              <th id="requiredQuantity">{{currentLanguageSet?.inventory?.requiredQuantity}}</th>
-              <th id="remarks">{{currentLanguageSet?.inventory?.remarks}}</th>
-              <th id="noValue"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of md2.data">
-              <td data-title="S.No.">{{ mainStoreItemListForDispense.indexOf(item)+1 }}</td>
-              <td data-title="Item Name">{{item?.itemName}}</td>
-              <td data-title="Required Quantity">{{item?.requiredQty}}</td>
-              <td data-title="Remarks">{{item?.remarks}}</td>
-              <td class="text-center">
-                <button md-raised-button (click)="selectBatchForSelectedItem(item,null,null)" [disabled]="item.selectedFlag" color="primary">{{currentLanguageSet?.itemDispense?.selectBatch}}</button>
-              </td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr *ngIf="mainStoreItemListForDispense.length > 0">
-              <td colspan="3" class="total-count">
-                <div> {{currentLanguageSet?.inventory?.totalCount}} : {{ mainStoreItemListForDispense.length }}</div>
-              </td>
-
-              <td colspan="2" style="text-align: right">
-                <md2-pagination></md2-pagination>
-              </td>
-            </tr>
-          </tfoot>
-        </table> -->
         <div
           class="table-responsive mat_form_field_background_color_table"
           *ngIf="mainStoreItemListForDispense.length > 0"
@@ -152,53 +118,6 @@
     </div>
     <div class="col-xs-12">
       <div class="table-responsive mat_form_field_background_color_table">
-        <!-- *ngIf="manualDispenseList.data.length > 0" -->
-        <!-- <table class="table table-bordered table-striped" [md2Data]="manualDispenseList" #md2="md2DataTable" aria-describedby="dispenseDetails">
-          <caption></caption>
-          <thead>
-            <tr>
-              <th id="sNo" class="width5">{{currentLanguageSet?.inventory?.sNo}}</th>
-              <th id="item" class="width10">{{currentLanguageSet?.inventory?.item}}</th>
-              <th id="requestedStoreQOH" class="width10">{{currentLanguageSet?.inventory?.requestedStoreQOH}}</th>
-              <th id="totalQuantityDispensed" class="width10">{{currentLanguageSet?.inventory?.totalQuantityDispensed}}</th>
-              <th id="batchNo" class="width10">{{currentLanguageSet?.itemDispense?.batchNo}}</th>
-              <th id="quantityOnHand" class="width10">{{currentLanguageSet?.inventory?.quantityOnHand}}</th>
-              <th id="expiryDate" class="width10">{{currentLanguageSet?.itemDispense?.expiryDate}}</th>
-              <th id="quantityDispensedPerBatch" class="width10">{{currentLanguageSet?.inventory?.quantityDispensedPerBatch}}</th>
-              <th id="edit" class="width10">{{currentLanguageSet?.bendetails?.edit}}</th>
-              <th id="delete" class="width10">{{currentLanguageSet?.inventory?.delete}}</th>
-            </tr>
-          </thead>
-          <tbody *ngIf="manualDispenseList?.length > 0">
-            <ng-container *ngFor="let item of md2.data; let i = index">
-              <tr *ngIf="item?.batchDetails.batchList.length != 0">
-                <td class="width5">{{ manualDispenseList?.indexOf(item)+1 }}</td>
-                <td class="width10">{{item?.itemDetails?.itemName}}</td>
-                <td class="width10">{{item?.itemDetails?.qOH}}</td>
-                <td class="width10">{{item?.batchDetails?.quantityDispensed}}</td>
-                <td colspan="4" class="noPadding">
-                  <table class="table inner_table table-striped" aria-describedby="dispenseDetails">
-                    <caption></caption>
-                    <th id="noValue"></th>
-                    <tr *ngFor='let batch of item?.batchDetails.batchList'>
-                      <td class="width25">{{batch?.batchNo?.batchNo}}</td>
-                      <td class="width25">{{batch?.quantityOnBatch}}</td>
-                      <td class="width25">{{batch?.expiryDate | date: 'dd/MM/yyyy'}}</td>
-                      <td class="width25">{{batch?.quantityOfDispense}}</td>
-                    </tr>
-                  </table>
-                </td>
-                <td class="width10">
-                  <md-icon mdTooltip="{{currentLanguageSet?.bendetails?.edit}}" class="mat-icon material-icons" role="img" aria-hidden="true" style="cursor:Pointer" *ngIf="item?.batchDetails.batchList.length != 0" (click)='editItem(item,i)'>edit</md-icon>
-                </td>
-                <td class="width10">
-                  <md-icon class="icon-remove cursorPointer" tooltip="{{currentLanguageSet?.inventory?.delete}}" (click)='removeManualDispenseItem(item,i)'>delete</md-icon>
-                </td>
-              </tr>
-            </ng-container>
-
-          </tbody>
-        </table> -->
         <table mat-table [dataSource]="manualDispenseList">
           <ng-container *ngIf="manualDispenseList.data.length > 0">
             <ng-container matColumnDef="SNo">
