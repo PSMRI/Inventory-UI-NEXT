@@ -85,4 +85,10 @@
   justify-content: flex-end;
   padding-top: 12px;
 }
+.mat_form_field_background_color >>>.mdc-text-field--filled, .mdc-text-field--focused {
+  background-color:unset !important;
+}
+.mat_form_field_background_width >>>.mat-mdc-text-field-wrapper {
+  width: 150% !important;
+}
 

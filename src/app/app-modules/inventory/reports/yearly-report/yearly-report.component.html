@@ -17,7 +17,6 @@
             </mat-label>
             <mat-select
               [style.width]="'100%'"
-              placeholder="{{ currentLanguageSet?.inventory?.selectyear }}"
               name="year"
               id="year"
               formControlName="year"
@@ -38,7 +37,6 @@
             </mat-label>
             <mat-select
               [style.width]="'100%'"
-              placeholder="{{ currentLanguageSet?.inventory?.facility }}"
               class="input-full-width"
               formControlName="facilityName"
             >
@@ -57,6 +55,7 @@
       <button
         mat-raised-button
         color="accent"
+        class="mat_green"
         type="submit"
         [disabled]="!yearlyForm.valid"
         (click)="downloadReport(true)"

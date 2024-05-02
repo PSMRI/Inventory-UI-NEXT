@@ -21,7 +21,6 @@
               name="startDate"
               id="startDate"
               (dateChange)="checkEndDate($event)"
-              placeholder="{{ currentLanguageSet?.inventory?.startDate }}"
               formControlName="startDate"
               [max]="maxEndDate"
               [disabled]="true"
@@ -45,7 +44,6 @@
               [matDatepicker]="pickerEnd"
               name="endDate"
               id="endDate"
-              placeholder="{{ currentLanguageSet?.inventory?.endDate }}"
               formControlName="endDate"
               [min]="minEndDate"
               (dateChange)="checkStartDate($event)"
@@ -68,7 +66,6 @@
             </mat-label>
             <mat-select
               [style.width]="'100%'"
-              placeholder="{{ currentLanguageSet?.inventory.facility }}"
               class="input-full-width"
               formControlName="facilityName"
             >
@@ -85,6 +82,7 @@
       <button
         mat-raised-button
         color="accent"
+        class="mat_green"
         type="submit"
         [disabled]="!dailyStockDetailsForm.valid"
         (click)="downloadReport(true)"

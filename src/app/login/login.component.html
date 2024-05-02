@@ -11,13 +11,13 @@
           <div class="col-xs-11 col-md-11 col-sm-11">
             <mat-form-field class="full-width">
               <mat-icon matPrefix>account_box</mat-icon>
+              <mat-label>Enter User Name</mat-label>
               <input
                 autocomplete="off"
                 allowText="usernameValidator"
                 matInput
                 type="text"
                 id="userID"
-                placeholder="Enter User Name"
                 [(ngModel)]="userName"
                 name="userName"
               />
@@ -28,12 +28,12 @@
           <div class="col-xs-11 col-md-11 col-sm-11">
             <mat-form-field class="full-width">
               <mat-icon matPrefix>lock</mat-icon>
+              <mat-label>Enter Password</mat-label>
               <input
                 autocomplete="off"
                 matInput
                 [type]="dynamictype"
                 id="password"
-                placeholder="Enter Password"
                 [(ngModel)]="password"
                 name="password"
               />

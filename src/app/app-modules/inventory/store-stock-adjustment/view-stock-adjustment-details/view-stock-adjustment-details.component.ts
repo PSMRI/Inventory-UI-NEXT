@@ -83,13 +83,17 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
         console.log('response##', response);
         this.stockAdjustmentList.data.push(this.stock);
         console.log(
+          ' this.stockAdjustmentList.data',
+          this.stockAdjustmentList.data,
+        );
+        console.log(
           'this.stockAdjustmentList.data',
           this.stockAdjustmentList.data,
         );
         this.dataSource = new MatTableDataSource<any>(
           this.stockAdjustmentList.data,
         );
-        this.adjustmentList.push(response.stockAdjustmentItemDraftEdit);
+        this.adjustmentList.push(response.data.stockAdjustmentItemDraftEdit);
         this.filteredAdjustmentList.data.push(this.stock);
         this.dataSource2 = new MatTableDataSource<any>(
           this.filteredAdjustmentList.data[0].data.stockAdjustmentItemDraftEdit,
@@ -99,11 +103,16 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
   }
 
   filterDetails(filterTerm: any) {
-    if (!filterTerm)
-      this.filteredAdjustmentList.data = this.adjustmentList.slice();
-    else {
+    if (!filterTerm) {
+      this.filteredAdjustmentList.data = this.adjustmentList;
+      console.log('CC', this.filteredAdjustmentList.data);
+      this.dataSource2 = new MatTableDataSource<any>(
+        this.filteredAdjustmentList.data[0],
+      );
+      this.dataSource2.paginator = this.paginator;
+    } else {
       this.filteredAdjustmentList.data = [];
-      this.adjustmentList.forEach((item: any) => {
+      this.adjustmentList[0].forEach((item: any) => {
         for (const key in item) {
           if (
             key === 'itemName' ||
@@ -131,6 +140,11 @@ export class ViewStockAdjustmentDetailsComponent implements OnInit, DoCheck {
             }
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this.filteredAdjustmentList.data.push(item);
+              console.log('Real', this.filteredAdjustmentList.data[0]);
+              this.dataSource2 = new MatTableDataSource<any>(
+                this.filteredAdjustmentList.data,
+              );
+              this.dataSource2.paginator = this.paginator;
               break;
             }
           }

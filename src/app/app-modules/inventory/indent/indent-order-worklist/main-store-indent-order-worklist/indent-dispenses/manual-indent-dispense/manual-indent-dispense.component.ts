@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, Input, DoCheck } from '@angular/core';
+import { Component, OnInit, Input, DoCheck, ViewChild } from '@angular/core';
 import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -30,6 +30,8 @@ import { InventoryService } from 'src/app/app-modules/inventory/shared/service/i
 import { SelectBatchForIndentItemComponent } from './select-batch-for-indent-item/select-batch-for-indent-item.component';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-manual-indent-dispense',
@@ -40,7 +42,7 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
   mainStoreItemList: any;
 
   batchlist = [];
-  manualDispenseList: any[] = [];
+  manualDispenseList = new MatTableDataSource<any>();
   mainStoreItemListForDispense: any = [];
   enableButton = true;
   languageComponent!: SetLanguageComponent;
@@ -64,6 +66,10 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
     'remarks',
     'action',
   ];
+  batchNumberDataList: any = [];
+  otherData: any = [];
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -150,7 +156,8 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
   ) {
     const matDialogRef: MatDialogRef<SelectBatchForIndentItemComponent> =
       this.dialog.open(SelectBatchForIndentItemComponent, {
-        width: '80%',
+        width: '1200px',
+        height: 'auto',
         panelClass: 'fit-screen',
         data: {
           indentItem: selectedItem,
@@ -160,13 +167,72 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
         },
         disableClose: false,
       });
+    // matDialogRef.afterClosed().subscribe((result) => {
+    //   if (result) {
+    //     console.log('Result', result);
+
+    //     if (editIndex !== null) {
+    //       this.manualDispenseList.data.splice(editIndex, 1);
+    //       this.manualDispenseList.data.push(result);
+    //       console.log(
+    //         'this.manualDispenseList***********',
+    //         JSON.stringify(this.manualDispenseList, null, 4),
+    //       );
+    //       this.manualDispenseList.paginator = this.paginator;
+    //       this.manualDispenseList.data.forEach((manualDispenseItem: any) => {
+    //         this.batchNumberDataList = [];
+    //         this.otherData = [];
+    //         manualDispenseItem.batchDetails.batchList.forEach(
+    //           (batchItem: any) => {
+    //             this.batchNumberDataList.push(batchItem.batchNo);
+    //             this.otherData.push(batchItem.quantityOfDispense);
+    //           },
+    //         );
+    //         manualDispenseItem['batchNo'] = this.batchNumberDataList;
+    //         manualDispenseItem['quantityOfDispense'] = this.otherData;
+    //         console.log('manualDispenseList', this.manualDispenseList.data);
+    //       });
+
+    //     } else {
+    //         this.manualDispenseList.data.push(result);
+    //       console.log("this.manualDispenseList.data under else with empty",this.manualDispenseList.data);
+    //       this.manualDispenseList.paginator = this.paginator;
+    //       this.manualDispenseList.data.forEach((manualDispenseItem: any) => {
+    //         this.batchNumberDataList = [];
+    //         this.otherData = [];
+    //         manualDispenseItem.batchDetails.batchList.forEach(
+    //           (batchItem: any) => {
+    //             this.batchNumberDataList.push(batchItem.batchNo);
+    //             this.otherData.push(batchItem.quantityOfDispense);
+    //           },
+    //         );
+    //         manualDispenseItem['batchNo'] = this.batchNumberDataList;
+    //         manualDispenseItem['quantityOfDispense'] = this.otherData;
+    //         console.log('manualDispenseList', this.manualDispenseList.data);
+    //       });
+    //       this.disableBatchSelcetion(
+    //         selectedItem,
+    //         this.mainStoreItemListForDispense,
+    //       );
+    //       this.manualDispenseList.data.push(result);
+    //       console.log(
+    //         'this.manualDispenseList*********** in else',
+    //         JSON.stringify(this.manualDispenseList.data),
+    //       );
+    //       }
+    //   }
+    // });
+
     matDialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Result', result);
 
         if (editIndex !== null) {
-          this.manualDispenseList.splice(editIndex, 1);
-          this.manualDispenseList.push(result);
+          this.manualDispenseList.data.splice(editIndex, 1);
+          this.manualDispenseList.data.push(result);
+          this.manualDispenseList = new MatTableDataSource<any>(
+            this.manualDispenseList.data,
+          );
           console.log(
             'this.manualDispenseList***********',
             JSON.stringify(this.manualDispenseList, null, 4),
@@ -176,7 +242,7 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
             selectedItem,
             this.mainStoreItemListForDispense,
           );
-          this.manualDispenseList.push(result);
+          this.manualDispenseList.data.push(result);
           console.log(
             'this.manualDispenseList*********** in else',
             JSON.stringify(this.manualDispenseList, null, 4),
@@ -218,14 +284,12 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
   }
 
   removeManualDispenseItem(deletedItem: any, deleteIndex: number) {
-    this.manualDispenseList.splice(deleteIndex, 1);
+    console.log('deletedItem &&&&&&&&&&&&&&', deletedItem);
+    this.manualDispenseList.data.splice(deleteIndex, 1);
     this.enableBatchSelection(deletedItem, this.mainStoreItemListForDispense);
   }
 
-  enableBatchSelection(
-    deletedItem: { itemDetails: { itemName: any } },
-    mainStoreItemList: any[],
-  ) {
+  enableBatchSelection(deletedItem: any, mainStoreItemList: any) {
     console.log('deletedItem', deletedItem);
     this.mainStoreItemListForDispense = mainStoreItemList.filter(
       (dispenseItem: { itemName: any }) => {
@@ -249,16 +313,12 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
 
   saveDispenseList() {
     let itemDetailsObj: any;
-    console.log(
-      'This.manual dispense list..',
-      JSON.stringify(this.manualDispenseList, null, 4),
-    );
     const currentDate = new Date();
     const currentDateManipulated = new Date(
       currentDate.valueOf() - 1 * currentDate.getTimezoneOffset() * 60 * 1000,
     );
 
-    this.manualDispenseList.forEach((itemData) => {
+    this.manualDispenseList.data.forEach((itemData) => {
       console.log(
         'itemData*******************update',
         itemData.item,
@@ -303,10 +363,9 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
         },
       );
     });
-    console.log('batchListDetails', this.batchListDetails);
     if (
       this.mainStoreItemListForDispense.length !==
-      this.manualDispenseList.length
+      this.manualDispenseList.data.length
     ) {
       this.confirmationService
         .confirm(
@@ -323,7 +382,7 @@ export class ManualIndentDispenseComponent implements OnInit, DoCheck {
     }
     if (
       this.mainStoreItemListForDispense.length ===
-      this.manualDispenseList.length
+      this.manualDispenseList.data.length
     ) {
       this.saveAPICall();
     }

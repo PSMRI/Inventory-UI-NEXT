@@ -6,6 +6,7 @@
     mat-icon-button
     matTooltip="{{ currentLanguageSet?.inventory?.close }}"
     [matDialogClose]="false"
+    style="text-align: end; margin-top: -10px"
     class="pull-right exit width-20px"
   >
     <mat-icon>close</mat-icon>
@@ -20,61 +21,69 @@
           <mat-card-content>
             <div class="row">
               <div class="col-xs-12">
-                <section class="table-responsive">
-                  <table
-                    mat-table
-                    [dataSource]="beneficiaryDetailsList"
-                    class="table table-striped responsive-table-view"
-                  >
-                    <ng-container matColumnDef="noValue">
-                      <th mat-header-cell *matHeaderCellDef></th>
-                      <td mat-cell *matCellDef="let i = index">{{ i + 1 }}</td>
-                    </ng-container>
+                <section class="mat_form_field_background_color_table">
+                  <div class="mat-elevation-z8 responsiveTable">
+                    <table
+                      mat-table
+                      [dataSource]="beneficiaryDetailsList"
+                      class=""
+                    >
+                      <ng-container matColumnDef="noValue">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let i = index">
+                          {{ i + 1 }}
+                        </td>
+                      </ng-container>
 
-                    <ng-container matColumnDef="beneficiaryID">
-                      <th mat-header-cell *matHeaderCellDef>
-                        {{ currentLanguageSet?.bendetails?.beneficiaryID }}
-                      </th>
-                      <td mat-cell *matCellDef="let element">
-                        {{ element?.beneficiaryID }}
-                      </td>
-                    </ng-container>
+                      <ng-container matColumnDef="beneficiaryID">
+                        <th mat-header-cell *matHeaderCellDef>
+                          {{ currentLanguageSet?.bendetails?.beneficiaryID }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.beneficiaryID }}
+                        </td>
+                      </ng-container>
 
-                    <ng-container matColumnDef="beneficiaryName">
-                      <th mat-header-cell *matHeaderCellDef>
-                        {{ currentLanguageSet?.bendetails?.beneficiaryName }}
-                      </th>
-                      <td mat-cell *matCellDef="let element">
-                        {{ element?.firstName ? element.firstName : "" }}
-                        {{ element?.lastName ? element.lastName : "" }}
-                      </td>
-                    </ng-container>
+                      <ng-container matColumnDef="beneficiaryName">
+                        <th mat-header-cell *matHeaderCellDef>
+                          {{ currentLanguageSet?.bendetails?.beneficiaryName }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.firstName ? element.firstName : "" }}
+                          {{ element?.lastName ? element.lastName : "" }}
+                        </td>
+                      </ng-container>
 
-                    <ng-container matColumnDef="age">
-                      <th mat-header-cell *matHeaderCellDef>
-                        {{ currentLanguageSet?.bendetails?.age }}
-                      </th>
-                      <td mat-cell *matCellDef="let element">
-                        {{ element?.age }}
-                      </td>
-                    </ng-container>
+                      <ng-container matColumnDef="age">
+                        <th mat-header-cell *matHeaderCellDef>
+                          {{ currentLanguageSet?.bendetails?.age }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.age }}
+                        </td>
+                      </ng-container>
 
-                    <ng-container matColumnDef="gender">
-                      <th mat-header-cell *matHeaderCellDef>
-                        {{ currentLanguageSet?.bendetails?.gender }}
-                      </th>
-                      <td mat-cell *matCellDef="let element">
-                        {{ element?.m_gender?.genderName }}
-                      </td>
-                    </ng-container>
-                    <!-- Header and row definitions -->
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr
-                      mat-row
-                      *matRowDef="let row; columns: displayedColumns"
-                      (click)="loadbeneficiaryDetails(row)"
-                    ></tr>
-                  </table>
+                      <ng-container matColumnDef="gender">
+                        <th mat-header-cell *matHeaderCellDef>
+                          {{ currentLanguageSet?.bendetails?.gender }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.m_gender?.genderName }}
+                        </td>
+                      </ng-container>
+                      <!-- Header and row definitions -->
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedColumns"
+                      ></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumns"
+                        (click)="loadbeneficiaryDetails(row)"
+                      ></tr>
+                    </table>
+                  </div>
+
                   <div
                     *ngIf="
                       beneficiaryDetailsList &&
@@ -92,6 +101,14 @@
                         }}</strong>
                       </td>
                     </tr>
+                  </div>
+                  <div>
+                    <mat-paginator
+                      [hidden]="beneficiaryDetailsList.data.length === 0"
+                      [pageSizeOptions]="[5, 10, 25]"
+                      [pageSize]="5"
+                      showFirstLastButtons
+                    ></mat-paginator>
                   </div>
                 </section>
               </div>

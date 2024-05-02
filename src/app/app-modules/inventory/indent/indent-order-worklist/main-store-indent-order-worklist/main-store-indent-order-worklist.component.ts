@@ -41,7 +41,8 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
   isMainStore = false;
   enableIndentReceipt = false;
 
-  mainstoreOrderlist: any = [];
+  mainstoreOrderlist = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   mainStoreItemList: any = [];
   orderReqObject: any;
   rejectOrderList = [];
@@ -49,7 +50,6 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
   mainFacilityID: any;
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource!: MatTableDataSource<any>;
   displayedColumns: string[] = [
     'SNo',
@@ -80,17 +80,15 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
     this.inventoryService
       .showMainstoreOrderWorklist(orderReqObject)
       .subscribe((orderlistRes) => {
-        this.mainstoreOrderlist = orderlistRes.data;
-        console.log(
-          'this.mainstoreOrderlist*******main form',
-          this.mainstoreOrderlist,
-        );
+        this.mainstoreOrderlist.data = orderlistRes.data;
+        this.mainstoreOrderlist.paginator = this.paginator;
       });
   }
 
   viewItemListDetails(orderList: any) {
     this.dialog.open(MainStoreItemModelComponent, {
-      width: '80%',
+      width: '1200px',
+      height: 'auto',
       panelClass: 'fit-screen',
       data: {
         itemListDetails: orderList,
@@ -110,8 +108,8 @@ export class MainStoreIndentOrderWorklistComponent implements OnInit, DoCheck {
   }
   rejectIndent(rejectOrder: any) {
     const dialogRef = this.dialog.open(RejectItemFromMainstoreModelComponent, {
-      width: '40%',
-      height: '40%',
+      width: '600px',
+      height: 'auto',
       panelClass: 'fit-screen',
       data: {
         rejectItem: rejectOrder,

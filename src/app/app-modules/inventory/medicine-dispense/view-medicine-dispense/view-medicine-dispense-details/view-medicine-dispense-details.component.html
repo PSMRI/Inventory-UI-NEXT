@@ -15,8 +15,9 @@
 <div class="scrolling-content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-xs-12 mat_form_field_background_color_table">
         <table
+          style="border: 1px solid #ddd; margin-top: 10px"
           mat-table
           class="table"
           aria-describedby="medicineDetailsDetails"
@@ -89,55 +90,56 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <section class="table-responsive">
-          <mat-table
+        <section class="table-responsive mat_form_field_background_color_table">
+          <table
+            mat-table
             class="mat-elevation-z8"
             aria-describedby="viewStoreStockDetails"
             [dataSource]="dataSource"
           >
             <ng-container matColumnDef="noValue">
-              <mat-header-cell *matHeaderCellDef>{{
-                currentLanguageSet?.inventory?.sNo
-              }}</mat-header-cell>
-              <mat-cell *matCellDef="let item; let i = index">{{
-                i + 1
-              }}</mat-cell>
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.inventory?.sNo }}
+              </th>
+              <td mat-cell *matCellDef="let item; let i = index">
+                {{ i + 1 }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="itemName">
-              <mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef>
                 {{ currentLanguageSet?.inventory?.itemName }}
-              </mat-header-cell>
-              <mat-cell *matCellDef="let item">
+              </th>
+              <td mat-cell *matCellDef="let item">
                 {{ item?.itemName }}
-              </mat-cell>
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="batchNo">
-              <mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef>
                 {{ currentLanguageSet?.itemDispense?.batchNo }}
-              </mat-header-cell>
-              <mat-cell *matCellDef="let item">
+              </th>
+              <td mat-cell *matCellDef="let item">
                 {{ item?.batchNo }}
-              </mat-cell>
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="expiryDate">
-              <mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef>
                 {{ currentLanguageSet?.itemDispense?.expiryDate }}
-              </mat-header-cell>
-              <mat-cell *matCellDef="let item">
+              </th>
+              <td mat-cell *matCellDef="let item">
                 {{ item?.expiryDate | date: "dd/MM/yyyy" }}
-              </mat-cell>
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="quantity">
-              <mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef>
                 {{ currentLanguageSet?.inventory?.quantity }}
-              </mat-header-cell>
-              <mat-cell *matCellDef="let item">
+              </th>
+              <td mat-cell *matCellDef="let item">
                 {{ item?.quantity }}
-              </mat-cell>
+              </td>
             </ng-container>
 
             <ng-container *ngIf="dataSource.data.length > 0">
@@ -154,10 +156,10 @@
               </div>
             </ng-container>
             <!-- Header row -->
-            <mat-header-row *matHeaderRowDef="itemListColumns"></mat-header-row>
+            <tr mat-header-row *matHeaderRowDef="itemListColumns"></tr>
             <!-- Data row -->
-            <mat-row *matRowDef="let row; columns: itemListColumns"> </mat-row>
-          </mat-table>
+            <tr mat-row *matRowDef="let row; columns: itemListColumns"></tr>
+          </table>
           <div
             *ngIf="dataSource && dataSource.data.length === 0"
             class="noRecord"
@@ -175,7 +177,10 @@
     </div>
 
     <div class="row m-b-15">
-      <div class="col-xs-12" style="display: flex; justify-content: end">
+      <div
+        class="col-xs-12"
+        style="display: flex; justify-content: end; margin-top: 10px"
+      >
         <button
           class="pull-right"
           mat-raised-button

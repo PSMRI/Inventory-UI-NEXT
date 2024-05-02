@@ -79,25 +79,29 @@
         <mat-card>
           <div class="table-responsive">
             <ng-container formArrayName="physicalStock">
-              <mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+              <table
+                mat-table
+                class="mat-elevation-z8 mat_form_field_background_color_table"
+                [dataSource]="dataSource"
+              >
                 <ng-container matColumnDef="index">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.index
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.index }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
-                    >{{ i + 1 }}</mat-cell
                   >
+                    {{ i + 1 }}
+                  </td>
                 </ng-container>
-
                 <ng-container matColumnDef="itemName">
-                  <mat-header-cell *matHeaderCellDef
-                    ><b>{{
-                      currentLanguageSet?.inventory?.itemName
-                    }}</b></mat-header-cell
-                  >
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    <b>{{ currentLanguageSet?.inventory?.itemName }}</b>
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
                   >
@@ -127,16 +131,15 @@
                         >search</mat-icon
                       >
                     </mat-form-field>
-                  </mat-cell>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="quantity">
-                  <mat-header-cell *matHeaderCellDef
-                    ><b>{{
-                      currentLanguageSet?.inventory?.qtyInLowestUnit
-                    }}</b></mat-header-cell
-                  >
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    <b>{{ currentLanguageSet?.inventory?.qtyInLowestUnit }}</b>
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
                   >
@@ -157,16 +160,15 @@
                         [(ngModel)]="stock.quantity"
                       />
                     </mat-form-field>
-                  </mat-cell>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="totalCostPrice">
-                  <mat-header-cell *matHeaderCellDef
-                    ><b>{{
-                      currentLanguageSet?.inventory?.unitCostPrice
-                    }}</b></mat-header-cell
-                  >
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    <b>{{ currentLanguageSet?.inventory?.unitCostPrice }}</b>
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
                   >
@@ -186,16 +188,15 @@
                         [readonly]="!stock.value.itemID"
                       />
                     </mat-form-field>
-                  </mat-cell>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="batchNo">
-                  <mat-header-cell *matHeaderCellDef
-                    ><b>{{
-                      currentLanguageSet?.itemDispense?.batchNo
-                    }}</b></mat-header-cell
-                  >
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    <b>{{ currentLanguageSet?.itemDispense?.batchNo }}</b>
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
                   >
@@ -207,7 +208,6 @@
                       }}</mat-label>
                       <input
                         matInput
-                        appAllowText="alphanumeric"
                         maxlength="45"
                         name="batchNo"
                         formControlName="batchNo"
@@ -216,16 +216,19 @@
                         (change)="checkForDuplicateBatch(stock, i)"
                       />
                     </mat-form-field>
-                  </mat-cell>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="expiryDate">
-                  <mat-header-cell *matHeaderCellDef
-                    ><b>{{
-                      currentLanguageSet?.itemDispense?.expiryDate
-                    }}</b></mat-header-cell
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    style="padding-left: 50px"
                   >
-                  <mat-cell
+                    <b>{{ currentLanguageSet?.itemDispense?.expiryDate }}</b>
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
                     class="input-full-width input-datepicker"
@@ -249,41 +252,43 @@
                       />
                       <mat-datepicker-toggle
                         [disabled]="!stock.value.itemID"
-                        matSuffix
+                        matPrefix
                         [for]="expDate"
                       ></mat-datepicker-toggle>
                       <mat-datepicker #expDate></mat-datepicker>
                     </mat-form-field>
-                  </mat-cell>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="actions">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.actions
-                  }}</mat-header-cell>
-                  <mat-cell
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.actions }}
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let stock; let i = index"
                     [formGroup]="stock"
                     class="text-right"
                   >
                     <mat-icon
-                      class="icon-remove cursorPointer"
+                      class="cursorPointer"
                       (click)="removeStock(i, stock)"
                       matTooltip="{{ currentLanguageSet?.inventory?.delete }}"
                       >delete</mat-icon
                     >
-                  </mat-cell>
+                  </td>
                 </ng-container>
-                <mat-header-row
-                  *matHeaderRowDef="displayedColumns"
-                ></mat-header-row>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <!-- Data row -->
-                <mat-row *matRowDef="let row; columns: displayedColumns">
-                </mat-row>
-              </mat-table>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
             </ng-container>
             <div
               class="text-right"
+              style="margin-top: 15px"
               *ngIf="physicalStockEntryForm.controls['physicalStock'].valid"
             >
               <button mat-mini-fab color="primary" (click)="addStock()">

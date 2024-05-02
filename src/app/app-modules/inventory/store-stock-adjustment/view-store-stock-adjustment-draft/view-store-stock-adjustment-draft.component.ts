@@ -47,7 +47,7 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
   filteredStockAdjustmentList = new MatTableDataSource<any>();
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
-  dataSource = new MatTableDataSource<any>();
+  // dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   displayedColumns: string[] = [
     'draftID',
@@ -79,6 +79,7 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
   }
 
   viewRecords() {
+    const facilityID: any = localStorage.getItem('facilityID');
     const startDate: Date = new Date(this.fromDate);
     startDate.setHours(0);
     startDate.setMinutes(0);
@@ -98,29 +99,36 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
       toDate: new Date(
         endDate.valueOf() - 1 * endDate.getTimezoneOffset() * 60 * 1000,
       ),
-      facilityID: localStorage.getItem('facilityID')
-        ? " +localStorage.getItem('facilityID') || '{}'"
-        : undefined,
+      facilityID: facilityID ? +facilityID : undefined,
     };
 
     this.inventoryService
       .getStockAdjustmentDraftList(temp)
       .subscribe((response: any) => {
         this.stockAdjustmentList = response;
-        this.filteredStockAdjustmentList.data.push(response);
-        this.dataSource = new MatTableDataSource<any>(
-          this.filteredStockAdjustmentList.data[0].data,
+        console.log('response', response);
+        console.log('response.data', response.data);
+        this.filteredStockAdjustmentList.data = response.data;
+        console.log(
+          'this.filteredStockAdjustmentList.data',
+          this.filteredStockAdjustmentList.data,
         );
+
+        // console.log("dataSource",this.dataSource.data);
         this.filteredStockAdjustmentList.paginator = this.paginator;
       });
   }
 
   filterStockAdjustmentList(filterTerm: any) {
-    if (!filterTerm)
-      this.filteredStockAdjustmentList.data = this.stockAdjustmentList.slice();
-    else {
+    if (!filterTerm) {
+      this.filteredStockAdjustmentList.data = this.stockAdjustmentList.data;
+      this.filteredStockAdjustmentList = new MatTableDataSource<any>(
+        this.filteredStockAdjustmentList.data,
+      );
+      this.filteredStockAdjustmentList.paginator = this.paginator;
+    } else {
       this.filteredStockAdjustmentList.data = [];
-      this.stockAdjustmentList.forEach((item: any) => {
+      this.stockAdjustmentList.data.forEach((item: any) => {
         for (const key in item) {
           if (
             key === 'stockAdjustmentDraftID' ||
@@ -131,6 +139,10 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this.filteredStockAdjustmentList.data.push(item);
+              this.filteredStockAdjustmentList = new MatTableDataSource<any>(
+                this.filteredStockAdjustmentList.data,
+              );
+              this.filteredStockAdjustmentList.paginator = this.paginator;
               break;
             }
           }
@@ -142,7 +154,8 @@ export class ViewStoreStockAdjustmentDraftComponent implements OnInit, DoCheck {
   viewStockAdjustmentDraftDetails(draftID: any) {
     this.dialog
       .open(ViewStockAdjustmentDraftDetailsComponent, {
-        width: '80%',
+        width: '1200px',
+        height: 'auto',
         panelClass: 'fit-screen',
         data: {
           adjustmentID: draftID,

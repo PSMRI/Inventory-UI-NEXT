@@ -42,6 +42,7 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
   fromDate: any;
   toDate: any;
   stockAdjustmentList: any = [];
+  ResponseWar: any = [];
   _minDate: any;
   filterTerm: any;
   filteredStockAdjustmentList = new MatTableDataSource<any>();
@@ -77,6 +78,7 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
   }
 
   viewRecords() {
+    const facilityID = localStorage.getItem('facilityID');
     const startDate: Date = new Date(this.fromDate);
     startDate.setHours(0);
     startDate.setMinutes(0);
@@ -96,33 +98,46 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
       toDate: new Date(
         endDate.valueOf() - 1 * endDate.getTimezoneOffset() * 60 * 1000,
       ),
-      facilityID: localStorage.getItem('facilityID')
-        ? " +localStorage.getItem('facilityID') || '{}' "
-        : undefined,
+
+      facilityID: facilityID ? +facilityID : undefined,
     };
 
     this.inventoryService
       .getStockAdjustmentList(temp)
       .subscribe((response: any) => {
         this.stockAdjustmentList = response;
+        this.ResponseWar = response;
         this.filteredStockAdjustmentList.data.push(response);
         this.dataSource = new MatTableDataSource<any>(
           this.filteredStockAdjustmentList.data[0].data,
         );
+        console.log('dataSourcePart2', this.dataSource.data);
         this.dataSource.paginator = this.paginator;
         console.log('WEEEEE', this.dataSource.data);
       });
   }
 
   filterStockAdjustmentList(filterTerm: any) {
-    if (!filterTerm)
-      this.filteredStockAdjustmentList.data = this.stockAdjustmentList.slice();
-    else {
+    if (!filterTerm) {
+      // this.viewRecords();
+      console.log('stockAdjustmentList', this.stockAdjustmentList);
+      console.log(
+        'filteredStockAdjustmentList',
+        this.filteredStockAdjustmentList.data,
+      );
+      this.filteredStockAdjustmentList.data.push(this.stockAdjustmentList);
+      const len = this.filteredStockAdjustmentList.data.length;
+      this.dataSource = new MatTableDataSource<any>(
+        this.filteredStockAdjustmentList.data[len - 1].data,
+      );
+      this.dataSource.paginator = this.paginator;
+    } else {
       this.filteredStockAdjustmentList.data = [];
-      this.stockAdjustmentList.forEach((item: any) => {
+      this.stockAdjustmentList.data.forEach((item: any) => {
         for (const key in item) {
           if (
             key === 'stockAdjustmentDraftID' ||
+            key === 'stockAdjustmentID' ||
             key === 'refNo' ||
             key === 'reason' ||
             key === 'createdBy'
@@ -130,6 +145,10 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this.filteredStockAdjustmentList.data.push(item);
+              this.dataSource = new MatTableDataSource<any>(
+                this.filteredStockAdjustmentList.data,
+              );
+              this.dataSource.paginator = this.paginator;
               break;
             }
           }
@@ -141,8 +160,8 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
   viewStockAdjustmentDetails(adjustmentID: any) {
     this.dialog
       .open(ViewStockAdjustmentDetailsComponent, {
-        width: '80%',
-        height: '80%',
+        width: '1200px',
+        height: 'auto',
         panelClass: 'fit-screen',
         data: {
           adjustmentID: adjustmentID,
@@ -173,28 +192,32 @@ export class ViewStoreStockAdjustmentComponent implements OnInit, DoCheck {
     const facilityName = facilityDetail.facilityName;
     const adjustedItemList: any = [];
     let i = 0;
+    console.log('adjustmentDetials', adjustmentDetials);
+    console.log('adjustmentDetials', adjustmentDetials.data);
 
-    adjustmentDetials.stockAdjustmentItemDraftEdit.forEach((stock: any) => {
-      i = i + 1;
-      const temp = {
-        sNo: i,
-        itemName: stock.itemName,
-        batchID: stock.batchID,
-        quantityInHand: stock.quantityInHand,
-        adjustedQuantity: stock.adjustedQuantity,
-        adjustmentType:
-          stock.isAdded !== undefined && stock.isAdded ? 'Receipt' : 'Issue',
-        reason: stock.reason,
-      };
-      adjustedItemList.push(temp);
-    });
+    adjustmentDetials.data.stockAdjustmentItemDraftEdit.forEach(
+      (stock: any) => {
+        i = i + 1;
+        const temp = {
+          sNo: i,
+          itemName: stock.itemName,
+          batchID: stock.batchID,
+          quantityInHand: stock.quantityInHand,
+          adjustedQuantity: stock.adjustedQuantity,
+          adjustmentType:
+            stock.isAdded !== undefined && stock.isAdded ? 'Receipt' : 'Issue',
+          reason: stock.reason,
+        };
+        adjustedItemList.push(temp);
+      },
+    );
 
     const headerDetails = Object.assign(
       {
         facilityName: facilityName,
         createDate: moment(adjustmentDetials.createdDate).format('DD-MM-YYYY'),
       },
-      adjustmentDetials,
+      adjustmentDetials.data,
     );
     const printableData = Object.assign(
       {},

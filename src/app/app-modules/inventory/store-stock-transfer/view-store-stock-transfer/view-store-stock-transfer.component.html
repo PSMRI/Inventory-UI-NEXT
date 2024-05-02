@@ -93,7 +93,7 @@
   </section>
 
   <section class="row m-t-20">
-    <div class="col-xs-12">
+    <div class="col-xs-12" style="margin-bottom: 50px">
       <mat-card>
         <mat-card-content>
           <div class="row">
@@ -111,7 +111,9 @@
               </mat-form-field>
             </div>
             <div class="col-xs-12">
-              <div class="table-responsive">
+              <div
+                class="table-responsive mat_form_field_background_color_table"
+              >
                 <table
                   mat-table
                   class="mat-elevation-z8"
@@ -251,17 +253,17 @@
                     currentLanguageSet?.inventory?.norecordsfound
                   }}</strong>
                 </div>
-                <div
+                <!-- <div
                   class="total-count"
                   *ngIf="_filteredStockEntryList.data.length > 0"
                   style="display: flex; justify-content: flex-start"
                 >
                   {{ currentLanguageSet?.inventory?.totalCount }} :
                   {{ _filteredStockEntryList.data.length }}
-                </div>
+                </div> -->
                 <div
                   *ngIf="_filteredStockEntryList.data.length > 0"
-                  style="display: flex; justify-content: center"
+                  style="display: flex; justify-content: left"
                 >
                   <ul class="description">
                     <li>

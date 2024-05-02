@@ -19,7 +19,6 @@
             [matDatepicker]="pickerStart"
             name="startDate"
             id="startDate"
-            placeholder="{{ currentLanguageSet?.inventory?.startDate }}"
             formControlName="startDate"
             (dateChange)="checkEndDate($event)"
             [max]="maxEndDate"
@@ -44,7 +43,6 @@
             [matDatepicker]="pickerEnds"
             name="endDate"
             id="endDate"
-            placeholder="{{ currentLanguageSet?.inventory?.endDate }}"
             formControlName="endDate"
             [disabled]="true"
             (dateChange)="checkStartDate($event)"
@@ -65,11 +63,7 @@
           <mat-label>
             {{ currentLanguageSet?.inventory?.facility }}
           </mat-label>
-          <mat-select
-            [style.width]="'100%'"
-            placeholder="{{ currentLanguageSet?.inventory.facility }}"
-            formControlName="facilityName"
-          >
+          <mat-select [style.width]="'100%'" formControlName="facilityName">
             <mat-option *ngFor="let item of facilities" [value]="item">{{
               item
             }}</mat-option>
@@ -82,6 +76,7 @@
         mat-raised-button
         color="accent"
         type="submit"
+        class="mat_green"
         [disabled]="!dailyStockSummaryForm.valid"
         (click)="downloadReport(true)"
       >

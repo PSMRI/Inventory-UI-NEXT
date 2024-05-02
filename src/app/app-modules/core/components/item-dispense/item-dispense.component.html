@@ -5,6 +5,7 @@
     matDialogClose
     matTooltip="{{ currentLanguageSet?.inventory?.close }}"
     class="pull-right exit width-20px"
+    style="text-align: end; margin-top: -5px"
   >
     <mat-icon>close</mat-icon>
   </button>
@@ -14,11 +15,11 @@
   <div class="row no-gutters">
     <div class="col-xs-12 col-sm-4">
       <mat-form-field class="input-full-width">
+        <mat-label>{{ currentLanguageSet?.inventory?.itemNameCode }}</mat-label>
         <input
           autocomplete="off"
           allowText="itemNameSearchValidator"
           matInput
-          placeholder="{{ currentLanguageSet?.inventory?.itemNameCode }}"
           [(ngModel)]="input.searchTerm"
           (keyup.enter)="search(input.searchTerm)"
           maxlength="100"
@@ -37,10 +38,8 @@
     </div>
   </div>
 
-  <div class="m-t-30"></div>
-
   <mat-dialog-content>
-    <div class="table-responsive">
+    <div class="table-responsive mat_form_field_background_color_table">
       <table
         mat-table
         class="mat-elevation-z8"
@@ -159,10 +158,10 @@
       <div class="noRecord" *ngIf="dataSource.data.length === 0">
         <strong>{{ currentLanguageSet?.inventory?.norecordsfound }}</strong>
       </div>
-      <div class="total-count" *ngIf="dataSource.data.length > 0">
+      <!-- <div class="total-count" *ngIf="dataSource.data.length > 0">
         {{ currentLanguageSet?.inventory?.totalCount }} :
         {{ dataSource.data.length }}
-      </div>
+      </div> -->
       <mat-paginator
         [hidden]="dataSource.data.length === 0"
         [pageSizeOptions]="[5, 10, 25]"

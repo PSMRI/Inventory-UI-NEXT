@@ -49,7 +49,7 @@ export class TransitReportComponent implements OnInit, DoCheck {
 
   today!: Date;
   minEndDate!: Date;
-  maxDate: any;
+  maxDate!: Date;
   maxEndDate!: Date;
   transitList = [];
   dateOffset: any;

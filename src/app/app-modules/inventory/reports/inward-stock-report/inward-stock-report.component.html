@@ -20,10 +20,9 @@
               [matDatepicker]="picker"
               name="startDate"
               id="startDate"
-              placeholder="{{ currentLanguageSet?.inventory?.startDate }}"
               formControlName="startDate"
               (change)="checkEndDate()"
-              max="maxEndDate"
+              [max]="maxEndDate"
               [disabled]="true"
             />
             <mat-datepicker-toggle
@@ -45,10 +44,9 @@
               [matDatepicker]="pickerEnd"
               name="endDate"
               id="endDate"
-              placeholder="{{ currentLanguageSet?.inventory?.endDate }}"
               formControlName="endDate"
-              min="minEndDate"
-              max="maxEndDate"
+              [min]="minEndDate"
+              [max]="maxEndDate"
               [disabled]="true"
             />
             <mat-datepicker-toggle
@@ -65,11 +63,7 @@
             <mat-label>
               {{ currentLanguageSet?.inventory?.facility }}
             </mat-label>
-            <mat-select
-              [style.width]="'100%'"
-              placeholder="{{ currentLanguageSet?.inventory.facility }}"
-              formControlName="facilityName"
-            >
+            <mat-select [style.width]="'100%'" formControlName="facilityName">
               <mat-option *ngFor="let item of facilities" [value]="item">{{
                 item
               }}</mat-option>
@@ -82,6 +76,7 @@
       <button
         mat-raised-button
         color="accent"
+        class="mat_green"
         type="submit"
         [disabled]="!inwardStockForm.valid"
         (click)="downloadReport(true)"

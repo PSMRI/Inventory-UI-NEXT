@@ -1,15 +1,6 @@
 <app-header [showRoles]="true"></app-header>
 
 <div class="container-fluid">
-  <button
-    mat-mini-fab
-    class="example-fab"
-    color="primary"
-    (click)="sideNavModeChange(sidenav)"
-  >
-    <mat-icon>account_box</mat-icon>
-  </button>
-
   <mat-sidenav-container class="example-sidenav-fab-container">
     <mat-sidenav class="sideNav" #sidenav mode="side" opened="false">
       <div class="example-scrolling-content sidenav">
@@ -62,8 +53,18 @@
           </mat-accordion>
         </div>
       </div>
-      <div class="row m-t-20" style="margin-bottom: 30px">
-        <div class="col-sm-12 step-btn actionButton">
+      <div class="row m-t-20 col-12" style="margin-bottom: 30px">
+        <div class="col-6" style="margin-top: 15px">
+          <button
+            mat-mini-fab
+            class="example-fab"
+            color="primary"
+            (click)="sideNavModeChange(sidenav)"
+          >
+            <mat-icon>account_box</mat-icon>
+          </button>
+        </div>
+        <div class="col-6 step-btn" style="text-align: end">
           <button
             mat-raised-button
             id="submitButton"

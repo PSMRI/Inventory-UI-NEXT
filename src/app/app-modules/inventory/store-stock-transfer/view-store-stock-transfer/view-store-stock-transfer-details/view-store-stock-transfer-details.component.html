@@ -12,8 +12,8 @@
   >
 </div>
 
-<div class="scrolling-content">
-  <div class="container-fluid">
+<div class="scrolling-content" style="margin-top: 20px">
+  <div class="container-fluid mat_form_field_background_color_table">
     <table
       mat-table
       class="mat-elevation-z8"
@@ -99,7 +99,7 @@
       ></tr>
     </table>
 
-    <div class="row">
+    <div class="row" style="margin-top: 15px">
       <div class="col-xs-12 text-right">
         <mat-form-field id="filterbox">
           <input
@@ -118,7 +118,7 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <div class="table-responsive">
+        <div class="table-responsive mat_form_field_background_color_table">
           <table
             mat-table
             class="mat-elevation-z8"
@@ -162,19 +162,7 @@
               <td mat-cell *matCellDef="let item">{{ item?.quantity }}</td>
             </ng-container>
 
-            <ng-container *ngIf="dataSource.data.length > 0">
-              <div class="total-count">
-                {{ currentLanguageSet?.inventory?.totalCount }} :
-                {{ dataSource.data.length }}
-              </div>
-              <div style="text-align: right">
-                <mat-paginator
-                  [pageSizeOptions]="[5, 10, 25]"
-                  [pageSize]="5"
-                  showFirstLastButtons
-                ></mat-paginator>
-              </div>
-            </ng-container>
+            <ng-container *ngIf="dataSource.data.length > 0"> </ng-container>
 
             <tr
               mat-header-row
@@ -193,11 +181,23 @@
               "
             ></tr>
           </table>
+          <div class="total-count">
+            {{ currentLanguageSet?.inventory?.totalCount }} :
+            {{ dataSource.data.length }}
+          </div>
+          <div style="text-align: right">
+            <mat-paginator
+              [hidden]="dataSource.data.length === 0"
+              [pageSizeOptions]="[5, 10, 25]"
+              [pageSize]="5"
+              showFirstLastButtons
+            ></mat-paginator>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="row m-b-15">
+    <div class="row m-b-15" style="margin-top: 15px">
       <div class="col-xs-12" style="display: flex; justify-content: end">
         <button
           class="pull-right"

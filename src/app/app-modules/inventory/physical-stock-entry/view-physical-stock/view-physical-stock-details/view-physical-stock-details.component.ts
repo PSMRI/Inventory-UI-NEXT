@@ -26,9 +26,11 @@ import {
   OnDestroy,
   DoCheck,
   ViewChild,
+  AfterViewInit,
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+
 import { MatTableDataSource } from '@angular/material/table';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
@@ -39,16 +41,16 @@ import { LanguageService } from 'src/app/app-modules/core/services/language.serv
   styleUrls: ['./view-physical-stock-details.component.css'],
 })
 export class ViewPhysicalStockDetailsComponent
-  implements OnInit, OnDestroy, DoCheck
+  implements OnInit, OnDestroy, DoCheck, AfterViewInit
 {
   _filterTerm = '';
   _detailedList: any = [];
   _filteredDetailedList = new MatTableDataSource<any>();
-  blankTable = [1, 2, 3, 4, 5];
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  // blankTable = [1, 2, 3, 4, 5];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
   dataSourceList = new MatTableDataSource<any>();
-  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
   constructor(
     private http_service: LanguageService,
@@ -64,15 +66,24 @@ export class ViewPhysicalStockDetailsComponent
   ngOnDestroy(): void {
     this.data = '';
   }
+  ngAfterViewInit() {
+    this._filteredDetailedList.paginator = this.paginator;
+  }
   populateStockEntryItems(data: any) {
     console.log(data);
     if (data && data.entryDetails && data.stockEntry) {
+      console.log('this.paginator2', this.paginator);
       const entries = data.entryDetails;
       const stockEntries = JSON.parse(JSON.stringify(data.stockEntry));
       this.dataSourceList.data.push(stockEntries);
       this._detailedList = entries.data;
       this._filteredDetailedList.data = entries.data;
       this._filteredDetailedList.paginator = this.paginator;
+      console.log('this.paginator', this.paginator);
+      console.log(
+        'this._filteredDetailedList.paginator',
+        this._filteredDetailedList.paginator,
+      );
     }
   }
 

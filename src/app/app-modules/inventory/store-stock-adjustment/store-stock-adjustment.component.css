@@ -86,3 +86,7 @@
 .mat_form_field_background_color_padding >>> .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
     padding-top: 24px !important; 
 }
+.mat_form_field_background_color_table >>> .mdc-text-field--filled, .mdc-text-field--focused {
+    /* background-color: #f9f9f9 !important; */
+    background-color:unset !important;
+}

@@ -1,7 +1,9 @@
 .input-full-width {
   width: 100%;
 }
-
+.radio-btn{
+  font-weight: bold !important;
+}
 .box {
   height: 70px;
 }
@@ -49,4 +51,14 @@
 .medicineAlign{
   display: flex;
   justify-content: space-between;
+}
+.radio_btn_fontsize >>> .mat-mdc-radio-button .mdc-radio--disabled+label{
+  font-weight: bold !important;
+}
+.radio_btn_fontsize >>>.mdc-form-field>label {
+  margin-left: 0;
+  margin-right: auto;
+  padding-left: 4px;
+  padding-right: 0;
+  font-weight: bold !important;
 }

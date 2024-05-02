@@ -114,8 +114,8 @@ export class PatientReturnComponent implements OnInit, DoCheck {
   openBenDetailsModal() {
     const mdDialogRef: MatDialogRef<BenificiaryDetailsComponent> =
       this.dialog.open(BenificiaryDetailsComponent, {
-        // height: '90%',
-        width: '80%',
+        width: '1200px',
+        height: 'auto',
         panelClass: 'fit-screen',
         data: {
           beneficiaryDetailsList: this.beneficiaryDetailsList,

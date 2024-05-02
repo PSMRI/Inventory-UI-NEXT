@@ -23,7 +23,7 @@
     padding: 8px;
     width: 100%;
     text-align: right;
-    border-top: 1px solid lightgrey;
+    /* border-top: 1px solid lightgrey; */
 }
 
 .action button {

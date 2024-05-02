@@ -37,7 +37,7 @@ const COMMON_API_OPEN = `${commonIP}commonapi-v1.0/`;
 const COMMON_API = `${commonIP}commonapi-v1.0/`;
 const INVENTORY_API = `${inventoryIP}Inventoryapi-v1.0/`;
 const MMU_API = `${mmuIP}mmuapi-v1.0/`;
-const FHIR_API = `${FHIRIP}/fhirapi-v1.0/`;
+const FHIR_API = `${FHIRIP}fhirapi-v1.0/`;
 
 export const environment = {
   production: true,
@@ -102,7 +102,7 @@ export const environment = {
 
   saveStockExitUrl: `${INVENTORY_API}patientIssue`,
 
-  allocateBatchStockUrl: `${INVENTORY_API}allocateStockFromItemID/`,
+  allocateBatchStockUrl: `${INVENTORY_API}allocateStockFromItemID`,
   saveStoreTransferUrl: `${INVENTORY_API}storeTransfer`,
 
   saveStockAdjustmentUrl: `${INVENTORY_API}stockadjustment`,

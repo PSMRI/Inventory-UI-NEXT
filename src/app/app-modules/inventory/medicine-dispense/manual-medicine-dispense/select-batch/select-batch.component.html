@@ -5,6 +5,7 @@
     matTooltip="{{ currentLanguageSet?.inventory?.close }}"
     [matDialogClose]="false"
     class="pull-right exit width-20px"
+    style="text-align: end; margin-top: -5px"
   >
     <mat-icon>close</mat-icon>
   </button>
@@ -16,15 +17,15 @@
       <div class="row m-t-10">
         <div class="col-xs-6 col-sm-3">
           <mat-form-field class="input-full-width">
+            <mat-label>{{
+              currentLanguageSet?.inventory?.totalquantitytodispense
+            }}</mat-label>
             <input
               autocomplete="off"
               matInput
               appDefaultNull
               allowText="number"
               name="quantityDispensed"
-              placeholder="{{
-                currentLanguageSet?.inventory?.totalquantitytodispense
-              }}"
               formControlName="quantityDispensed"
               [readonly]="true"
             />
@@ -34,7 +35,7 @@
 
       <div class="row m-t-10">
         <div class="col-xs-12 col-sm-12">
-          <div class="table-responsive">
+          <div class="table-responsive mat_form_field_background_color_table">
             <ng-container formArrayName="batchList"></ng-container>
             <table
               mat-table
@@ -166,9 +167,13 @@
                       }}"
                       name="expiryDate"
                       formControlName="expiryDate"
-                      [disabled]="true"
+                      [readonly]="true"
                     />
-                    <mat-datepicker-toggle matSuffix [for]="expiryDatePicker">
+                    <mat-datepicker-toggle
+                      matPrefix
+                      [disabled]="true"
+                      [for]="expiryDatePicker"
+                    >
                     </mat-datepicker-toggle>
                     <mat-datepicker #expiryDatePicker></mat-datepicker>
                   </mat-form-field>

@@ -23,6 +23,7 @@ import { Directive, HostListener, Input, ElementRef } from '@angular/core';
 import { IndentItemListComponent } from '../components/indent-item-list/indent-item-list.component';
 import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { InventoryService } from '../../inventory/shared/service/inventory.service';
 
 @Directive({
   selector: '[appIndentRequest]',
@@ -45,14 +46,15 @@ export class IndentRequestDirective {
     private el: ElementRef,
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private inventoryService: InventoryService,
   ) {}
 
   openDialog(): void {
     // const searchTerm = this.itemListForm.itemNameView;
     const searchTerm = this.itemListForm.controls['itemNameView'].value;
     const dialogRef = this.dialog.open(IndentItemListComponent, {
-      width: '80%',
-      //   height: '90%',
+      width: '1200px',
+      height: 'auto',
       panelClass: 'fit-screen',
       data: { searchTerm: searchTerm, addedIndent: this.previousSelected },
     });
@@ -76,6 +78,7 @@ export class IndentRequestDirective {
 
           if (formArray.length < len + result.length - 1)
             formArray.push(this.initIndentRequestList());
+          this.inventoryService.dialogClosed();
         }
       }
     });

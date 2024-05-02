@@ -73,7 +73,7 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
       genderName: { value: '', disabled: false },
       doctorName: { value: '', disabled: false },
       reference: { value: '', disabled: false },
-      visitDate: { value: '', disabled: false },
+      visitDate: { value: '', disabled: true },
     });
   }
 
@@ -195,8 +195,8 @@ export class MedicineDispenseComponent implements OnInit, OnDestroy, DoCheck {
     const matDialogRef: MatDialogRef<SearchComponent> = this.dialog.open(
       SearchComponent,
       {
-        height: '80%',
-        width: '65%',
+        width: '1200px',
+        height: 'auto',
         panelClass: 'fit-screen',
         disableClose: false,
       },

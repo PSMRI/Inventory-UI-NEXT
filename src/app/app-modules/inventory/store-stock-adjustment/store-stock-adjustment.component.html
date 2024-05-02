@@ -63,7 +63,6 @@
             matInput
             [matDatepicker]="adjustmentDatePicker"
             autocomplete="off"
-            placeholder="{{ currentLanguageSet?.inventory?.adjustmentDate }}"
             name="adjustmentDate"
             formControlName="adjustmentDate"
           />
@@ -79,10 +78,12 @@
         <mat-form-field
           class="input-full-width mat_form_field_background_color mat_form_field_background_color_padding"
         >
+          <mat-label>{{
+            currentLanguageSet?.inventory?.referenceNumber
+          }}</mat-label>
           <input
             matInput
             allowText="alphanumeric"
-            placeholder="{{ currentLanguageSet?.inventory?.referenceNumber }}*"
             name="refNo"
             formControlName="refNo"
             required
@@ -103,14 +104,16 @@
               aria-describedby="storeStockDetails"
             >
               <ng-container matColumnDef="index">
-                <mat-header-cell *matHeaderCellDef>{{
-                  currentLanguageSet?.inventory?.index
-                }}</mat-header-cell>
-                <mat-cell
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ currentLanguageSet?.inventory?.index }}
+                </th>
+                <td
+                  mat-cell
                   *matCellDef="let stock; let i = index"
                   [formGroup]="stock"
-                  >{{ i + 1 }}</mat-cell
                 >
+                  {{ i + 1 }}
+                </td>
               </ng-container>
 
               <!-- Item Name Column -->
@@ -226,7 +229,7 @@
                       class="input-full-width"
                       name="adjustmentType"
                       formControlName="adjustmentType"
-                      (change)="calculateQOHAfterAdjustment(stock)"
+                      (selectionChange)="calculateQOHAfterAdjustment(stock)"
                       required
                     >
                       <mat-option
@@ -364,6 +367,7 @@
             </table>
             <div
               class="text-right"
+              style="margin-top: 15px"
               *ngIf="
                 storeStockAdjustmentForm.controls['stockAdjustmentList'].valid
               "

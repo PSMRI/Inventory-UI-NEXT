@@ -279,7 +279,11 @@ export class SystemIndentDispenseComponent implements OnInit, DoCheck {
         this.batchListDetails.push(reqObjForBatchList);
       });
     });
-    console.log('batchListDetails', this.batchListDetails);
+    console.log('systemDispenseList.length', this.systemDispenseList.length);
+    console.log(
+      'mainStoreItemListForDispense.length',
+      this.mainStoreItemListForDispense.length,
+    );
     if (
       this.systemDispenseList.length !==
       this.mainStoreItemListForDispense.length

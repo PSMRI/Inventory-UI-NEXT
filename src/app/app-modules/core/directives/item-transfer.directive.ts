@@ -54,8 +54,8 @@ export class ItemTransferDirective {
       this.stockForm?.parent?.parent?.value.transferTo.facilityID;
 
     const dialogRef = this.dialog.open(TransferSearchComponent, {
-      // width: '80%',
-      // height: '90%',
+      width: '1200px',
+      height: 'auto',
       panelClass: 'fit-screen',
       data: {
         searchTerm: searchTerm,

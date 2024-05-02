@@ -26,6 +26,7 @@ import {
   OnDestroy,
   DoCheck,
   ViewChild,
+  AfterViewInit,
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -39,11 +40,11 @@ import { LanguageService } from 'src/app/app-modules/core/services/language.serv
   styleUrls: ['./view-store-stock-transfer-details.component.css'],
 })
 export class ViewStoreStockTransferDetailsComponent
-  implements OnInit, OnDestroy, DoCheck
+  implements OnInit, OnDestroy, DoCheck, AfterViewInit
 {
   _filterTerm = '';
-  _detailedList = [];
-  blankTable = [1, 2, 3, 4, 5];
+  _detailedList: any = [];
+  // blankTable = [1, 2, 3, 4, 5];
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
   _filteredDetailedList = new MatTableDataSource<any>();
@@ -64,6 +65,10 @@ export class ViewStoreStockTransferDetailsComponent
     this.fetchLanguageResponse();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
@@ -77,21 +82,35 @@ export class ViewStoreStockTransferDetailsComponent
       this.dataSource = new MatTableDataSource<any>(
         this._filteredDetailedList.data[0].data,
       );
+      this.dataSource.paginator = this.paginator;
       console.log('dataSourceG', this.dataSource.data);
     }
   }
 
   filterDetails(filterTerm: string) {
     console.log(filterTerm);
-    if (!filterTerm) this._filteredDetailedList.data = this._detailedList;
-    else {
+    if (!filterTerm) {
+      this._filteredDetailedList.data = this._detailedList.data;
+      console.log(
+        ' this._filteredDetailedList ',
+        this._filteredDetailedList.data,
+      );
+      this.dataSource = new MatTableDataSource<any>(
+        this._filteredDetailedList.data,
+      );
+      this.dataSource.paginator = this.paginator;
+    } else {
       this._filteredDetailedList.data = [];
-      this._detailedList.forEach((item) => {
+      this._detailedList.data.forEach((item: any) => {
         for (const key in item) {
           if (key === 'batchNo' || key === 'itemName' || key === 'quantity') {
             const value: string = '' + item[key];
             if (value.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0) {
               this._filteredDetailedList.data.push(item);
+              this.dataSource = new MatTableDataSource<any>(
+                this._filteredDetailedList.data,
+              );
+              this.dataSource.paginator = this.paginator;
               break;
             }
           }

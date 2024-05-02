@@ -1,6 +1,11 @@
-<div class="title">
+<div class="col-12 title">
   <h4>ItemList Details</h4>
-  <button mat-icon-button [mat-dialog-close] class="pull-right exit width-20px">
+  <button
+    mat-icon-button
+    [mat-dialog-close]
+    class="exit width-20px"
+    style="text-align: end !important; float: inline-end; margin-top: -10px"
+  >
     <mat-icon>close</mat-icon>
   </button>
 </div>
@@ -33,38 +38,7 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <section class="table-responsive">
-          <!-- <table [md2Data]="mainStoreBatchWiseItemList" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1" class="table table-striped responsive-table-view" aria-describedby="storeItemDetails">
-            <caption></caption> 
-            <thead>
-              <tr>
-                <th id=""></th>
-                <th id="itemName">{{currentLanguageSet?.inventory?.itemName}}</th>
-                <th id="requiredQuantity">{{currentLanguageSet?.inventory?.requiredQuantity}}</th>
-                <th id="remarks">{{currentLanguageSet?.inventory?.remarks}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of md2.data">
-                <td data-title="S.No.">{{ mainStoreBatchWiseItemList.indexOf(item)+1 }}</td>
-                <td data-title="Item Name">{{item?.itemName}}</td>
-                <td data-title="Required Quantity">{{item?.requiredQty}}</td>
-                <td data-title="Remarks">{{item?.remarks}}</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr *ngIf="mainStoreBatchWiseItemList.length > 0">
-                <td colspan="2" class="total-count">
-                  <div> {{currentLanguageSet?.inventory?.totalCount}} : {{ mainStoreBatchWiseItemList.length }}</div>
-                </td>
-
-                <td colspan="2" style="text-align: right">
-                  <md2-pagination></md2-pagination>
-                </td>
-              </tr>
-            </tfoot>
-          </table> -->
-
+        <section class="table-responsive mat_form_field_background_color_table">
           <table mat-table [dataSource]="mainStoreBatchWiseItemList">
             <!-- index Column -->
             <ng-container matColumnDef="index">
@@ -93,7 +67,7 @@
             </ng-container>
 
             <!-- remarks Column -->
-            <ng-container matColumnDef="view">
+            <ng-container matColumnDef="remarks">
               <th mat-header-cell *matHeaderCellDef>
                 {{ currentLanguageSet?.inventory?.remarks }}
               </th>
@@ -101,22 +75,6 @@
             </ng-container>
 
             <!-- action Column -->
-            <!-- <ng-container matColumnDef="action">
-              <th mat-header-cell *matHeaderCellDef> {{currentLanguageSet?.bendetails?.action}} </th>
-              <td mat-cell *matCellDef="let element">
-                <div class="row">
-                  <button mat-raised-button class="button-full-width" type="button" color="accent" (click)="viewItemListDetailsForDispense(element)">{{currentLanguageSet?.inventory?.accept}}</button>
-                <button mat-raised-button class="button-full-width" type="button" color="warn" (click)="rejectIndent(element)">{{currentLanguageSet?.inventory?.reject}}</button>
-                </div> 
-              </td>
-            </ng-container> -->
-
-            <!-- <tr *ngIf="mainstoreOrderlist.length == 0">
-              <td mat-cell colspan="6" style="text-align: center; font-size: 16px">
-                <strong>{{currentLanguageSet?.inventory?.norecordsfound}}</strong>
-              </td>
-            </tr> -->
-
             <ng-container matFooterRow>
               <tr *ngIf="mainStoreBatchWiseItemList.length > 0">
                 <td
@@ -147,7 +105,7 @@
       </div>
     </div>
 
-    <div class="row m-b-15">
+    <div class="row m-b-15" style="margin-top: 20px; text-align: end">
       <div class="col-xs-12">
         <button
           class="pull-right"

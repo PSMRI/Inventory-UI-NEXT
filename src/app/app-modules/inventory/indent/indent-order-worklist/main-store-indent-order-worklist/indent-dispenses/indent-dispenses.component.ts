@@ -33,6 +33,9 @@ export class IndentDispensesComponent implements OnInit, DoCheck {
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
 
+  expressType: string | undefined = 'Manual Issue';
+  typeComp: string[] = ['System Issue', 'Manual Issue'];
+
   constructor(public http_service: LanguageService) {}
 
   ngOnInit() {

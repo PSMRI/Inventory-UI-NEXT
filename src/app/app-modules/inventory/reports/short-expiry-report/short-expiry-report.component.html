@@ -19,16 +19,20 @@
             [matDatepicker]="picker"
             name="startDate"
             id="startDate"
-            placeholder="{{ currentLanguageSet?.inventory?.date }}"
-            formControlName="startDate"
             [max]="maxEndDate"
-            [disabled]="true"
+            formControlName="startDate"
+            [readonly]="true"
           />
+
           <mat-datepicker-toggle
             matSuffix
             [for]="picker"
           ></mat-datepicker-toggle>
-          <mat-datepicker [style.width]="'100%'" #picker></mat-datepicker>
+          <mat-datepicker
+            [disabled]="true"
+            [style.width]="'100%'"
+            #picker
+          ></mat-datepicker>
         </mat-form-field>
       </div>
     </form>
@@ -36,6 +40,7 @@
       <button
         mat-raised-button
         color="accent"
+        class="mat_green"
         type="submit"
         (click)="downloadReport(true)"
       >

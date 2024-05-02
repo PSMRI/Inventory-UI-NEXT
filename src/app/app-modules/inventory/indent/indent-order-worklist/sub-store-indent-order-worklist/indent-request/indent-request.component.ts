@@ -26,6 +26,7 @@ import {
   FormArray,
   Validators,
   FormGroup,
+  FormControl,
 } from '@angular/forms';
 import { ConfirmationService } from 'src/app/app-modules/core/services';
 import { InventoryService } from 'src/app/app-modules/inventory/shared/service/inventory.service';
@@ -36,6 +37,7 @@ import { DataStorageService } from '../../../../shared/service/data-storage.serv
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-indent-request',
@@ -62,6 +64,7 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     'action',
   ];
   dataSource = new MatTableDataSource<any>();
+  private subs: Subscription;
 
   constructor(
     private router: Router,
@@ -72,13 +75,21 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     private inventoryService: InventoryService,
     private confirmationService: ConfirmationService,
     private dataStorageService: DataStorageService,
-  ) {}
+  ) {
+    this.subs = this.inventoryService
+      .getDialogClosedObservable()
+      .subscribe(() => {
+        this.loadIndentData();
+      });
+  }
 
   ngOnInit() {
+    // this.indentRequestForm = this.createIndentRequestForm();
     this.indentRequestForm = this.fb.group({
       requestDate: new Date(),
       referenceNumber: ['', Validators.required],
       indentReason: ['', Validators.required],
+      // indentItemList: this.fb.array([this.initIndentItemList()])
       indentItemList: this.fb.array([]),
     });
 
@@ -91,6 +102,11 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     this.fetchLanguageResponse();
     this.initIndentItemList();
     this.loadIndentData();
+    // this.indentItemListArray = this.indentRequestForm.value.indentItemList;
+    // console.log(
+    //   'this.indentItemListArray**********from indent',
+    //   this.indentItemListArray,
+    // );
   }
 
   methodForIndentEdit() {
@@ -164,14 +180,26 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       itemList?.patchValue({ requiredQty: null });
       itemList?.markAsPristine();
     }
+    // else if (itemList.value.qOH < quantity) {
+    //   this.confirmationService.alert('Please enter quantity less than or equal to Qty in qoh')
+    //   itemList.patchValue({ requiredQty: null });
+    //   itemList.markAsPristine();
+    // }
   }
 
   get indentItemList() {
     return this.indentRequestForm.get('indentItemList') as FormArray;
   }
   addToindentItemList() {
+    // const IndentItemListArray = this.indentRequestForm.controls[
+    //   'indentItemList'
+    // ] as FormArray;
+    // IndentItemListArray.push(this.initIndentItemList());
     this.indentItemList.push(this.loadIndentItemList());
     this.loadIndentData();
+    // IndentItemListArray.push(
+    //   this.loadIndentItemList()
+    // );
   }
 
   loadIndentItemList() {
@@ -202,6 +230,11 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     const IndentItemListArray = this.indentRequestForm.get(
       'indentItemList',
     ) as FormArray;
+    // const stockForm = this.physicalStockEntryForm.get(
+    //   'physicalStock',
+    // ) as FormArray;
+
+    // if (IndentItemListArray.length > 1)
 
     if (IndentItemListArray.length > 1) {
       this.deleted = true;
@@ -251,14 +284,6 @@ export class IndentRequestComponent implements OnInit, DoCheck {
     const indentRequest = JSON.parse(
       JSON.stringify(indentRequestForm.value.indentItemList),
     );
-    console.log(
-      'indentRequestForm under submitIndentRequest',
-      indentRequestForm,
-    );
-    console.log(
-      "JSON.parse(localStorage.getItem('facilityDetail') || '{}').mainFacilityID",
-      JSON.parse(localStorage.getItem('facilityDetail') || '{}').mainFacilityID,
-    );
     const otherDetails = {
       refNo: indentRequestForm.value.referenceNumber,
       reason: indentRequestForm.value.indentReason,
@@ -281,6 +306,7 @@ export class IndentRequestComponent implements OnInit, DoCheck {
       { indentOrder: indentRequest },
       otherDetails,
     );
+    console.log('temp******** under submit', temp);
     this.inventoryService.saveIndentRequest(temp).subscribe((response) => {
       console.log('response+++++++++++ in saveIndentRequest', response);
       if (response.statusCode === 200) {

@@ -33,7 +33,9 @@
               </legend>
               <div class="row">
                 <div class="col-md-1 right-padding-remove-desktop">
-                  <mat-form-field class="input-full-width">
+                  <mat-form-field
+                    class="input-full-width mat_form_field_background_color"
+                  >
                     <mat-label>{{
                       currentLanguageSet?.itemDispense?.form
                     }}</mat-label>
@@ -48,7 +50,9 @@
                   </mat-form-field>
                 </div>
                 <div class="col-md-2">
-                  <mat-form-field class="input-full-width">
+                  <mat-form-field
+                    class="input-full-width mat_form_field_background_color"
+                  >
                     <mat-label>{{
                       currentLanguageSet?.itemDispense?.duration
                     }}</mat-label>
@@ -67,7 +71,9 @@
                 <div
                   class="col-md-2 left-padding-remove-desktop right-padding-remove-desktop"
                 >
-                  <mat-form-field class="input-full-width">
+                  <mat-form-field
+                    class="input-full-width mat_form_field_background_color"
+                  >
                     <mat-label>{{
                       currentLanguageSet?.itemDispense?.frequency
                     }}</mat-label>
@@ -84,7 +90,9 @@
                   </mat-form-field>
                 </div>
                 <div class="col-md-2">
-                  <mat-form-field class="input-full-width">
+                  <mat-form-field
+                    class="input-full-width mat_form_field_background_color"
+                  >
                     <mat-label>{{
                       currentLanguageSet?.itemDispense?.dose
                     }}</mat-label>
@@ -99,7 +107,9 @@
                   </mat-form-field>
                 </div>
                 <div class="col-md-2">
-                  <mat-form-field class="input-full-width">
+                  <mat-form-field
+                    class="input-full-width mat_form_field_background_color"
+                  >
                     <mat-label>{{
                       currentLanguageSet?.itemDispense?.quantityPrescribed
                     }}</mat-label>
@@ -116,7 +126,9 @@
                   </mat-form-field>
                 </div>
                 <div class="col-md-3">
-                  <mat-form-field class="input-full-width">
+                  <mat-form-field
+                    class="input-full-width mat_form_field_background_color"
+                  >
                     <mat-label>{{
                       currentLanguageSet?.itemDispense?.quantityDispensed
                     }}</mat-label>
@@ -135,7 +147,9 @@
                   </mat-form-field>
                 </div>
                 <div class="col-md-4 right-padding-remove-desktop">
-                  <mat-form-field class="input-full-width">
+                  <mat-form-field
+                    class="input-full-width mat_form_field_background_color"
+                  >
                     <input
                       autocomplete="off"
                       readonly="true"
@@ -154,7 +168,9 @@
                     'col-md-8': issueType === 1 && allocated === false
                   }"
                 >
-                  <mat-form-field class="input-full-width">
+                  <mat-form-field
+                    class="input-full-width mat_form_field_background_color"
+                  >
                     <input
                       autocomplete="off"
                       type="text"
@@ -167,7 +183,10 @@
                     />
                   </mat-form-field>
                 </div>
-                <div class="col-md-2">
+                <div
+                  class="col-md-2"
+                  style="text-align: center; margin-top: 10px"
+                >
                   <button
                     mat-raised-button
                     *ngIf="issueType === 0"
@@ -214,7 +233,7 @@
       <div>
         <ng-container>
           <section
-            class="m-t-20 overflow table-responsive"
+            class="m-t-20 overflow table-responsive mat_form_field_background_color_table"
             *ngIf="copyprescription.itemList.length > 0"
           >
             <table

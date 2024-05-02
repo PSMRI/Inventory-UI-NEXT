@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -34,13 +34,16 @@ import { LanguageService } from '../../core/services/language.service';
 import { ConfirmationService } from '../../core/services/confirmation.service';
 import { InventoryService } from '../shared/service/inventory.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-store-stock-adjustment',
   templateUrl: './store-stock-adjustment.component.html',
   styleUrls: ['./store-stock-adjustment.component.css'],
 })
-export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
+export class StoreStockAdjustmentComponent
+  implements OnInit, DoCheck, OnDestroy
+{
   storeStockAdjustmentForm!: FormGroup;
   adjustmentTypeList = ['Issue', 'Receipt'];
   draftID: any;
@@ -62,6 +65,7 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
     'action',
   ];
   stockItemName: any;
+  private subs: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -71,14 +75,20 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private inventoryService: InventoryService,
-  ) {}
+  ) {
+    this.subs = this.inventoryService
+      .getDialogClosedObservable()
+      .subscribe(() => {
+        this.loadStockAdjData();
+      });
+  }
   dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {
     this.storeStockAdjustmentForm = this.fb.group({
       refNo: [''],
       adjustmentDate: { value: new Date(), disabled: true },
-      stockAdjustmentDraftID: [''],
+      stockAdjustmentDraftID: [null],
       draftDesc: [''],
       stockAdjustmentList: this.fb.array([]),
     });
@@ -91,12 +101,17 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
       this.getStockAdjustmentDraftDetails(this.draftID);
     } else {
       this.editMode = false;
+      // this.loadStockAdjData();
     }
 
     const isMainStore: any = localStorage.getItem('facilityDetail');
     this.isMainStore = JSON.parse(isMainStore).isMainFacility;
     this.showLastUpdatedStockLog();
     this.loadStockAdjData();
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 
   loadStockAdjData() {
@@ -129,9 +144,9 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
         adjustedQuantity: [''],
         qohAfterAdjustment: [''],
         reason: [''],
-        deleted: [''],
-        stockAdjustmentDraftID: [''],
-        sADraftItemMapID: [''],
+        deleted: [null],
+        stockAdjustmentDraftID: [null],
+        sADraftItemMapID: [null],
       }),
     );
   }
@@ -146,9 +161,9 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
       adjustedQuantity: [''],
       qohAfterAdjustment: [''],
       reason: [''],
-      deleted: [''],
-      stockAdjustmentDraftID: [''],
-      sADraftItemMapID: [''],
+      deleted: [null],
+      stockAdjustmentDraftID: [null],
+      sADraftItemMapID: [null],
     });
   }
 
@@ -305,34 +320,45 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
       }
     });
   }
-
   getStockAdjustmentDraftDetails(draftID: any) {
     const temp = parseInt(draftID);
+    console.log('draftID', draftID);
+    console.log('temp', temp);
     this.inventoryService
       .getStockAdjustmentDraftDetails(temp)
       .subscribe((response) => {
-        const stockAdjustmentList = response.stockAdjustmentItemDraftEdit;
+        const stockAdjusmentList = response.data.stockAdjustmentItemDraftEdit;
+        const stockAdjustmentFormArray = this.storeStockAdjustmentForm.controls[
+          'stockAdjustmentList'
+        ] as FormArray;
+        console.log('stockAdjusmentList', stockAdjusmentList);
+        console.log('stockAdjustmentFormArray', stockAdjustmentFormArray);
 
-        this.dataSource.data = [];
-
-        for (let i = 0; i < stockAdjustmentList.length; i++) {
-          stockAdjustmentList[i].adjustmentType = stockAdjustmentList[i].isAdded
+        for (let i = 0; i < stockAdjusmentList.length; i++) {
+          stockAdjusmentList[i].adjustmentType = stockAdjusmentList[i].isAdded
             ? 'Receipt'
             : 'Issue';
-          stockAdjustmentList[i].stockAdjustmentDraftID =
-            response.stockAdjustmentDraftID;
-          this.dataSource.data.push(stockAdjustmentList[i]);
+          stockAdjusmentList[i].stockAdjustmentDraftID =
+            response.data.stockAdjustmentDraftID;
+          stockAdjustmentFormArray.at(i).patchValue(stockAdjusmentList[i]);
+          (<FormGroup>stockAdjustmentFormArray.at(i)).controls[
+            'itemName'
+          ].disable();
+          this.calculateQOHAfterAdjustment(
+            stockAdjustmentFormArray.at(i) as FormGroup,
+          );
+          if (stockAdjustmentFormArray.length < stockAdjusmentList.length)
+            this.addToStockAdjustmentList();
         }
-
-        // Assign the modified data to MatTableDataSource
-        this.dataSource.data = this.dataSource.data.slice();
+        // this.loadStockAdjData();
 
         this.storeStockAdjustmentForm.patchValue({
-          adjustmentDate: new Date(response.createdDate),
-          refNo: response.refNo,
-          stockAdjustmentDraftID: response.stockAdjustmentDraftID,
-          draftDesc: response.draftDesc,
+          adjustmentDate: new Date(response.data.createdDate),
+          refNo: response.data.refNo,
+          stockAdjustmentDraftID: response.data.stockAdjustmentDraftID,
+          draftDesc: response.data.draftDesc,
         });
+        this.loadStockAdjData();
       });
   }
 
@@ -345,8 +371,10 @@ export class StoreStockAdjustmentComponent implements OnInit, DoCheck {
       if (qoh >= 0 && adjustedQuantity >= 0)
         stockForm.patchValue({ qohAfterAdjustment: qoh + adjustedQuantity });
     } else if (adjustmentType === 'Issue') {
+      console.log('loose');
       if (qoh > 0 && adjustedQuantity >= 0 && adjustedQuantity <= qoh)
-        stockForm.patchValue({ qohAfterAdjustment: qoh - adjustedQuantity });
+        console.log('win');
+      stockForm.patchValue({ qohAfterAdjustment: qoh - adjustedQuantity });
     }
   }
 

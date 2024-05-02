@@ -44,6 +44,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
   filteredBatchList: any = [];
   languageComponent: any;
   currentLanguageSet: any;
+  editBatchBool = false;
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -99,6 +100,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
   }
 
   handleBatchData() {
+    this.editBatchBool = true;
     const formBatchList = <FormArray>this.batchForm.controls['batchList'];
     const temp = this.data.editBatch.batchList.slice();
 
@@ -136,6 +138,7 @@ export class SelectBatchComponent implements OnInit, DoCheck {
 
   getQuantityAndFilterItem(selectedBatch: any, i: any, batchForm?: FormGroup) {
     const selectedBatchList = this.selectedBatchList[i];
+    console.log('selectedBatch', selectedBatch);
     this.filteredBatchList.map((item: any, t: any) => {
       const index = item.indexOf(selectedBatch);
       if (index !== -1 && t !== i) {
@@ -143,16 +146,29 @@ export class SelectBatchComponent implements OnInit, DoCheck {
       }
     });
     this.selectedBatchList[i] = selectedBatch;
-
-    const expiryDate = (this.today = new Date(selectedBatch.value.expiryDate));
-    if (batchForm !== undefined) {
-      batchForm.patchValue({
-        quantityOnBatch: selectedBatch.value.quantityInHand,
-        expiryDate: expiryDate,
-        quantityOfDispense: null,
-      });
+    if (this.editBatchBool) {
+      const expiryDate = (this.today = new Date(selectedBatch.expiryDate));
+      if (batchForm !== undefined) {
+        batchForm.patchValue({
+          quantityOnBatch: selectedBatch.value.quantityInHand,
+          expiryDate: expiryDate,
+          quantityOfDispense: null,
+        });
+      }
+      const quantityOnBatch = selectedBatch.quantityInHand;
+    } else {
+      const expiryDate = (this.today = new Date(
+        selectedBatch.value.expiryDate,
+      ));
+      if (batchForm !== undefined) {
+        batchForm.patchValue({
+          quantityOnBatch: selectedBatch.value.quantityInHand,
+          expiryDate: expiryDate,
+          quantityOfDispense: null,
+        });
+      }
+      const quantityOnBatch = selectedBatch.value.quantityInHand;
     }
-    const quantityOnBatch = selectedBatch.value.quantityInHand;
   }
 
   calculateDispenseQuantity() {
@@ -170,10 +186,15 @@ export class SelectBatchComponent implements OnInit, DoCheck {
   loadManualDispense() {
     const dataFromFun: any = this.getBatchListTableData();
     this.dataSource.data = dataFromFun;
+    console.log('TEST##', this.dataSource.data);
   }
 
   getBatchListTableData(): any {
     return (this.batchForm.get('batchList') as FormArray).controls;
+  }
+
+  get batchList() {
+    return this.batchForm.get('batchList') as FormArray;
   }
 
   addBatch() {

@@ -43,6 +43,17 @@ export class IndentItemListComponent implements OnInit, DoCheck {
   languageComponent!: SetLanguageComponent;
   currentLanguageSet: any;
   noRecordsFlag = false;
+
+  displayedColumns = [
+    'itemCode',
+    'itemName',
+    'itemCategory',
+    'itemForm',
+    'strength',
+    'quantityOnHand',
+    'action',
+  ];
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public input: any,
     private confirmationService: ConfirmationService,
@@ -58,15 +69,36 @@ export class IndentItemListComponent implements OnInit, DoCheck {
 
   search(term: string): void {
     this.items = this.batchSearchService.searchItem(term);
-    this.items.subscribe((data) => {
-      if (data) {
-        this.dataSource.data = data.data;
-        this.dataSource.paginator = this.paginator;
-        this.noRecordsFlag = true;
-      } else {
-        this.noRecordsFlag = false;
-      }
-    });
+    // this.items.subscribe((data) => {
+    //   if (data) {
+    //     this.dataSource.data = data.data;
+    //     this.dataSource.paginator = this.paginator;
+    //     this.noRecordsFlag = true;
+    //   } else {
+    //     this.noRecordsFlag = false;
+    //   }
+    // });
+    if (term === '%%') {
+      this.items.subscribe((data) => {
+        if (data) {
+          this.dataSource.data = data.data;
+          this.dataSource.paginator = this.paginator;
+          this.noRecordsFlag = true;
+        } else {
+          this.noRecordsFlag = false;
+        }
+      });
+    } else if (term) {
+      this.items.subscribe((data) => {
+        if (data) {
+          this.dataSource.data = data.data;
+          this.dataSource.paginator = this.paginator;
+          this.noRecordsFlag = true;
+        } else {
+          this.noRecordsFlag = false;
+        }
+      });
+    }
   }
   selectItem(event: any, item: any) {
     if (event.checked) {

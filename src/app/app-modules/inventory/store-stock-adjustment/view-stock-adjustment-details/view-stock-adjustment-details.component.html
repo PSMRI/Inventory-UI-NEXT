@@ -13,53 +13,58 @@
 </div>
 
 <div class="scrolling-content">
-  <div class="container-fluid">
-    <mat-table
+  <div
+    class="container-fluid mat_form_field_background_color_table"
+    style="margin-top: 20px"
+  >
+    <table
+      mat-table
+      style="border: 1px solid #ddd"
       class="mat-elevation-z8"
       class="table"
       aria-describedby="viewStoreStockDetails"
       [dataSource]="dataSource"
     >
       <ng-container matColumnDef="stockAdjustmentID">
-        <mat-header-cell *matHeaderCellDef>
+        <th mat-header-cell *matHeaderCellDef>
           <b>{{ currentLanguageSet?.inventory?.stockAdjustmentID }}</b>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let stock">
+        </th>
+        <td mat-cell *matCellDef="let stock">
           {{ stock?.data.stockAdjustmentID }}
-        </mat-cell>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="refNo">
-        <mat-header-cell *matHeaderCellDef>
+        <th mat-header-cell *matHeaderCellDef>
           <b>{{ currentLanguageSet?.inventory?.refNo }}</b>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let stock">
+        </th>
+        <td mat-cell *matCellDef="let stock">
           {{ stock?.data.refNo }}
-        </mat-cell>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="createdBy">
-        <mat-header-cell *matHeaderCellDef>
+        <th mat-header-cell *matHeaderCellDef>
           <b>{{ currentLanguageSet?.inventory?.createdBy }}</b>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let stock">
+        </th>
+        <td mat-cell *matCellDef="let stock">
           {{ stock?.data.createdBy }}
-        </mat-cell>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="createdDate">
-        <mat-header-cell *matHeaderCellDef>
+        <th mat-header-cell *matHeaderCellDef>
           <b>{{ currentLanguageSet?.inventory?.createdDate }}</b>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let stock">
+        </th>
+        <td mat-cell *matCellDef="let stock">
           {{ stock?.data.createdDate | istDate: "dd/MM/yyyy" }}
-        </mat-cell>
+        </td>
       </ng-container>
       <!-- Header row -->
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <!-- Data row -->
-      <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
-    </mat-table>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
 
     <div class="row" *ngIf="adjustmentList?.length > 0">
       <div class="col-xs-12 col-sm-12 text-right">
@@ -80,85 +85,84 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <section class="table-responsive">
-          <mat-table
+        <section class="table-responsive mat_form_field_background_color_table">
+          <table
+            mat-table
             class="mat-elevation-z8"
             aria-describedby="viewStoreStockDetails"
             [dataSource]="dataSource2"
           >
             <!-- Define columns for mat-table -->
             <ng-container matColumnDef="noValue">
-              <mat-header-cell *matHeaderCellDef>{{
-                currentLanguageSet?.inventory?.sNo
-              }}</mat-header-cell>
-              <mat-cell *matCellDef="let stock; let i = index">{{
-                i + 1
-              }}</mat-cell>
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.inventory?.sNo }}
+              </th>
+              <td mat-cell *matCellDef="let stock; let i = index">
+                {{ i + 1 }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="itemName">
-              <mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef>
                 <b>{{ currentLanguageSet?.inventory?.itemName }}</b>
-              </mat-header-cell>
-              <mat-cell *matCellDef="let adjustment">
+              </th>
+              <td mat-cell *matCellDef="let adjustment">
                 {{ adjustment?.itemName }}
-              </mat-cell>
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="batchNo">
-              <mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef>
                 <b>{{ currentLanguageSet?.itemDispense?.batchNo }}</b>
-              </mat-header-cell>
-              <mat-cell *matCellDef="let adjustment">
+              </th>
+              <td mat-cell *matCellDef="let adjustment">
                 {{ adjustment?.batchID }}
-              </mat-cell>
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="quantityOnHand">
-              <mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef>
                 <b>{{ currentLanguageSet?.inventory?.quantityOnHand }}</b>
-              </mat-header-cell>
-              <mat-cell *matCellDef="let adjustment">
+              </th>
+              <td mat-cell *matCellDef="let adjustment">
                 {{ adjustment?.quantityInHand }}
-              </mat-cell>
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="adjustmentType">
-              <mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef>
                 <b>{{ currentLanguageSet?.inventory?.adjustmentType }}</b>
-              </mat-header-cell>
-              <mat-cell *matCellDef="let adjustment">
+              </th>
+              <td mat-cell *matCellDef="let adjustment">
                 {{ adjustment?.isAdded ? "Receipt" : "Issue" }}
-              </mat-cell>
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="adjustedQuantity">
-              <mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef>
                 <b>{{ currentLanguageSet?.inventory?.adjustedQuantity }}</b>
-              </mat-header-cell>
-              <mat-cell *matCellDef="let adjustment">
+              </th>
+              <td mat-cell *matCellDef="let adjustment">
                 {{ adjustment?.adjustedQuantity }}
-              </mat-cell>
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="reason">
-              <mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef>
                 <b>{{ currentLanguageSet?.inventory?.reason }}</b>
-              </mat-header-cell>
-              <mat-cell *matCellDef="let adjustment">
+              </th>
+              <td mat-cell *matCellDef="let adjustment">
                 {{ adjustment?.reason }}
-              </mat-cell>
+              </td>
             </ng-container>
-            <mat-header-row
-              *matHeaderRowDef="storeListColumns"
-            ></mat-header-row>
+            <tr mat-header-row *matHeaderRowDef="storeListColumns"></tr>
             <!-- Data row -->
-            <mat-row *matRowDef="let row; columns: storeListColumns"> </mat-row>
-          </mat-table>
-          <div class="total-count" *ngIf="dataSource2.data.length > 0">
+            <tr mat-row *matRowDef="let row; columns: storeListColumns"></tr>
+          </table>
+          <!-- <div class="total-count" *ngIf="dataSource2.data.length > 0">
             {{ currentLanguageSet?.inventory?.totalCount }} :
             {{ dataSource2.data.length }}
-          </div>
+          </div> -->
 
           <mat-paginator
             [hidden]="dataSource2.data.length === 0"
@@ -171,7 +175,10 @@
     </div>
 
     <div class="row m-b-15">
-      <div class="col-xs-12" style="display: flex; justify-content: end">
+      <div
+        class="col-xs-12"
+        style="display: flex; justify-content: end; margin-top: 10px"
+      >
         <button
           class="pull-right"
           color="primary"

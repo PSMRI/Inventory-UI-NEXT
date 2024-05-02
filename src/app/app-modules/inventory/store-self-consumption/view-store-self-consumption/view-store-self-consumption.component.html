@@ -101,88 +101,96 @@
                 <mat-icon class="matIcon" matSuffix>search</mat-icon>
               </mat-form-field>
             </div>
-            <section class="col-xs-12 table-responsive">
-              <mat-table
+            <section
+              class="col-xs-12 table-responsive mat_form_field_background_color_table"
+            >
+              <table
+                mat-table
                 class="mat-elevation-z8"
                 [dataSource]="_filteredConsumptionList"
               >
                 <!-- Define columns for mat-table -->
                 <ng-container matColumnDef="noValue">
-                  <mat-header-cell *matHeaderCellDef>{{
-                    currentLanguageSet?.inventory?.index
-                  }}</mat-header-cell>
-                  <mat-cell *matCellDef="let consumption; let i = index">{{
-                    i + 1
-                  }}</mat-cell>
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ currentLanguageSet?.inventory?.index }}
+                  </th>
+                  <td mat-cell *matCellDef="let consumption; let i = index">
+                    {{ i + 1 }}
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="consumptionID">
-                  <mat-header-cell *matHeaderCellDef>
+                  <th mat-header-cell *matHeaderCellDef>
                     <b>{{ currentLanguageSet?.inventory?.consumptionID }}</b>
-                  </mat-header-cell>
-                  <mat-cell
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let consumption"
                     (click)="loadConsumptionDetails(consumption)"
                   >
                     {{ consumption?.consumptionID }}
-                  </mat-cell>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="refNo">
-                  <mat-header-cell *matHeaderCellDef>
+                  <th mat-header-cell *matHeaderCellDef>
                     <b>{{ currentLanguageSet?.inventory?.refNo }}</b>
-                  </mat-header-cell>
-                  <mat-cell
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let consumption"
                     (click)="loadConsumptionDetails(consumption)"
                   >
                     {{ consumption?.refNo }}
-                  </mat-cell>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="reason">
-                  <mat-header-cell *matHeaderCellDef>
+                  <th mat-header-cell *matHeaderCellDef>
                     <b>{{ currentLanguageSet?.inventory?.reason }}</b>
-                  </mat-header-cell>
-                  <mat-cell
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let consumption"
                     (click)="loadConsumptionDetails(consumption)"
                   >
                     {{ consumption?.reason }}
-                  </mat-cell>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="createdBy">
-                  <mat-header-cell *matHeaderCellDef>
+                  <th mat-header-cell *matHeaderCellDef>
                     <b>{{ currentLanguageSet?.inventory?.createdBy }}</b>
-                  </mat-header-cell>
-                  <mat-cell
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let consumption"
                     (click)="loadConsumptionDetails(consumption)"
                   >
                     {{ consumption?.createdBy }}
-                  </mat-cell>
+                  </td>
                 </ng-container>
 
                 <ng-container matColumnDef="createdDate">
-                  <mat-header-cell *matHeaderCellDef>
+                  <th mat-header-cell *matHeaderCellDef>
                     <b>{{ currentLanguageSet?.inventory?.createdDate }}</b>
-                  </mat-header-cell>
-                  <mat-cell
+                  </th>
+                  <td
+                    mat-cell
                     *matCellDef="let consumption"
                     (click)="loadConsumptionDetails(consumption)"
                   >
                     {{ consumption?.createdDate | istDate: "dd/MM/yyyy" }}
-                  </mat-cell>
+                  </td>
                 </ng-container>
                 <!-- Header row -->
-                <mat-header-row
-                  *matHeaderRowDef="displayedColumns"
-                ></mat-header-row>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <!-- Data row -->
-                <mat-row *matRowDef="let row; columns: displayedColumns">
-                </mat-row>
-              </mat-table>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
               <div
                 *ngIf="
                   _filteredConsumptionList &&
@@ -195,13 +203,13 @@
                   currentLanguageSet?.inventory?.norecordsfound
                 }}</strong>
               </div>
-              <div
+              <!-- <div
                 class="total-count"
                 *ngIf="_filteredConsumptionList.data.length > 0"
               >
                 {{ currentLanguageSet?.inventory?.totalCount }} :
                 {{ _filteredConsumptionList.data.length }}
-              </div>
+              </div> -->
               <mat-paginator
                 [hidden]="_filteredConsumptionList.data.length === 0"
                 [pageSizeOptions]="[5, 10, 25]"

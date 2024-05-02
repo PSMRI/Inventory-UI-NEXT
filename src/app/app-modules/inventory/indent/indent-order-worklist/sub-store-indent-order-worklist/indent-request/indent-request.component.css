@@ -17,3 +17,16 @@
 .width15 {
     width: 15%;
 }
+
+.mat_form_field_background_color >>>.mdc-text-field--filled, .mdc-text-field--focused {
+    background-color: #f2f2f0 !important;
+}
+/* mat-header-cell{
+    flex: none;
+    justify-content: center;
+   
+} */
+th.mat-header-cell {
+    text-align: center !important;
+  }
+

@@ -1,18 +1,21 @@
 <form [formGroup]="itemReturnForm" autocomplete="off">
   <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 box">
-    <mat-select
-      style="border-bottom: solid 1px; border-color: grey"
-      class="input-full-width"
-      name="itemName"
-      id="itemName"
-      formControlName="itemName"
-      placeholder="{{ currentLanguageSet?.inventory?.item }}"
-      (change)="getBatchDetail(itemName, null)"
+    <mat-form-field
+      class="mat_form_field_background_color mat_form_field_background_width"
     >
-      <mat-option *ngFor="let item of filterItemList" [value]="item">
-        {{ item.itemName }}
-      </mat-option>
-    </mat-select>
+      <mat-label>{{ currentLanguageSet?.inventory?.item }}</mat-label>
+      <mat-select
+        class="input-full-width"
+        name="itemName"
+        id="itemName"
+        formControlName="itemName"
+        (selectionChange)="getBatchDetail(itemName, null)"
+      >
+        <mat-option *ngFor="let item of filterItemList" [value]="item">
+          {{ item.itemName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 </form>
 <div class="container-fluid">
@@ -22,7 +25,7 @@
     </div>
 
     <div class="col-xs-12">
-      <div class="table-responsive">
+      <div class="table-responsive mat_form_field_background_color_table">
         <table
           mat-table
           class="table table-bordered table-striped"
@@ -43,72 +46,81 @@
             <th mat-header-cell *matHeaderCellDef class="width-percent-10">
               {{ currentLanguageSet?.inventory?.itemName }}
             </th>
-            <td mat-cell *matCellDef="let element" class="width-percent-10">
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              class="width-percent-10"
+            >
               {{ element?.itemName.itemName }}
             </td>
           </ng-container>
           <!-- Inner Table Column -->
-          <ng-container matColumnDef="noValue">
-            <!-- Inner table for batchList -->
-            <table
-              mat-table
-              [dataSource]="batchList"
-              class="table inner_table table-striped"
-              aria-describedby="itemBatchDetails"
+          <ng-container matColumnDef="batchNo">
+            <th mat-header-cell *matHeaderCellDef class="width-percent-25">
+              {{ currentLanguageSet?.itemDispense?.batchNo }}
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              class="width-percent-25"
             >
-              <!-- Inner Table Columns -->
-              <ng-container matColumnDef="batchNo">
-                <th mat-header-cell *matHeaderCellDef class="width-percent-25">
-                  {{ currentLanguageSet?.itemDispense?.batchNo }}
-                </th>
-                <td
-                  mat-cell
-                  *matCellDef="let batchElement"
-                  class="width-percent-25"
-                >
-                  {{ batchElement?.batchNo?.batchNo }}
-                </td>
-              </ng-container>
+              <table>
+                <tr *ngFor="let x of element.batchList">
+                  <td>{{ x?.batchNo?.batchNo }}</td>
+                </tr>
+              </table>
+            </td>
+          </ng-container>
 
-              <ng-container matColumnDef="issuedQuantity">
-                <th mat-header-cell *matHeaderCellDef class="width-percent-10">
-                  {{ currentLanguageSet?.inventory?.issueQuantity }}
-                </th>
-                <td
-                  mat-cell
-                  *matCellDef="let batchElement"
-                  class="width-percent-10"
-                >
-                  {{ batchElement?.batchNo?.issuedQuantity }}
-                </td>
-              </ng-container>
+          <ng-container matColumnDef="issuedQuantity">
+            <th mat-header-cell *matHeaderCellDef class="width-percent-10">
+              {{ currentLanguageSet?.inventory?.issueQuantity }}
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              class="width-percent-10"
+            >
+              <table>
+                <tr *ngFor="let x of element.batchList">
+                  <td>{{ x?.batchNo?.issuedQuantity }}</td>
+                </tr>
+              </table>
+            </td>
+          </ng-container>
 
-              <ng-container matColumnDef="dateofIssue">
-                <th mat-header-cell *matHeaderCellDef class="width-percent-10">
-                  {{ currentLanguageSet?.inventory?.dateOfIssue }}
-                </th>
-                <td
-                  mat-cell
-                  *matCellDef="let batchElement"
-                  class="width-percent-10"
-                >
-                  {{ batchElement?.batchNo?.dateofIssue }}
-                </td>
-              </ng-container>
+          <ng-container matColumnDef="dateofIssue">
+            <th mat-header-cell *matHeaderCellDef class="width-percent-10">
+              {{ currentLanguageSet?.inventory?.dateOfIssue }}
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              class="width-percent-10"
+            >
+              <table>
+                <tr *ngFor="let x of element.batchList">
+                  <td>{{ x?.batchNo?.dateofIssue }}</td>
+                </tr>
+              </table>
+            </td>
+          </ng-container>
 
-              <ng-container matColumnDef="returnQuantity">
-                <th mat-header-cell *matHeaderCellDef class="width-percent-25">
-                  {{ currentLanguageSet?.inventory?.returnQuantity }}
-                </th>
-                <td
-                  mat-cell
-                  *matCellDef="let batchElement"
-                  class="width-percent-25"
-                >
-                  {{ batchElement?.batchNo?.returnQuantity }}
-                </td>
-              </ng-container>
-            </table>
+          <ng-container matColumnDef="returnQuantity">
+            <th mat-header-cell *matHeaderCellDef class="width-percent-25">
+              {{ currentLanguageSet?.inventory?.returnQuantity }}
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              class="width-percent-25"
+            >
+              <table>
+                <tr *ngFor="let x of element.batchList">
+                  <td>{{ x?.returnQuantity }}</td>
+                </tr>
+              </table>
+            </td>
           </ng-container>
           <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef class="width-percent-10">
@@ -135,11 +147,15 @@
             <th mat-header-cell *matHeaderCellDef class="width-percent-10">
               {{ currentLanguageSet?.inventory?.delete }}
             </th>
-            <td mat-cell *matCellDef="let element" class="width-percent-10">
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              class="width-percent-10"
+            >
               <mat-icon
                 class="icon-remove cursorPointer"
                 matTooltip="{{ currentLanguageSet?.inventory?.delete }}"
-                (click)="removeAddedItem(element)"
+                (click)="removeAddedItem(i)"
                 >delete</mat-icon
               >
             </td>

@@ -3,7 +3,7 @@
     <div class="col-xs-12 col-sm-6">
       <h4>{{ currentLanguageSet?.inventory?.subStoreIndentOrderWorklist }}</h4>
     </div>
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-12 col-sm-6" style="text-align: end">
       <button
         mat-raised-button
         class="pull-right button-full-width"
@@ -16,13 +16,15 @@
     </div>
   </section>
 
-  <section class="row m-t-20">
+  <section class="row" style="margin-top: 20px">
     <div class="col-xs-12">
       <mat-card>
         <mat-card-content>
           <div class="row">
             <div class="col-xs-12 m-t-10">
-              <div class="table-responsive">
+              <div
+                class="table-responsive mat_form_field_background_color_tablem"
+              >
                 <!-- <table [md2Data]="substoreOrderlist" #md2="md2DataTable" [rowsPerPage]="5" [activePage]="1" class="table table-striped responsive-table-view" aria-describedby="subStoreDetails">
                   <caption></caption> 
                   <thead>
@@ -78,7 +80,7 @@
                   <ng-container matColumnDef="SNo">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
-                      {{ substoreOrderlist.indexOf(element) + 1 }}
+                      {{ substoreOrderlist.data.indexOf(element) + 1 }}
                     </td>
                   </ng-container>
 
@@ -196,7 +198,7 @@
                     </td>
                   </ng-container>
 
-                  <ng-container *ngIf="substoreOrderlist.length === 0">
+                  <ng-container *ngIf="substoreOrderlist.data.length === 0">
                     <td
                       mat-cell
                       *matCellDef="let element"
@@ -209,35 +211,29 @@
                     </td>
                   </ng-container>
 
-                  <ng-container matFooterRow>
-                    <tr *ngIf="substoreOrderlist.length > 0">
-                      <td
-                        mat-cell
-                        *matCellDef="let element"
-                        colspan="3"
-                        class="total-count"
-                      >
-                        <div>
-                          {{ currentLanguageSet?.inventory?.totalCount }} :
-                          {{ substoreOrderlist.length }}
-                        </div>
-                      </td>
-                      <td>
-                        <mat-paginator
-                          [pageSizeOptions]="[5, 10, 15, 20]"
-                          showFirstLastButtons
-                          aria-label="Select page of sub store Orderlist"
-                        >
-                        </mat-paginator>
-                      </td>
-                    </tr>
-                  </ng-container>
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr
                     mat-row
                     *matRowDef="let row; columns: displayedColumns"
                   ></tr>
                 </table>
+
+                <div
+                  class="total-count"
+                  *ngIf="substoreOrderlist.data.length > 0"
+                >
+                  {{ currentLanguageSet?.inventory?.totalCount }} :
+                  {{ substoreOrderlist.data.length }}
+                </div>
+
+                <mat-paginator
+                  [hidden]="substoreOrderlist.data.length === 0"
+                  [pageSizeOptions]="[5, 10, 15, 20]"
+                  showFirstLastButtons
+                  [pageSize]="5"
+                  aria-label="Select page of sub store Orderlist"
+                >
+                </mat-paginator>
               </div>
             </div>
           </div>

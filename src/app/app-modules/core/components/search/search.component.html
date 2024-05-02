@@ -4,6 +4,7 @@
     mat-icon-button
     matTooltip="{{ currentLanguageSet?.inventory?.close }}"
     matDialogClose
+    style="text-align: end; margin-top: -5px"
     class="pull-right exit width-20px"
   >
     <mat-icon>close</mat-icon>
@@ -123,7 +124,7 @@
             <button
               [disabled]="newSearchForm.invalid"
               mat-raised-button
-              class="pull-right m-r-5"
+              class="pull-right m-r-5 mat_green"
               color="accent"
               type="button"
               (click)="getSearchResult()"
@@ -146,114 +147,126 @@
 
     <section class="row m-b-30">
       <div class="col-xs-12">
-        <div class="table-responsive">
-          <mat-table
+        <div class="table-responsive mat_form_field_background_color_table">
+          <table
+            mat-table
             [dataSource]="filteredBeneficiaryList"
             class="mat-elevation-z8"
             aria-describedby="registeredSearchDetails"
           >
             <ng-container matColumnDef="noValue">
-              <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let element; let i = index">{{
-                i + 1
-              }}</mat-cell>
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                {{ i + 1 }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="beneficiaryID">
-              <mat-header-cell *matHeaderCellDef>{{
-                currentLanguageSet?.bendetails?.beneficiaryID
-              }}</mat-header-cell>
-              <mat-cell
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.bendetails?.beneficiaryID }}
+              </th>
+              <td
+                mat-cell
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
-                >{{ element?.beneficiaryID }}</mat-cell
               >
+                {{ element?.beneficiaryID }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="benName">
-              <mat-header-cell *matHeaderCellDef>{{
-                currentLanguageSet?.bendetails?.beneficiaryName
-              }}</mat-header-cell>
-              <mat-cell
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.bendetails?.beneficiaryName }}
+              </th>
+              <td
+                mat-cell
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
-                >{{ element?.benName | titlecase }}</mat-cell
               >
+                {{ element?.benName | titlecase }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="genderName">
-              <mat-header-cell *matHeaderCellDef>{{
-                currentLanguageSet?.bendetails?.gender
-              }}</mat-header-cell>
-              <mat-cell
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.bendetails?.gender }}
+              </th>
+              <td
+                mat-cell
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
-                >{{ element?.benName | titlecase }}</mat-cell
               >
+                {{ element?.genderName }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="age">
-              <mat-header-cell *matHeaderCellDef
-                >{{ currentLanguageSet?.inventory?.dOB }}
-              </mat-header-cell>
-              <mat-cell
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.inventory?.dOB }}
+              </th>
+              <td
+                mat-cell
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
-                >{{ element?.benName | titlecase }}</mat-cell
               >
+                {{ element?.age | date: "dd/MM/yyyy" }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="fatherName">
-              <mat-header-cell *matHeaderCellDef>{{
-                currentLanguageSet?.inventory?.fatherName
-              }}</mat-header-cell>
-              <mat-cell
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.inventory?.fatherName }}
+              </th>
+              <td
+                mat-cell
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
-                >{{ element?.benName | titlecase }}</mat-cell
               >
+                {{ element?.fatherName | titlecase }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="districtVillage">
-              <mat-header-cell *matHeaderCellDef
-                >{{ currentLanguageSet?.bendetails?.district }}
-              </mat-header-cell>
-              <mat-cell
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.bendetails?.district }}
+              </th>
+              <td
+                mat-cell
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
-                >{{ element?.benName | titlecase }}</mat-cell
               >
+                {{ element?.districtName }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="phoneNo">
-              <mat-header-cell *matHeaderCellDef>{{
-                currentLanguageSet?.bendetails?.phoneNo
-              }}</mat-header-cell>
-              <mat-cell
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.bendetails?.phoneNo }}
+              </th>
+              <td
+                mat-cell
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
-                >{{ element?.benName | titlecase }}</mat-cell
               >
+                {{ element?.phoneNo }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="registeredOn">
-              <mat-header-cell *matHeaderCellDef>{{
-                currentLanguageSet?.bendetails?.regDate
-              }}</mat-header-cell>
-              <mat-cell
+              <th mat-header-cell *matHeaderCellDef>
+                {{ currentLanguageSet?.bendetails?.regDate }}
+              </th>
+              <td
+                mat-cell
                 *matCellDef="let element; let i = index"
                 (click)="checkVisit(element?.beneficiaryID)"
-                >{{ element?.benName | titlecase }}</mat-cell
               >
+                {{ element?.registeredOn | date: "dd/MM/yyyy" }}
+              </td>
             </ng-container>
-            <mat-paginator
-              [pageSizeOptions]="[5, 10, 20]"
-              showFirstLastButtons
-            ></mat-paginator>
-            <mat-header-row *matHeaderRowDef="displayedColumns">
-            </mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-          </mat-table>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
           <div
             *ngIf="
               filteredBeneficiaryList &&
@@ -268,14 +281,20 @@
           >
             <strong>{{ currentLanguageSet?.inventory?.norecordsfound }}</strong>
           </div>
-          <div
+          <!-- <div
             class="total-count"
             *ngIf="filteredBeneficiaryList.data.length > 0"
           >
             {{ currentLanguageSet?.inventory?.totalCount }} :
             {{ filteredBeneficiaryList.data.length }}
-          </div>
+          </div> -->
         </div>
+        <mat-paginator
+          [hidden]="filteredBeneficiaryList.data.length === 0"
+          [pageSizeOptions]="[5, 10, 25]"
+          [pageSize]="5"
+          showFirstLastButtons
+        ></mat-paginator>
       </div>
     </section>
   </section>

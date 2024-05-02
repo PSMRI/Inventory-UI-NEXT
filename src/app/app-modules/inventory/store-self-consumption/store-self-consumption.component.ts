@@ -33,6 +33,7 @@ import {
 import { LanguageService } from '../../core/services/language.service';
 import { SetLanguageComponent } from '../../core/components/set-language.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 
 export interface PeriodicElement {
   itemName: string;
@@ -65,13 +66,20 @@ export class StoreSelfConsumptionComponent implements OnInit, DoCheck {
     'quantity',
     'delete',
   ];
+  private subs: Subscription;
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private http_service: LanguageService,
     private inventoryService: InventoryService,
     private alertService: ConfirmationService,
-  ) {}
+  ) {
+    this.subs = this.inventoryService
+      .getDialogClosedObservable()
+      .subscribe(() => {
+        this.loadStockConsumptionData();
+      });
+  }
   dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {

@@ -39,7 +39,11 @@
     </mat-form-field>
   </div>
   <div class="action">
-    <button mat-button (click)="dialogRef.close(false)">
+    <button
+      mat-button
+      (click)="dialogRef.close(false)"
+      style="margin-right: 10px"
+    >
       {{ btnCancelText }}
     </button>
     <button mat-button (click)="dialogRef.close(remarksRef.value)">
@@ -64,7 +68,11 @@
     </mat-form-field>
   </div>
   <div class="action">
-    <button mat-button (click)="dialogRef.close(false)">
+    <button
+      mat-button
+      (click)="dialogRef.close(false)"
+      style="margin-right: 10px"
+    >
       {{ btnCancelText }}
     </button>
     <button mat-button (click)="dialogRef.close(remarksRef.value + '.')">
@@ -77,10 +85,12 @@
   <h3 class="title info">{{ message }}</h3>
   <div class="message">
     <mat-form-field [style.width]="'100%'">
+      <mat-label>{{
+        currentLanguageSet?.inventory?.provideDraftDesc
+      }}</mat-label>
       <textarea
         matInput
         matTextareaAutosize
-        placeholder="{{ currentLanguageSet?.inventory?.provideDraftDesc }}"
         name="draftDescription"
         maxLength="500"
         [value]="comments"
@@ -89,7 +99,11 @@
     </mat-form-field>
   </div>
   <div class="action">
-    <button mat-button (click)="dialogRef.close(comments)">
+    <button
+      mat-button
+      (click)="dialogRef.close(comments)"
+      style="margin-right: 10px"
+    >
       {{ btnCancelText }}
     </button>
     <button mat-button (click)="dialogRef.close(draftDescription.value)">
@@ -141,7 +155,11 @@
     </mat-radio-group>
   </div>
   <div class="action">
-    <button mat-button (click)="dialogRef.close(false)">
+    <button
+      mat-button
+      (click)="dialogRef.close(false)"
+      style="margin-right: 10px"
+    >
       {{ btnCancelText }}
     </button>
     <button mat-button (click)="dialogRef.close(selectedValue)" cdkFocusInitial>
@@ -162,7 +180,9 @@
     </small>
   </div>
   <div class="action">
-    <button mat-button (click)="stopTimer()">{{ btnCancelText }}</button>
+    <button mat-button (click)="stopTimer()" style="margin-right: 10px">
+      {{ btnCancelText }}
+    </button>
     <button mat-button (click)="continueSession()" cdkFocusInitial>
       {{ btnOkText }}
     </button>

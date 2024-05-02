@@ -139,7 +139,7 @@
   </div>
 </nav>
 
-<div *ngIf="showRoles" class="container-fluid">
+<div *ngIf="showRoles && !isExternal" class="container-fluid">
   <nav class="navbar navbar-expand-lg">
     <div class="collapse navbar-collapse" id="main-navbar">
       <ul class="nav navbar-nav ml-auto" *ngFor="let item of navigation">
@@ -147,8 +147,10 @@
           <!-- <li class="nav-item" *ngIf="!isExternal"> -->
 
           <button class="nav-btn" mat-button [matMenuTriggerFor]="items">
+            <mat-icon matSuffix style="margin-top: 10px; margin-right: -5px"
+              >keyboard_arrow_down</mat-icon
+            >
             {{ item.role }}
-            <span class="caret"></span>
           </button>
           <mat-menu
             class="role-menu"
@@ -158,6 +160,7 @@
             [overlapTrigger]="false"
           >
             <button
+              class="nav-item alignDropDown"
               mat-menu-item
               *ngFor="let value of item.work"
               [routerLink]="[value.link]"
@@ -167,9 +170,23 @@
             </button>
           </mat-menu>
         </li>
-        <li class="nav-item" *ngIf="item.role === 'isExternal'">
+        <li class="nav-item alignDropDown" *ngIf="item.role === 'isExternal'">
           <!-- <li class="nav-item" *ngIf="isExternal"> -->
           <button class="nav-btn" mat-button (click)="backToParent()">
+            {{ currentLanguageSet?.itemDispense?.pharmacist }}
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div *ngIf="showRoles && isExternal" class="container-fluid">
+  <nav class="navbar navbar-expand-lg">
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav">
+        <li>
+          <button mat-button (click)="backToParent()">
             {{ currentLanguageSet?.itemDispense?.pharmacist }}
           </button>
         </li>

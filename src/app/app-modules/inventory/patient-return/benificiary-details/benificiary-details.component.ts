@@ -19,19 +19,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/.
  */
-import { Component, OnInit, Inject, DoCheck } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  DoCheck,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { InventoryService } from './../../../inventory/shared/service/inventory.service';
 import { SetLanguageComponent } from 'src/app/app-modules/core/components/set-language.component';
 import { LanguageService } from 'src/app/app-modules/core/services/language.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-benificiary-details',
   templateUrl: './benificiary-details.component.html',
   styleUrls: ['./benificiary-details.component.css'],
 })
-export class BenificiaryDetailsComponent implements OnInit, DoCheck {
+export class BenificiaryDetailsComponent
+  implements OnInit, DoCheck, AfterViewInit
+{
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   beneficiaryDetailsList = new MatTableDataSource<any>();
   // beneficiaryDetailsList: any = [];
   languageComponent!: SetLanguageComponent;
@@ -53,12 +64,17 @@ export class BenificiaryDetailsComponent implements OnInit, DoCheck {
   ngOnInit() {
     console.log('Data', this.data);
     this.beneficiaryDetailsList.data = this.data.beneficiaryDetailsList;
+    this.beneficiaryDetailsList.paginator = this.paginator;
     this.fetchLanguageResponse();
     console.log('this.ben', this.beneficiaryDetailsList.data);
   }
 
   loadbeneficiaryDetails(beneficiary: any) {
     this.dialogRef.close(beneficiary);
+  }
+  ngAfterViewInit() {
+    this.beneficiaryDetailsList.data = this.data.beneficiaryDetailsList;
+    this.beneficiaryDetailsList.paginator = this.paginator;
   }
 
   //AN40085822 29/9/2021 Integrating Multilingual Functionality --Start--

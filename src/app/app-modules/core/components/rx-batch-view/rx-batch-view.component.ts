@@ -25,6 +25,7 @@ import {
   FormArray,
   FormGroup,
   AbstractControl,
+  FormControl,
 } from '@angular/forms';
 import { ConfirmationService } from './../../services/confirmation.service';
 import { LanguageService } from '../../services/language.service';
@@ -60,6 +61,7 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
 
   loadtoForm(items: any) {
     const formArray = this.initBatchListArray(items, this.editSelection);
+    console.log('this.editSelection', this.editSelection);
     this.itemsForm?.addControl('formArray', formArray);
     this.setDispensed(formArray.value);
   }
@@ -108,8 +110,14 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
 
   save() {
     const formItems = <FormArray>this.itemsForm.controls['formArray'];
-
     if (!formItems.invalid) {
+      console.log('formItems1', formItems.value);
+      formItems.value.forEach((item: any) => {
+        const newExpDate: any = new Date(item.expiryDate);
+        console.log('newExpDate', newExpDate);
+        item.expiryDate = newExpDate;
+      });
+      console.log('formItems2', formItems.value);
       this.dialogRef.close({
         selectionBatchList: formItems.value,
         batchList: formItems.value.filter(
@@ -151,9 +159,10 @@ export class RxBatchViewComponent implements OnInit, DoCheck {
 
   initBatchListElement(batch: any, selection: any): FormGroup {
     const expDate: any = new DatePipe('en-US');
+
     const formatedExpDate: any = expDate.transform(
       batch.expiryDate,
-      'dd/MM/yyyy',
+      'MM/dd/yyyy',
     );
     return this.fb.group({
       expiryDate: formatedExpDate,
