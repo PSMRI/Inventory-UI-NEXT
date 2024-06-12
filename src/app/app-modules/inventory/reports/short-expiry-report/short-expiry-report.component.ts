@@ -86,7 +86,9 @@ export class ShortExpiryReportComponent implements OnInit, DoCheck {
       'Data form value...',
       JSON.stringify(this.shortExpiryForm.value),
     );
-    const reqObjForShortExpiryReport = {};
+    const reqObjForShortExpiryReport = {
+      facilityID: localStorage.getItem('facilityID'),
+    };
     console.log(
       'Data form data',
       JSON.stringify(reqObjForShortExpiryReport, null, 4),
