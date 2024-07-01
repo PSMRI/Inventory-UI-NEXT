@@ -68,9 +68,9 @@ export const environment = {
 
   getItem_Url: `${INVENTORY_API}getSubStoreitem/`,
 
-  savePhysicalStock_Url: `${INVENTORY_API}physicalStockEntry/`,
+  savePhysicalStock_Url: `${INVENTORY_API}physicalStockEntry`,
 
-  storeSelfConsumption: `${INVENTORY_API}storeSelfConsumption/`,
+  storeSelfConsumption: `${INVENTORY_API}storeSelfConsumption`,
 
   searchItemUrl: `${INVENTORY_API}itemPartialSearch`,
   searchBatchUrl: `${INVENTORY_API}itemBatchPartialSearch`,
@@ -93,7 +93,7 @@ export const environment = {
 
   saveStockExitUrl: `${INVENTORY_API}patientIssue`,
 
-  allocateBatchStockUrl: `${INVENTORY_API}allocateStockFromItemID/`,
+  allocateBatchStockUrl: `${INVENTORY_API}allocateStockFromItemID`,
   saveStoreTransferUrl: `${INVENTORY_API}storeTransfer`,
 
   saveStockAdjustmentUrl: `${INVENTORY_API}stockadjustment`,
@@ -121,20 +121,20 @@ export const environment = {
   viewItemListForMainStoreUrl: `${INVENTORY_API}indentController/getIndentOrderWorklist`,
 
   getSaveDispenseListUrl: `${INVENTORY_API}indentController/issueIndent`,
-  receiveIndentOrderUrl: `${INVENTORY_API}/indentController/receiveIndent`,
+  receiveIndentOrderUrl: `${INVENTORY_API}indentController/receiveIndent`,
   updateIndentOrderUrl: `${INVENTORY_API}indentController/updateIndentOrder`,
 
   /* Report URL's*/
-  inwardStockReportUrl: `${INVENTORY_API}/crmReportController/getInwardStockReport`,
-  consumptionReportUrl: `${INVENTORY_API}/crmReportController/getConsumptionReport`,
-  expiryReportUrl: `${INVENTORY_API}/crmReportController/getExpiryReport`,
-  beneficiaryDrugIssueReportUrl: `${INVENTORY_API}/crmReportController/getBenDrugIssueReport`,
-  dailyStockDetailsReportUrl: `${INVENTORY_API}/crmReportController/getDailyStockDetailReport`,
-  dailyStockSummaryReportUrl: `${INVENTORY_API}/crmReportController/getDailyStockSummaryReport`,
-  monthlyReportUrl: `${INVENTORY_API}/crmReportController/getMonthlyReport`,
-  yearlyReportUrl: `${INVENTORY_API}/crmReportController/getYearlyReport`,
-  shortExpiryReportUrl: `${INVENTORY_API}/crmReportController/getShortExpiryReport`,
-  transitReportUrl: `${INVENTORY_API}/crmReportController/getTransitReport`,
+  inwardStockReportUrl: `${INVENTORY_API}crmReportController/getInwardStockReport`,
+  consumptionReportUrl: `${INVENTORY_API}crmReportController/getConsumptionReport`,
+  expiryReportUrl: `${INVENTORY_API}crmReportController/getExpiryReport`,
+  beneficiaryDrugIssueReportUrl: `${INVENTORY_API}crmReportController/getBenDrugIssueReport`,
+  dailyStockDetailsReportUrl: `${INVENTORY_API}crmReportController/getDailyStockDetailReport`,
+  dailyStockSummaryReportUrl: `${INVENTORY_API}crmReportController/getDailyStockSummaryReport`,
+  monthlyReportUrl: `${INVENTORY_API}crmReportController/getMonthlyReport`,
+  yearlyReportUrl: `${INVENTORY_API}crmReportController/getYearlyReport`,
+  shortExpiryReportUrl: `${INVENTORY_API}crmReportController/getShortExpiryReport`,
+  transitReportUrl: `${INVENTORY_API}crmReportController/getTransitReport`,
   licenseUrl: `${COMMON_API}license.html`,
   apiVersionUrl: `${INVENTORY_API}version`,
   getLanguageList: `${COMMON_API}beneficiary/getLanguageList`,
